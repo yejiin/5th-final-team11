@@ -72,3 +72,4 @@ local.properties
 
 ### User Config ###
 application.properties
+/target/
