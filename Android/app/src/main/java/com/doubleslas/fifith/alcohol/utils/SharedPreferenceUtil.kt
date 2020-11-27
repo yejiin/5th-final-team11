@@ -8,13 +8,13 @@ class SharedPreferenceUtil(private val context: Context) {
         context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
     }
 
-    var isShowTutorial: Boolean
-        get() = prefs.getBoolean(PREFS_IS_SHOW_TUTORIAL, true)
-        set(value) = prefs.edit().putBoolean(PREFS_IS_SHOW_TUTORIAL, value).apply()
+    var idToken: String
+        get() = prefs.getString(PREFS_ID_TOKEN, "") ?: ""
+        set(value) = prefs.edit().putString(PREFS_ID_TOKEN, value).apply()
 
     companion object {
         private const val PREFS_NAME = "DoubleSlash05_team11_final_alcohol"
 
-        private const val PREFS_IS_SHOW_TUTORIAL = "PREFS_IS_SHOW_TUTORIAL"
+        private const val PREFS_ID_TOKEN = "PREFS_ID_TOKEN"
     }
 }
