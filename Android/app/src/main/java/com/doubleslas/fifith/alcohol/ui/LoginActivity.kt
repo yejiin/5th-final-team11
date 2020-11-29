@@ -1,10 +1,13 @@
 package com.doubleslas.fifith.alcohol.ui
 
 import android.content.Intent
+import android.opengl.Visibility
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.lifecycle.Observer
 import com.doubleslas.fifith.alcohol.MainActivity
 import com.doubleslas.fifith.alcohol.R
 import com.doubleslas.fifith.alcohol.databinding.ActivityLoginBinding
@@ -20,11 +23,12 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.android.synthetic.main.activity_login.*
 
-class LoginActivity : AppCompatActivity(){
+class LoginActivity : AppCompatActivity() {
     private var googleSignInClient: GoogleSignInClient? = null
     private var activityLoginBinding: ActivityLoginBinding? = null
     private var firebaseAuth: FirebaseAuth? = null
     private val RC_SIGN_IN = 1001
+    private val viewModel = LoginViewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,6 +51,15 @@ class LoginActivity : AppCompatActivity(){
             startActivityForResult(signInIntent, RC_SIGN_IN)
         }
 
+        btn_signout.setOnClickListener {
+            firebaseAuth!!.signOut()
+            googleSignInClient.signOut()
+        }
+
+
+
+        observeAuthenticationState()
+
 
     }
 
@@ -57,26 +70,43 @@ class LoginActivity : AppCompatActivity(){
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             try {
                 val account = task.getResult(ApiException::class.java)
-                firebaseAuthWithGoogle(account)
+                firebaseAuthWithGoogle(account?.idToken!!)
+                Log.d("junmin", "sign in success" + account.id)
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
             } catch (e: ApiException) {
-
+                Log.d("junmin", "sign in failed", e)
             }
         }
     }
 
-    private fun firebaseAuthWithGoogle(acct: GoogleSignInAccount?) {
-        val credential = GoogleAuthProvider.getCredential(acct?.idToken, null)
+    private fun firebaseAuthWithGoogle(idToken: String) {
+        val credential = GoogleAuthProvider.getCredential(idToken, null)
         firebaseAuth!!.signInWithCredential(credential)
             .addOnCompleteListener(this) {
                 if (it.isSuccessful) {
                     val user = firebaseAuth?.currentUser
-                    Toast.makeText(this, "login success", Toast.LENGTH_SHORT).show()
+                    Log.d("junmin", "sign in credential success")
                 } else {
-                    Toast.makeText(this, "login failed", Toast.LENGTH_SHORT).show()
+                    Log.d("junmin", "sign in credential failed")
                 }
             }
     }
 
-
+    private fun observeAuthenticationState() {
+        viewModel.authenticationState.observe(this, Observer { authenticationState ->
+            when (authenticationState) {
+                LoginViewModel.AuthenticationState.AUTHENTICATED -> {
+                    activityLoginBinding?.tvState?.text = "로그인 되어있음"
+                    activityLoginBinding?.btnLogin?.visibility = View.GONE
+                }
+                LoginViewModel.AuthenticationState.UNAUTHENTICATED -> {
+                    activityLoginBinding?.tvState?.text = "로그인 안됨"
+                    activityLoginBinding?.btnLogin?.visibility = View.VISIBLE
+            }
+        }
+            })
+    }
 
 }
+

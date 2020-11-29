@@ -9,8 +9,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.doubleslas.fifith.alcohol.databinding.ActivityMainBinding
 import com.doubleslas.fifith.alcohol.model.network.base.ApiStatus
-import com.doubleslas.fifith.alcohol.model.network.base.MutableApiLiveData
+//import com.doubleslas.fifith.alcohol.model.network.base.MutableApiLiveData
 import com.doubleslas.fifith.alcohol.ui.LoginActivity
+import com.doubleslas.fifith.alcohol.ui.LoginViewModel
 import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -24,10 +25,11 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity(), GoogleApiClient.OnConnectionFailedListener {
+class MainActivity : AppCompatActivity() {
+    private var firebaseAuth = FirebaseAuth.getInstance()
+    private var googleSignInClient: GoogleSignInClient? = null
 
     private var activityMainBinding: ActivityMainBinding? = null
-    lateinit var googleApiClient: GoogleApiClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,53 +37,27 @@ class MainActivity : AppCompatActivity(), GoogleApiClient.OnConnectionFailedList
         activityMainBinding = binding
         setContentView(activityMainBinding!!.root)
 
-        googleApiClient = GoogleApiClient.Builder(applicationContext)
-            .enableAutoManage(this, this)
-            .addApi(Auth.GOOGLE_SIGN_IN_API)
-            .build()
 
-        val currentUser = FirebaseAuth.getInstance().currentUser
+//        val liveData = MutableApiLiveData<String>()
+//
+//        liveData.observe(this, Observer {
+//            when (it) {
+//                is ApiStatus.Loading -> {
+//
+//                }
+//                is ApiStatus.Success<*> -> {
+//
+//                }
+//                is ApiStatus.Error -> {
+//
+//                }
+//            }
+////        })
+//    }
 
-        if (currentUser == null) {
-            val intent = Intent(applicationContext, LoginActivity::class.java)
-            startActivity(intent)
-        } else {
-
-        }
-
-        btn_logout.setOnClickListener {
-            FirebaseAuth.getInstance().signOut()
-            Auth.GoogleSignInApi.signOut(googleApiClient)
-            val intent = Intent(applicationContext, LoginActivity::class.java)
-            startActivity(intent)
-        }
-        val liveData = MutableApiLiveData<String>()
-
-        liveData.observe(this, Observer {
-            when (it) {
-                is ApiStatus.Loading -> {
-
-                }
-                is ApiStatus.Success<*> -> {
-
-                }
-                is ApiStatus.Error -> {
-
-                }
-            }
-        })
     }
 
-    override fun onResume() {
-        super.onResume()
 
-        val currentUser = FirebaseAuth.getInstance().currentUser
-        supportActionBar?.title = currentUser.toString()
-    }
-
-    override fun onConnectionFailed(p0: ConnectionResult) {
-        TODO("Not yet implemented")
-    }
 
 
 }

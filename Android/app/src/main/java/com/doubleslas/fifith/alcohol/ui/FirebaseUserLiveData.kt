@@ -1,11 +1,12 @@
-package com.doubleslas.fifith.alcohol.ui.auth
+package com.doubleslas.fifith.alcohol.ui
 
 import androidx.lifecycle.LiveData
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 
-class UserLiveData : LiveData<FirebaseUser?>() {
-    private val userAuth = FirebaseAuth.getInstance()
+class FirebaseUserLiveData : LiveData<FirebaseUser>() {
+    private val firebaseAuth = FirebaseAuth.getInstance()
+
 
     private val authStateListener = FirebaseAuth.AuthStateListener { firebaseAuth ->
         value = firebaseAuth.currentUser
@@ -13,11 +14,11 @@ class UserLiveData : LiveData<FirebaseUser?>() {
 
     override fun onActive() {
         super.onActive()
-        userAuth.addAuthStateListener(authStateListener)
+        firebaseAuth.addAuthStateListener(authStateListener)
     }
 
     override fun onInactive() {
         super.onInactive()
-        userAuth.removeAuthStateListener(authStateListener)
+        firebaseAuth.removeAuthStateListener(authStateListener)
     }
 }
