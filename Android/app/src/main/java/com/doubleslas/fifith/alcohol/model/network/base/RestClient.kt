@@ -2,6 +2,7 @@ package com.doubleslas.fifith.alcohol.model.network.base
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.doubleslas.fifith.alcohol.App
 import com.doubleslas.fifith.alcohol.BuildConfig
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -11,8 +12,6 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-typealias RetroLiveData<T> = LiveData<ApiStatus<T>>
-typealias MutableRetroLiveData<T> = MutableLiveData<ApiStatus<T>>
 object RestClient {
 
     private val retrofit =
@@ -24,7 +23,7 @@ object RestClient {
             val headerInterceptor = object : Interceptor {
                 override fun intercept(chain: Interceptor.Chain): Response {
                     val request: Request = chain.request().newBuilder()
-                        .addHeader("user_id", "1234")
+                        .addHeader("authorization", "bearer ${App.prefs.idToken}")
                         .build()
                     return chain.proceed(request)
                 }
