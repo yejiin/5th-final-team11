@@ -15,7 +15,6 @@ import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 
 class LoginActivity : AppCompatActivity() {
-    private var googleSignInClient: GoogleSignInClient? = null
     private var activityLoginBinding: ActivityLoginBinding? = null
     private var firebaseAuth: FirebaseAuth? = null
     private val GOOGLE_SIGN_IN = 1001
@@ -49,10 +48,7 @@ class LoginActivity : AppCompatActivity() {
             googleSignInClient.signOut()
         }
 
-
-
         observeAuthenticationState()
-
 
     }
 
@@ -76,14 +72,19 @@ class LoginActivity : AppCompatActivity() {
                 LoginViewModel.AuthenticationState.AUTHENTICATED -> {
                     activityLoginBinding?.tvState?.text = "로그인 되어있음"
                     activityLoginBinding?.btnLogin?.visibility = View.GONE
+                    activityLoginBinding?.tvDisplayName?.visibility = View.VISIBLE
+                    activityLoginBinding?.tvDisplayName?.text = firebaseAuth?.currentUser?.displayName
                 }
                 LoginViewModel.AuthenticationState.UNAUTHENTICATED -> {
                     activityLoginBinding?.tvState?.text = "로그인 안됨"
                     activityLoginBinding?.btnLogin?.visibility = View.VISIBLE
+                    activityLoginBinding?.tvDisplayName?.visibility = View.GONE
                 }
             }
         })
     }
+
+
 
 }
 

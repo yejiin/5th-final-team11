@@ -27,9 +27,8 @@ class LoginViewModel : ViewModel() {
         firebaseAuth!!.signInWithCredential(credential)
             .addOnCompleteListener {task ->
                 if (task.isSuccessful) {
-                    val user = firebaseAuth.currentUser
-                } else {
-                    Log.d("junmin","실패(크레덴셜)")
+                    val user = firebaseAuth.currentUser?.displayName
+                    Log.d("junmin", user.toString())
                 }
             }
     }
