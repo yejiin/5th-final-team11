@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class HealthController {
 
-	@GetMapping(value = "/health")
+	@GetMapping(value = {"/", "/health"})
 	@ResponseBody
 	public Object healthCheck() {
 		return "Server Status : ON";
