@@ -1,7 +1,6 @@
-package com.doubleslas.fifith.alcohol.ui
+package com.doubleslas.fifith.alcohol.ui.auth
 
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
 import com.google.firebase.auth.FirebaseAuth

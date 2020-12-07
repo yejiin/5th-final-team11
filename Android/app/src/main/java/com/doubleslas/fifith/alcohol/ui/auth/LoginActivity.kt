@@ -1,4 +1,4 @@
-package com.doubleslas.fifith.alcohol.ui
+package com.doubleslas.fifith.alcohol.ui.auth
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,27 +7,23 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.doubleslas.fifith.alcohol.R
 import com.doubleslas.fifith.alcohol.databinding.ActivityLoginBinding
-import com.doubleslas.fifith.alcohol.model.repository.AuthRepository
 import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 
+
 class LoginActivity : AppCompatActivity() {
-    private var activityLoginBinding: ActivityLoginBinding? = null
-    private var firebaseAuth: FirebaseAuth? = null
-    private val GOOGLE_SIGN_IN = 1001
+    private lateinit var activityLoginBinding: ActivityLoginBinding
+    private lateinit var firebaseAuth: FirebaseAuth
     private val loginViewModel by lazy { LoginViewModel() }
-    private val authRepository by lazy { AuthRepository() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
 
-        val binding = ActivityLoginBinding.inflate(layoutInflater)
-        activityLoginBinding = binding
-        setContentView(activityLoginBinding!!.root)
+        activityLoginBinding = ActivityLoginBinding.inflate(layoutInflater)
+        setContentView(activityLoginBinding.root)
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
@@ -38,13 +34,13 @@ class LoginActivity : AppCompatActivity() {
         firebaseAuth = FirebaseAuth.getInstance()
 
 
-        binding.btnLogin.setOnClickListener {
+        activityLoginBinding.btnLogin.setOnClickListener {
             val signInIntent = googleSignInClient.signInIntent
             startActivityForResult(signInIntent, GOOGLE_SIGN_IN)
         }
 
-        binding.btnSignout.setOnClickListener {
-            firebaseAuth!!.signOut()
+        activityLoginBinding.btnSignout.setOnClickListener {
+            firebaseAuth.signOut()
             googleSignInClient.signOut()
         }
 
@@ -70,21 +66,26 @@ class LoginActivity : AppCompatActivity() {
         loginViewModel.authenticationState.observe(this, Observer { authenticationState ->
             when (authenticationState) {
                 LoginViewModel.AuthenticationState.AUTHENTICATED -> {
-                    activityLoginBinding?.tvState?.text = "로그인 되어있음"
-                    activityLoginBinding?.btnLogin?.visibility = View.GONE
-                    activityLoginBinding?.tvDisplayName?.visibility = View.VISIBLE
-                    activityLoginBinding?.tvDisplayName?.text = firebaseAuth?.currentUser?.displayName
+                    activityLoginBinding.tvState.text = "로그인 되어있음"
+                    activityLoginBinding.btnLogin.visibility = View.GONE
+                    activityLoginBinding.tvDisplayName.visibility = View.VISIBLE
+                    activityLoginBinding.tvDisplayName.text = firebaseAuth.currentUser?.displayName
                 }
                 LoginViewModel.AuthenticationState.UNAUTHENTICATED -> {
-                    activityLoginBinding?.tvState?.text = "로그인 안됨"
-                    activityLoginBinding?.btnLogin?.visibility = View.VISIBLE
-                    activityLoginBinding?.tvDisplayName?.visibility = View.GONE
+                    activityLoginBinding.tvState.text = "로그인 안됨"
+                    activityLoginBinding.btnLogin.visibility = View.VISIBLE
+                    activityLoginBinding.tvDisplayName.visibility = View.GONE
+                }
+                else -> {
                 }
             }
         })
     }
 
 
+    companion object {
+        private const val GOOGLE_SIGN_IN = 1001
+    }
 
 }
 

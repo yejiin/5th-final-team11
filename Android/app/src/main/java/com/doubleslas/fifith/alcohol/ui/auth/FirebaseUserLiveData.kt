@@ -1,4 +1,4 @@
-package com.doubleslas.fifith.alcohol.ui
+package com.doubleslas.fifith.alcohol.ui.auth
 
 import androidx.lifecycle.LiveData
 import com.google.firebase.auth.FirebaseAuth
