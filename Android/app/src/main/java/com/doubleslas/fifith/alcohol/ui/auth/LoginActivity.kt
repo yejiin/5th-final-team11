@@ -2,16 +2,20 @@ package com.doubleslas.fifith.alcohol.ui.auth
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import com.bumptech.glide.Glide
 import com.doubleslas.fifith.alcohol.R
 import com.doubleslas.fifith.alcohol.databinding.ActivityLoginBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
+import com.kakao.sdk.auth.LoginClient
 import com.kakao.sdk.common.KakaoSdk
+import com.kakao.sdk.user.UserApiClient
 
 
 class LoginActivity : AppCompatActivity() {
@@ -36,17 +40,38 @@ class LoginActivity : AppCompatActivity() {
         firebaseAuth = FirebaseAuth.getInstance()
 
 
-        activityLoginBinding.btnLogin.setOnClickListener {
+        activityLoginBinding.btnLoginGoogle.setOnClickListener {
             val signInIntent = googleSignInClient.signInIntent
             startActivityForResult(signInIntent, GOOGLE_SIGN_IN)
         }
 
-        activityLoginBinding.btnSignout.setOnClickListener {
+        activityLoginBinding.btnSignoutGoogle.setOnClickListener {
             firebaseAuth.signOut()
             googleSignInClient.signOut()
         }
 
+        activityLoginBinding.btnLoginKakao.setOnClickListener {
+            if (LoginClient.instance.isKakaoTalkLoginAvailable(this)) {
+                LoginClient.instance.loginWithKakaoTalk(this) { token, error ->
+                    Log.i("kakao", "loginWithKakaoTalk $token $error")
+                    updateLoginInfo()
+                }
+            } else {
+                LoginClient.instance.loginWithKakaoAccount(this) { token, error ->
+                    Log.i("kakao", "loginWithKakaoAccount $token $error")
+                    updateLoginInfo()
+                }
+            }
+        }
+
+        activityLoginBinding.btnSignoutKakao.setOnClickListener {
+            UserApiClient.instance.logout {
+                updateLoginInfo()
+            }
+        }
+
         observeAuthenticationState()
+        updateLoginInfo()
 
     }
 
@@ -68,20 +93,34 @@ class LoginActivity : AppCompatActivity() {
         loginViewModel.authenticationState.observe(this, Observer { authenticationState ->
             when (authenticationState) {
                 LoginViewModel.AuthenticationState.AUTHENTICATED -> {
-                    activityLoginBinding.tvState.text = "로그인 되어있음"
-                    activityLoginBinding.btnLogin.visibility = View.GONE
-                    activityLoginBinding.tvDisplayName.visibility = View.VISIBLE
-                    activityLoginBinding.tvDisplayName.text = firebaseAuth.currentUser?.displayName
+                    activityLoginBinding.btnLoginGoogle.visibility = View.GONE
                 }
                 LoginViewModel.AuthenticationState.UNAUTHENTICATED -> {
-                    activityLoginBinding.tvState.text = "로그인 안됨"
-                    activityLoginBinding.btnLogin.visibility = View.VISIBLE
-                    activityLoginBinding.tvDisplayName.visibility = View.GONE
+                    activityLoginBinding.btnLoginGoogle.visibility = View.VISIBLE
                 }
                 else -> {
                 }
             }
         })
+    }
+
+
+    private fun updateLoginInfo() {
+        UserApiClient.instance.me { user, error ->
+            user?.let {
+                activityLoginBinding.tvKakaoNickname.text = user.kakaoAccount?.profile?.nickname
+                Glide.with(this).load(user.kakaoAccount?.profile?.thumbnailImageUrl).circleCrop()
+                    .into(activityLoginBinding.profileKakao)
+                activityLoginBinding.btnLoginKakao.visibility = View.GONE
+                activityLoginBinding.btnSignoutKakao.visibility = View.VISIBLE
+            }
+            error?.let {
+                activityLoginBinding.tvKakaoNickname.text = null
+                activityLoginBinding.profileKakao.setImageBitmap(null)
+                activityLoginBinding.btnLoginKakao.visibility = View.VISIBLE
+                activityLoginBinding.btnSignoutKakao.visibility = View.GONE
+            }
+        }
     }
 
 
