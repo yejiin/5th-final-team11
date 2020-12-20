@@ -11,6 +11,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
+import com.kakao.sdk.common.KakaoSdk
 
 
 class LoginActivity : AppCompatActivity() {
@@ -21,6 +22,7 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        KakaoSdk.init(this, NATIVE_APP_KEY)
 
         activityLoginBinding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(activityLoginBinding.root)
@@ -85,6 +87,7 @@ class LoginActivity : AppCompatActivity() {
 
     companion object {
         private const val GOOGLE_SIGN_IN = 1001
+        private const val NATIVE_APP_KEY = "f4ce9d07643e80606b97e6b009366095"
     }
 
 }

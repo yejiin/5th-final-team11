@@ -56,6 +56,10 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth-ktx'
     implementation 'com.google.android.gms:play-services-auth:19.0.0'
 
+    // 카카오 로그인
+    implementation "com.kakao.sdk:v2-user:2.2.0"
+
+
     // Retrofit2
     implementation 'com.squareup.retrofit2:retrofit:2.3.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
