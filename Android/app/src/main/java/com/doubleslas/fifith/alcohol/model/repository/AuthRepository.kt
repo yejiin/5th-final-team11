@@ -53,6 +53,7 @@ class AuthRepository {
         user.getIdToken(true).addOnCompleteListener {
             if (it.isSuccessful) {
                 val idToken = it.result?.token ?: ""
+                LogUtil.d("FirebaseToken", idToken)
                 App.prefs.idToken = idToken
                 result.value = ApiStatus.Success(0, idToken)
                 authService.test()

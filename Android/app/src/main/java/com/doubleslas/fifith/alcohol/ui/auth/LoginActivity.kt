@@ -71,7 +71,7 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
-        activityLoginBinding.btnLoginFacebook.setReadPermissions("email")
+        activityLoginBinding.btnLoginFacebook.setPermissions("public_profile", "email")
 
 
 
