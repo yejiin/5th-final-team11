@@ -37,8 +37,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_signout_google"
-        android:visibility="gone"/>
+        app:layout_constraintTop_toBottomOf="@+id/btn_signout_google" />
 
     <com.google.android.gms.common.SignInButton
         android:id="@+id/btn_login_google"
@@ -60,7 +59,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_login_kakao"
-        android:visibility="gone"/>
+       />
 
 
     <Button
