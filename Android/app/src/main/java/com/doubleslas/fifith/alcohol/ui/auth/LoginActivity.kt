@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
@@ -14,7 +13,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.kakao.sdk.auth.LoginClient
@@ -26,7 +24,6 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var activityLoginBinding: ActivityLoginBinding
     private lateinit var firebaseAuth: FirebaseAuth
     private val loginViewModel by lazy { LoginViewModel() }
-    private var customToken: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,25 +59,21 @@ class LoginActivity : AppCompatActivity() {
             if (LoginClient.instance.isKakaoTalkLoginAvailable(this)) {
                 LoginClient.instance.loginWithKakaoTalk(this) { token, error ->
 
+                    // 액세스 토큰과 리프레시 토큰값 단순 출력
                     Log.i("kakao", "loginWithKakaoTalk $token $error")
-                    startSignInWithKakao()
+                    updateLoginInfo()
                 }
             } else {
                 LoginClient.instance.loginWithKakaoAccount(this) { token, error ->
                     Log.i("kakao", "loginWithKakaoAccount $token $error")
-                    val user = firebaseAuth.currentUser
-                    updateLoginInfo(user)
+                    updateLoginInfo()
                 }
             }
         }
 
         activityLoginBinding.btnSignoutKakao.setOnClickListener {
             UserApiClient.instance.logout {
-
-
-                updateLoginInfo(user)
-
-
+                updateLoginInfo()
             }
         }
 
@@ -118,7 +111,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
 
-    private fun updateLoginInfo(user: FirebaseUser?) {
+    private fun updateLoginInfo() {
         UserApiClient.instance.me { user, error ->
             user?.let {
                 activityLoginBinding.tvKakaoNickname.text = user.kakaoAccount?.profile?.nickname
@@ -136,27 +129,11 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun startSignInWithKakao() {
-        customToken?.let {
-            firebaseAuth.signInWithCustomToken(it).addOnCompleteListener {
-                if (it.isSuccessful) {
-                    Log.d("kakao", "signInWithCustomToken : success")
-                    val user = firebaseAuth.currentUser
-                    if (user != null) {
-                        updateLoginInfo(user)
-                    }
-                } else {
-                    Log.d("kakao", "signInWithCustomToken : failed")
-                    Toast.makeText(this, "Authentication Failed", Toast.LENGTH_SHORT).show()
-                    updateLoginInfo(null)
-                }
-            }
-        }
-    }
-
 
     companion object {
         private const val GOOGLE_SIGN_IN = 1001
+
+        // 카카오 네이티브 앱 키
         private const val NATIVE_APP_KEY = "f4ce9d07643e80606b97e6b009366095"
 
     }

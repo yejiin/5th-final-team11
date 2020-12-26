@@ -1,5 +1,6 @@
 package com.doubleslas.fifith.alcohol.model.repository
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
@@ -65,5 +66,18 @@ class AuthRepository {
         }
 
         return result
+    }
+
+    fun startSignInWithKakao(customToken : String?) {
+        customToken?.let {
+            firebaseAuth.signInWithCustomToken(customToken).addOnCompleteListener {
+                if (it.isSuccessful) {
+                    Log.d("kakao", "signInWithCustomToken : success")
+
+                } else {
+                    Log.d("kakao", "signInWithCustomToken : failed")
+                }
+            }
+        }
     }
 }
