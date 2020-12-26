@@ -24,7 +24,7 @@ object RestClient {
             val headerInterceptor = object : Interceptor {
                 override fun intercept(chain: Interceptor.Chain): Response {
                     val request: Request = chain.request().newBuilder()
-                        .addHeader("Authorization", "bearer ${App.prefs.idToken}")
+                        .addHeader("Authorization", "Bearer ${App.prefs.idToken}")
                         .build()
                     return chain.proceed(request)
                 }
