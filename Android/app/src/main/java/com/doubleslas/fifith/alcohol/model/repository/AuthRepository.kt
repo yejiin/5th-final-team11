@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.Observer
 import com.doubleslas.fifith.alcohol.App
 import com.doubleslas.fifith.alcohol.model.network.base.*
+import com.doubleslas.fifith.alcohol.model.network.dto.AccessTokenBody
 import com.doubleslas.fifith.alcohol.utils.LogUtil
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.ktx.auth
@@ -14,7 +15,7 @@ class AuthRepository {
     private val firebaseAuth by lazy { Firebase.auth }
     private val authService by lazy { RestClient.getAuthService() }
 
-    fun completeLogin(credential: AuthCredential): ApiLiveData<Any> {
+    fun signInWithCredential(credential: AuthCredential): ApiLiveData<Any> {
         val result = MediatorApiLiveData<Any>()
         result.value = ApiStatus.Loading
 
@@ -37,6 +38,19 @@ class AuthRepository {
             }
 
         return result
+    }
+
+    fun signInWithKakaoToken(accessToken: String) {
+        val mediator = MediatorApiLiveData<String>()
+        val liveData = authService.loginKaKao(AccessTokenBody(accessToken))
+
+        mediator.addSource(liveData, Observer {
+            when (it) {
+                is ApiStatus.Success -> {
+                    signInWithCustomToken(it.data.customToken)
+                }
+            }
+        })
     }
 
 
@@ -66,15 +80,13 @@ class AuthRepository {
         return result
     }
 
-    fun startSignInWithKakao(customToken : String?) {
-        customToken?.let {
-            firebaseAuth.signInWithCustomToken(customToken).addOnCompleteListener {
-                if (it.isSuccessful) {
-                    Log.d("kakao", "signInWithCustomToken : success")
-
-                } else {
-                    Log.d("kakao", "signInWithCustomToken : failed")
-                }
+    private fun signInWithCustomToken(customToken: String) {
+        firebaseAuth.signInWithCustomToken(customToken).addOnCompleteListener {
+            if (it.isSuccessful) {
+                Log.d("kakao", "signInWithCustomToken : success")
+                getIdToken()
+            } else {
+                Log.d("kakao", "signInWithCustomToken : failed")
             }
         }
     }
