@@ -2,7 +2,6 @@ package com.doubleslas.fifith.alcohol.ui.auth
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -58,22 +57,21 @@ class LoginActivity : AppCompatActivity() {
         activityLoginBinding.btnLoginKakao.setOnClickListener {
             if (LoginClient.instance.isKakaoTalkLoginAvailable(this)) {
                 LoginClient.instance.loginWithKakaoTalk(this) { token, error ->
-
-                    // 액세스 토큰과 리프레시 토큰값 단순 출력
-                    Log.i("kakao", "loginWithKakaoTalk $token $error")
-                    updateLoginInfo()
+                    if (token != null) {
+                        loginViewModel.signInWithKaKao(token, error)
+                    }
                 }
             } else {
                 LoginClient.instance.loginWithKakaoAccount(this) { token, error ->
-                    Log.i("kakao", "loginWithKakaoAccount $token $error")
-                    updateLoginInfo()
+                    if (token != null) {
+                        loginViewModel.signInWithKaKao(token, error)
+                    }
                 }
             }
         }
 
         activityLoginBinding.btnSignoutKakao.setOnClickListener {
             UserApiClient.instance.logout {
-                updateLoginInfo()
             }
         }
 
@@ -114,29 +112,30 @@ class LoginActivity : AppCompatActivity() {
             }
         })
     }
-
-
-    private fun updateLoginInfo() {
-        UserApiClient.instance.me { user, error ->
-            user?.let {
-                activityLoginBinding.tvKakaoNickname.text = user.kakaoAccount?.profile?.nickname
-                Glide.with(this).load(user.kakaoAccount?.profile?.thumbnailImageUrl).circleCrop()
-                    .into(activityLoginBinding.profileKakao)
-                activityLoginBinding.btnLoginKakao.visibility = View.GONE
-                activityLoginBinding.btnSignoutKakao.visibility = View.VISIBLE
-            }
-            error?.let {
-                activityLoginBinding.tvKakaoNickname.text = null
-                activityLoginBinding.profileKakao.setImageBitmap(null)
-                activityLoginBinding.btnLoginKakao.visibility = View.VISIBLE
-                activityLoginBinding.btnSignoutKakao.visibility = View.GONE
-            }
-        }
-    }
+//
+//
+//    private fun updateLoginInfo() {
+//        UserApiClient.instance.me { user, error ->
+//            user?.let {
+//                activityLoginBinding.tvKakaoNickname.text = user.kakaoAccount?.profile?.nickname
+//                Glide.with(this).load(user.kakaoAccount?.profile?.thumbnailImageUrl).circleCrop()
+//                    .into(activityLoginBinding.profileKakao)
+//                activityLoginBinding.btnLoginKakao.visibility = View.GONE
+//                activityLoginBinding.btnSignoutKakao.visibility = View.VISIBLE
+//            }
+//            error?.let {
+//                activityLoginBinding.tvKakaoNickname.text = null
+//                activityLoginBinding.profileKakao.setImageBitmap(null)
+//                activityLoginBinding.btnLoginKakao.visibility = View.VISIBLE
+//                activityLoginBinding.btnSignoutKakao.visibility = View.GONE
+//            }
+//        }
+//    }
 
 
     companion object {
         private const val GOOGLE_SIGN_IN = 1001
+
         // 카카오 네이티브 앱 키
         private const val NATIVE_APP_KEY = "f4ce9d07643e80606b97e6b009366095"
 
