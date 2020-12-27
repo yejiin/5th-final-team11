@@ -33,6 +33,7 @@ class LoginActivity : AppCompatActivity() {
 
         KakaoSdk.init(this, NATIVE_APP_KEY)
 
+
         activityLoginBinding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(activityLoginBinding.root)
 
@@ -77,11 +78,16 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
+        activityLoginBinding.btnLoginFacebook.setPermissions("public_profile", "email")
+
+
+
         observeAuthenticationState()
 
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        loginViewModel.facebookAuthCallbackManager.onActivityResult(requestCode, resultCode, data)
         super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == GOOGLE_SIGN_IN) {
