@@ -6,6 +6,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
 import com.doubleslas.fifith.alcohol.databinding.ActivityLoginBinding
 import com.doubleslas.fifith.alcohol.model.repository.AuthRepository
+import com.doubleslas.fifith.alcohol.utils.LogUtil
+import com.facebook.CallbackManager
+import com.facebook.FacebookCallback
+import com.facebook.FacebookException
+import com.facebook.login.LoginManager
+import com.facebook.login.LoginResult
+import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 
@@ -15,6 +22,32 @@ class LoginViewModel : ViewModel() {
     private var customToken: String? = null
     private lateinit var activityLoginBinding: ActivityLoginBinding
 
+
+
+    val facebookAuthCallbackManager by lazy {
+        CallbackManager.Factory.create().also {
+            LoginManager.getInstance().registerCallback(it,
+                object : FacebookCallback<LoginResult?> {
+                    override fun onSuccess(loginResult: LoginResult?) {
+                        loginResult?.let { result ->
+                            val token = result.accessToken.token
+                            LogUtil.d("Facebook", token)
+                            val credential = FacebookAuthProvider.getCredential(token)
+                            authRepository.completeLogin(credential)
+                        }
+                    }
+
+                    override fun onCancel() {
+                        // App code
+                    }
+
+                    override fun onError(exception: FacebookException) {
+                        LogUtil.e("Facebook", "Login Error", exception)
+                        // App code
+                    }
+                })
+        }
+    }
 
     enum class AuthenticationState {
         AUTHENTICATED, UNAUTHENTICATED, INVALID_AUTHENTICATION
