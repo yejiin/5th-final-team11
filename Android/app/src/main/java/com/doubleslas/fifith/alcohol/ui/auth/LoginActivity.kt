@@ -29,7 +29,6 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         firebaseAuth = Firebase.auth
-        val user = firebaseAuth.currentUser
 
         KakaoSdk.init(this, NATIVE_APP_KEY)
 
@@ -132,7 +131,6 @@ class LoginActivity : AppCompatActivity() {
 
     companion object {
         private const val GOOGLE_SIGN_IN = 1001
-
         // 카카오 네이티브 앱 키
         private const val NATIVE_APP_KEY = "f4ce9d07643e80606b97e6b009366095"
 

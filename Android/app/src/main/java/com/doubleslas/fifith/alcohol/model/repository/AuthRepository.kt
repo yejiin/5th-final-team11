@@ -68,7 +68,7 @@ class AuthRepository {
         return result
     }
 
-    fun startSignInWithKakao(customToken : String?) {
+    fun startSignInWithKakao(customToken: String?) {
         customToken?.let {
             firebaseAuth.signInWithCustomToken(customToken).addOnCompleteListener {
                 if (it.isSuccessful) {
