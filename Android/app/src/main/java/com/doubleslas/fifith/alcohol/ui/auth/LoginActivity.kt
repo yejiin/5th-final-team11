@@ -2,11 +2,10 @@ package com.doubleslas.fifith.alcohol.ui.auth
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import com.bumptech.glide.Glide
 import com.doubleslas.fifith.alcohol.R
 import com.doubleslas.fifith.alcohol.databinding.ActivityLoginBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -29,7 +28,6 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         firebaseAuth = Firebase.auth
-        val user = firebaseAuth.currentUser
 
         KakaoSdk.init(this, NATIVE_APP_KEY)
 
@@ -37,13 +35,14 @@ class LoginActivity : AppCompatActivity() {
         activityLoginBinding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(activityLoginBinding.root)
 
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+
+        val googleSignInOption = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
             .build()
 
-        val googleSignInClient = GoogleSignIn.getClient(this, gso)
-        firebaseAuth = FirebaseAuth.getInstance()
+
+        val googleSignInClient = GoogleSignIn.getClient(this, googleSignInOption)
 
 
         activityLoginBinding.btnLoginGoogle.setOnClickListener {
@@ -51,30 +50,31 @@ class LoginActivity : AppCompatActivity() {
             startActivityForResult(signInIntent, GOOGLE_SIGN_IN)
         }
 
-        activityLoginBinding.btnSignoutGoogle.setOnClickListener {
-            firebaseAuth.signOut()
-            googleSignInClient.signOut()
-        }
 
         activityLoginBinding.btnLoginKakao.setOnClickListener {
             if (LoginClient.instance.isKakaoTalkLoginAvailable(this)) {
                 LoginClient.instance.loginWithKakaoTalk(this) { token, error ->
-
-                    // 액세스 토큰과 리프레시 토큰값 단순 출력
-                    Log.i("kakao", "loginWithKakaoTalk $token $error")
-                    updateLoginInfo()
+                    if (token != null) {
+                        loginViewModel.signInWithKaKao(token, error)
+                    }
                 }
             } else {
                 LoginClient.instance.loginWithKakaoAccount(this) { token, error ->
-                    Log.i("kakao", "loginWithKakaoAccount $token $error")
-                    updateLoginInfo()
+                    if (token != null) {
+                        loginViewModel.signInWithKaKao(token, error)
+                    }
                 }
             }
         }
+        activityLoginBinding.btnSignoutGoogle.setOnClickListener {
+            // 구글 로그아웃
+            googleSignInClient.signOut()
 
-        activityLoginBinding.btnSignoutKakao.setOnClickListener {
+            // 파이어베이스 로그아웃
+            firebaseAuth.signOut()
+            // 카카오 로그아웃
             UserApiClient.instance.logout {
-                updateLoginInfo()
+
             }
         }
 
@@ -95,7 +95,10 @@ class LoginActivity : AppCompatActivity() {
             try {
                 val account = task.getResult(ApiException::class.java)
                 loginViewModel.firebaseAuthWithGoogle(account?.idToken!!)
+                Toast.makeText(this, "success", Toast.LENGTH_SHORT).show()
             } catch (e: ApiException) {
+                Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show()
+
             }
         }
     }
@@ -115,25 +118,25 @@ class LoginActivity : AppCompatActivity() {
             }
         })
     }
-
-
-    private fun updateLoginInfo() {
-        UserApiClient.instance.me { user, error ->
-            user?.let {
-                activityLoginBinding.tvKakaoNickname.text = user.kakaoAccount?.profile?.nickname
-                Glide.with(this).load(user.kakaoAccount?.profile?.thumbnailImageUrl).circleCrop()
-                    .into(activityLoginBinding.profileKakao)
-                activityLoginBinding.btnLoginKakao.visibility = View.GONE
-                activityLoginBinding.btnSignoutKakao.visibility = View.VISIBLE
-            }
-            error?.let {
-                activityLoginBinding.tvKakaoNickname.text = null
-                activityLoginBinding.profileKakao.setImageBitmap(null)
-                activityLoginBinding.btnLoginKakao.visibility = View.VISIBLE
-                activityLoginBinding.btnSignoutKakao.visibility = View.GONE
-            }
-        }
-    }
+//
+//
+//    private fun updateLoginInfo() {
+//        UserApiClient.instance.me { user, error ->
+//            user?.let {
+//                activityLoginBinding.tvKakaoNickname.text = user.kakaoAccount?.profile?.nickname
+//                Glide.with(this).load(user.kakaoAccount?.profile?.thumbnailImageUrl).circleCrop()
+//                    .into(activityLoginBinding.profileKakao)
+//                activityLoginBinding.btnLoginKakao.visibility = View.GONE
+//                activityLoginBinding.btnSignoutKakao.visibility = View.VISIBLE
+//            }
+//            error?.let {
+//                activityLoginBinding.tvKakaoNickname.text = null
+//                activityLoginBinding.profileKakao.setImageBitmap(null)
+//                activityLoginBinding.btnLoginKakao.visibility = View.VISIBLE
+//                activityLoginBinding.btnSignoutKakao.visibility = View.GONE
+//            }
+//        }
+//    }
 
 
     companion object {
