@@ -14,18 +14,6 @@ class AuthRepository {
     private val firebaseAuth by lazy { Firebase.auth }
     private val authService by lazy { RestClient.getAuthService() }
 
-    private val callback by lazy {
-        object : MediatorApiCallback<String> {
-            override fun onSuccess(data: String) {
-                super.onSuccess(data)
-            }
-
-            override fun onError(code: Int, msg: String) {
-                super.onError(code, msg)
-            }
-        }
-    }
-
     fun signInWithCredential(credential: AuthCredential): ApiLiveData<String> {
         val mediator = MediatorApiLiveData<String>()
         mediator.value = ApiStatus.Loading
@@ -37,9 +25,9 @@ class AuthRepository {
             }
             addOnFailureListener {
                 // If sign in fails, display a message to the user.
-                LogUtil.e("FirebaseAuth", "signInWithCredential:failure", it)
+                LogUtil.e("Auth", "signInWithCredential:failure", it)
                 mediator.value =
-                    ApiStatus.Error(ErrorCode.SigInFirebase.code, it.message ?: "Firebase Error")
+                    ApiStatus.Error(ERROR_CODE_UNKNOWN, it.message ?: "Firebase Error")
             }
         }
 
@@ -77,9 +65,9 @@ class AuthRepository {
                 mediator.addSource(idTokenLiveData)
             }
             addOnFailureListener {
-                LogUtil.e("kakao", "signInWithCustomToken : failed", it)
+                LogUtil.e("Auth", "signInWithCustomToken : failed", it)
                 mediator.value =
-                    ApiStatus.Error(ErrorCode.SigInFirebase.code, it.message ?: "Custom Token")
+                    ApiStatus.Error(ERROR_CODE_UNKNOWN, it.message ?: "Custom Token")
             }
         }
 
@@ -93,7 +81,7 @@ class AuthRepository {
         val user = firebaseAuth.currentUser
 
         if (user == null) {
-            result.value = ApiStatus.Error(-1, "Not Login")
+            result.value = ApiStatus.Error(ERROR_CODE_NOT_LOGIN, "Not Login")
             return result
         }
 
@@ -102,21 +90,18 @@ class AuthRepository {
             if (it.isSuccessful) {
                 val idToken = it.result?.token ?: ""
                 App.prefs.idToken = idToken
-                result.value = ApiStatus.Success(0, idToken)
+                result.value = ApiStatus.Success(200, idToken)
                 authService.test() // TODO: Remove
             } else {
-                result.value = ApiStatus.Error(0, "Error Get Id Token")
+                result.value = ApiStatus.Error(ERROR_CODE_UNKNOWN, "Error Get Id Token")
             }
         }
 
         return result
     }
 
-
-    enum class ErrorCode(val code: Int) {
-        NotLogin(-1),
-        GetIdToken(-2),
-        SigInFirebase(-3),
-        SignInKakao(-4)
+    companion object {
+        const val ERROR_CODE_NOT_LOGIN = -1
+        const val ERROR_CODE_UNKNOWN = -2
     }
 }

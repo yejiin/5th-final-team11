@@ -11,7 +11,7 @@ typealias MutableApiLiveData<T> = MutableLiveData<ApiStatus<T>>
 typealias MediatorApiLiveData<T> = MediatorImpl<ApiStatus<T>>
 
 class MediatorImpl<T : ApiStatus<*>> : MediatorLiveData<T>() {
-    fun <S: Any?> addSource(
+    fun <S : Any?> addSource(
         source: LiveData<ApiStatus<S>>,
         callback: MediatorApiCallback<in S>
     ) {

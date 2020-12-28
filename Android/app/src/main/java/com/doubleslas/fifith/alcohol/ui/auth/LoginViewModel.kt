@@ -2,7 +2,9 @@ package com.doubleslas.fifith.alcohol.ui.auth
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.map
+import com.doubleslas.fifith.alcohol.model.network.base.ApiLiveData
+import com.doubleslas.fifith.alcohol.model.network.base.ApiStatus
+import com.doubleslas.fifith.alcohol.model.network.base.MediatorApiLiveData
 import com.doubleslas.fifith.alcohol.model.repository.AuthRepository
 import com.doubleslas.fifith.alcohol.utils.LogUtil
 import com.facebook.CallbackManager
@@ -19,6 +21,8 @@ class LoginViewModel : ViewModel() {
     private val authRepository by lazy { AuthRepository() }
     private var firebaseAuth = FirebaseAuth.getInstance()
 
+    private val mSignInLiveData = MediatorApiLiveData<String>()
+    val signInLiveData: ApiLiveData<String> = mSignInLiveData
 
     val facebookAuthCallbackManager by lazy {
         CallbackManager.Factory.create().also {
@@ -27,50 +31,43 @@ class LoginViewModel : ViewModel() {
                     override fun onSuccess(loginResult: LoginResult?) {
                         loginResult?.let { result ->
                             val token = result.accessToken.token
-                            LogUtil.d("Facebook", token)
                             val credential = FacebookAuthProvider.getCredential(token)
-                            authRepository.signInWithCredential(credential)
+                            val result = authRepository.signInWithCredential(credential)
+                            mSignInLiveData.addSource(result)
                         }
                     }
 
                     override fun onCancel() {
-                        // App code
                     }
 
                     override fun onError(exception: FacebookException) {
-                        LogUtil.e("Facebook", "Login Error", exception)
-                        // App code
+                        LogUtil.e("Auth", "ViewModel-facebookAuthCallbackManager", exception)
+                        mSignInLiveData.value = ApiStatus.Error(-1, exception.message ?: "Error Facebook Auth")
                     }
                 })
         }
     }
 
-
-    val authenticationState = FirebaseUserLiveData().map { user ->
-        if (user != null) {
-            AuthenticationState.AUTHENTICATED
-        } else {
-            AuthenticationState.UNAUTHENTICATED
+    fun firebaseAuthWithGoogle(idToken: String) {
+        val credential = GoogleAuthProvider.getCredential(idToken, null)
+        firebaseAuth.signInWithCredential(credential).apply {
+            addOnSuccessListener {
+                val result = authRepository.signInWithCredential(credential)
+                mSignInLiveData.addSource(result)
+            }
+            addOnFailureListener {
+                LogUtil.e("Auth", "ViewModel-firebaseAuthWithGoogle", it)
+                mSignInLiveData.value = ApiStatus.Error(-1, it.message ?: "Error Google Auth")
+            }
         }
     }
 
-    fun firebaseAuthWithGoogle(idToken: String) {
-        val credential = GoogleAuthProvider.getCredential(idToken, null)
-        firebaseAuth.signInWithCredential(credential)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    authRepository.signInWithCredential(credential)
-                }
-            }
-    }
-
     fun signInWithKaKao(token: OAuthToken, error: Throwable?) {
-
-        authRepository.signInWithKakaoToken(token.accessToken)
         // 액세스 토큰과 리프레시 토큰값 단순 출력
         Log.i("kakao", "loginWithKakaoTalk $token $error")
 
-
+        val result = authRepository.signInWithKakaoToken(token.accessToken)
+        mSignInLiveData.addSource(result)
     }
 
     enum class AuthenticationState {
