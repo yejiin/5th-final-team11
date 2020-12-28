@@ -66,17 +66,6 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
         }
-        activityLoginBinding.btnSignoutGoogle.setOnClickListener {
-            // 구글 로그아웃
-            googleSignInClient.signOut()
-
-            // 파이어베이스 로그아웃
-            firebaseAuth.signOut()
-            // 카카오 로그아웃
-            UserApiClient.instance.logout {
-
-            }
-        }
 
         activityLoginBinding.btnLoginFacebook.setPermissions("public_profile", "email")
 

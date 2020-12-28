@@ -4,23 +4,44 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.auth.LoginActivity">
+    tools:context=".ui.auth.LoginActivity"
+    android:background="#000000">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="69dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="106dp"
+        android:layout_marginEnd="256dp"
+        android:text="LOGO"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/btn_login_kakao"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="11dp"
+        android:layout_marginBottom="188dp"
         android:src="@drawable/kakao_login_medium_narrow"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_signout_google" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_login_google" />
 
     <com.google.android.gms.common.SignInButton
         android:id="@+id/btn_login_google"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="479dp"
+        android:layout_marginEnd="36dp"
+        android:layout_marginBottom="240dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -29,17 +50,6 @@
 
 
 
-    <Button
-        android:id="@+id/btn_signout_google"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/btn_login_google"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:text="Logout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_login_google" />
 
     <!--    <Button-->
     <!--        android:id="@+id/btn_sign_in_facebook"-->
@@ -55,12 +65,29 @@
         android:id="@+id/btn_login_facebook"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginTop="11dp"
+        android:layout_marginBottom="136dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_login_kakao" />
 
+    <Button
+        android:layout_width="288dp"
+        android:layout_height="41dp"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="668dp"
+        android:layout_marginEnd="35dp"
+        android:layout_marginBottom="51dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/button_background"
+        android:text="둘러보기"
+        android:textSize="16sp"
+        android:textColor="#FFFFFF"
+        />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
