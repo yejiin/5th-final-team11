@@ -19,14 +19,8 @@ class MediatorImpl<T : ApiStatus<*>> : MediatorLiveData<T>() {
             if (it !is ApiStatus.Loading) removeSource(source)
             when (it) {
                 is ApiStatus.Loading -> callback.onLoading()
-                is ApiStatus.Success<S> -> {
-                    removeSource(source)
-                    callback.onSuccess(it.data)
-                }
-                is ApiStatus.Error -> {
-                    removeSource(source)
-                    callback.onError(it.code, it.message)
-                }
+                is ApiStatus.Success<S> -> callback.onSuccess(it.data)
+                is ApiStatus.Error -> callback.onError(it.code, it.message)
             }
         })
     }

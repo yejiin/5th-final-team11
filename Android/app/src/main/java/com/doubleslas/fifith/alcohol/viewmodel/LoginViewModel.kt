@@ -1,4 +1,4 @@
-package com.doubleslas.fifith.alcohol.ui.auth
+package com.doubleslas.fifith.alcohol.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
