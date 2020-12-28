@@ -41,7 +41,7 @@ class LoginViewModel : ViewModel() {
                     }
 
                     override fun onError(exception: FacebookException) {
-                        LogUtil.e("Auth", "ViewModel-facebookAuthCallbackManager", exception)
+                        LogUtil.e("Auth", "", exception)
                         mSignInLiveData.value = ApiStatus.Error(-1, exception.message ?: "Error Facebook Auth")
                     }
                 })
@@ -56,7 +56,7 @@ class LoginViewModel : ViewModel() {
                 mSignInLiveData.addSource(result)
             }
             addOnFailureListener {
-                LogUtil.e("Auth", "ViewModel-firebaseAuthWithGoogle", it)
+                LogUtil.e("Auth", "", it)
                 mSignInLiveData.value = ApiStatus.Error(-1, it.message ?: "Error Google Auth")
             }
         }
@@ -64,7 +64,7 @@ class LoginViewModel : ViewModel() {
 
     fun signInWithKaKao(token: OAuthToken, error: Throwable?) {
         // 액세스 토큰과 리프레시 토큰값 단순 출력
-        Log.i("kakao", "loginWithKakaoTalk $token $error")
+        LogUtil.d("Auth", "$token $error")
 
         val result = authRepository.signInWithKakaoToken(token.accessToken)
         mSignInLiveData.addSource(result)

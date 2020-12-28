@@ -25,7 +25,7 @@ class AuthRepository {
             }
             addOnFailureListener {
                 // If sign in fails, display a message to the user.
-                LogUtil.e("Auth", "signInWithCredential:failure", it)
+                LogUtil.e("Auth", "", it)
                 mediator.value =
                     ApiStatus.Error(ERROR_CODE_UNKNOWN, it.message ?: "Firebase Error")
             }
@@ -65,7 +65,7 @@ class AuthRepository {
                 mediator.addSource(idTokenLiveData)
             }
             addOnFailureListener {
-                LogUtil.e("Auth", "signInWithCustomToken : failed", it)
+                LogUtil.e("Auth", "", it)
                 mediator.value =
                     ApiStatus.Error(ERROR_CODE_UNKNOWN, it.message ?: "Custom Token")
             }
