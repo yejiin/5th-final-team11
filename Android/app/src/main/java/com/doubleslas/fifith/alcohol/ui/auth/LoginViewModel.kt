@@ -3,7 +3,6 @@ package com.doubleslas.fifith.alcohol.ui.auth
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
-import com.doubleslas.fifith.alcohol.databinding.ActivityLoginBinding
 import com.doubleslas.fifith.alcohol.model.repository.AuthRepository
 import com.doubleslas.fifith.alcohol.utils.LogUtil
 import com.facebook.CallbackManager
@@ -19,8 +18,6 @@ import com.kakao.sdk.auth.model.OAuthToken
 class LoginViewModel : ViewModel() {
     private val authRepository by lazy { AuthRepository() }
     private var firebaseAuth = FirebaseAuth.getInstance()
-    private var customToken: String? = null
-    private lateinit var activityLoginBinding: ActivityLoginBinding
 
 
     val facebookAuthCallbackManager by lazy {
@@ -48,9 +45,6 @@ class LoginViewModel : ViewModel() {
         }
     }
 
-    enum class AuthenticationState {
-        AUTHENTICATED, UNAUTHENTICATED, INVALID_AUTHENTICATION
-    }
 
     val authenticationState = FirebaseUserLiveData().map { user ->
         if (user != null) {
@@ -62,12 +56,10 @@ class LoginViewModel : ViewModel() {
 
     fun firebaseAuthWithGoogle(idToken: String) {
         val credential = GoogleAuthProvider.getCredential(idToken, null)
-        firebaseAuth!!.signInWithCredential(credential)
+        firebaseAuth.signInWithCredential(credential)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    val user = firebaseAuth.currentUser?.displayName
                     authRepository.signInWithCredential(credential)
-                    Log.d("junmin", user.toString())
                 }
             }
     }
@@ -79,6 +71,10 @@ class LoginViewModel : ViewModel() {
         Log.i("kakao", "loginWithKakaoTalk $token $error")
 
 
+    }
+
+    enum class AuthenticationState {
+        AUTHENTICATED, UNAUTHENTICATED, INVALID_AUTHENTICATION
     }
 
 

@@ -6,29 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".ui.auth.LoginActivity">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:gravity="center"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/btn_login_google"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:id="@+id/profile_kakao"
-            android:layout_width="200dp"
-            android:layout_height="200dp" />
-
-        <TextView
-            android:id="@+id/tv_kakao_nickname"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-
-    </LinearLayout>
-
     <ImageView
         android:id="@+id/btn_login_kakao"
         android:layout_width="wrap_content"
@@ -50,17 +27,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/btn_signout_kakao"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="카카오 로그아웃"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_login_kakao"
-       />
 
 
     <Button
