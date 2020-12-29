@@ -1,10 +1,9 @@
 package com.doubleslas.fifith.alcohol.model.repository
 
-import android.util.Log
-import androidx.lifecycle.Observer
 import com.doubleslas.fifith.alcohol.App
 import com.doubleslas.fifith.alcohol.model.network.base.*
 import com.doubleslas.fifith.alcohol.model.network.dto.AccessTokenBody
+import com.doubleslas.fifith.alcohol.model.network.dto.CustomTokenData
 import com.doubleslas.fifith.alcohol.utils.LogUtil
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.ktx.auth
@@ -15,44 +14,66 @@ class AuthRepository {
     private val firebaseAuth by lazy { Firebase.auth }
     private val authService by lazy { RestClient.getAuthService() }
 
-    fun signInWithCredential(credential: AuthCredential): ApiLiveData<Any> {
-        val result = MediatorApiLiveData<Any>()
-        result.value = ApiStatus.Loading
+    fun signInWithCredential(credential: AuthCredential): ApiLiveData<String> {
+        val mediator = MediatorApiLiveData<String>()
+        mediator.value = ApiStatus.Loading
 
-        firebaseAuth.signInWithCredential(credential)
-            .addOnCompleteListener {
-                if (it.isSuccessful) {
-                    // Sign in success, update UI with the signed-in user's information
-                    val liveData = getIdToken()
-
-                    result.addSource(liveData, Observer { idToken ->
-                        if (idToken !is ApiStatus.Loading) result.removeSource(liveData)
-                        result.value = idToken
-                    })
-
-                } else {
-                    // If sign in fails, display a message to the user.
-                    LogUtil.e("FirebaseAuth", "signInWithCredential:failure", it.exception!!)
-                    result.value = ApiStatus.Error(-1, "Firebase Error")
-                }
+        firebaseAuth.signInWithCredential(credential).apply {
+            addOnSuccessListener {
+                val liveData = getIdToken()
+                mediator.addSource(liveData)
             }
+            addOnFailureListener {
+                // If sign in fails, display a message to the user.
+                LogUtil.e("Auth", "", it)
+                mediator.value =
+                    ApiStatus.Error(ERROR_CODE_UNKNOWN, it.message ?: "Firebase Error")
+            }
+        }
 
-        return result
+        return mediator
     }
 
-    fun signInWithKakaoToken(accessToken: String) {
+    fun signInWithKakaoToken(accessToken: String): ApiLiveData<String> {
         val mediator = MediatorApiLiveData<String>()
         val liveData = authService.loginKaKao(AccessTokenBody(accessToken))
 
-        mediator.addSource(liveData, Observer {
-            when (it) {
-                is ApiStatus.Success -> {
-                    signInWithCustomToken(it.data.customToken)
-                }
+        mediator.value = ApiStatus.Loading
+
+        mediator.addSource(liveData, object : MediatorApiCallback<CustomTokenData> {
+            override fun onSuccess(data: CustomTokenData) {
+                val firebaseLiveData = signInWithCustomToken(data.customToken)
+                mediator.addSource(firebaseLiveData)
+            }
+
+            override fun onError(code: Int, msg: String) {
+                mediator.value = ApiStatus.Error(code, msg)
             }
         })
+
+        return mediator
     }
 
+
+    private fun signInWithCustomToken(customToken: String): ApiLiveData<String> {
+        val mediator = MediatorApiLiveData<String>()
+
+        mediator.value = ApiStatus.Loading
+        val task = firebaseAuth.signInWithCustomToken(customToken).apply {
+            addOnSuccessListener {
+                val idTokenLiveData = getIdToken()
+                mediator.addSource(idTokenLiveData)
+            }
+            addOnFailureListener {
+                LogUtil.e("Auth", "", it)
+                mediator.value =
+                    ApiStatus.Error(ERROR_CODE_UNKNOWN, it.message ?: "Custom Token")
+            }
+        }
+
+
+        return mediator
+    }
 
     private fun getIdToken(): ApiLiveData<String> {
         val result = MutableApiLiveData<String>()
@@ -60,7 +81,7 @@ class AuthRepository {
         val user = firebaseAuth.currentUser
 
         if (user == null) {
-            result.value = ApiStatus.Error(-1, "Not Login")
+            result.value = ApiStatus.Error(ERROR_CODE_NOT_LOGIN, "Not Login")
             return result
         }
 
@@ -68,26 +89,19 @@ class AuthRepository {
         user.getIdToken(true).addOnCompleteListener {
             if (it.isSuccessful) {
                 val idToken = it.result?.token ?: ""
-                LogUtil.d("FirebaseToken", idToken)
                 App.prefs.idToken = idToken
-                result.value = ApiStatus.Success(0, idToken)
-                authService.test()
+                result.value = ApiStatus.Success(200, idToken)
+                authService.test() // TODO: Remove
             } else {
-                result.value = ApiStatus.Error(0, "Error Get Id Token")
+                result.value = ApiStatus.Error(ERROR_CODE_UNKNOWN, "Error Get Id Token")
             }
         }
 
         return result
     }
 
-    private fun signInWithCustomToken(customToken: String) {
-        firebaseAuth.signInWithCustomToken(customToken).addOnCompleteListener {
-            if (it.isSuccessful) {
-                Log.d("kakao", "signInWithCustomToken : success")
-                getIdToken()
-            } else {
-                Log.d("kakao", "signInWithCustomToken : failed")
-            }
-        }
+    companion object {
+        const val ERROR_CODE_NOT_LOGIN = -1
+        const val ERROR_CODE_UNKNOWN = -2
     }
 }

@@ -2,12 +2,14 @@ package com.doubleslas.fifith.alcohol.ui.auth
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.doubleslas.fifith.alcohol.R
 import com.doubleslas.fifith.alcohol.databinding.ActivityLoginBinding
+import com.doubleslas.fifith.alcohol.model.network.base.ApiStatus
+import com.doubleslas.fifith.alcohol.utils.LogUtil
+import com.doubleslas.fifith.alcohol.viewmodel.LoginViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
@@ -84,48 +86,25 @@ class LoginActivity : AppCompatActivity() {
             try {
                 val account = task.getResult(ApiException::class.java)
                 loginViewModel.firebaseAuthWithGoogle(account?.idToken!!)
-                Toast.makeText(this, "success", Toast.LENGTH_SHORT).show()
             } catch (e: ApiException) {
-                Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show()
-
+                LogUtil.e("Auth", "", e)
             }
         }
     }
 
 
     private fun observeAuthenticationState() {
-        loginViewModel.authenticationState.observe(this, Observer { authenticationState ->
-            when (authenticationState) {
-                LoginViewModel.AuthenticationState.AUTHENTICATED -> {
-                    activityLoginBinding.btnLoginGoogle.visibility = View.GONE
+        loginViewModel.signInLiveData.observe(this, Observer {
+            when (it) {
+                is ApiStatus.Success -> {
+                    Toast.makeText(applicationContext, "로그인 완료", Toast.LENGTH_SHORT).show()
                 }
-                LoginViewModel.AuthenticationState.UNAUTHENTICATED -> {
-                    activityLoginBinding.btnLoginGoogle.visibility = View.VISIBLE
-                }
-                else -> {
+                is ApiStatus.Error -> {
+                    Toast.makeText(applicationContext, "로그인 ERROR - ${it.message}", Toast.LENGTH_SHORT).show()
                 }
             }
         })
     }
-//
-//
-//    private fun updateLoginInfo() {
-//        UserApiClient.instance.me { user, error ->
-//            user?.let {
-//                activityLoginBinding.tvKakaoNickname.text = user.kakaoAccount?.profile?.nickname
-//                Glide.with(this).load(user.kakaoAccount?.profile?.thumbnailImageUrl).circleCrop()
-//                    .into(activityLoginBinding.profileKakao)
-//                activityLoginBinding.btnLoginKakao.visibility = View.GONE
-//                activityLoginBinding.btnSignoutKakao.visibility = View.VISIBLE
-//            }
-//            error?.let {
-//                activityLoginBinding.tvKakaoNickname.text = null
-//                activityLoginBinding.profileKakao.setImageBitmap(null)
-//                activityLoginBinding.btnLoginKakao.visibility = View.VISIBLE
-//                activityLoginBinding.btnSignoutKakao.visibility = View.GONE
-//            }
-//        }
-//    }
 
 
     companion object {
