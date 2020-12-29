@@ -3,6 +3,9 @@ package com.doubleslas.fifith.alcohol.model.network.base
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.doubleslas.fifith.alcohol.utils.LogUtil
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import retrofit2.*
 import java.lang.reflect.ParameterizedType
 import java.lang.reflect.Type
@@ -22,17 +25,21 @@ class LiveDataCallAdapter<R>(private val responseType: Type) : CallAdapter<R, Li
 
             override fun onResponse(call: Call<R>, response: Response<R>) {
 
-                val code = response.code()
-                if (response.isSuccessful) {
-                    liveData.value = ApiStatus.Success(code, response.body()!!)
-                    return
-                }
+                CoroutineScope(Dispatchers.Main).launch {
 
-                // Error 처리
-                liveData.value = ApiStatus.Error(code, response.message())
+                    val code = response.code()
+                    if (response.isSuccessful) {
+                        liveData.value = ApiStatus.Success(code, response.body()!!)
+                        return@launch
+                    }
 
-                when (response.code()) {
-                    401 -> {
+                    // Error 처리
+                    liveData.value = ApiStatus.Error(code, response.message())
+
+                    when (response.code()) {
+                        401 -> {
+                            // TODO : Error 처리
+                        }
                     }
                 }
             }
