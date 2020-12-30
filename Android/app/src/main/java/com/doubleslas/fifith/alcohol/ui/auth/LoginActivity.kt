@@ -83,9 +83,7 @@ class LoginActivity : AppCompatActivity() {
         activityLoginBinding.btnLoginFacebook.setPermissions("public_profile", "email")
 
 
-
         observeAuthenticationState()
-
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

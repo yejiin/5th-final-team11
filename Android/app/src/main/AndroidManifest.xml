@@ -15,18 +15,18 @@
         android:usesCleartextTraffic="true">
         <activity android:name=".ui.auth.LoginActivity">
 
+        </activity>
+
+        <activity android:name=".ui.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
-        </activity>
-        <activity android:name=".MainActivity">
-
         </activity>
 
 
+        <!-- region Auth -->
         <activity android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -39,11 +39,8 @@
                     android:host="oauth"
                     android:scheme="kakaof4ce9d07643e80606b97e6b009366095" />
             </intent-filter>
-
         </activity>
 
-
-        <!-- region Facebook Auth -->
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
