@@ -80,7 +80,7 @@
         android:textColor="#3B3B3B"
         android:textSize="14sp"
         android:text="중복 확인"
-        android:background="@drawable/btn_validate"
+        android:background="@drawable/button_validate"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBaseline_toBaselineOf="@+id/et_nickname"
         />
@@ -161,7 +161,7 @@
         android:layout_height="62dp"
         android:background="#202425"
         android:text="다음"
-        android:textColor="#FFFFFF"
+        android:textColor="#575757"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -185,7 +185,8 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.355" />
+        app:layout_constraintVertical_bias="0.355"
+        android:onClick="onCheckboxClicked"/>
 
 
     <CheckBox
@@ -206,7 +207,8 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.355" />
+        app:layout_constraintVertical_bias="0.355"
+        android:onClick="onCheckboxClicked"/>
 
 
     <CheckBox
@@ -227,7 +229,8 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.355" />
+        app:layout_constraintVertical_bias="0.355"
+        android:onClick="onCheckboxClicked"/>
 
 
     <CheckBox
@@ -248,7 +251,8 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.355" />
+        app:layout_constraintVertical_bias="0.355"
+        android:onClick="onCheckboxClicked"/>
 
 
     <CheckBox
@@ -269,7 +273,8 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.355" />
+        app:layout_constraintVertical_bias="0.355"
+        android:onClick="onCheckboxClicked"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
