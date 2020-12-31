@@ -18,7 +18,6 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.kakao.sdk.auth.LoginClient
 import com.kakao.sdk.common.KakaoSdk
-import com.kakao.sdk.user.UserApiClient
 
 
 class LoginActivity : AppCompatActivity() {
@@ -98,6 +97,8 @@ class LoginActivity : AppCompatActivity() {
             when (it) {
                 is ApiStatus.Success -> {
                     Toast.makeText(applicationContext, "로그인 완료", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this, RegisterActivity::class.java)
+                    startActivity(intent)
                 }
                 is ApiStatus.Error -> {
                     Toast.makeText(applicationContext, "로그인 ERROR - ${it.message}", Toast.LENGTH_SHORT).show()

@@ -1,22 +1,19 @@
 package com.doubleslas.fifith.alcohol.ui.auth
 
-import android.graphics.Color
 import android.os.Bundle
-import android.view.View
-import android.widget.CheckBox
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.observe
 import com.doubleslas.fifith.alcohol.databinding.ActivityRegisterBinding
-import com.doubleslas.fifith.alcohol.model.network.dto.Register
-import com.doubleslas.fifith.alcohol.model.network.dto.RegisterService
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.doubleslas.fifith.alcohol.model.network.base.ApiStatus
+import com.doubleslas.fifith.alcohol.model.network.dto.RegisterRequestData
+import com.doubleslas.fifith.alcohol.viewmodel.RegisterViewModel
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class RegisterActivity : AppCompatActivity() {
     private lateinit var activityRegisterBinding: ActivityRegisterBinding
+    private val registerViewModel by lazy { RegisterViewModel() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,7 +25,6 @@ class RegisterActivity : AppCompatActivity() {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
-        var registerService = retrofit.create(RegisterService::class.java)
 
         activityRegisterBinding.btnEndRegister.isEnabled = false
 
@@ -51,39 +47,37 @@ class RegisterActivity : AppCompatActivity() {
 
         activityRegisterBinding.btnValidate.setOnClickListener {
             val nickname = activityRegisterBinding.etNickname.text.toString()
-            registerService.requestRegister(nickname).enqueue(object : Callback<Register> {
-                override fun onResponse(call: Call<Register>, response: Response<Register>) {
-                    var register = response.body()
-                    var dialog = AlertDialog.Builder(this@RegisterActivity)
-                    dialog.setMessage("알람")
-                    dialog.setMessage("code: " + register?.code)
-                    dialog.show()
+            registerViewModel.register(nickname).observe(this, Observer {
+                when (it) {
+                    is ApiStatus.Loading -> {
+                    }
+                    is ApiStatus.Success -> {
+                        it.data
+                    }
+                    is ApiStatus.Error -> {
+                    }
                 }
-
-                override fun onFailure(call: Call<Register>, t: Throwable) {
-                    var dialog = AlertDialog.Builder(this@RegisterActivity)
-                    dialog.setTitle("실패")
-                    dialog.setMessage("통신에 실패함")
-                    dialog.show()
-                }
-
             })
-        }
 
 
-    }
-
-    fun onCheckboxClicked(view: View) {
-        if (view is CheckBox) {
-            if (activityRegisterBinding.cbEssential1.isChecked && activityRegisterBinding.cbEssential2.isChecked && activityRegisterBinding.cbEssential3.isChecked) {
-                activityRegisterBinding.btnEndRegister.isEnabled = true
-                activityRegisterBinding.btnEndRegister.setTextColor(Color.parseColor("#FFFFFF"))
-            } else {
-                activityRegisterBinding.btnEndRegister.isEnabled = false
-                activityRegisterBinding.btnEndRegister.setTextColor(Color.parseColor("#575757"))
-            }
         }
     }
 
 
 }
+
+
+
+//    fun onCheckboxClicked(view: View) {
+//        if (view is CheckBox) {
+//            if (activityRegisterBinding.cbEssential1.isChecked && activityRegisterBinding.cbEssential2.isChecked && activityRegisterBinding.cbEssential3.isChecked) {
+//                activityRegisterBinding.btnEndRegister.isEnabled = true
+//                activityRegisterBinding.btnEndRegister.setTextColor(Color.parseColor("#FFFFFF"))
+//            } else {
+//                activityRegisterBinding.btnEndRegister.isEnabled = false
+//                activityRegisterBinding.btnEndRegister.setTextColor(Color.parseColor("#575757"))
+//            }
+//        }
+//    }
+
+
