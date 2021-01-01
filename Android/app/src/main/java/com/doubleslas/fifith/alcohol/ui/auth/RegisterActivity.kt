@@ -26,7 +26,7 @@ class RegisterActivity : AppCompatActivity() {
             .build()
 
 
-        activityRegisterBinding.btnEndRegister.isEnabled = false
+        activityRegisterBinding.btnEndRegister1.isEnabled = false
 
 
 

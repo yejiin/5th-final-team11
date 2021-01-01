@@ -15,4 +15,8 @@ class RegisterViewModel : ViewModel() {
         var registerRequestData: RegisterRequestData = RegisterRequestData(nickname)
         return registerRepository.register(registerRequestData)
     }
+
+    fun endRegister() {
+
+    }
 }

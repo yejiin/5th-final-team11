@@ -10,4 +10,8 @@ interface UserRetrofit {
     fun requestRegister(
         @Body body: RegisterRequestData
     ): ApiLiveData<Any>
+
+    /*
+    주량 및 숙취 데이터
+     */
 }

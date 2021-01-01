@@ -112,6 +112,7 @@
 
     <SeekBar
         android:id="@+id/sb_drinking_capacity"
+        style="@style/Widget.AppCompat.SeekBar.Discrete"
         android:layout_width="270dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="425dp"
@@ -122,10 +123,55 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.425"
-        android:max="100"
+        android:max="4"
         android:min="0"
-        android:thumbTint="#FFFFFF"
-        android:progressTint="#FFFFFF"/>
+        android:thumb="@drawable/seekbar_thumb"
+        android:progressTint="#FFFFFF"
+        android:tickMark="@drawable/tickmark"/>
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="453dp"
+        android:layout_marginEnd="301dp"
+        android:layout_marginBottom="290dp"
+        android:text="없음"
+        android:textColor="#B2B2B2"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="305dp"
+        android:layout_marginTop="453dp"
+        android:layout_marginEnd="90dp"
+        android:layout_marginBottom="290dp"
+        android:text="심함"
+        android:textColor="#B2B2B2"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <Button
+        android:id="@+id/btn_end_register2"
+        android:layout_width="match_parent"
+        android:layout_height="62dp"
+        android:background="#FFFFFF"
+        android:text="작성 완료"
+        android:textColor="#767676"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
