@@ -1,17 +1,17 @@
 package com.doubleslas.fifith.alcohol.ui.auth
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import androidx.lifecycle.observe
 import com.doubleslas.fifith.alcohol.databinding.ActivityRegisterBinding
 import com.doubleslas.fifith.alcohol.model.network.base.ApiStatus
-import com.doubleslas.fifith.alcohol.model.network.dto.RegisterRequestData
 import com.doubleslas.fifith.alcohol.viewmodel.RegisterViewModel
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 class RegisterActivity : AppCompatActivity() {
+    val nickname = activityRegisterBinding.etNickname.text.toString()
+
+
     private lateinit var activityRegisterBinding: ActivityRegisterBinding
     private val registerViewModel by lazy { RegisterViewModel() }
 
@@ -20,10 +20,7 @@ class RegisterActivity : AppCompatActivity() {
         activityRegisterBinding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(activityRegisterBinding.root)
 
-        var retrofit = Retrofit.Builder()
-            .baseUrl("http://double-slash.shop/user/register/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
+
 
 
         activityRegisterBinding.btnEndRegister1.isEnabled = false
@@ -46,8 +43,8 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         activityRegisterBinding.btnValidate.setOnClickListener {
-            val nickname = activityRegisterBinding.etNickname.text.toString()
-            registerViewModel.register(nickname).observe(this, Observer {
+            // 닉네임 중복 체크
+            registerViewModel.nicknameCheck(nickname).observe(this, Observer {
                 when (it) {
                     is ApiStatus.Loading -> {
                     }
@@ -61,11 +58,29 @@ class RegisterActivity : AppCompatActivity() {
 
 
         }
+
+        activityRegisterBinding.btnEndRegister1.setOnClickListener {
+            registerViewModel.register(nickname).observe(this, Observer {
+                // 닉네임 전송
+                when (it) {
+                    is ApiStatus.Loading -> {
+
+                    }
+                    is ApiStatus.Success -> {
+                        it.data
+                    }
+                    is ApiStatus.Error -> {
+
+                    }
+                }
+            })
+            val intent = Intent(this, Register2Activity::class.java)
+            startActivity(intent)
+        }
     }
 
 
 }
-
 
 
 //    fun onCheckboxClicked(view: View) {

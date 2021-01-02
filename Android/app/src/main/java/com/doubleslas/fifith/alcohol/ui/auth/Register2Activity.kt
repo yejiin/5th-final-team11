@@ -4,9 +4,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.SeekBar
 import com.doubleslas.fifith.alcohol.databinding.ActivityRegister2Binding
+import com.doubleslas.fifith.alcohol.viewmodel.RegisterViewModel
 import kotlinx.android.synthetic.main.activity_register2.*
 
 class Register2Activity : AppCompatActivity(), SeekBar.OnSeekBarChangeListener {
+    private val registerViewModel by lazy { RegisterViewModel() }
     private lateinit var activityRegister2Binding: ActivityRegister2Binding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -16,7 +18,8 @@ class Register2Activity : AppCompatActivity(), SeekBar.OnSeekBarChangeListener {
         activityRegister2Binding.sbDrinkingCapacity.setOnSeekBarChangeListener(this)
 
         activityRegister2Binding.btnEndRegister2.setOnClickListener {
-            // 주량 및 숙취 데이터 뷰모델에 전송.
+            //  주량 및 숙취 데이터 뷰모델에 전송.
+
         }
 
 

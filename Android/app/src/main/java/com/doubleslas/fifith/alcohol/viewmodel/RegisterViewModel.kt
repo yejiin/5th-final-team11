@@ -11,12 +11,13 @@ class RegisterViewModel : ViewModel() {
     private val mSignInLiveData = MediatorApiLiveData<String>()
 
 
-    fun register(nickname: String): ApiLiveData<Any> {
+    fun nicknameCheck(nickname: String): ApiLiveData<Any> {
         var registerRequestData: RegisterRequestData = RegisterRequestData(nickname)
-        return registerRepository.register(registerRequestData)
+        return registerRepository.nicknameCheck(registerRequestData)
     }
 
-    fun endRegister() {
-
+    fun register(nickname: String) :ApiLiveData<Any> {
+        val registerRequestData: RegisterRequestData = RegisterRequestData(nickname)
+        return registerRepository.register(registerRequestData)
     }
 }
