@@ -7,8 +7,8 @@ import com.doubleslas.fifith.alcohol.model.network.dto.RegisterRequestData
 
 class RegisterRepository {
     val retrofit: UserRetrofit = getUserService()
-    fun nicknameCheck(registerRequestData: RegisterRequestData): ApiLiveData<Any> {
-        return retrofit.nicknameCheck(registerRequestData)
+    fun nicknameCheck(nickname: String): ApiLiveData<Any> {
+        return retrofit.nicknameCheck(nickname)
     }
 
     fun register(registerRequestData: RegisterRequestData): ApiLiveData<Any> {

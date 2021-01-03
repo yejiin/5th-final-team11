@@ -5,16 +5,28 @@ import android.os.Bundle
 import android.widget.NumberPicker
 import android.widget.SeekBar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import com.doubleslas.fifith.alcohol.R
 import com.doubleslas.fifith.alcohol.databinding.ActivityRegister2Binding
+import com.doubleslas.fifith.alcohol.databinding.ActivityRegisterBinding
+import com.doubleslas.fifith.alcohol.model.network.base.ApiStatus
 import com.doubleslas.fifith.alcohol.utils.LogUtil
 import com.doubleslas.fifith.alcohol.viewmodel.RegisterViewModel
 
 class Register2Activity : AppCompatActivity(), SeekBar.OnSeekBarChangeListener {
     private val registerViewModel by lazy { RegisterViewModel() }
+    private lateinit var activityRegisterBinding: ActivityRegisterBinding
     private lateinit var activityRegister2Binding: ActivityRegister2Binding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val intent = intent
+        // 닉네임 가져오기
+        val nickname = intent.getStringExtra("nickname").toString()
+        val drink = activityRegister2Binding.sbDrinkingCapacity.progress.toFloat()
+        val hangover: Float = activityRegister2Binding.etDrinkingCapacity.text.toString().toFloat()
+
         activityRegister2Binding = ActivityRegister2Binding.inflate(layoutInflater)
         setContentView(activityRegister2Binding.root)
 
@@ -29,7 +41,19 @@ class Register2Activity : AppCompatActivity(), SeekBar.OnSeekBarChangeListener {
         }
 
         activityRegister2Binding.btnEndRegister2.setOnClickListener {
-            //  주량 및 숙취 데이터 뷰모델에 전송.
+            // 닉네임 , 주량 및 숙취 데이터 뷰모델에 전송.
+
+            registerViewModel.register(nickname, drink, hangover).observe(this, Observer {
+                when (it) {
+                    is ApiStatus.Loading -> {
+                    }
+                    is ApiStatus.Success -> {
+                        it.data
+                    }
+                    is ApiStatus.Error -> {
+                    }
+                }
+            })
 
         }
 
@@ -37,7 +61,7 @@ class Register2Activity : AppCompatActivity(), SeekBar.OnSeekBarChangeListener {
     }
 
     override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-        val drinkCapacity = seekBar?.progress
+        LogUtil.d("capacity", "progress: $progress")
 
     }
 
@@ -48,16 +72,7 @@ class Register2Activity : AppCompatActivity(), SeekBar.OnSeekBarChangeListener {
     }
 
     private fun showDialog() {
-//        val numberPicker: NumberPicker = NumberPicker(this)
-//        numberPicker.minValue = 0
-//        numberPicker.maxValue = 10
-//        val builder = AlertDialog.Builder(this)
-//        builder.setView(numberPicker)
-//        builder.setTitle("주량을 입력하세요")
-//        builder.setMessage("주량")
-//
-//        builder.create()
-//        return builder.show()
+
 
         val dialog = AlertDialog.Builder(this)
         val inflater = this.layoutInflater
@@ -73,13 +88,13 @@ class Register2Activity : AppCompatActivity(), SeekBar.OnSeekBarChangeListener {
         numberPicker.setOnValueChangedListener { picker, oldVal, newVal ->
             LogUtil.d("numberPicker", "current Value: $newVal")
         }
-//        dialog.setPositiveButton("Done") { dialog, which ->
-//            LogUtil.d("onClick: ", numberPicker.value.toString())
-//        }
-//        dialog.setNegativeButton("Cancel") { dialog, which ->
-//        }
+        dialog.setPositiveButton("완료") { dialog, which ->
+            activityRegister2Binding.etDrinkingCapacity.setText(numberPicker.value.toString())
+        }
+
         val alertDialog = dialog.create()
         alertDialog.show()
+
 
     }
 

@@ -9,7 +9,6 @@ import com.doubleslas.fifith.alcohol.model.network.base.ApiStatus
 import com.doubleslas.fifith.alcohol.viewmodel.RegisterViewModel
 
 class RegisterActivity : AppCompatActivity() {
-    val nickname = activityRegisterBinding.etNickname.text.toString()
 
 
     private lateinit var activityRegisterBinding: ActivityRegisterBinding
@@ -21,9 +20,13 @@ class RegisterActivity : AppCompatActivity() {
         setContentView(activityRegisterBinding.root)
 
 
+        val nickname = activityRegisterBinding.etNickname.text.toString()
 
 
-        activityRegisterBinding.btnEndRegister1.isEnabled = false
+
+
+
+//        activityRegisterBinding.btnEndRegister1.isEnabled = false
 
 
 
@@ -60,21 +63,9 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         activityRegisterBinding.btnEndRegister1.setOnClickListener {
-            registerViewModel.register(nickname).observe(this, Observer {
-                // 닉네임 전송
-                when (it) {
-                    is ApiStatus.Loading -> {
 
-                    }
-                    is ApiStatus.Success -> {
-                        it.data
-                    }
-                    is ApiStatus.Error -> {
-
-                    }
-                }
-            })
             val intent = Intent(this, Register2Activity::class.java)
+            intent.putExtra("nickname", nickname)
             startActivity(intent)
         }
     }

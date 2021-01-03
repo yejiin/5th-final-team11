@@ -5,6 +5,7 @@ import com.doubleslas.fifith.alcohol.model.network.dto.RegisterRequestData
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Path
 
 interface UserRetrofit {
     @POST("/user/register")
@@ -14,7 +15,7 @@ interface UserRetrofit {
 
     @GET("/user/nickcheck/{nickname}")
     fun nicknameCheck(
-        @Body body: RegisterRequestData
+        @Path("nickname") nickname: String
     ): ApiLiveData<Any>
     /*
     주량 및 숙취 데이터
