@@ -13,8 +13,9 @@ class RegisterViewModel : ViewModel() {
 
 
     fun nicknameCheck(nickname: String): ApiLiveData<Any> {
-        val registerRequestData: RegisterRequestDataNickName = RegisterRequestDataNickName(nickname)
-        return registerRepository.nicknameCheck(registerRequestData.toString())
+//        val registerRequestData: RegisterRequestDataNickName = RegisterRequestDataNickName(nickname)
+//        val nickname = RegisterRequestDataNickName(nickname)
+        return registerRepository.nicknameCheck(nickname)
     }
 
     fun register(nickname: String, drink: Float, hangover: Float): ApiLiveData<Any> {

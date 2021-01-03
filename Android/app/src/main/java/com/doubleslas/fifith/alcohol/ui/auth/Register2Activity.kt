@@ -21,20 +21,19 @@ class Register2Activity : AppCompatActivity(), SeekBar.OnSeekBarChangeListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val intent = intent
-        // 닉네임 가져오기
-        val nickname = intent.getStringExtra("nickname").toString()
-        val drink = activityRegister2Binding.sbDrinkingCapacity.progress.toFloat()
-        val hangover: Float = activityRegister2Binding.etDrinkingCapacity.text.toString().toFloat()
+
 
         activityRegister2Binding = ActivityRegister2Binding.inflate(layoutInflater)
         setContentView(activityRegister2Binding.root)
+        val intent = intent
+        // 닉네임 가져오기
 
         activityRegister2Binding.sbDrinkingCapacity.setOnSeekBarChangeListener(this)
 
+        val nickname = intent.getStringExtra("nickname").toString()
+
         activityRegister2Binding.etDrinkingCapacity.setOnClickListener {
-//            window
-//                .setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
+
             showDialog()
 
 
@@ -62,6 +61,7 @@ class Register2Activity : AppCompatActivity(), SeekBar.OnSeekBarChangeListener {
 
     override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
         LogUtil.d("capacity", "progress: $progress")
+        hangover = progress.toFloat()
 
     }
 
@@ -90,6 +90,7 @@ class Register2Activity : AppCompatActivity(), SeekBar.OnSeekBarChangeListener {
         }
         dialog.setPositiveButton("완료") { dialog, which ->
             activityRegister2Binding.etDrinkingCapacity.setText(numberPicker.value.toString())
+            drink = activityRegister2Binding.etDrinkingCapacity.text.toString().toFloat()
         }
 
         val alertDialog = dialog.create()
@@ -98,5 +99,9 @@ class Register2Activity : AppCompatActivity(), SeekBar.OnSeekBarChangeListener {
 
     }
 
+    companion object {
+        var drink: Float = 0.0f
+        var hangover: Float = 0.0f
+    }
 
 }

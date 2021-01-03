@@ -20,14 +20,7 @@ class RegisterActivity : AppCompatActivity() {
         setContentView(activityRegisterBinding.root)
 
 
-        val nickname = activityRegisterBinding.etNickname.text.toString()
-
-
-
-
-
 //        activityRegisterBinding.btnEndRegister1.isEnabled = false
-
 
 
         activityRegisterBinding.cbAdmitAll.setOnClickListener {
@@ -46,6 +39,7 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         activityRegisterBinding.btnValidate.setOnClickListener {
+            nickname = activityRegisterBinding.etNickname.text.toString()
             // 닉네임 중복 체크
             registerViewModel.nicknameCheck(nickname).observe(this, Observer {
                 when (it) {
@@ -68,6 +62,10 @@ class RegisterActivity : AppCompatActivity() {
             intent.putExtra("nickname", nickname)
             startActivity(intent)
         }
+    }
+
+    companion object {
+        var nickname: String = ""
     }
 
 
