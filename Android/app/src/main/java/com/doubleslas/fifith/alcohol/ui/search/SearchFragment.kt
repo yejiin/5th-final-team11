@@ -57,6 +57,7 @@ class SearchFragment : Fragment() {
             }
 
             sortDialog.setOnSortSelectListener {
+                b.tvSort.text = it.text
                 for (f in fragmentList) {
                     f.setSort(it)
                 }

@@ -49,8 +49,20 @@ class AlcoholListFragment private constructor() : Fragment() {
         })
     }
 
+    override fun onResume() {
+        super.onResume()
+        if (sortType != null){
+            listViewModel.setSort(sortType!!)
+            sortType = null
+        }
+    }
+
+    private var sortType: SortType? = null
     fun setSort(sortType: SortType) {
-        listViewModel.setSort(sortType)
+        if (isResumed)
+            listViewModel.setSort(sortType)
+        else
+            this.sortType = sortType
     }
 
     companion object {

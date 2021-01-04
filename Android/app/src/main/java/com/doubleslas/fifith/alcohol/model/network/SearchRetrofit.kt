@@ -9,6 +9,7 @@ interface SearchRetrofit {
     @GET("/alcohol")
     fun getList(
         @Query("category") category: String,
+        @Query("page") page: Int,
         @Query("sort") sort: String,
         @Query("sortOption") sortOption: String
     ): ApiLiveData<AlcoholList>

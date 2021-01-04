@@ -61,6 +61,7 @@ open class BottomSheetMenu : BottomSheetDialogFragment() {
             init {
                 binding.root.setOnClickListener {
                     onItemClickListener?.invoke(list!![adapterPosition])
+                    dismiss()
                 }
             }
         }

@@ -20,11 +20,13 @@ class AlcoholListViewModel(val category: String) : ViewModel() {
 
     private var sort = SortType.Popular
 
+    private var page = 0
+
     fun loadList() {
         if (mediatorLiveData.value is ApiStatus.Loading) return
 
         mediatorLiveData.value = ApiStatus.Loading
-        val liveData = repository.getList(category, sort.sort, sort.sortOption)
+        val liveData = repository.getList(category, page, sort.sort, sort.sortOption)
         mediatorLiveData.addSource(liveData, object : MediatorApiSuccessCallback<AlcoholList> {
             override fun onSuccess(code: Int, data: AlcoholList) {
                 list.addAll(data.list)
