@@ -2,4 +2,10 @@
     <string name="app_name">My Application</string>
     <string name="facebook_app_id">110001590897403</string>
     <string name="fb_login_protocol_scheme">fb110001590897403</string>
+    <string name="sort_popular">인기순</string>
+    <string name="sort_review">리뷰순</string>
+    <string name="sort_favorite">찜한순</string>
+    <string name="sort_abv">도수순</string>
+    <string name="sort_price_desc">가격높은순</string>
+    <string name="sort_price_asc">가격낮은순</string>
 </resources>
