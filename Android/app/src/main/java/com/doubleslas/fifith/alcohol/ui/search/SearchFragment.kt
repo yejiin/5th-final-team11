@@ -24,6 +24,12 @@ class SearchFragment : Fragment() {
             Pair(getString(R.string.category_beer), "세계맥주")
         )
     }
+    private val adapter by lazy { ViewPagerAdapter() }
+    private val fragmentList by lazy {
+        List(categoryList.size) {
+            AlcoholListFragment.create(categoryList[it].second)
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,23 +43,26 @@ class SearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding?.let {
-            it.viewPager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
-            it.viewPager.adapter = ViewPagerAdapter()
+        binding?.let { b ->
+            b.viewPager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
+            b.viewPager.adapter = adapter
 
-            TabLayoutMediator(it.tabLayout, it.viewPager) { tab, position ->
+            TabLayoutMediator(b.tabLayout, b.viewPager) { tab, position ->
                 tab.text = categoryList[position].first
             }.attach()
 
-            it.tvSort.text = getString(R.string.sort_popular)
-            it.tvSort.setOnClickListener {
+            b.tvSort.text = getString(R.string.sort_popular)
+            b.tvSort.setOnClickListener {
                 sortDialog.show(fragmentManager!!, null)
+            }
+
+            sortDialog.setOnSortSelectListener {
+                for (f in fragmentList) {
+                    f.setSort(it)
+                }
             }
         }
 
-        sortDialog.setOnSortSelectListener {
-
-        }
     }
 
     inner class ViewPagerAdapter : FragmentStateAdapter(activity!!) {
@@ -62,7 +71,7 @@ class SearchFragment : Fragment() {
         }
 
         override fun createFragment(position: Int): Fragment {
-            return AlcoholListFragment.create(categoryList[position].second)
+            return fragmentList[position]
         }
     }
 }

@@ -9,6 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.doubleslas.fifith.alcohol.databinding.FragmentAlcoholListBinding
+import com.doubleslas.fifith.alcohol.enum.SortType
 import com.doubleslas.fifith.alcohol.model.network.base.ApiStatus
 import com.doubleslas.fifith.alcohol.viewmodel.AlcoholListViewModel
 
@@ -46,6 +47,10 @@ class AlcoholListFragment private constructor() : Fragment() {
                 }
             }
         })
+    }
+
+    fun setSort(sortType: SortType) {
+        listViewModel.setSort(sortType)
     }
 
     companion object {

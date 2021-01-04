@@ -1,7 +1,5 @@
 package com.doubleslas.fifith.alcohol.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.doubleslas.fifith.alcohol.enum.SortType
@@ -20,15 +18,10 @@ class AlcoholListViewModel(val category: String) : ViewModel() {
     private val mediatorLiveData = MediatorApiLiveData<List<AlcoholSimpleData>>()
     val listLiveData: ApiLiveData<List<AlcoholSimpleData>> = mediatorLiveData
 
-    private val mSortLiveData = MutableLiveData<SortType>().apply {
-        value = SortType.Popular
-    }
-    val sortLiveData: LiveData<SortType> = mSortLiveData
+    private var sort = SortType.Popular
 
     fun loadList() {
         if (mediatorLiveData.value is ApiStatus.Loading) return
-
-        val sort = mSortLiveData.value!!
 
         mediatorLiveData.value = ApiStatus.Loading
         val liveData = repository.getList(category, sort.sort, sort.sortOption)
@@ -38,6 +31,12 @@ class AlcoholListViewModel(val category: String) : ViewModel() {
                 mediatorLiveData.value = ApiStatus.Success(code, list)
             }
         })
+    }
+
+    fun setSort(sortType: SortType) {
+        sort = sortType
+        list.clear()
+        loadList()
     }
 
 
