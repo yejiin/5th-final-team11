@@ -7,8 +7,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
+import com.doubleslas.fifith.alcohol.R
 import com.doubleslas.fifith.alcohol.databinding.FragmentSearchBinding
 import com.doubleslas.fifith.alcohol.ui.common.AlcoholListFragment
+import com.doubleslas.fifith.alcohol.ui.common.SortBottomSheetDialog
 import com.google.android.material.tabs.TabLayoutMediator
 
 class SearchFragment : Fragment() {
@@ -37,6 +39,12 @@ class SearchFragment : Fragment() {
                     else -> "???"
                 }
             }.attach()
+
+            it.tvSort.text = getString(R.string.sort_popular)
+            it.tvSort.setOnClickListener {
+                val b = SortBottomSheetDialog()
+                b.show(fragmentManager!!, null)
+            }
         }
     }
 

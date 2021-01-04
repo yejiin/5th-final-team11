@@ -24,9 +24,9 @@ class AlcoholListAdapter : RecyclerView.Adapter<AlcoholListAdapter.AlcoholViewHo
         val item = list!![position]
         holder.binding.run {
             tvName.text = item.name
-            tvType.text = item.type
-            tvRating.text = "${item.rating}(${item.numVote})"
-            rating.rating = item.rating
+            tvType.text = item.category
+            tvRating.text = "${item.star}(${item.reviewCnt})"
+            rating.rating = item.star
         }
     }
 
