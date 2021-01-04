@@ -36,6 +36,12 @@ class LoginActivity : AppCompatActivity() {
         activityLoginBinding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(activityLoginBinding.root)
 
+        activityLoginBinding.btnBrowse.setOnClickListener {
+            /*
+                    추천창으로 이동
+             */
+        }
+
 
         val googleSignInOption = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))

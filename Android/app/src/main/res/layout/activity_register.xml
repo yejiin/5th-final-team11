@@ -64,7 +64,7 @@
         android:layout_marginTop="250dp"
         android:layout_marginBottom="509dp"
         android:backgroundTint="#707070"
-        android:hint="2자 이상"
+        android:hint="10자 이하"
         android:textColor="#FFFFFF"
         android:textColorHint="#969696"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -77,7 +77,7 @@
         android:id="@+id/btn_validate"
         android:layout_width="76dp"
         android:layout_height="27dp"
-        android:textColor="#3B3B3B"
+        android:textColor="#FFFFFF"
         android:textSize="14sp"
         android:text="중복 확인"
         android:background="@drawable/button_validate"
@@ -85,75 +85,6 @@
         app:layout_constraintBaseline_toBaselineOf="@+id/et_nickname"
         />
 
-    <TextView
-        android:id="@+id/tv_email"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="37dp"
-        android:layout_marginTop="287dp"
-        android:layout_marginEnd="281dp"
-        android:layout_marginBottom="454dp"
-        android:text="이메일"
-        android:textColor="#FFFFFF"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
-    <EditText
-        android:id="@+id/et_email"
-        android:layout_width="288dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="346dp"
-        android:layout_marginBottom="413dp"
-        android:backgroundTint="#707070"
-        android:hint="이메일 입력"
-        android:importantForAutofill="no"
-        android:textColor="#FFFFFF"
-        android:textColorHint="#969696"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.43"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
-    <TextView
-        android:id="@+id/tv_password"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="383dp"
-        android:layout_marginEnd="269dp"
-        android:layout_marginBottom="358dp"
-        android:text="비밀번호"
-        android:textColor="#FFFFFF"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/et_password"
-        android:layout_width="288dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="442dp"
-        android:layout_marginBottom="318dp"
-        android:backgroundTint="#707070"
-        android:hint="6자 이상"
-        android:textColor="#FFFFFF"
-        android:textColorHint="#969696"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.43"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.472" />
 
     <Button
         android:id="@+id/btn_end_register1"
@@ -172,10 +103,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
-        android:layout_marginTop="482dp"
+        android:layout_marginTop="275dp"
         android:layout_marginEnd="308dp"
-        android:layout_marginBottom="262dp"
-        android:buttonTint="#FFFFFF"
+        android:layout_marginBottom="469dp"
+        android:buttonTint="#FFA255"
         android:text="전체 약관 동의"
         android:textColor="#FFFFFF"
         android:textSize="12sp"
@@ -185,8 +116,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.355"
-        android:onClick="onCheckboxClicked"/>
+        app:layout_constraintVertical_bias="0.355" />
 
 
     <CheckBox
@@ -194,10 +124,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
-        android:layout_marginTop="523dp"
+        android:layout_marginTop="316dp"
         android:layout_marginEnd="308dp"
-        android:layout_marginBottom="221dp"
-        android:buttonTint="#FFFFFF"
+        android:layout_marginBottom="428dp"
+        android:buttonTint="#FFA255"
         android:text="필수    만 14세 이상 동의"
         android:textColor="#FFFFFF"
         android:textSize="12sp"
@@ -207,8 +137,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.355"
-        android:onClick="onCheckboxClicked"/>
+        app:layout_constraintVertical_bias="0.355" />
 
 
     <CheckBox
@@ -216,10 +145,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
-        android:layout_marginTop="548dp"
+        android:layout_marginTop="341dp"
         android:layout_marginEnd="308dp"
-        android:layout_marginBottom="196dp"
-        android:buttonTint="#FFFFFF"
+        android:layout_marginBottom="403dp"
+        android:buttonTint="#FFA255"
         android:text="필수    서비스 이용약관 동의"
         android:textColor="#FFFFFF"
         android:textSize="12sp"
@@ -229,8 +158,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.355"
-        android:onClick="onCheckboxClicked"/>
+        app:layout_constraintVertical_bias="0.355" />
 
 
     <CheckBox
@@ -238,10 +166,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
-        android:layout_marginTop="573dp"
+        android:layout_marginTop="366dp"
         android:layout_marginEnd="308dp"
-        android:layout_marginBottom="171dp"
-        android:buttonTint="#FFFFFF"
+        android:layout_marginBottom="378dp"
+        android:buttonTint="#FFA255"
         android:text="필수    개인정보 취급방식 동의"
         android:textColor="#FFFFFF"
         android:textSize="12sp"
@@ -251,8 +179,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.355"
-        android:onClick="onCheckboxClicked"/>
+        app:layout_constraintVertical_bias="0.355" />
 
 
     <CheckBox
@@ -260,10 +187,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
-        android:layout_marginTop="596dp"
+        android:layout_marginTop="391dp"
         android:layout_marginEnd="308dp"
-        android:layout_marginBottom="146dp"
-        android:buttonTint="#FFFFFF"
+        android:layout_marginBottom="353dp"
+        android:buttonTint="#FFA255"
         android:text="선택    마케팅 정보 수신 동의"
         android:textColor="#FFFFFF"
         android:textSize="12sp"
@@ -273,8 +200,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.355"
-        android:onClick="onCheckboxClicked"/>
+        app:layout_constraintVertical_bias="0.355" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

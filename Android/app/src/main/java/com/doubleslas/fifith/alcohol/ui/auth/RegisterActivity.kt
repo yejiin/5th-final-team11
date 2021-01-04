@@ -1,6 +1,7 @@
 package com.doubleslas.fifith.alcohol.ui.auth
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -20,22 +21,11 @@ class RegisterActivity : AppCompatActivity() {
         setContentView(activityRegisterBinding.root)
 
 
-//        activityRegisterBinding.btnEndRegister1.isEnabled = false
+        activityRegisterBinding.btnEndRegister1.isEnabled = false
 
 
         activityRegisterBinding.cbAdmitAll.setOnClickListener {
-
-            if (activityRegisterBinding.cbAdmitAll.isChecked) {
-                activityRegisterBinding.cbEssential1.isChecked = true
-                activityRegisterBinding.cbEssential2.isChecked = true
-                activityRegisterBinding.cbEssential3.isChecked = true
-                activityRegisterBinding.cbChoice1.isChecked = true
-            } else {
-                activityRegisterBinding.cbEssential1.isChecked = false
-                activityRegisterBinding.cbEssential2.isChecked = false
-                activityRegisterBinding.cbEssential3.isChecked = false
-                activityRegisterBinding.cbChoice1.isChecked = false
-            }
+            checkAll()
         }
 
         activityRegisterBinding.btnValidate.setOnClickListener {
@@ -61,6 +51,30 @@ class RegisterActivity : AppCompatActivity() {
             val intent = Intent(this, Register2Activity::class.java)
             intent.putExtra("nickname", nickname)
             startActivity(intent)
+        }
+
+
+    }
+
+    private fun checkAll() {
+        if (activityRegisterBinding.cbAdmitAll.isChecked) {
+            activityRegisterBinding.cbEssential1.isChecked = true
+            activityRegisterBinding.cbEssential2.isChecked = true
+            activityRegisterBinding.cbEssential3.isChecked = true
+            activityRegisterBinding.cbChoice1.isChecked = true
+        } else {
+            activityRegisterBinding.cbEssential1.isChecked = false
+            activityRegisterBinding.cbEssential2.isChecked = false
+            activityRegisterBinding.cbEssential3.isChecked = false
+            activityRegisterBinding.cbChoice1.isChecked = false
+        }
+    }
+
+    private fun checkEssential() {
+        if (activityRegisterBinding.cbEssential1.isChecked && activityRegisterBinding.cbEssential2.isChecked && activityRegisterBinding.cbEssential3.isChecked) {
+            activityRegisterBinding.btnEndRegister1.isEnabled = true
+            activityRegisterBinding.btnEndRegister1.setTextColor(Color.parseColor("#FFFFFF"))
+            activityRegisterBinding.btnEndRegister1.setBackgroundColor(Color.parseColor("#4638CE"))
         }
     }
 
