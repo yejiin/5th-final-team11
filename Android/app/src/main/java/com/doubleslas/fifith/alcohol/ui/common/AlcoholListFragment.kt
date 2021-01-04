@@ -29,18 +29,7 @@ class AlcoholListFragment : Fragment() {
 
             it.tvSort.text = getString(R.string.sort_popular)
             it.tvSort.setOnClickListener {
-                val b = BottomSheetMenu().apply {
-                    setList(
-                        listOf(
-                            getString(R.string.sort_popular),
-                            getString(R.string.sort_review),
-                            getString(R.string.sort_favorite),
-                            getString(R.string.sort_abv),
-                            getString(R.string.sort_price_asc),
-                            getString(R.string.sort_price_desc)
-                        )
-                    )
-                }
+                val b = SortBottomSheetDialog()
                 b.show(fragmentManager!!, null)
             }
         }

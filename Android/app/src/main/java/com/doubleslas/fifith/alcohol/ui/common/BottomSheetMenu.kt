@@ -10,7 +10,7 @@ import com.doubleslas.fifith.alcohol.databinding.ItemMenuListBinding
 import com.doubleslas.fifith.alcohol.databinding.RecyclerviewBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-class BottomSheetMenu() : BottomSheetDialogFragment() {
+open class BottomSheetMenu : BottomSheetDialogFragment() {
     private var binding: RecyclerviewBinding? = null
     private var list: List<String>? = null
     private var onItemClickListener: ((String) -> Unit)? = null
