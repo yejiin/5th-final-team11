@@ -12,7 +12,7 @@ import com.doubleslas.fifith.alcohol.databinding.FragmentAlcoholListBinding
 import com.doubleslas.fifith.alcohol.model.network.base.ApiStatus
 import com.doubleslas.fifith.alcohol.viewmodel.AlcoholListViewModel
 
-class AlcoholListFragment : Fragment() {
+class AlcoholListFragment private constructor() : Fragment() {
     private val category by lazy { arguments?.getString(ARGUMENT_CATEGORY) ?: "전체" }
     private var binding: FragmentAlcoholListBinding? = null
     private val listViewModel by lazy {
@@ -50,5 +50,13 @@ class AlcoholListFragment : Fragment() {
 
     companion object {
         const val ARGUMENT_CATEGORY = "ARGUMENT_CATEGORY"
+
+        fun create(category: String): AlcoholListFragment {
+            val fragment = AlcoholListFragment()
+            fragment.arguments = Bundle().apply {
+                putString(ARGUMENT_CATEGORY, category)
+            }
+            return fragment
+        }
     }
 }

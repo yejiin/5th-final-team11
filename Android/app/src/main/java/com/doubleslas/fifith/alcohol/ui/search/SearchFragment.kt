@@ -15,6 +15,15 @@ import com.google.android.material.tabs.TabLayoutMediator
 
 class SearchFragment : Fragment() {
     private var binding: FragmentSearchBinding? = null
+    private val sortDialog by lazy { SortBottomSheetDialog() }
+    private val categoryList by lazy {
+        listOf(
+            Pair(getString(R.string.category_all), "전체"),
+            Pair(getString(R.string.category_liquor), "양주"),
+            Pair(getString(R.string.category_wine), "와인"),
+            Pair(getString(R.string.category_beer), "세계맥주")
+        )
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,29 +42,27 @@ class SearchFragment : Fragment() {
             it.viewPager.adapter = ViewPagerAdapter()
 
             TabLayoutMediator(it.tabLayout, it.viewPager) { tab, position ->
-                tab.text = when (position) {
-                    0 -> "aaa"
-                    1 -> "bbb"
-                    else -> "???"
-                }
+                tab.text = categoryList[position].first
             }.attach()
 
             it.tvSort.text = getString(R.string.sort_popular)
             it.tvSort.setOnClickListener {
-                val b = SortBottomSheetDialog()
-                b.show(fragmentManager!!, null)
+                sortDialog.show(fragmentManager!!, null)
             }
+        }
+
+        sortDialog.setOnSortSelectListener {
+
         }
     }
 
     inner class ViewPagerAdapter : FragmentStateAdapter(activity!!) {
         override fun getItemCount(): Int {
-            return 2
+            return categoryList.size
         }
 
         override fun createFragment(position: Int): Fragment {
-            return AlcoholListFragment()
+            return AlcoholListFragment.create(categoryList[position].second)
         }
-
     }
 }
