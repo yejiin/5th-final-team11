@@ -19,8 +19,21 @@ class MediatorImpl<T : ApiStatus<*>> : MediatorLiveData<T>() {
             if (it !is ApiStatus.Loading) removeSource(source)
             when (it) {
                 is ApiStatus.Loading -> callback.onLoading()
-                is ApiStatus.Success<S> -> callback.onSuccess(it.data)
+                is ApiStatus.Success<S> -> callback.onSuccess(it.code, it.data)
                 is ApiStatus.Error -> callback.onError(it.code, it.message)
+            }
+        })
+    }
+
+    fun <S : Any?> addSource(
+        source: LiveData<ApiStatus<S>>,
+        callback: MediatorApiSuccessCallback<in S>
+    ) {
+        addSource(source, Observer {
+            if (it !is ApiStatus.Loading) removeSource(source)
+            when (it) {
+                is ApiStatus.Success<S> -> callback.onSuccess(it.code, it.data)
+                else -> value = it as T
             }
         })
     }
@@ -36,6 +49,10 @@ class MediatorImpl<T : ApiStatus<*>> : MediatorLiveData<T>() {
 
 interface MediatorApiCallback<T> {
     fun onLoading() {}
-    fun onSuccess(data: T) {}
+    fun onSuccess(code: Int, data: T) {}
     fun onError(code: Int, msg: String) {}
+}
+
+interface MediatorApiSuccessCallback<T> {
+    fun onSuccess(code: Int, data: T)
 }

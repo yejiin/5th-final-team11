@@ -1,9 +1,11 @@
 package com.doubleslas.fifith.alcohol.model.network.dto
 
+import com.google.gson.annotations.SerializedName
+
 data class AlcoholSimpleData(
-    val imageUrl: String,
+    val aid: Int,
     val name: String,
-    val type: String,
-    val rating: Float,
-    val numVote: Int
+    val category: String,
+    val star: Float,
+    val reviewCnt: Int
 )
