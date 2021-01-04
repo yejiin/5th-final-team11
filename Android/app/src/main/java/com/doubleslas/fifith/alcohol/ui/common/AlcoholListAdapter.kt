@@ -32,6 +32,7 @@ class AlcoholListAdapter : RecyclerView.Adapter<AlcoholListAdapter.AlcoholViewHo
 
     fun setData(list: List<AlcoholSimpleData>) {
         this.list = list
+        notifyDataSetChanged()
     }
 
     class AlcoholViewHolder(val binding: ItemAlcoholDetailBinding) :

@@ -3,6 +3,7 @@ package com.doubleslas.fifith.alcohol.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.doubleslas.fifith.alcohol.enum.SortType
 import com.doubleslas.fifith.alcohol.model.network.base.ApiLiveData
 import com.doubleslas.fifith.alcohol.model.network.base.ApiStatus
@@ -12,7 +13,7 @@ import com.doubleslas.fifith.alcohol.model.network.dto.AlcoholList
 import com.doubleslas.fifith.alcohol.model.network.dto.AlcoholSimpleData
 import com.doubleslas.fifith.alcohol.model.repository.SearchRepository
 
-class SearchViewModel : ViewModel() {
+class AlcoholListViewModel(val category: String) : ViewModel() {
     private val repository by lazy { SearchRepository() }
 
     private val list = ArrayList<AlcoholSimpleData>()
@@ -24,10 +25,10 @@ class SearchViewModel : ViewModel() {
     }
     val sortLiveData: LiveData<SortType> = mSortLiveData
 
-    lateinit var category: String
-
-    fun loadList(sort: SortType) {
+    fun loadList() {
         if (mediatorLiveData.value is ApiStatus.Loading) return
+
+        val sort = mSortLiveData.value!!
 
         mediatorLiveData.value = ApiStatus.Loading
         val liveData = repository.getList(category, sort.sort, sort.sortOption)
@@ -40,5 +41,15 @@ class SearchViewModel : ViewModel() {
     }
 
 
+    class Factory(private val param: String) : ViewModelProvider.Factory {
+        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+            return if (modelClass.isAssignableFrom(AlcoholListViewModel::class.java)) {
+                AlcoholListViewModel(param) as T
+            } else {
+                throw IllegalArgumentException()
+            }
+        }
+
+    }
 
 }
