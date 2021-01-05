@@ -3,17 +3,20 @@ package com.doubleslas.fifith.alcohol.ui.auth
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.doubleslas.fifith.alcohol.databinding.ActivityRegisterBinding
 import com.doubleslas.fifith.alcohol.model.network.base.ApiStatus
 import com.doubleslas.fifith.alcohol.viewmodel.RegisterViewModel
 
-class RegisterActivity : AppCompatActivity() {
+class RegisterActivity : AppCompatActivity(), CustomDialogInterface {
 
 
     private lateinit var activityRegisterBinding: ActivityRegisterBinding
     private val registerViewModel by lazy { RegisterViewModel() }
+    private val customDialog = CustomDialog(this, this)
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,6 +79,15 @@ class RegisterActivity : AppCompatActivity() {
             activityRegisterBinding.btnEndRegister1.setTextColor(Color.parseColor("#FFFFFF"))
             activityRegisterBinding.btnEndRegister1.setBackgroundColor(Color.parseColor("#4638CE"))
         }
+    }
+
+    private fun onDialogBtnClicked(view: View) {
+        customDialog.show()
+    }
+
+
+    override fun onConfirmBtnClicked() {
+        customDialog.dismiss()
     }
 
     companion object {
