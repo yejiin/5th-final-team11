@@ -21,7 +21,7 @@ class RegisterActivity : AppCompatActivity() {
         setContentView(activityRegisterBinding.root)
 
 
-        activityRegisterBinding.btnEndRegister1.isEnabled = false
+//        activityRegisterBinding.btnEndRegister1.isEnabled = false
 
 
         activityRegisterBinding.cbAdmitAll.setOnClickListener {
