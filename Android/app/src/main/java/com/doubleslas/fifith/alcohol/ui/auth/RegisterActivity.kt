@@ -8,14 +8,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.doubleslas.fifith.alcohol.databinding.ActivityRegisterBinding
 import com.doubleslas.fifith.alcohol.model.network.base.ApiStatus
+import com.doubleslas.fifith.alcohol.utils.LogUtil
 import com.doubleslas.fifith.alcohol.viewmodel.RegisterViewModel
+import kotlinx.android.synthetic.main.custom_dialog.*
 
 class RegisterActivity : AppCompatActivity(), CustomDialogInterface {
 
-
+    private val customDialog: CustomDialog by lazy { CustomDialog(this, this) }
     private lateinit var activityRegisterBinding: ActivityRegisterBinding
     private val registerViewModel by lazy { RegisterViewModel() }
-    private val customDialog = CustomDialog(this, this)
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,8 +41,10 @@ class RegisterActivity : AppCompatActivity(), CustomDialogInterface {
                     }
                     is ApiStatus.Success -> {
                         it.data
+                        onDialogBtnClicked("해당 닉네임은\n 사용 가능합니다.")
                     }
                     is ApiStatus.Error -> {
+                        onDialogBtnClicked("해당 닉네임은\n 이미 사용 중입니다.")
                     }
                 }
             })
@@ -81,12 +84,15 @@ class RegisterActivity : AppCompatActivity(), CustomDialogInterface {
         }
     }
 
-    private fun onDialogBtnClicked(view: View) {
+    private fun onDialogBtnClicked(text: String?) {
         customDialog.show()
+        customDialog.tv_nicknameCheck?.text = text
+
     }
 
 
     override fun onConfirmBtnClicked() {
+        LogUtil.d("confirm", "button clicked")
         customDialog.dismiss()
     }
 
@@ -96,18 +102,5 @@ class RegisterActivity : AppCompatActivity(), CustomDialogInterface {
 
 
 }
-
-
-//    fun onCheckboxClicked(view: View) {
-//        if (view is CheckBox) {
-//            if (activityRegisterBinding.cbEssential1.isChecked && activityRegisterBinding.cbEssential2.isChecked && activityRegisterBinding.cbEssential3.isChecked) {
-//                activityRegisterBinding.btnEndRegister.isEnabled = true
-//                activityRegisterBinding.btnEndRegister.setTextColor(Color.parseColor("#FFFFFF"))
-//            } else {
-//                activityRegisterBinding.btnEndRegister.isEnabled = false
-//                activityRegisterBinding.btnEndRegister.setTextColor(Color.parseColor("#575757"))
-//            }
-//        }
-//    }
 
 
