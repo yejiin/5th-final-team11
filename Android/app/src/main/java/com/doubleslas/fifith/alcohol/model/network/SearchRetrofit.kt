@@ -1,7 +1,7 @@
 package com.doubleslas.fifith.alcohol.model.network
 
 import com.doubleslas.fifith.alcohol.model.network.base.ApiLiveData
-import com.doubleslas.fifith.alcohol.model.network.dto.AlcoholList
+import com.doubleslas.fifith.alcohol.model.network.dto.SearchList
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -12,13 +12,14 @@ interface SearchRetrofit {
         @Query("page") page: Int,
         @Query("sort") sort: String,
         @Query("sortOption") sortOption: String
-    ): ApiLiveData<AlcoholList>
+    ): ApiLiveData<SearchList>
 
 
     @GET("/alcohol/serach")
     fun searchAlcohol(
         @Query("category") category: String,
+        @Query("page") page: Int,
         @Query("sort") sort: String,
         @Query("sortOption") sortOption: String
-    ): ApiLiveData<AlcoholList>
+    ): ApiLiveData<SearchList>
 }

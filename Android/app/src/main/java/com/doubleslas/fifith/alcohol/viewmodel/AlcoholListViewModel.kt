@@ -7,8 +7,8 @@ import com.doubleslas.fifith.alcohol.model.network.base.ApiLiveData
 import com.doubleslas.fifith.alcohol.model.network.base.ApiStatus
 import com.doubleslas.fifith.alcohol.model.network.base.MediatorApiLiveData
 import com.doubleslas.fifith.alcohol.model.network.base.MediatorApiSuccessCallback
-import com.doubleslas.fifith.alcohol.model.network.dto.AlcoholList
 import com.doubleslas.fifith.alcohol.model.network.dto.AlcoholSimpleData
+import com.doubleslas.fifith.alcohol.model.network.dto.SearchList
 import com.doubleslas.fifith.alcohol.model.repository.SearchRepository
 
 class AlcoholListViewModel(val category: String) : ViewModel() {
@@ -21,14 +21,17 @@ class AlcoholListViewModel(val category: String) : ViewModel() {
     private var sort = SortType.Popular
 
     private var page = 0
+    private var totalCount: Int? = null
 
     fun loadList() {
         if (mediatorLiveData.value is ApiStatus.Loading) return
+        if (totalCount != null && list.size >= totalCount!!) return
 
         mediatorLiveData.value = ApiStatus.Loading
-        val liveData = repository.getList(category, page, sort.sort, sort.sortOption)
-        mediatorLiveData.addSource(liveData, object : MediatorApiSuccessCallback<AlcoholList> {
-            override fun onSuccess(code: Int, data: AlcoholList) {
+        val liveData = repository.getList(category, page++, sort.sort, sort.sortOption)
+        mediatorLiveData.addSource(liveData, object : MediatorApiSuccessCallback<SearchList> {
+            override fun onSuccess(code: Int, data: SearchList) {
+                totalCount = data.totalCount
                 list.addAll(data.list)
                 mediatorLiveData.value = ApiStatus.Success(code, list)
             }
@@ -37,6 +40,8 @@ class AlcoholListViewModel(val category: String) : ViewModel() {
 
     fun setSort(sortType: SortType) {
         sort = sortType
+        page = 0
+        totalCount = null
         list.clear()
         loadList()
     }
