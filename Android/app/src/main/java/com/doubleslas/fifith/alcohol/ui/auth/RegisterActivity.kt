@@ -3,12 +3,10 @@ package com.doubleslas.fifith.alcohol.ui.auth
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.doubleslas.fifith.alcohol.databinding.ActivityRegisterBinding
 import com.doubleslas.fifith.alcohol.model.network.base.ApiStatus
-import com.doubleslas.fifith.alcohol.utils.LogUtil
 import com.doubleslas.fifith.alcohol.viewmodel.RegisterViewModel
 import kotlinx.android.synthetic.main.custom_dialog.*
 
@@ -25,12 +23,41 @@ class RegisterActivity : AppCompatActivity(), CustomDialogInterface {
         setContentView(activityRegisterBinding.root)
 
 
-//        activityRegisterBinding.btnEndRegister1.isEnabled = false
+        activityRegisterBinding.btnEndRegister1.isEnabled = false
 
 
         activityRegisterBinding.cbAdmitAll.setOnClickListener {
             checkAll()
+            if (activityRegisterBinding.cbEssential1.isChecked && activityRegisterBinding.cbEssential2.isChecked && activityRegisterBinding.cbEssential3.isChecked) {
+                activityRegisterBinding.btnEndRegister1.isEnabled = true
+                activityRegisterBinding.btnEndRegister1.setBackgroundColor(Color.parseColor("#4638CE"))
+                activityRegisterBinding.btnEndRegister1.setTextColor(Color.parseColor("#FFFFFF"))
+            } else {
+                activityRegisterBinding.btnEndRegister1.isEnabled = false
+                activityRegisterBinding.btnEndRegister1.setBackgroundColor(Color.parseColor("#202425"))
+                activityRegisterBinding.btnEndRegister1.setTextColor(Color.parseColor("#575757"))
+
+            }
+
+
         }
+        activityRegisterBinding.cbEssential1.setOnClickListener {
+            isChecked()
+        }
+
+        activityRegisterBinding.cbEssential2.setOnClickListener {
+            isChecked()
+        }
+
+        activityRegisterBinding.cbEssential3.setOnClickListener {
+            isChecked()
+        }
+
+        activityRegisterBinding.cbChoice1.setOnClickListener {
+            isChecked()
+        }
+
+
 
         activityRegisterBinding.btnValidate.setOnClickListener {
             nickname = activityRegisterBinding.etNickname.text.toString()
@@ -62,10 +89,6 @@ class RegisterActivity : AppCompatActivity(), CustomDialogInterface {
 
     }
 
-    override fun onResume() {
-        super.onResume()
-        checkEssential()
-    }
 
     private fun checkAll() {
         if (activityRegisterBinding.cbAdmitAll.isChecked) {
@@ -81,13 +104,23 @@ class RegisterActivity : AppCompatActivity(), CustomDialogInterface {
         }
     }
 
-    private fun checkEssential() {
+    private fun isChecked() {
+        if (activityRegisterBinding.cbAdmitAll.isChecked) {
+            activityRegisterBinding.cbAdmitAll.isChecked = false
+        } else if (activityRegisterBinding.cbEssential1.isChecked && activityRegisterBinding.cbEssential2.isChecked && activityRegisterBinding.cbEssential3.isChecked && activityRegisterBinding.cbChoice1.isChecked) {
+            activityRegisterBinding.cbAdmitAll.isChecked = true
+        }
         if (activityRegisterBinding.cbEssential1.isChecked && activityRegisterBinding.cbEssential2.isChecked && activityRegisterBinding.cbEssential3.isChecked) {
             activityRegisterBinding.btnEndRegister1.isEnabled = true
-            activityRegisterBinding.btnEndRegister1.setTextColor(Color.parseColor("#FFFFFF"))
             activityRegisterBinding.btnEndRegister1.setBackgroundColor(Color.parseColor("#4638CE"))
+            activityRegisterBinding.btnEndRegister1.setTextColor(Color.parseColor("#FFFFFF"))
+        } else {
+            activityRegisterBinding.btnEndRegister1.isEnabled = false
+            activityRegisterBinding.btnEndRegister1.setBackgroundColor(Color.parseColor("#202425"))
+            activityRegisterBinding.btnEndRegister1.setTextColor(Color.parseColor("#575757"))
         }
     }
+
 
     private fun onDialogBtnClicked(text: String?) {
         customDialog.show()
@@ -97,7 +130,6 @@ class RegisterActivity : AppCompatActivity(), CustomDialogInterface {
 
 
     override fun onConfirmBtnClicked() {
-        LogUtil.d("confirm", "button clicked")
         customDialog.dismiss()
     }
 
