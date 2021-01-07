@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.doubleslas.fifith.alcohol.databinding.FragmentAlcoholListBinding
 import com.doubleslas.fifith.alcohol.enum.SortType
 import com.doubleslas.fifith.alcohol.model.network.base.ApiStatus
+import com.doubleslas.fifith.alcohol.ui.detail.AlcoholDetailActivity
 import com.doubleslas.fifith.alcohol.viewmodel.AlcoholListViewModel
 
 class AlcoholListFragment private constructor() : Fragment() {
@@ -36,6 +37,11 @@ class AlcoholListFragment private constructor() : Fragment() {
         binding?.let {
             it.recyclerview.layoutManager = LinearLayoutManager(context)
             it.recyclerview.adapter = adapter
+        }
+
+        adapter.setOnItemClickListener {
+            val intent = AlcoholDetailActivity.getStartIntent(context!!, it.aid)
+            startActivity(intent)
         }
 
         listViewModel.loadList()

@@ -8,6 +8,7 @@ import com.doubleslas.fifith.alcohol.model.network.dto.AlcoholSimpleData
 
 class AlcoholListAdapter : RecyclerView.Adapter<AlcoholListAdapter.AlcoholViewHolder>() {
     private var list: List<AlcoholSimpleData>? = null
+    private var onItemClickListener: ((AlcoholSimpleData) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AlcoholViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -35,6 +36,16 @@ class AlcoholListAdapter : RecyclerView.Adapter<AlcoholListAdapter.AlcoholViewHo
         notifyDataSetChanged()
     }
 
-    class AlcoholViewHolder(val binding: ItemAlcoholDetailBinding) :
-        RecyclerView.ViewHolder(binding.root)
+    fun setOnItemClickListener(listener: ((AlcoholSimpleData) -> Unit)?) {
+        onItemClickListener = listener
+    }
+
+    inner class AlcoholViewHolder(val binding: ItemAlcoholDetailBinding) :
+        RecyclerView.ViewHolder(binding.root){
+        init {
+            binding.root.setOnClickListener {
+                onItemClickListener?.invoke(list!![adapterPosition])
+            }
+        }
+    }
 }
