@@ -62,6 +62,11 @@ class RegisterActivity : AppCompatActivity(), CustomDialogInterface {
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        checkEssential()
+    }
+
     private fun checkAll() {
         if (activityRegisterBinding.cbAdmitAll.isChecked) {
             activityRegisterBinding.cbEssential1.isChecked = true

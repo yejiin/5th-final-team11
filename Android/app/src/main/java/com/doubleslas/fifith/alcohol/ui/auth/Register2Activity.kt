@@ -1,10 +1,16 @@
 package com.doubleslas.fifith.alcohol.ui.auth
 
+import android.graphics.Canvas
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.SeekBar
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.graphics.drawable.toDrawable
 import androidx.lifecycle.Observer
+import com.doubleslas.fifith.alcohol.R
 import com.doubleslas.fifith.alcohol.databinding.ActivityRegister2Binding
 import com.doubleslas.fifith.alcohol.databinding.ActivityRegisterBinding
 import com.doubleslas.fifith.alcohol.model.network.base.ApiStatus
@@ -12,7 +18,6 @@ import com.doubleslas.fifith.alcohol.viewmodel.RegisterViewModel
 
 class Register2Activity : AppCompatActivity(), SeekBar.OnSeekBarChangeListener {
     private val registerViewModel by lazy { RegisterViewModel() }
-    private lateinit var activityRegisterBinding: ActivityRegisterBinding
     private lateinit var activityRegister2Binding: ActivityRegister2Binding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -90,15 +95,16 @@ class Register2Activity : AppCompatActivity(), SeekBar.OnSeekBarChangeListener {
     }
 
 
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
         hangover = progress.toFloat()
-
     }
 
     override fun onStartTrackingTouch(seekBar: SeekBar?) {
     }
 
     override fun onStopTrackingTouch(seekBar: SeekBar?) {
+
     }
 
 

@@ -7,6 +7,19 @@
     tools:context=".ui.auth.LoginActivity"
     android:background="#000000">
 
+    <ImageView
+        android:layout_width="84dp"
+        android:layout_height="89dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="102dp"
+        android:layout_marginEnd="240dp"
+        android:layout_marginBottom="568dp"
+        android:src="@drawable/ic_logo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/textView"
         android:layout_width="190dp"
