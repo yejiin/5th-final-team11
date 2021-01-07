@@ -9,13 +9,12 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.doubleslas.fifith.alcohol.R
 import com.doubleslas.fifith.alcohol.databinding.FragmentSearchBinding
+import com.doubleslas.fifith.alcohol.enum.SortType
 import com.doubleslas.fifith.alcohol.ui.common.AlcoholListFragment
-import com.doubleslas.fifith.alcohol.ui.common.SortBottomSheetDialog
 import com.google.android.material.tabs.TabLayoutMediator
 
-class SearchFragment : Fragment() {
+class SearchMainFragment : Fragment() {
     private var binding: FragmentSearchBinding? = null
-    private val sortDialog by lazy { SortBottomSheetDialog() }
     private val categoryList by lazy {
         listOf(
             Pair(getString(R.string.category_all), "전체"),
@@ -51,22 +50,20 @@ class SearchFragment : Fragment() {
                 tab.text = categoryList[position].first
             }.attach()
 
-            b.tvSort.text = getString(R.string.sort_popular)
-            b.tvSort.setOnClickListener {
-                sortDialog.show(fragmentManager!!, null)
-            }
 
-            sortDialog.setOnSortSelectListener {
-                b.tvSort.text = it.text
-                for (f in fragmentList) {
-                    f.setSort(it)
-                }
-            }
         }
 
     }
 
-    inner class ViewPagerAdapter : FragmentStateAdapter(activity!!) {
+
+    fun setSort(fragment: Fragment, sortType: SortType) {
+        for (f in fragmentList) {
+            if (f == fragment) continue
+            f.setSort(sortType)
+        }
+    }
+
+    inner class ViewPagerAdapter : FragmentStateAdapter(this) {
         override fun getItemCount(): Int {
             return categoryList.size
         }

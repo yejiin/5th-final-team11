@@ -8,10 +8,12 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.doubleslas.fifith.alcohol.R
 import com.doubleslas.fifith.alcohol.databinding.FragmentAlcoholListBinding
 import com.doubleslas.fifith.alcohol.enum.SortType
 import com.doubleslas.fifith.alcohol.model.network.base.ApiStatus
 import com.doubleslas.fifith.alcohol.ui.detail.AlcoholDetailActivity
+import com.doubleslas.fifith.alcohol.ui.search.SearchMainFragment
 import com.doubleslas.fifith.alcohol.viewmodel.AlcoholListViewModel
 
 class AlcoholListFragment private constructor() : Fragment() {
@@ -22,6 +24,9 @@ class AlcoholListFragment private constructor() : Fragment() {
             .get(AlcoholListViewModel::class.java)
     }
     private val adapter by lazy { AlcoholListAdapter() }
+
+    private val sortDialog by lazy { SortBottomSheetDialog() }
+    private var sortType: SortType? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,6 +42,11 @@ class AlcoholListFragment private constructor() : Fragment() {
         binding?.let {
             it.recyclerview.layoutManager = LinearLayoutManager(context)
             it.recyclerview.adapter = adapter
+
+            it.tvSort.text = getString(R.string.sort_popular)
+            it.tvSort.setOnClickListener {
+                sortDialog.show(fragmentManager!!, null)
+            }
         }
 
         adapter.setOnItemClickListener {
@@ -53,22 +63,34 @@ class AlcoholListFragment private constructor() : Fragment() {
                 }
             }
         })
+
+        sortDialog.setOnSortSelectListener {
+            setSort(it)
+
+            // Search 화면 일경우 다른 Category Fragment 에도 전달 해야함
+            val pf = parentFragment as? SearchMainFragment
+            pf?.setSort(this, it)
+        }
     }
 
     override fun onResume() {
         super.onResume()
-        if (sortType != null){
-            listViewModel.setSort(sortType!!)
-            sortType = null
+        if (sortType != null) {
+            processSort()
         }
     }
 
-    private var sortType: SortType? = null
     fun setSort(sortType: SortType) {
-        if (isResumed)
-            listViewModel.setSort(sortType)
-        else
-            this.sortType = sortType
+        this.sortType = sortType
+        if (isResumed) {
+            processSort()
+        }
+    }
+
+    private fun processSort() {
+        listViewModel.setSort(sortType!!)
+        binding?.tvSort?.text = sortType!!.text
+        sortType = null
     }
 
     companion object {
