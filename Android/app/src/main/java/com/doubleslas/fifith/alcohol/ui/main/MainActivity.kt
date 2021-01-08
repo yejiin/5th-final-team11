@@ -5,12 +5,12 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.doubleslas.fifith.alcohol.R
 import com.doubleslas.fifith.alcohol.databinding.ActivityMainBinding
-import com.doubleslas.fifith.alcohol.ui.search.SearchMainFragment
+import com.doubleslas.fifith.alcohol.ui.search.SearchListFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
     private lateinit var binding: ActivityMainBinding
-    private val searchFragment by lazy { SearchMainFragment() }
+    private val searchFragment by lazy { SearchListFragment() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

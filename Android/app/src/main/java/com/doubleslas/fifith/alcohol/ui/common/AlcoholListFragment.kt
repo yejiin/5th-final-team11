@@ -13,7 +13,7 @@ import com.doubleslas.fifith.alcohol.databinding.FragmentAlcoholListBinding
 import com.doubleslas.fifith.alcohol.enum.SortType
 import com.doubleslas.fifith.alcohol.model.network.base.ApiStatus
 import com.doubleslas.fifith.alcohol.ui.detail.AlcoholDetailActivity
-import com.doubleslas.fifith.alcohol.ui.search.SearchMainFragment
+import com.doubleslas.fifith.alcohol.ui.search.SearchListFragment
 import com.doubleslas.fifith.alcohol.viewmodel.AlcoholListViewModel
 
 class AlcoholListFragment private constructor() : Fragment() {
@@ -68,7 +68,7 @@ class AlcoholListFragment private constructor() : Fragment() {
             setSort(it)
 
             // Search 화면 일경우 다른 Category Fragment 에도 전달 해야함
-            val pf = parentFragment as? SearchMainFragment
+            val pf = parentFragment as? SearchListFragment
             pf?.setSort(this, it)
         }
     }
@@ -78,6 +78,11 @@ class AlcoholListFragment private constructor() : Fragment() {
         if (sortType != null) {
             processSort()
         }
+    }
+    
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
     }
 
     fun setSort(sortType: SortType) {
