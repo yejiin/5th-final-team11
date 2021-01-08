@@ -4,11 +4,11 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.doubleslas.fifith.alcohol.R
 import com.doubleslas.fifith.alcohol.databinding.ActivityAlcoholDetailBinding
 
 class AlcoholDetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAlcoholDetailBinding
+    private val alcoholId by lazy { intent.getIntExtra(EXTRA_ALCOHOL_ID, 0) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
