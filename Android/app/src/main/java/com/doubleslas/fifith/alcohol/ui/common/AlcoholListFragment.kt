@@ -12,13 +12,13 @@ import com.doubleslas.fifith.alcohol.R
 import com.doubleslas.fifith.alcohol.databinding.FragmentAlcoholListBinding
 import com.doubleslas.fifith.alcohol.enum.SortType
 import com.doubleslas.fifith.alcohol.model.network.base.ApiStatus
+import com.doubleslas.fifith.alcohol.ui.common.base.BaseFragment
 import com.doubleslas.fifith.alcohol.ui.detail.AlcoholDetailActivity
 import com.doubleslas.fifith.alcohol.ui.search.SearchListFragment
 import com.doubleslas.fifith.alcohol.viewmodel.AlcoholListViewModel
 
-class AlcoholListFragment private constructor() : Fragment() {
+class AlcoholListFragment private constructor() : BaseFragment<FragmentAlcoholListBinding>() {
     private val category by lazy { arguments?.getString(ARGUMENT_CATEGORY) ?: "전체" }
-    private var binding: FragmentAlcoholListBinding? = null
     private val listViewModel by lazy {
         ViewModelProvider(this, AlcoholListViewModel.Factory(category))
             .get(AlcoholListViewModel::class.java)
@@ -28,14 +28,13 @@ class AlcoholListFragment private constructor() : Fragment() {
     private val sortDialog by lazy { SortBottomSheetDialog() }
     private var sortType: SortType? = null
 
-    override fun onCreateView(
+    override fun createViewBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentAlcoholListBinding.inflate(inflater, container, false)
-        return binding!!.root
+        container: ViewGroup?
+    ): FragmentAlcoholListBinding {
+        return FragmentAlcoholListBinding.inflate(inflater, container, false)
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -78,11 +77,6 @@ class AlcoholListFragment private constructor() : Fragment() {
         if (sortType != null) {
             processSort()
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        binding = null
     }
 
     fun setSort(sortType: SortType) {

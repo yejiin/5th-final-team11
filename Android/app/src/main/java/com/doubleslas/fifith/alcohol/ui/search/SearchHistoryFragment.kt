@@ -6,19 +6,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.doubleslas.fifith.alcohol.databinding.FragmentSearchListBinding
 import com.doubleslas.fifith.alcohol.databinding.RecyclerviewBinding
+import com.doubleslas.fifith.alcohol.ui.common.base.BaseFragment
 
-class SearchHistoryFragment : Fragment() {
-    private var binding: RecyclerviewBinding? = null
+class SearchHistoryFragment : BaseFragment<RecyclerviewBinding>() {
     private val adapter by lazy { SearchHistoryAdapter() }
 
-    override fun onCreateView(
+    override fun createViewBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = RecyclerviewBinding.inflate(inflater, container, false)
-        return binding!!.root
+        container: ViewGroup?
+    ): RecyclerviewBinding {
+        return RecyclerviewBinding.inflate(inflater, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -29,8 +28,4 @@ class SearchHistoryFragment : Fragment() {
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        binding = null
-    }
 }

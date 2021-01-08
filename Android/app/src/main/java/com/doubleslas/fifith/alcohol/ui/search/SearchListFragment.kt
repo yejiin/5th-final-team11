@@ -11,11 +11,11 @@ import com.doubleslas.fifith.alcohol.R
 import com.doubleslas.fifith.alcohol.databinding.FragmentSearchListBinding
 import com.doubleslas.fifith.alcohol.enum.SortType
 import com.doubleslas.fifith.alcohol.ui.common.AlcoholListFragment
+import com.doubleslas.fifith.alcohol.ui.common.base.BaseFragment
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.fragment_search_list.*
 
-class SearchListFragment : Fragment() {
-    private var binding: FragmentSearchListBinding? = null
+class SearchListFragment : BaseFragment<FragmentSearchListBinding>() {
     private val categoryList by lazy {
         listOf(
             Pair(getString(R.string.category_all), "전체"),
@@ -31,13 +31,11 @@ class SearchListFragment : Fragment() {
         }
     }
 
-    override fun onCreateView(
+    override fun createViewBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentSearchListBinding.inflate(inflater, container, false)
-        return binding!!.root
+        container: ViewGroup?
+    ): FragmentSearchListBinding {
+        return FragmentSearchListBinding.inflate(inflater, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -56,11 +54,6 @@ class SearchListFragment : Fragment() {
             }
         }
 
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        binding = null
     }
 
 
