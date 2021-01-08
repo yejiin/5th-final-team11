@@ -2,19 +2,15 @@ package com.doubleslas.fifith.alcohol.viewmodel
 
 import androidx.lifecycle.ViewModel
 import com.doubleslas.fifith.alcohol.model.network.base.ApiLiveData
-import com.doubleslas.fifith.alcohol.model.network.base.MediatorApiLiveData
 import com.doubleslas.fifith.alcohol.model.network.dto.RegisterRequestData
-import com.doubleslas.fifith.alcohol.model.network.dto.RegisterRequestDataNickName
 import com.doubleslas.fifith.alcohol.model.repository.RegisterRepository
 
 class RegisterViewModel : ViewModel() {
-    val registerRepository: RegisterRepository = RegisterRepository()
-    private val mSignInLiveData = MediatorApiLiveData<String>()
+    private val registerRepository: RegisterRepository = RegisterRepository()
 
 
     fun nicknameCheck(nickname: String): ApiLiveData<Any> {
-//        val registerRequestData: RegisterRequestDataNickName = RegisterRequestDataNickName(nickname)
-//        val nickname = RegisterRequestDataNickName(nickname)
+
         return registerRepository.nicknameCheck(nickname)
     }
 
@@ -22,4 +18,6 @@ class RegisterViewModel : ViewModel() {
         val registerRequestData: RegisterRequestData = RegisterRequestData(nickname, drink, hangover)
         return registerRepository.register(registerRequestData)
     }
+
+
 }

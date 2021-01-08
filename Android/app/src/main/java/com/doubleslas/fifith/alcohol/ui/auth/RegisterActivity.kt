@@ -80,10 +80,16 @@ class RegisterActivity : AppCompatActivity(), CustomDialogInterface {
         }
 
         activityRegisterBinding.btnEndRegister1.setOnClickListener {
+            if (nickname != "") {
 
-            val intent = Intent(this, Register2Activity::class.java)
-            intent.putExtra("nickname", nickname)
-            startActivity(intent)
+                val intent = Intent(this, Register2Activity::class.java)
+                intent.putExtra("nickname", nickname)
+                startActivity(intent)
+            } else {
+                onDialogBtnClicked("닉네임을\n 입력하세요!")
+                nickname = ""
+            }
+
         }
 
 
@@ -111,9 +117,10 @@ class RegisterActivity : AppCompatActivity(), CustomDialogInterface {
             activityRegisterBinding.cbAdmitAll.isChecked = true
         }
         if (activityRegisterBinding.cbEssential1.isChecked && activityRegisterBinding.cbEssential2.isChecked && activityRegisterBinding.cbEssential3.isChecked) {
-            activityRegisterBinding.btnEndRegister1.isEnabled = true
             activityRegisterBinding.btnEndRegister1.setBackgroundColor(Color.parseColor("#4638CE"))
             activityRegisterBinding.btnEndRegister1.setTextColor(Color.parseColor("#FFFFFF"))
+            activityRegisterBinding.btnEndRegister1.isEnabled = true
+
         } else {
             activityRegisterBinding.btnEndRegister1.isEnabled = false
             activityRegisterBinding.btnEndRegister1.setBackgroundColor(Color.parseColor("#202425"))
@@ -130,6 +137,10 @@ class RegisterActivity : AppCompatActivity(), CustomDialogInterface {
 
 
     override fun onConfirmBtnClicked() {
+        nickname = activityRegisterBinding.etNickname.text.toString()
+        if (activityRegisterBinding.cbEssential1.isChecked && activityRegisterBinding.cbEssential2.isChecked && activityRegisterBinding.cbEssential3.isChecked) {
+            activityRegisterBinding.btnEndRegister1.isEnabled = true
+        }
         customDialog.dismiss()
     }
 
