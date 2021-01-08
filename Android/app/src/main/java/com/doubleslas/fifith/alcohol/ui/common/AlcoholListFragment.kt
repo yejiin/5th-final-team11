@@ -79,7 +79,7 @@ class AlcoholListFragment private constructor() : Fragment() {
             processSort()
         }
     }
-    
+
     override fun onDestroyView() {
         super.onDestroyView()
         binding = null

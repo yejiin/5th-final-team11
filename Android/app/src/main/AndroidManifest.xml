@@ -26,6 +26,7 @@
         </activity>
 
         <activity android:name=".ui.detail.AlcoholDetailActivity" />
+        <activity android:name=".ui.search.SearchActivity" />
 
 
         <!-- region Auth -->

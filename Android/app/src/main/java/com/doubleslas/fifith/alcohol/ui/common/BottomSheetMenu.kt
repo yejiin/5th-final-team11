@@ -40,22 +40,22 @@ open class BottomSheetMenu : BottomSheetDialogFragment() {
         onItemClickListener = listener
     }
 
-    inner class Adapter : RecyclerView.Adapter<Adapter.ViewHolder>() {
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Adapter.ViewHolder {
+    inner class Adapter : RecyclerView.Adapter<Adapter.BottomSheetMenuViewHolder>() {
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Adapter.BottomSheetMenuViewHolder {
             val binding =
                 ItemMenuListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-            return ViewHolder(binding)
+            return BottomSheetMenuViewHolder(binding)
         }
 
         override fun getItemCount(): Int {
             return list?.size ?: 0
         }
 
-        override fun onBindViewHolder(holder: Adapter.ViewHolder, position: Int) {
+        override fun onBindViewHolder(holder: Adapter.BottomSheetMenuViewHolder, position: Int) {
             holder.binding.tv.text = list!![position]
         }
 
-        inner class ViewHolder(val binding: ItemMenuListBinding) :
+        inner class BottomSheetMenuViewHolder(val binding: ItemMenuListBinding) :
             RecyclerView.ViewHolder(binding.root) {
 
             init {
