@@ -14,6 +14,22 @@ class AlcoholDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityAlcoholDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.btnAlcoholInfo.setOnClickListener {
+
+        }
+
+        binding.btnAlcoholReview.setOnClickListener {
+
+        }
+    }
+
+    private fun onInfoBtnClicked() {
+
+    }
+
+    private fun onReviewBtnClicked() {
+
     }
 
     companion object {
@@ -25,4 +41,5 @@ class AlcoholDetailActivity : AppCompatActivity() {
             }
         }
     }
+
 }
