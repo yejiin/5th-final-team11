@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.doubleslas.fifith.alcohol.databinding.ActivityAlcoholDetailBinding
 
 class AlcoholDetailActivity : AppCompatActivity() {
@@ -17,6 +16,8 @@ class AlcoholDetailActivity : AppCompatActivity() {
         binding = ActivityAlcoholDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val alcoholDetailList = arrayListOf<AlcoholDetailData>()
+        binding.rvAlcoholSimilar.adapter = AlcoholDetailAdapter(this)
         binding.rvAlcoholSimilar.layoutManager = LinearLayoutManager(this).also {
             it.orientation = LinearLayoutManager.HORIZONTAL
         }
