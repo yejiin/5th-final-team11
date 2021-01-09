@@ -14,13 +14,16 @@ class SearchViewModel : ViewModel() {
     }
 
     private fun addHistory(keyword: String) {
+        if (mHistoryList.contains(keyword)) return
         mHistoryList.add(keyword)
+
+        if (mHistoryList.size > 10) mHistoryList.removeAt(mHistoryList.size - 1)
 
         repository.saveSearchHistory(mHistoryList)
     }
 
-    private fun deleteHistory(keyword: String){
-        mHistoryList.remove(keyword)
+    fun deleteHistory(index: Int){
+        mHistoryList.removeAt(index)
 
         repository.saveSearchHistory(mHistoryList)
     }

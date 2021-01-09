@@ -6,7 +6,6 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
-import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.doubleslas.fifith.alcohol.databinding.FragmentSearchHistoryBinding
@@ -33,7 +32,7 @@ class SearchHistoryFragment : BaseFragment<FragmentSearchHistoryBinding>() {
 
             b.etSearch.setOnEditorActionListener { v, actionId, event ->
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    search()
+                    search(b.etSearch.text.toString())
                     return@setOnEditorActionListener true
                 }
 
@@ -41,7 +40,7 @@ class SearchHistoryFragment : BaseFragment<FragmentSearchHistoryBinding>() {
             }
 
             b.btnSearch.setOnClickListener {
-                search()
+                search(b.etSearch.text.toString())
             }
 
             b.rvSearchHistory.layoutManager = LinearLayoutManager(context)
@@ -59,6 +58,18 @@ class SearchHistoryFragment : BaseFragment<FragmentSearchHistoryBinding>() {
                 it.setDisplayShowTitleEnabled(false)
             }
         }
+
+        adapter.setOnItemClickListener(object : SearchHistoryAdapter.OnItemClickListener {
+            override fun onItemClick(position: Int, keyword: String) {
+                search(keyword)
+            }
+
+            override fun onDeleteClick(position: Int, keyword: String) {
+                vm.deleteHistory(position)
+                adapter.notifyItemRemoved(position)
+            }
+
+        })
     }
 
 
@@ -78,13 +89,8 @@ class SearchHistoryFragment : BaseFragment<FragmentSearchHistoryBinding>() {
         return super.onOptionsItemSelected(item)
     }
 
-    private fun search() {
-        if (binding == null) return
-        val keyword = binding!!.etSearch.text.toString()
-
-        if (keyword.isEmpty()) {
-            return
-        }
+    private fun search(keyword: String) {
+        if (keyword.isEmpty()) return
 
         vm.search(keyword)
         (parentFragment as? SearchFragment)?.openSearchResultFragment(keyword)
