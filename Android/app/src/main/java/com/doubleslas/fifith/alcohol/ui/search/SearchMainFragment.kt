@@ -13,7 +13,6 @@ import com.doubleslas.fifith.alcohol.enum.SortType
 import com.doubleslas.fifith.alcohol.ui.common.AlcoholListFragment
 import com.doubleslas.fifith.alcohol.ui.common.base.BaseFragment
 import com.google.android.material.tabs.TabLayoutMediator
-import kotlinx.android.synthetic.main.fragment_search_list.*
 
 class SearchMainFragment : BaseFragment<FragmentSearchListBinding>() {
     private val categoryList by lazy {
@@ -24,7 +23,7 @@ class SearchMainFragment : BaseFragment<FragmentSearchListBinding>() {
             Pair(getString(R.string.category_beer), "세계맥주")
         )
     }
-    private val adapter by lazy { ViewPagerAdapter() }
+    private lateinit var adapter : CategoryViewPagerAdapter
     private val fragmentList by lazy {
         List(categoryList.size) {
             AlcoholListFragment.create(categoryList[it].second)
@@ -40,6 +39,7 @@ class SearchMainFragment : BaseFragment<FragmentSearchListBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        adapter = CategoryViewPagerAdapter()
 
         binding?.let { b ->
             b.viewPager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
@@ -50,12 +50,22 @@ class SearchMainFragment : BaseFragment<FragmentSearchListBinding>() {
             }.attach()
 
             b.layoutSearch.setOnClickListener {
-                startActivity(SearchHistoryActivity.getStartIntent(context!!))
+                (parentFragment as? SearchFragment)?.openSearchHistoryFragment()
+//                startActivity(SearchHistoryActivity.getStartIntent(context!!))
             }
         }
 
     }
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        binding?.let { b ->
+            setSupportActionBar(b.toolbar)
+            getSupportActionBar()?.setDisplayShowTitleEnabled(false)
+
+        }
+    }
 
     fun setSort(fragment: Fragment, sortType: SortType) {
         for (f in fragmentList) {
@@ -64,13 +74,13 @@ class SearchMainFragment : BaseFragment<FragmentSearchListBinding>() {
         }
     }
 
-    inner class ViewPagerAdapter : FragmentStateAdapter(this) {
+    inner class CategoryViewPagerAdapter : FragmentStateAdapter(this) {
         override fun getItemCount(): Int {
             return categoryList.size
         }
 
         override fun createFragment(position: Int): Fragment {
-            return fragmentList[position]
+            return AlcoholListFragment.create(categoryList[position].second)
         }
     }
 }

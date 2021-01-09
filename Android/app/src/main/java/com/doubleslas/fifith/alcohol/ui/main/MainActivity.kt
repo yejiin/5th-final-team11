@@ -5,21 +5,18 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.doubleslas.fifith.alcohol.R
 import com.doubleslas.fifith.alcohol.databinding.ActivityMainBinding
-import com.doubleslas.fifith.alcohol.ui.search.SearchMainFragment
+import com.doubleslas.fifith.alcohol.ui.search.SearchFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
     private lateinit var binding: ActivityMainBinding
-    private val searchFragment by lazy { SearchMainFragment() }
+    private val searchFragment by lazy { SearchFragment() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Toolbar
-        setSupportActionBar(binding.toolbar)
-        supportActionBar?.setDisplayShowTitleEnabled(false)
 
         binding.bottomNavigation.setOnNavigationItemSelectedListener(this)
 
@@ -36,6 +33,14 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         }
 
         return true
+    }
+
+    override fun onBackPressed() {
+        if (searchFragment.childFragmentManager.backStackEntryCount >= 1) {
+            searchFragment.childFragmentManager.popBackStackImmediate()
+        } else {
+            super.onBackPressed()
+        }
     }
 
 
@@ -56,4 +61,5 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     private fun gotoStats() {
 
     }
+
 }
