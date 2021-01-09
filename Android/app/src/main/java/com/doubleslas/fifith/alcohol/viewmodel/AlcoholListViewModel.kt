@@ -8,11 +8,11 @@ import com.doubleslas.fifith.alcohol.model.network.base.ApiStatus
 import com.doubleslas.fifith.alcohol.model.network.base.MediatorApiLiveData
 import com.doubleslas.fifith.alcohol.model.network.base.MediatorApiSuccessCallback
 import com.doubleslas.fifith.alcohol.model.network.dto.AlcoholSimpleData
-import com.doubleslas.fifith.alcohol.model.network.dto.SearchList
+import com.doubleslas.fifith.alcohol.model.network.dto.IPageList
 import com.doubleslas.fifith.alcohol.model.repository.SearchRepository
 
-class AlcoholListViewModel(val category: String) : ViewModel() {
-    private val repository by lazy { SearchRepository() }
+class AlcoholListViewModel<T : IPageList<AlcoholSimpleData>>(private val loader: ISortedPageLoader<T>) :
+    ViewModel() {
 
     private val list = ArrayList<AlcoholSimpleData>()
     private val mediatorLiveData = MediatorApiLiveData<List<AlcoholSimpleData>>()
@@ -28,14 +28,17 @@ class AlcoholListViewModel(val category: String) : ViewModel() {
         if (totalCount != null && list.size >= totalCount!!) return
 
         mediatorLiveData.value = ApiStatus.Loading
-        val liveData = repository.getList(category, page++, sort.sort, sort.sortOption)
-        mediatorLiveData.addSource(liveData, object : MediatorApiSuccessCallback<SearchList> {
-            override fun onSuccess(code: Int, data: SearchList) {
-                totalCount = data.totalCount
-                list.addAll(data.list)
-                mediatorLiveData.value = ApiStatus.Success(code, list)
-            }
-        })
+        val liveData = loader.loadList(page++, sort.sort, sort.sortOption)
+//        val liveData = repository.getList(category, page++, sort.sort, sort.sortOption)
+        mediatorLiveData.addSource(
+            liveData,
+            object : MediatorApiSuccessCallback<IPageList<AlcoholSimpleData>> {
+                override fun onSuccess(code: Int, data: IPageList<AlcoholSimpleData>) {
+                    totalCount = data.getTotalCount()
+                    list.addAll(data.getList())
+                    mediatorLiveData.value = ApiStatus.Success(code, list)
+                }
+            })
     }
 
     fun setSort(sortType: SortType) {
@@ -47,7 +50,8 @@ class AlcoholListViewModel(val category: String) : ViewModel() {
     }
 
 
-    class Factory(private val param: String) : ViewModelProvider.Factory {
+    class Factory<T : IPageList<AlcoholSimpleData>>(private val param: ISortedPageLoader<T>) :
+        ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             return if (modelClass.isAssignableFrom(AlcoholListViewModel::class.java)) {
                 AlcoholListViewModel(param) as T
@@ -55,7 +59,6 @@ class AlcoholListViewModel(val category: String) : ViewModel() {
                 throw IllegalArgumentException()
             }
         }
-
     }
 
 }

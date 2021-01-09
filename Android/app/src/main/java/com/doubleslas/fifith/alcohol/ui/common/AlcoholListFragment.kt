@@ -11,15 +11,22 @@ import com.doubleslas.fifith.alcohol.R
 import com.doubleslas.fifith.alcohol.databinding.FragmentAlcoholListBinding
 import com.doubleslas.fifith.alcohol.enum.SortType
 import com.doubleslas.fifith.alcohol.model.network.base.ApiStatus
+import com.doubleslas.fifith.alcohol.model.network.dto.AlcoholSimpleData
+import com.doubleslas.fifith.alcohol.model.network.dto.IPageList
 import com.doubleslas.fifith.alcohol.ui.common.base.BaseFragment
 import com.doubleslas.fifith.alcohol.ui.detail.AlcoholDetailActivity
 import com.doubleslas.fifith.alcohol.ui.search.SearchMainFragment
 import com.doubleslas.fifith.alcohol.viewmodel.AlcoholListViewModel
+import com.doubleslas.fifith.alcohol.viewmodel.ISortedPageLoader
 
 class AlcoholListFragment private constructor() : BaseFragment<FragmentAlcoholListBinding>() {
-    private val category by lazy { arguments?.getString(ARGUMENT_CATEGORY) ?: "전체" }
+    private val loader by lazy {
+        arguments!!
+            .getParcelable<ISortedPageLoader<IPageList<AlcoholSimpleData>>>(ARGUMENT_LOAD_INTERFACE)!!
+    }
+
     private val listViewModel by lazy {
-        ViewModelProvider(this, AlcoholListViewModel.Factory(category))
+        ViewModelProvider(this, AlcoholListViewModel.Factory(loader))
             .get(AlcoholListViewModel::class.java)
     }
     private val adapter by lazy { AlcoholListAdapter() }
@@ -92,12 +99,12 @@ class AlcoholListFragment private constructor() : BaseFragment<FragmentAlcoholLi
     }
 
     companion object {
-        const val ARGUMENT_CATEGORY = "ARGUMENT_CATEGORY"
+        const val ARGUMENT_LOAD_INTERFACE = "ARGUMENT_LOAD_INTERFACE"
 
-        fun create(category: String): AlcoholListFragment {
+        fun <T : IPageList<AlcoholSimpleData>> create(mInterface: ISortedPageLoader<T>): AlcoholListFragment {
             val fragment = AlcoholListFragment()
             fragment.arguments = Bundle().apply {
-                putString(ARGUMENT_CATEGORY, category)
+                putParcelable(ARGUMENT_LOAD_INTERFACE, mInterface)
             }
             return fragment
         }
