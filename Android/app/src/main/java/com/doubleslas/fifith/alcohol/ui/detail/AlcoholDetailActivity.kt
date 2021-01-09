@@ -16,11 +16,14 @@ class AlcoholDetailActivity : AppCompatActivity() {
         binding = ActivityAlcoholDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val alcoholDetailList = arrayListOf<AlcoholDetailData>()
+
         binding.rvAlcoholSimilar.adapter = AlcoholDetailAdapter(this)
+
         binding.rvAlcoholSimilar.layoutManager = LinearLayoutManager(this).also {
             it.orientation = LinearLayoutManager.HORIZONTAL
         }
+
+        binding.rvAlcoholSimilar.addItemDecoration(DetailItemDecoration(5))
         binding.btnAlcoholInfo.setOnClickListener {
 
         }
