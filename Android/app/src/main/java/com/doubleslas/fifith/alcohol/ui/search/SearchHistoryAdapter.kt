@@ -7,7 +7,7 @@ import com.doubleslas.fifith.alcohol.databinding.ItemSearchHistoryBinding
 import com.doubleslas.fifith.alcohol.model.network.dto.SearchHistoryData
 
 class SearchHistoryAdapter : RecyclerView.Adapter<SearchHistoryAdapter.SearchHistoryViewHolder>() {
-    private var list: List<SearchHistoryData>? = null
+    private var list: List<String>? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchHistoryViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -20,10 +20,10 @@ class SearchHistoryAdapter : RecyclerView.Adapter<SearchHistoryAdapter.SearchHis
     }
 
     override fun onBindViewHolder(holder: SearchHistoryViewHolder, position: Int) {
-        holder.binding.tvText.text = list!![position].text
+        holder.binding.tvText.text = list!![position]
     }
 
-    fun setList(list: List<SearchHistoryData>) {
+    fun setList(list: List<String>) {
         this.list = list
         notifyDataSetChanged()
     }

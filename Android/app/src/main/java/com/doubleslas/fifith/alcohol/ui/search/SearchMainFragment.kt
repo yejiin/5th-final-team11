@@ -15,7 +15,7 @@ import com.doubleslas.fifith.alcohol.ui.common.base.BaseFragment
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.fragment_search_list.*
 
-class SearchListFragment : BaseFragment<FragmentSearchListBinding>() {
+class SearchMainFragment : BaseFragment<FragmentSearchListBinding>() {
     private val categoryList by lazy {
         listOf(
             Pair(getString(R.string.category_all), "전체"),
@@ -50,7 +50,7 @@ class SearchListFragment : BaseFragment<FragmentSearchListBinding>() {
             }.attach()
 
             b.layoutSearch.setOnClickListener {
-                startActivity(SearchActivity.getStartIntent(context!!))
+                startActivity(SearchHistoryActivity.getStartIntent(context!!))
             }
         }
 

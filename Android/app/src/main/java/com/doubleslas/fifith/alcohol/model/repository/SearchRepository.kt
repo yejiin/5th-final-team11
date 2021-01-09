@@ -20,13 +20,13 @@ class SearchRepository {
         return searchRetrofit.getList(category, page, sort, sortOption)
     }
 
-    fun getSearchHistory(): MutableList<SearchHistoryData> {
+    fun getSearchHistory(): MutableList<String> {
         val json = App.prefs.searchHistoryList
-        val typeToken = object : TypeToken<ArrayList<SearchHistoryData>>() {}
+        val typeToken = object : TypeToken<ArrayList<String>>() {}
         return Gson().fromJson(json, typeToken.type)
     }
 
-    fun saveSearchHistory(list: List<SearchHistoryData>) {
+    fun saveSearchHistory(list: List<String>) {
         App.prefs.searchHistoryList = Gson().toJson(list)
     }
 }

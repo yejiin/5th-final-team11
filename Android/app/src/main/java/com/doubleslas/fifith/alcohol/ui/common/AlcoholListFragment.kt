@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,7 +13,7 @@ import com.doubleslas.fifith.alcohol.enum.SortType
 import com.doubleslas.fifith.alcohol.model.network.base.ApiStatus
 import com.doubleslas.fifith.alcohol.ui.common.base.BaseFragment
 import com.doubleslas.fifith.alcohol.ui.detail.AlcoholDetailActivity
-import com.doubleslas.fifith.alcohol.ui.search.SearchListFragment
+import com.doubleslas.fifith.alcohol.ui.search.SearchMainFragment
 import com.doubleslas.fifith.alcohol.viewmodel.AlcoholListViewModel
 
 class AlcoholListFragment private constructor() : BaseFragment<FragmentAlcoholListBinding>() {
@@ -67,7 +66,7 @@ class AlcoholListFragment private constructor() : BaseFragment<FragmentAlcoholLi
             setSort(it)
 
             // Search 화면 일경우 다른 Category Fragment 에도 전달 해야함
-            val pf = parentFragment as? SearchListFragment
+            val pf = parentFragment as? SearchMainFragment
             pf?.setSort(this, it)
         }
     }
