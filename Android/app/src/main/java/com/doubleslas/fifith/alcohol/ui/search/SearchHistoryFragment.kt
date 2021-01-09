@@ -87,7 +87,7 @@ class SearchHistoryFragment : BaseFragment<FragmentSearchHistoryBinding>() {
         }
 
         vm.search(keyword)
-        Toast.makeText(context, keyword, Toast.LENGTH_SHORT).show()
+        (parentFragment as? SearchFragment)?.openSearchResultFragment(keyword)
     }
 
 }

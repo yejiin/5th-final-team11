@@ -35,4 +35,13 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
             commit()
         }
     }
+
+    fun openSearchResultFragment(keyword: String) {
+        val fragment = SearchResultFragment.create(keyword)
+
+        childFragmentManager.beginTransaction()
+            .replace(R.id.fragment, fragment)
+            .addToBackStack(null)
+            .commit()
+    }
 }
