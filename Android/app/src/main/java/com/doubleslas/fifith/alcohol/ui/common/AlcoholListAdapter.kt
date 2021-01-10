@@ -26,7 +26,8 @@ class AlcoholListAdapter : RecyclerView.Adapter<AlcoholListAdapter.AlcoholViewHo
         holder.binding.run {
             tvName.text = item.name
             tvType.text = item.category
-            tvRating.text = "${item.star}(${item.reviewCnt})"
+            tvRating.text = item.star.toString()
+            tvReviewCnt.text = "(${item.reviewCnt})"
             rating.rating = item.star
         }
     }

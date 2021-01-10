@@ -9,16 +9,18 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.doubleslas.fifith.alcohol.R
 import com.doubleslas.fifith.alcohol.databinding.FragmentSearchListBinding
+import com.doubleslas.fifith.alcohol.databinding.TabCustomBinding
 import com.doubleslas.fifith.alcohol.enum.SortType
 import com.doubleslas.fifith.alcohol.model.network.base.ApiLiveData
-import com.doubleslas.fifith.alcohol.model.network.dto.AlcoholSimpleData
 import com.doubleslas.fifith.alcohol.model.network.dto.SearchList
 import com.doubleslas.fifith.alcohol.model.repository.SearchRepository
 import com.doubleslas.fifith.alcohol.ui.common.AlcoholListFragment
 import com.doubleslas.fifith.alcohol.ui.common.base.BaseFragment
 import com.doubleslas.fifith.alcohol.viewmodel.ISortedPageLoader
+import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.parcel.Parcelize
+
 
 class SearchMainFragment : BaseFragment<FragmentSearchListBinding>() {
     private val categoryList by lazy {
@@ -56,12 +58,23 @@ class SearchMainFragment : BaseFragment<FragmentSearchListBinding>() {
                 tab.text = categoryList[position].first
             }.attach()
 
+            for (i in 0 until b.tabLayout.tabCount) {
+                val tab: TabLayout.Tab = b.tabLayout.getTabAt(i)!!
+                tab.customView = getTabView(i)
+            }
+
             b.layoutSearch.setOnClickListener {
                 (parentFragment as? SearchFragment)?.openSearchHistoryFragment()
 //                startActivity(SearchHistoryActivity.getStartIntent(context!!))
             }
         }
+    }
 
+
+    private fun getTabView(position: Int): View? {
+        val b = TabCustomBinding.inflate(LayoutInflater.from(context))
+        b.tvTab.text = categoryList[position].first
+        return b.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.doubleslas.fifith.alcohol.R
 import com.doubleslas.fifith.alcohol.databinding.FragmentSearchHistoryBinding
 import com.doubleslas.fifith.alcohol.ui.common.base.BaseFragment
 import com.doubleslas.fifith.alcohol.viewmodel.SearchViewModel
@@ -25,7 +26,6 @@ class SearchHistoryFragment : BaseFragment<FragmentSearchHistoryBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setHasOptionsMenu(true)
 
         binding?.let { b ->
 
@@ -51,10 +51,12 @@ class SearchHistoryFragment : BaseFragment<FragmentSearchHistoryBinding>() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        setHasOptionsMenu(true)
         binding?.let { b ->
             setSupportActionBar(b.toolbar)
             getSupportActionBar()?.let {
                 it.setDisplayHomeAsUpEnabled(true)
+                it.setHomeAsUpIndicator(R.drawable.ic_back_12)
                 it.setDisplayShowTitleEnabled(false)
             }
         }
