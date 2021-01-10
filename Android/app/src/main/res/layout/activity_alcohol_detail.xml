@@ -83,11 +83,9 @@
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="27dp"
                     android:layout_marginEnd="312dp"
-                    android:layout_marginBottom="251dp"
                     android:text="가격"
                     android:textColor="#BEBEBE"
                     android:textSize="16sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -97,14 +95,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="189dp"
-                    android:layout_marginTop="27dp"
+                    android:layout_marginTop="24dp"
                     android:layout_marginEnd="111dp"
-                    android:layout_marginBottom="251dp"
                     android:text="용량/도수"
                     android:textColor="#BEBEBE"
                     android:textSize="16sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.888"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -113,34 +110,122 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
-                    android:layout_marginTop="64dp"
+                    android:layout_marginTop="12dp"
                     android:layout_marginEnd="223dp"
-                    android:layout_marginBottom="214dp"
                     android:text="가격정보 sample"
                     android:textColor="#FFFFFF"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toBottomOf="@+id/tv_price"
+                    android:paddingBottom="20dp"
+                    />
 
                 <TextView
                     android:id="@+id/tv_volume_info"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="190dp"
-                    android:layout_marginTop="66dp"
+                    android:layout_marginTop="14dp"
                     android:layout_marginEnd="77dp"
-                    android:layout_marginBottom="215dp"
                     android:text="용량 도수 sample"
                     android:textColor="#FFFFFF"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_volume"
+                    android:paddingBottom="20dp"/>
+
+                <TextView
+                    android:id="@+id/tv_nation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="113dp"
+                    android:layout_marginEnd="220dp"
+                    android:text="국가 / 지역 / 상세지역"
+                    android:textColor="#BEBEBE"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                   />
+
+                <TextView
+                    android:id="@+id/tv_breed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="189dp"
+                    android:layout_marginTop="113dp"
+                    android:layout_marginEnd="119dp"
+                    android:text="주요 품종"
+                    android:textColor="#BEBEBE"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+
+                   />
+
+                <TextView
+                    android:id="@+id/tv_nation_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="149dp"
+                    android:layout_marginEnd="239dp"
+                    android:text="지역 sample"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:paddingBottom="20dp"
+
+
+                   />
+
+                <TextView
+                    android:id="@+id/tv_breed_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="190dp"
+                    android:layout_marginTop="148dp"
+                    android:layout_marginEnd="115dp"
+                    android:text="품종 sample"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:paddingBottom="20dp"
+                    />
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="105dp"
+                    android:background="#404040"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#1B1C1D">
+
 
                 <TextView
                     android:id="@+id/tv_description"
@@ -156,18 +241,8 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="105dp"
-                    android:background="#404040"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-
             </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 
             <LinearLayout
@@ -175,15 +250,12 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-              
 
                 <SeekBar
                     android:id="@+id/sb_body"
                     android:layout_width="280dp"
                     android:layout_height="wrap_content"
                     android:visibility="gone" />
-
-
 
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -247,6 +319,49 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
+
+                    <SeekBar
+                        android:id="@+id/sb_taste"
+                        android:layout_width="280dp"
+                        android:layout_height="wrap_content"
+                        style="@style/Widget.AppCompat.SeekBar.Discrete"
+                        android:max="4"
+                        android:min="0"
+                        android:progressTint="#FFA255"
+                        android:thumb="@drawable/seekbar_thumb"
+                        android:tickMark="@drawable/tickmark"
+                        android:layout_marginStart="33dp"
+                        android:layout_marginEnd="33dp"
+                        android:layout_marginTop="32dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_taste"
+                        android:visibility="gone"
+                     />
+
+                    <TextView
+                        android:id="@+id/textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="33dp"
+                        android:layout_marginTop="23dp"
+                        android:text="Dry"
+                        android:textColor="#CCCCCC"
+                        android:textSize="14sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/sb_taste" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Sweet"
+                        android:textColor="#CCCCCC"
+                        android:textSize="14sp"
+                        android:layout_marginEnd="22dp"
+                        android:layout_marginTop="23dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/sb_taste"/>
+
+
                     <com.nex3z.flowlayout.FlowLayout
                         android:id="@+id/fl_taste"
                         android:layout_width="match_parent"
@@ -257,7 +372,8 @@
                         app:flRowSpacing="auto"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/tv_taste">
+                        app:layout_constraintTop_toBottomOf="@id/tv_taste"
+                        >
 
 
                         <com.google.android.material.chip.ChipGroup
@@ -270,11 +386,7 @@
                         </com.google.android.material.chip.ChipGroup>
 
                     </com.nex3z.flowlayout.FlowLayout>
-                    <SeekBar
-                        android:id="@+id/sb_taste"
-                        android:layout_width="280dp"
-                        android:layout_height="wrap_content"
-                        android:visibility="gone" />
+
 
                     <TextView
                         android:id="@+id/tv_taste"
@@ -285,6 +397,7 @@
                         android:textColor="#FFFFFF"
                         android:textSize="20sp"
                         android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -294,9 +407,9 @@
                         android:layout_marginStart="22dp"
                         android:background="@drawable/dash_line"
                         android:layerType="software"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toEndOf="@id/tv_taste"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toTopOf="@+id/fl_taste"/>
+                        app:layout_constraintTop_toTopOf="parent" />
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -308,15 +421,13 @@
                     android:visibility="gone">
 
 
-
                     <TextView
                         android:id="@+id/tv_body"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="바디감"
                         android:textColor="#FFFFFF"
-                        android:textSize="20sp"
-                         />
+                        android:textSize="20sp" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -363,11 +474,6 @@
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
-
-
 
 
             </LinearLayout>
