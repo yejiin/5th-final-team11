@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <androidx.appcompat.widget.Toolbar
@@ -35,8 +34,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:background="#000000">
+            android:background="#000000"
+            android:orientation="vertical">
 
             <ImageView
                 android:id="@+id/iv_alcohol_detail"
@@ -55,20 +54,20 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="정보"
-                    android:textColor="#707070"
                     android:background="@drawable/detail_button_active_background"
-                    android:onClick="onInfoBtnClicked"/>
+                    android:onClick="onInfoBtnClicked"
+                    android:text="정보"
+                    android:textColor="#707070" />
 
                 <Button
                     android:id="@+id/btn_alcohol_review"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="리뷰"
-                    android:textColor="#707070"
                     android:background="@drawable/detail_button_inactive_background"
-                    android:onClick="onReviewBtnClicked"/>
+                    android:onClick="onReviewBtnClicked"
+                    android:text="리뷰"
+                    android:textColor="#707070" />
             </LinearLayout>
 
 
@@ -171,89 +170,207 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/tv_kinds"
-                    android:layout_width="wrap_content"
+              
+
+                <SeekBar
+                    android:id="@+id/sb_body"
+                    android:layout_width="280dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="33dp"
-                    android:text="종류"
-                    android:textColor="#FFFFFF"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"/>
+                    android:visibility="gone" />
 
-                <TextView
-                    android:id="@+id/tv_taste"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="22dp"
-                    android:layout_marginTop="132dp"
-                    android:text="맛"
-                    android:textColor="#FFFFFF"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"/>
 
-                <TextView
-                    android:id="@+id/tv_similar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="231dp"
-                    android:text="이 술과 비슷한 술"
-                    android:textColor="#FFFFFF"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
 
-                <ImageView
-                    android:layout_width="350dp"
-                    android:layout_height="5dp"
-                    android:layout_marginStart="22dp"
-                    android:layout_marginTop="43dp"
-                    android:background="@drawable/dash_line"
-                    android:layerType="software"
-                    app:layout_constraintStart_toEndOf="@+id/tv_kinds"
-                    app:layout_constraintTop_toTopOf="parent" />
 
-                <ImageView
-                    android:layout_width="350dp"
-                    android:layout_height="5dp"
-                    android:layout_marginStart="22dp"
-                    android:layout_marginTop="142dp"
-                    android:background="@drawable/dash_line"
-                    android:layerType="software"
-                    app:layout_constraintStart_toEndOf="@+id/tv_taste"
-                    app:layout_constraintTop_toTopOf="parent" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cl_kinds"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-                <ImageView
-                    android:layout_width="303dp"
-                    android:layout_height="5dp"
-                    android:layout_marginStart="22dp"
-                    android:layout_marginTop="241dp"
-                    android:background="@drawable/dash_line"
-                    android:layerType="software"
-                    app:layout_constraintStart_toEndOf="@+id/tv_similar"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    <com.nex3z.flowlayout.FlowLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        app:flChildSpacing="auto"
+                        app:flChildSpacingForLastRow="align"
+                        app:flRowSpacing="auto"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_kinds">
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_alcohol_similar"
+
+                        <com.google.android.material.chip.ChipGroup
+                            android:id="@+id/chip_group"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/detail_button_active_background">
+
+
+                        </com.google.android.material.chip.ChipGroup>
+
+                    </com.nex3z.flowlayout.FlowLayout>
+
+
+                    <TextView
+                        android:id="@+id/tv_kinds"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:text="종류"
+                        android:textColor="#FFFFFF"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/imageView"
+                        android:layout_width="350dp"
+                        android:layout_height="5dp"
+                        android:layout_marginStart="22dp"
+                        android:background="@drawable/dash_line"
+                        android:layerType="software"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/tv_kinds"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cl_taste"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.nex3z.flowlayout.FlowLayout
+                        android:id="@+id/fl_taste"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        app:flChildSpacing="auto"
+                        app:flChildSpacingForLastRow="align"
+                        app:flRowSpacing="auto"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_taste">
+
+
+                        <com.google.android.material.chip.ChipGroup
+                            android:id="@+id/chip_group_taste"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/detail_button_active_background">
+
+
+                        </com.google.android.material.chip.ChipGroup>
+
+                    </com.nex3z.flowlayout.FlowLayout>
+                    <SeekBar
+                        android:id="@+id/sb_taste"
+                        android:layout_width="280dp"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/tv_taste"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:text="맛"
+                        android:textColor="#FFFFFF"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:layout_width="350dp"
+                        android:layout_height="5dp"
+                        android:layout_marginStart="22dp"
+                        android:background="@drawable/dash_line"
+                        android:layerType="software"
+                        app:layout_constraintStart_toEndOf="@id/tv_taste"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toTopOf="@+id/fl_taste"/>
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cl_body"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:orientation="horizontal"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_similar"/>
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                    android:visibility="gone">
+
+
+
+                    <TextView
+                        android:id="@+id/tv_body"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="바디감"
+                        android:textColor="#FFFFFF"
+                        android:textSize="20sp"
+                         />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cl_similar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+
+                    <TextView
+                        android:id="@+id/tv_similar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="20dp"
+                        android:text="이 술과 비슷한 술"
+                        android:textColor="#FFFFFF"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <ImageView
+                        android:layout_width="303dp"
+                        android:layout_height="5dp"
+                        android:layout_marginStart="22dp"
+                        android:layout_marginTop="30dp"
+                        android:background="@drawable/dash_line"
+                        android:layerType="software"
+                        app:layout_constraintStart_toEndOf="@+id/tv_similar"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_alcohol_similar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:orientation="horizontal"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_similar" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
+
+
+            </LinearLayout>
 
 
         </LinearLayout>
