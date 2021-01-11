@@ -8,11 +8,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.doubleslas.fifith.alcohol.R
 import com.doubleslas.fifith.alcohol.databinding.ActivityAlcoholDetailBinding
+import com.doubleslas.fifith.alcohol.viewmodel.DetailViewModel
 import com.google.android.material.chip.Chip
 import kotlinx.android.synthetic.main.activity_alcohol_detail.*
 
 class AlcoholDetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAlcoholDetailBinding
+    private val detailViewModel by lazy { DetailViewModel() }
     private val alcoholId by lazy { intent.getIntExtra(EXTRA_ALCOHOL_ID, 0) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
