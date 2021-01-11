@@ -8,6 +8,7 @@ import androidx.lifecycle.Observer
 import com.doubleslas.fifith.alcohol.R
 import com.doubleslas.fifith.alcohol.databinding.ActivityLoginBinding
 import com.doubleslas.fifith.alcohol.model.network.base.ApiStatus
+import com.doubleslas.fifith.alcohol.ui.detail.AlcoholDetailActivity
 import com.doubleslas.fifith.alcohol.utils.LogUtil
 import com.doubleslas.fifith.alcohol.viewmodel.LoginViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -107,6 +108,8 @@ class LoginActivity : AppCompatActivity() {
             when (it) {
                 is ApiStatus.Success -> {
                     Toast.makeText(applicationContext, "로그인 완료", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this, AlcoholDetailActivity::class.java)
+                    startActivity(intent)
                 }
                 is ApiStatus.Error -> {
                     Toast.makeText(applicationContext, "로그인 ERROR - ${it.message}", Toast.LENGTH_SHORT).show()

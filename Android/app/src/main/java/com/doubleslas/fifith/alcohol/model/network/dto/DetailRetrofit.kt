@@ -8,5 +8,5 @@ interface DetailRetrofit {
     @GET("/alcohol/detail/{id}")
     fun getDetail(
         @Path("id") id: Int
-    ): ApiLiveData<Any>
+    ): ApiLiveData<DetailList>
 }
