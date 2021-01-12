@@ -3,6 +3,7 @@ package com.doubleslash.fifth.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.json.simple.JSONObject;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.doubleslash.fifth.service.AlcoholService;
+import com.doubleslash.fifth.service.AuthService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -24,6 +26,9 @@ import io.swagger.annotations.ApiResponses;
 @Controller
 @RequestMapping(value = "/alcohol")
 public class AlcoholController {
+	
+	@Autowired
+	AuthService authService;
 	
 	@Autowired
 	AlcoholService alcoholService;
@@ -37,22 +42,25 @@ public class AlcoholController {
 	})
 	@GetMapping(value = "/detail/{id}")
 	@ResponseBody
-	public String detail(@PathVariable("id") int id, HttpServletResponse response) throws Exception {
+	public String detail(@PathVariable("id") int id, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String uid = authService.verifyToken(request);
+	
 		Map<String, Object> map = new HashMap<String, Object>();
 	
 		String category = alcoholService.getCategory(id);
 		
 		String result ="";
+
 		if(category == null) {
 			response.sendError(400, "Alcohol Id Error");
 		}else {
 			response.setStatus(200);
 			if(category.equals("양주")) {
-				map = alcoholService.getLiquor(id);
+				map = alcoholService.getLiquor(uid, id);
 			}else if(category.equals("세계맥주")) {
-				map = alcoholService.getBeer(id);
+				map = alcoholService.getBeer(uid, id);
 			}else if(category.equals("와인")) {
-				map = alcoholService.getWine(id);
+				map = alcoholService.getWine(uid, id);
 			}
 			JSONObject jsonObject = new JSONObject(map);
 			result = jsonObject.toJSONString();

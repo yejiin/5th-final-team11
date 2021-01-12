@@ -1,7 +1,6 @@
 package com.doubleslash.fifth.service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -14,7 +13,9 @@ import com.doubleslash.fifth.dto.LiquorDTO;
 import com.doubleslash.fifth.dto.WineDTO;
 import com.doubleslash.fifth.repository.AlcoholRepository;
 import com.doubleslash.fifth.repository.ReviewRepository;
+import com.doubleslash.fifth.repository.UserRepository;
 import com.doubleslash.fifth.vo.AlcoholVO;
+import com.doubleslash.fifth.vo.UserVO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
@@ -25,6 +26,9 @@ public class AlcoholService {
 	
 	@Autowired
 	ReviewRepository reviewRepository;
+	
+	@Autowired
+	UserRepository userRepository;
 	
 	// category 조회
 	public String getCategory(int id) {
@@ -40,7 +44,7 @@ public class AlcoholService {
 	}
 	
 	// 양주 주종 세부 조회
-	public Map<String, Object> getLiquor(int id){
+	public Map<String, Object> getLiquor(String uid, int id){
 		ObjectMapper objectMapper = new ObjectMapper();
 		LiquorDTO liquorDto = new LiquorDTO();
 		
@@ -62,12 +66,13 @@ public class AlcoholService {
 			flavors.add(ftemp[i]);
 		}
 		liquorMap.put("flavor", flavors);
+		liquorMap.put("userDrink", getUserDrink(uid, id));
 		
 		return liquorMap;
 	}
 	
 	// 세계 맥주 주종 세부 조회
-	public Map<String, Object> getBeer(int id) {
+	public Map<String, Object> getBeer(String uid,int id) {
 		ObjectMapper objectMapper = new ObjectMapper();
 		BeerDTO beerDto = alcoholRepository.findByAidBeer(id);
 		
@@ -83,17 +88,18 @@ public class AlcoholService {
 		
 		// 지역 데이터 가공
 		List<String> areas = new ArrayList<String>();
-		String ftemp[] = beerDto.getArea().split("#");
-		for(int i = 0; i < ftemp.length; i++) {
-			areas.add(ftemp[i]);
+		String atemp[] = beerDto.getArea().split("#");
+		for(int i = 0; i < atemp.length; i++) {
+			areas.add(atemp[i]);
 		}
 		beerMap.put("area", areas);
+		beerMap.put("userDrink", getUserDrink(uid, id));
 		
 		return beerMap;
 	}
 	
 	// 와인 주종 세부 조회
-	public Map<String, Object> getWine(int id) {
+	public Map<String, Object> getWine(String uid, int id) {
 		ObjectMapper objectMapper = new ObjectMapper();
 		WineDTO wineDto = new WineDTO();
 		
@@ -107,7 +113,7 @@ public class AlcoholService {
 		Map<String, Object> wineMap = objectMapper.convertValue(wineDto, Map.class);
 		
 		wineMap.put("kind", getKinds(wineDto.getKind()));
-		
+		wineMap.put("userDrink", getUserDrink(uid, id));
 		return wineMap;
 	}
 	
@@ -119,9 +125,29 @@ public class AlcoholService {
 		for(int i = 0; i < ktemp.length; i++) {
 			kinds.add(ktemp[i]);
 		}
-
-		return kinds;
-				
+		return kinds;		
 	}
+	
+	// 주종별 사용자 주량 
+	public double getUserDrink(String uid, int aid) {
+		UserVO userVo = userRepository.findByUid(uid);
+		
+		// 소주 기준 
+		double sojuDrink = userVo.getDrink();
+		double sojuAbv = 20.0;
+		
+		// 알콜량 = 소주병수*도수*용량/100   
+		double sojuAmount = (sojuDrink*sojuAbv*360/100);
+	
+		AlcoholVO alcoholVo = alcoholRepository.findByAid(aid);
+		double alcoholAbv = alcoholVo.getAbv();
+		int alcoholMl = alcoholVo.getMl();
+		double alcoholAmount = (alcoholAbv*alcoholMl/100);
+		
+		double userDrink = Math.round(sojuAmount / alcoholAmount*10)/10.0;
+		System.out.println("사용자 주량 : " + userDrink);
+		return userDrink;
+	}
+	
 	
 }
