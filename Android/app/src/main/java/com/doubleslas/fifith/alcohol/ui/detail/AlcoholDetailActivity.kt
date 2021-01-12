@@ -3,6 +3,7 @@ package com.doubleslas.fifith.alcohol.ui.detail
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -28,6 +29,21 @@ class AlcoholDetailActivity : AppCompatActivity() {
                 is ApiStatus.Success -> {
                     binding.tvPriceInfo.text = it.data.lowestPrice.toString() + "-" + it.data.highestPrice.toString() + " 원"
                     binding.tvVolumeInfo.text = it.data.ml.toString() + " ml" + " / " + it.data.abv.toString() + " %"
+                    binding.detailRating.rating = it.data.starAvg
+                    binding.tvAlcoholName.text = it.data.name
+                    binding.tvDrinkName.text = it.data.name
+
+                    if (it.data.country != null && it.data.area != null && it.data.town != null && it.data.wineKind != null) {
+                        binding.tvNation.visibility = View.VISIBLE
+                        binding.tvNationInfo.visibility = View.VISIBLE
+                        binding.tvBreed.visibility = View.VISIBLE
+                        binding.tvBreedInfo.visibility = View.VISIBLE
+                        binding.tvNationInfo.text = it.data.country + it.data.area + it.data.town
+                        binding.tvBreedInfo.text = it.data.wineKind
+                    } else {
+                        binding.tvNation.visibility = View.GONE
+                        binding.tvNationInfo.visibility = View.GONE
+                    }
                 }
                 is ApiStatus.Error -> {
 
