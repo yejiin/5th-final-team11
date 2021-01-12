@@ -7,18 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import com.doubleslas.fifith.alcohol.R
 import com.doubleslas.fifith.alcohol.databinding.FragmentSearchResultBinding
-import com.doubleslas.fifith.alcohol.model.network.base.ApiLiveData
-import com.doubleslas.fifith.alcohol.model.network.dto.SearchList
-import com.doubleslas.fifith.alcohol.model.repository.SearchRepository
-import com.doubleslas.fifith.alcohol.ui.common.AlcoholListFragment
 import com.doubleslas.fifith.alcohol.ui.common.base.BaseFragment
-import com.doubleslas.fifith.alcohol.viewmodel.ISortedPageLoader
-import kotlinx.android.parcel.Parcelize
 
 class SearchResultFragment private constructor() : BaseFragment<FragmentSearchResultBinding>() {
     private val keyword by lazy { arguments!!.getString(ARGUMENT_KEYWORD, "") }
     private val listFragment by lazy {
-        AlcoholListFragment.create(SearchRepository.SearchPageLoader(keyword))
+        SearchListFragment.create("전체")
     }
 
     override fun createViewBinding(
