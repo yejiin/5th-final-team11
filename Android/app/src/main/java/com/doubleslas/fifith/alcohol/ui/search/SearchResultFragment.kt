@@ -5,15 +5,19 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.doubleslas.fifith.alcohol.R
 import com.doubleslas.fifith.alcohol.databinding.FragmentSearchResultBinding
+import com.doubleslas.fifith.alcohol.model.network.base.ApiStatus
+import com.doubleslas.fifith.alcohol.ui.common.AlcoholListAdapter
 import com.doubleslas.fifith.alcohol.ui.common.base.BaseFragment
+import com.doubleslas.fifith.alcohol.viewmodel.SearchViewModel
 
 class SearchResultFragment private constructor() : BaseFragment<FragmentSearchResultBinding>() {
     private val keyword by lazy { arguments!!.getString(ARGUMENT_KEYWORD, "") }
-    private val listFragment by lazy {
-        SearchListFragment.create("전체")
-    }
+    private val searchViewModel by lazy { SearchViewModel() }
+    private val adapter by lazy { AlcoholListAdapter() }
 
     override fun createViewBinding(
         inflater: LayoutInflater,
@@ -30,12 +34,19 @@ class SearchResultFragment private constructor() : BaseFragment<FragmentSearchRe
             b.btnSearch.setOnClickListener {
                 (parentFragment as? SearchFragment)?.openSearchHistoryFragment()
             }
+
+            b.recyclerview.layoutManager = LinearLayoutManager(context)
+            b.recyclerview.adapter = adapter
         }
 
-        childFragmentManager.beginTransaction()
-            .replace(R.id.fragment_list, listFragment)
-            .addToBackStack(null)
-            .commit()
+        searchViewModel.search(keyword)
+        searchViewModel.listLiveData.observe(viewLifecycleOwner, Observer {
+            when (it) {
+                is ApiStatus.Success -> {
+                    adapter.setData(it.data)
+                }
+            }
+        })
     }
 
 
