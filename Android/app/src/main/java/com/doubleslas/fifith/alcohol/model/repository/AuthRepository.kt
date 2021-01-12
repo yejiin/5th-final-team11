@@ -40,14 +40,10 @@ class AuthRepository {
 
         mediator.value = ApiStatus.Loading
 
-        mediator.addSource(liveData, object : MediatorApiCallback<CustomTokenData> {
-            override fun onSuccess(data: CustomTokenData) {
+        mediator.addSource(liveData, object : MediatorApiSuccessCallback<CustomTokenData> {
+            override fun onSuccess(code: Int, data: CustomTokenData) {
                 val firebaseLiveData = signInWithCustomToken(data.customToken)
                 mediator.addSource(firebaseLiveData)
-            }
-
-            override fun onError(code: Int, msg: String) {
-                mediator.value = ApiStatus.Error(code, msg)
             }
         })
 

@@ -13,36 +13,25 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.auth.Register2Activity"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
 
+        <activity android:name=".ui.auth.Register2Activity"/>
 
+        <activity android:name=".ui.auth.RegisterActivity"/>
 
-        </activity>
-        <activity
-            android:name=".ui.auth.RegisterActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
+        <activity android:name=".ui.auth.AgeCheckActivity"/>
 
-        </activity>
-        <activity android:name=".ui.auth.AgeCheckActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
+        <activity android:name=".ui.main.MainActivity" />
+
+        <activity android:name=".ui.auth.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.auth.LoginActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
 
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+        <activity android:name=".ui.detail.AlcoholDetailActivity" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-
-        </activity>
-        <activity android:name=".MainActivity" />
+        <!-- region Auth -->
         <activity android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -56,6 +45,7 @@
                     android:scheme="kakaof4ce9d07643e80606b97e6b009366095" />
             </intent-filter>
         </activity> <!-- region Facebook Auth -->
+
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
