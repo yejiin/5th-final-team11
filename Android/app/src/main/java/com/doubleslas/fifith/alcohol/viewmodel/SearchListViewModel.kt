@@ -4,28 +4,20 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.doubleslas.fifith.alcohol.enum.SortType
 import com.doubleslas.fifith.alcohol.model.network.base.ApiLiveData
-import com.doubleslas.fifith.alcohol.model.network.base.ApiStatus
-import com.doubleslas.fifith.alcohol.model.network.base.MediatorApiLiveData
-import com.doubleslas.fifith.alcohol.model.network.base.MediatorApiSuccessCallback
 import com.doubleslas.fifith.alcohol.model.network.dto.AlcoholSimpleData
-import com.doubleslas.fifith.alcohol.model.network.dto.SearchList
 import com.doubleslas.fifith.alcohol.model.repository.SearchRepository
+import com.doubleslas.fifith.alcohol.viewmodel.base.PageLoader
 
 class SearchListViewModel(private val category: String) : ViewModel() {
     private val repository = SearchRepository()
-    private val list = ArrayList<AlcoholSimpleData>()
-    private val listMediatorLiveData = MediatorApiLiveData<List<AlcoholSimpleData>>()
-    val listLiveData: ApiLiveData<List<AlcoholSimpleData>> = listMediatorLiveData
+    private val pageLoader = PageLoader<AlcoholSimpleData>()
+    val listLiveData: ApiLiveData<List<AlcoholSimpleData>> = pageLoader.liveData
 
     var sort = globalSortType
         private set
 
-
-    private var page = 0
-    private var totalCount: Int? = null
-
     fun initList(): Boolean {
-        if (totalCount == null || sort != globalSortType){
+        if (pageLoader.isInit() || sort != globalSortType) {
             loadList()
             return true
         }
@@ -37,30 +29,17 @@ class SearchListViewModel(private val category: String) : ViewModel() {
             setSort(globalSortType)
             return
         }
-        if (listMediatorLiveData.value is ApiStatus.Loading) return
-        if (totalCount != null && list.size >= totalCount!!) return
+        if (!pageLoader.canLoadList()) return
 
-
-        listMediatorLiveData.value = ApiStatus.Loading
-        val liveData = repository.getList(category, page++, sort.sort, sort.sortOption)
-        listMediatorLiveData.addSource(
-            liveData,
-            object : MediatorApiSuccessCallback<SearchList> {
-                override fun onSuccess(code: Int, data: SearchList) {
-                    totalCount = data.totalCount
-                    list.addAll(data.list)
-                    listMediatorLiveData.value = ApiStatus.Success(code, list)
-                }
-            })
+        val liveData = repository.getList(category, pageLoader.page++, sort)
+        pageLoader.addObserve(liveData)
     }
 
     fun setSort(sortType: SortType) {
         if (sort == sortType) return
         sort = sortType
         globalSortType = sortType
-        page = 0
-        totalCount = null
-        list.clear()
+        pageLoader.reset()
         loadList()
     }
 
