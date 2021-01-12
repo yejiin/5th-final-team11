@@ -114,10 +114,36 @@
             </LinearLayout>
 
 
+
+
+
+
+                <LinearLayout
+                    android:id="@+id/layout_review"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_detail_review"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"/>
+
+
+
+                </LinearLayout>
+
+
+
+
+
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_basic_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#1B1C1D">
+                android:background="#1B1C1D"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/tv_price"
@@ -264,9 +290,11 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#1B1C1D">
+                android:background="#1B1C1D"
+                android:visibility="gone">
 
 
                 <TextView
@@ -287,9 +315,11 @@
 
 
             <LinearLayout
+                android:id="@+id/layout_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
 
 
                 <androidx.constraintlayout.widget.ConstraintLayout
