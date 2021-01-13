@@ -92,24 +92,24 @@
                 android:layout_height="37dp"
                 android:orientation="horizontal">
 
-                <Button
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btn_alcohol_info"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/detail_button_active_background"
                     android:onClick="onInfoBtnClicked"
                     android:text="정보"
-                    android:textColor="#707070" />
+                    android:background="@drawable/detail_button_active_background"
+                    android:textColor="#FFFFFF" />
 
-                <Button
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btn_alcohol_review"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/detail_button_inactive_background"
                     android:onClick="onReviewBtnClicked"
                     android:text="리뷰"
+                    android:background="@drawable/detail_button_inactive_background"
                     android:textColor="#707070" />
             </LinearLayout>
 
@@ -121,7 +121,8 @@
                 <LinearLayout
                     android:id="@+id/layout_review"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:visibility="gone">
 
 
                     <androidx.recyclerview.widget.RecyclerView
@@ -142,8 +143,7 @@
                 android:id="@+id/cl_basic_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#1B1C1D"
-                android:visibility="gone">
+                android:background="#1B1C1D">
 
                 <TextView
                     android:id="@+id/tv_price"
@@ -214,7 +214,7 @@
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="113dp"
                     android:layout_marginEnd="220dp"
-                    android:text="국가 / 지역 / 상세지역"
+                    android:text="국가 / 지역"
                     android:textColor="#BEBEBE"
                     android:textSize="16sp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -223,22 +223,7 @@
                     app:layout_constraintTop_toTopOf="parent"
                     android:visibility="gone"/>
 
-                <TextView
-                    android:id="@+id/tv_breed"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="189dp"
-                    android:layout_marginTop="113dp"
-                    android:layout_marginEnd="119dp"
-                    android:text="주요 품종"
-                    android:textColor="#BEBEBE"
-                    android:textSize="16sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:visibility="gone"
-                    />
+
 
                 <TextView
                     android:id="@+id/tv_nation_info"
@@ -259,23 +244,6 @@
 
                     />
 
-                <TextView
-                    android:id="@+id/tv_breed_info"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="190dp"
-                    android:layout_marginTop="148dp"
-                    android:layout_marginEnd="115dp"
-                    android:paddingBottom="20dp"
-                    android:text="품종 sample"
-                    android:textColor="#FFFFFF"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:visibility="gone"/>
 
 
                 <View
@@ -293,15 +261,14 @@
                 android:id="@+id/cl_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#1B1C1D"
-                android:visibility="gone">
+                android:background="#1B1C1D">
 
 
                 <TextView
                     android:id="@+id/tv_description"
                     android:layout_width="308dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="134dp"
+                    android:layout_marginTop="50dp"
                     android:layout_marginBottom="39dp"
                     android:text="음료 설명 Sample"
                     android:textColor="#FFFFFF"
@@ -318,8 +285,7 @@
                 android:id="@+id/layout_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:visibility="gone">
+                android:orientation="vertical">
 
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -342,11 +308,7 @@
                         <com.google.android.material.chip.ChipGroup
                             android:id="@+id/chip_group"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/detail_button_active_background">
-
-
-                        </com.google.android.material.chip.ChipGroup>
+                            android:layout_height="wrap_content"/>
 
                     </com.nex3z.flowlayout.FlowLayout>
 
@@ -402,7 +364,7 @@
                         app:layout_constraintTop_toBottomOf="@id/tv_taste" />
 
                     <TextView
-                        android:id="@+id/textView"
+                        android:id="@+id/tv_dry"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="33dp"
@@ -414,6 +376,7 @@
                         app:layout_constraintTop_toBottomOf="@+id/sb_taste" />
 
                     <TextView
+                        android:id="@+id/tv_sweet"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="23dp"
@@ -442,10 +405,8 @@
                             android:id="@+id/chip_group_taste"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/detail_button_active_background">
+                           />
 
-
-                        </com.google.android.material.chip.ChipGroup>
 
                     </com.nex3z.flowlayout.FlowLayout>
 

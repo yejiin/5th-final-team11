@@ -10,19 +10,23 @@ data class DetailList(
     @SerializedName("abv") val abv: Double,
     @SerializedName("starAvg") val starAvg: Float,
     @SerializedName("name") val name: String,
-    @SerializedName("kind") val kind: List<Any>,
+    @SerializedName("kind") val kind: List<String>,
+    @SerializedName("description") val description: String,
 
     // 와인 추가속성
     @SerializedName("country") val country: String?,
     @SerializedName("area") val area: String?,
-    @SerializedName("town") val town: String?,
     @SerializedName("wineKind") val wineKind: String?,
     @SerializedName("flavor") val flavor: Int?,
-    @SerializedName("body") val body: Int?
+    @SerializedName("body") val body: Int?,
 
     // 양주 추가속성
 
 
+    @SerializedName("flavors") val flavors: List<String>?,
+
+
     // 맥주 추가속성
+    @SerializedName("areas") val areas: List<Any>?
 
 )
