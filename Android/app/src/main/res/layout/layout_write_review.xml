@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="684dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#202425">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="리뷰하기"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="15dp"/>
+
+
+        <RatingBar
+            android:id="@+id/rating_review"
+            android:layout_width="220dp"
+            android:layout_height="42dp"
+            android:numStars="5"
+            android:stepSize="1"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="57dp"/>
+
+        <EditText
+            android:id="@+id/et_review"
+            android:layout_width="319dp"
+            android:layout_height="152dp"
+            android:hint="의견을 남겨주세요!"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="118dp"
+            android:background="#383f42"
+            android:textColorHint="#A5A5A5"/>
+
+
+
+        <Button
+            android:id="@+id/btn_review_confirm"
+            android:layout_width="match_parent"
+            android:layout_height="61dp"
+            android:text="작성완료"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>

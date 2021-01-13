@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.doubleslas.fifith.alcohol.R
 import com.doubleslas.fifith.alcohol.databinding.ActivityAlcoholDetailBinding
 import com.doubleslas.fifith.alcohol.model.network.base.ApiStatus
+import com.doubleslas.fifith.alcohol.ui.common.base.ReviewBottomSheetDialog
 import com.doubleslas.fifith.alcohol.viewmodel.DetailViewModel
 import com.google.android.material.chip.Chip
 
@@ -26,6 +27,10 @@ class AlcoholDetailActivity : AppCompatActivity() {
         binding = ActivityAlcoholDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.btnWriteReview.setOnClickListener {
+            val bottomSheet = ReviewBottomSheetDialog()
+            bottomSheet.show(supportFragmentManager, bottomSheet.tag)
+        }
 
         detailViewModel.getDetail(10).observe(this, Observer {
             when (it) {
