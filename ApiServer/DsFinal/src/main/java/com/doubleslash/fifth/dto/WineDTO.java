@@ -35,10 +35,6 @@ public class WineDTO {
 	
 	private String area;
 	
-	private String town;
-	
-	private String wineKind;
-	
 	private int flavor;
 	
 	private int body;

@@ -31,10 +31,10 @@ public interface AlcoholRepository extends JpaRepository<AlcoholVO, Integer>{
 	public BeerDTO findByAidBeerNoReview(int aid);
 
 	// 와인 조회
-	@Query(value = "select new com.doubleslash.fifth.dto.WineDTO(a.aid, a.name, a.category, a.image, a.lowestPrice, a.highestPrice, a.ml, a.abv, a.description, a.kind, w.country, w.area, w.town, w.wineKind, w.flavor, w.body, AVG(r.star), COUNT(*)) from AlcoholVO as a, WineVO as w, ReviewVO as r where a.aid = w.aid and a.aid = r.aid and a.aid = ?1")
+	@Query(value = "select new com.doubleslash.fifth.dto.WineDTO(a.aid, a.name, a.category, a.image, a.lowestPrice, a.highestPrice, a.ml, a.abv, a.description, a.kind, w.country, w.area, w.flavor, w.body, AVG(r.star), COUNT(*)) from AlcoholVO as a, WineVO as w, ReviewVO as r where a.aid = w.aid and a.aid = r.aid and a.aid = ?1")
 	public WineDTO findByAidWine(int aid);
 	
 	// 리뷰 존재하지 않을 때 와인 조회
-	@Query(value = "select new com.doubleslash.fifth.dto.WineDTO(a.aid, a.name, a.category, a.image, a.lowestPrice, a.highestPrice, a.ml, a.abv, a.description, a.kind, w.country, w.area, w.town, w.wineKind, w.flavor, w.body, 0.0, 0L) from AlcoholVO as a, WineVO as w where a.aid = w.aid and a.aid = ?1")
+	@Query(value = "select new com.doubleslash.fifth.dto.WineDTO(a.aid, a.name, a.category, a.image, a.lowestPrice, a.highestPrice, a.ml, a.abv, a.description, a.kind, w.country, w.area, w.flavor, w.body, 0.0, 0L) from AlcoholVO as a, WineVO as w where a.aid = w.aid and a.aid = ?1")
 	public WineDTO findByAidWineNoReview(int aid);
 }

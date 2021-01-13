@@ -32,7 +32,7 @@ public class BeerDTO {
 	
 	private String kind;
 	
-	private String area;
+	private String areas;
 		
 	private double starAvg;
 	

@@ -61,11 +61,11 @@ public class AlcoholService {
 		
 		// 맛 데이터 가공
 		List<String> flavors = new ArrayList<String>();
-		String ftemp[] = liquorDto.getFlavor().split("#");
+		String ftemp[] = liquorDto.getFlavors().split("#");
 		for(int i = 0; i < ftemp.length; i++) {
 			flavors.add(ftemp[i]);
 		}
-		liquorMap.put("flavor", flavors);
+		liquorMap.put("flavors", flavors);
 		liquorMap.put("userDrink", getUserDrink(uid, id));
 		
 		return liquorMap;
@@ -88,11 +88,11 @@ public class AlcoholService {
 		
 		// 지역 데이터 가공
 		List<String> areas = new ArrayList<String>();
-		String atemp[] = beerDto.getArea().split("#");
+		String atemp[] = beerDto.getAreas().split("#");
 		for(int i = 0; i < atemp.length; i++) {
 			areas.add(atemp[i]);
 		}
-		beerMap.put("area", areas);
+		beerMap.put("areas", areas);
 		beerMap.put("userDrink", getUserDrink(uid, id));
 		
 		return beerMap;

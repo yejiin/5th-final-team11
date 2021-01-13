@@ -34,7 +34,7 @@ public class AlcoholController {
 	AlcoholService alcoholService;
 
 	@ApiOperation(value = "주류 세부 사항 조회", notes="주류 공통 속성 \n: aid(주류id), name(주류명), category(카테고리), image(이미지경로), lowestPrice(최저가격), highest(최고가격), ml(용량), abv(도수), description(설명), kind(종류, list 타입), starAvg(별점평균), starCnt(별점수), userDrink(사용자주량), smiliar(비슷한 술 정보)"
-			+ "\n 주류별 추가 속성 \n: 양주 - flavor(맛, list 타입), \n  맥주 - area(지역, list 타입), \n  와인 - country(국가), area(지역), town(상세지역), wineKind(품종), flavor(맛, int 타입(1~5로 구분)), body(바디감, int 타입(1~5로 구분))"
+			+ "\n 주류별 추가 속성 \n: 양주 - flavors(맛, list 타입), \n  맥주 - areas(지역, list 타입), \n  와인 - country(국가), area(지역), flavor(맛, int 타입(1~5로 구분)), body(바디감, int 타입(1~5로 구분))"
 			+ "\n 추천사항 정보인 종류, 맛, 지역은 list로 제공")
 	@ApiResponses({
 		@ApiResponse(code = 200, message = "Alcohol Information Get Succues "),		

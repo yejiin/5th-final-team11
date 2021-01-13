@@ -31,7 +31,7 @@ public class LiquorDTO{
 	
 	private String kind;
 	
-	private String flavor;
+	private String flavors;
 	
 	private double starAvg;
 	
