@@ -13,7 +13,7 @@
         android:orientation="vertical"
         android:id="@+id/bottom_sheet"
         app:layout_behavior="@string/bottom_sheet_behavior"
-        app:behavior_peekHeight="600dp"
+        app:behavior_peekHeight="700dp"
         app:behavior_hideable="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -45,7 +45,7 @@
 
             <RatingBar
                 android:id="@+id/rating_review"
-                android:layout_width="220dp"
+                android:layout_width="240dp"
                 android:layout_height="42dp"
                 android:layout_marginTop="57dp"
                 android:numStars="5"
@@ -59,9 +59,12 @@
                 android:layout_width="319dp"
                 android:layout_height="152dp"
                 android:layout_marginTop="118dp"
-                android:background="#383f42"
+                android:background="@drawable/background_review_edit_text"
                 android:hint="의견을 남겨주세요!"
                 android:textColorHint="#A5A5A5"
+                android:paddingLeft="16dp"
+                android:paddingBottom="116dp"
+                android:paddingTop="12dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -122,6 +125,104 @@
                 android:layout_marginTop="9dp"
                 android:maxLines="1"
                 android:backgroundTint="#707070"/>
+
+
+            <TextView
+                android:id="@+id/tv_review_drink"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="마신 주량"
+                android:textSize="16sp"
+                android:textColor="#A5A5A5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_review_place"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="20dp"/>
+
+            <EditText
+                android:id="@+id/et_review_drink"
+                android:layout_width="260dp"
+                android:layout_height="30dp"
+                app:layout_constraintStart_toEndOf="@id/tv_review_drink"
+                app:layout_constraintTop_toBottomOf="@id/et_review_place"
+                android:layout_marginStart="31dp"
+                android:layout_marginTop="9dp"
+                android:maxLines="1"
+                android:backgroundTint="#707070"/>
+
+            <TextView
+                android:id="@+id/tv_review_hangover"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="숙취"
+                android:textSize="16sp"
+                android:textColor="#A5A5A5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_review_drink"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="20dp"/>
+
+
+            <SeekBar
+                android:id="@+id/sb_hangover"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@id/tv_review_hangover"
+                app:layout_constraintTop_toBottomOf="@id/et_review_drink"
+                android:layout_marginStart="31dp"
+                android:layout_marginTop="19dp"
+                style="@style/Widget.AppCompat.SeekBar.Discrete"
+                android:thumb="@drawable/seekbar_thumb"
+                android:min="0"
+                android:max="4"
+                android:tickMark="@drawable/tickmark"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="없음"
+                android:textSize="14sp"
+                android:textColor="#CCCCCC"
+                app:layout_constraintTop_toBottomOf="@id/tv_review_hangover"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="14dp"
+                android:layout_marginStart="74dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="심함"
+                android:textSize="14sp"
+                android:textColor="#CCCCCC"
+                app:layout_constraintTop_toBottomOf="@id/tv_review_hangover"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="14dp"
+                android:layout_marginEnd="20dp"
+                />
+
+
+            <TextView
+                android:id="@+id/tv_review_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="가격"
+                android:textSize="16sp"
+                android:textColor="#A5A5A5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_review_hangover"
+                android:layout_marginTop="45dp"
+                android:layout_marginStart="20dp"/>
+
+            <EditText
+                android:id="@+id/et_review_price"
+                android:layout_width="260dp"
+                android:layout_height="30dp"
+                app:layout_constraintStart_toEndOf="@id/tv_review_price"
+                app:layout_constraintTop_toBottomOf="@id/et_review_drink"
+                android:layout_marginStart="31dp"
+                android:layout_marginTop="80dp"
+                android:maxLines="1"
+                android:backgroundTint="#707070"/>
+
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
