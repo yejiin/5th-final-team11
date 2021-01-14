@@ -1,51 +1,130 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="684dp"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#202425">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/bottom_sheet"
+        app:layout_behavior="@string/bottom_sheet_behavior"
+        app:behavior_peekHeight="600dp"
+        app:behavior_hideable="true">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <Button
+                android:id="@+id/btn_review_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="상세기록"
+                app:layout_constraintTop_toBottomOf="@id/et_review"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="15dp"
+                android:layout_marginStart="22dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="리뷰하기"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <RatingBar
+                android:id="@+id/rating_review"
+                android:layout_width="220dp"
+                android:layout_height="42dp"
+                android:layout_marginTop="57dp"
+                android:numStars="5"
+                android:stepSize="1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/et_review"
+                android:layout_width="319dp"
+                android:layout_height="152dp"
+                android:layout_marginTop="118dp"
+                android:background="#383f42"
+                android:hint="의견을 남겨주세요!"
+                android:textColorHint="#A5A5A5"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_review_detail"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="리뷰하기"
-            android:textColor="#FFFFFF"
-            android:textStyle="bold"
-            android:textSize="18sp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="15dp"/>
+            android:layout_marginTop="18dp"
+            android:visibility="gone">
 
 
-        <RatingBar
-            android:id="@+id/rating_review"
-            android:layout_width="220dp"
-            android:layout_height="42dp"
-            android:numStars="5"
-            android:stepSize="1"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="57dp"/>
 
-        <EditText
-            android:id="@+id/et_review"
-            android:layout_width="319dp"
-            android:layout_height="152dp"
-            android:hint="의견을 남겨주세요!"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="118dp"
-            android:background="#383f42"
-            android:textColorHint="#A5A5A5"/>
+            <TextView
+                android:id="@+id/tv_review_calendar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="날짜"
+                android:textColor="#A5A5A5"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="20dp"/>
+
+            <EditText
+                android:id="@+id/et_calendar"
+                android:layout_width="260dp"
+                android:layout_height="30dp"
+                app:layout_constraintStart_toEndOf="@id/tv_review_calendar"
+                android:layout_marginStart="31dp"
+                android:maxLines="1"
+                android:backgroundTint="#707070"/>
+
+            <TextView
+                android:id="@+id/tv_review_place"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="장소"
+                android:textColor="#A5A5A5"
+                android:textSize="16sp"
+                app:layout_constraintTop_toBottomOf="@+id/tv_review_calendar"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"/>
+            <EditText
+                android:id="@+id/et_review_place"
+                android:layout_width="260dp"
+                android:layout_height="30dp"
+                app:layout_constraintStart_toEndOf="@id/tv_review_place"
+                app:layout_constraintTop_toBottomOf="@id/et_calendar"
+                android:layout_marginStart="31dp"
+                android:layout_marginTop="9dp"
+                android:maxLines="1"
+                android:backgroundTint="#707070"/>
 
 
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <Button
             android:id="@+id/btn_review_confirm"
@@ -53,12 +132,11 @@
             android:layout_height="61dp"
             android:text="작성완료"
             android:textSize="20sp"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_review"
+            android:layout_marginTop="55dp"/>
+    </LinearLayout>
 
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
