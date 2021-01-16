@@ -145,7 +145,8 @@
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_marginTop="10dp"
                 android:inputType="none"
-                android:focusable="false"/>
+                android:focusable="false"
+                android:textColor="#FFFFFF"/>
 
             <TextView
                 android:id="@+id/tv_review_place"
@@ -167,7 +168,8 @@
                 android:layout_marginStart="31dp"
                 android:layout_marginTop="9dp"
                 android:maxLines="1"
-                android:backgroundTint="#707070"/>
+                android:backgroundTint="#707070"
+                android:textColor="#FFFFFF"/>
 
 
             <TextView
@@ -191,7 +193,8 @@
                 android:layout_marginStart="31dp"
                 android:layout_marginTop="9dp"
                 android:maxLines="1"
-                android:backgroundTint="#707070"/>
+                android:backgroundTint="#707070"
+                android:textColor="#FFFFFF"/>
 
             <TextView
                 android:id="@+id/tv_review_hangover"
@@ -265,7 +268,8 @@
                 android:layout_marginStart="31dp"
                 android:layout_marginTop="80dp"
                 android:maxLines="1"
-                android:backgroundTint="#707070"/>
+                android:backgroundTint="#707070"
+                android:textColor="#FFFFFF"/>
 
 
 
@@ -284,16 +288,6 @@
         />
     </LinearLayout>
 
-        <DatePicker
-            android:id="@+id/datePicker"
-            android:layout_width="match_parent"
-            android:layout_height="360dp"
-            android:datePickerMode="spinner"
-            android:calendarViewShown="false"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:visibility="gone"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

@@ -4,12 +4,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import androidx.lifecycle.Observer
 import com.doubleslas.fifith.alcohol.R
+import com.doubleslas.fifith.alcohol.ui.common.base.CalendarDialogFragment.Companion.date
+
+import com.doubleslas.fifith.alcohol.ui.main.MainActivity
+import com.doubleslas.fifith.alcohol.utils.LogUtil
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.android.synthetic.main.layout_write_review.*
 
 
 class ReviewBottomSheetDialog : BottomSheetDialogFragment() {
+
 
 
     override fun onCreateView(
@@ -20,29 +27,45 @@ class ReviewBottomSheetDialog : BottomSheetDialogFragment() {
 
 
         super.onCreateView(inflater, container, savedInstanceState)
-        return inflater.inflate(R.layout.layout_write_review, container, false)
+        val view = inflater.inflate(R.layout.layout_write_review, container, false)
+        return view
+
+
 
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        et_calendar.setText(date)
+
+    }
+
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
+        val calendarDialogFragment = CalendarDialogFragment()
         super.onActivityCreated(savedInstanceState)
 
+
+
         et_calendar.setOnClickListener {
-            val calendarDialogFragment = CalendarDialogFragment()
+
 
             activity?.supportFragmentManager?.let { it1 ->
                 calendarDialogFragment.show(
                     it1,
-                    calendarDialogFragment.tag
+                    "Calendar"
                 )
             }
 
 
         }
 
+
+
         btn_review_confirm.setOnClickListener {
             dismiss()
         }
+
 
 
 
@@ -64,3 +87,6 @@ class ReviewBottomSheetDialog : BottomSheetDialogFragment() {
 
 
 }
+
+
+
