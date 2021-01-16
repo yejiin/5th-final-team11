@@ -6,8 +6,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.Data;
+
 @Entity
 @Table(name = "ReportReview")
+@Data
 public class ReportReviewVO {
 
 	@Id
@@ -15,6 +18,8 @@ public class ReportReviewVO {
 	private int rno;
 	
 	private int rid;
+
+	private int id;
 	
 	private String content;
 	
