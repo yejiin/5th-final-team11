@@ -17,6 +17,8 @@ class ReviewBottomSheetDialog : BottomSheetDialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+
         super.onCreateView(inflater, container, savedInstanceState)
         return inflater.inflate(R.layout.layout_write_review, container, false)
 
@@ -24,18 +26,41 @@ class ReviewBottomSheetDialog : BottomSheetDialogFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
+        et_calendar.setOnClickListener {
+            val calendarDialogFragment = CalendarDialogFragment()
+
+            activity?.supportFragmentManager?.let { it1 ->
+                calendarDialogFragment.show(
+                    it1,
+                    calendarDialogFragment.tag
+                )
+            }
+
+
+        }
+
         btn_review_confirm.setOnClickListener {
             dismiss()
         }
-        btn_review_detail.setOnClickListener {
+
+
+
+        cl_detail_record.setOnClickListener {
             if (cl_review_detail.visibility == View.GONE) {
+                iv__detail_record.setImageResource(R.drawable.ic_review_button_x)
                 cl_review_detail.visibility = View.VISIBLE
-                btn_review_detail.text = "상세기록 끄기"
+
+
             } else {
+                iv__detail_record.setImageResource(R.drawable.ic_review_button_plus)
                 cl_review_detail.visibility = View.GONE
-                btn_review_detail.text = "상세기록"
+
             }
         }
+
+
     }
+
 
 }

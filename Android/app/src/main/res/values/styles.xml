@@ -7,4 +7,11 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="MyDatePicker">
+
+        <item name="android:textColorPrimary">@color/datePickerColor</item>
+
+
+    </style>
+
 </resources>
