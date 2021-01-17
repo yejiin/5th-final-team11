@@ -15,9 +15,9 @@ interface SearchRetrofit {
     ): ApiLiveData<SearchList>
 
 
-    @GET("/alcohol/serach")
+    @GET("/alcohol/search")
     fun searchAlcohol(
-        @Query("category") category: String,
+        @Query("keyword") keyword: String,
         @Query("page") page: Int,
         @Query("sort") sort: String,
         @Query("sortOption") sortOption: String

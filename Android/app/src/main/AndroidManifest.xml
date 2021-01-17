@@ -25,12 +25,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.detail.AlcoholDetailActivity"
-            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar">
-
-        </activity>
-        <activity android:name=".ui.search.SearchActivity" />
-
+        <activity android:name=".ui.detail.AlcoholDetailActivity"/>
 
         <!-- region Auth -->
         <activity android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity">

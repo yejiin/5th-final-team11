@@ -47,9 +47,8 @@ class MediatorImpl<T : ApiStatus<*>> : MediatorLiveData<T>() {
 
 }
 
-interface MediatorApiCallback<T> {
+interface MediatorApiCallback<T>: MediatorApiSuccessCallback<T> {
     fun onLoading() {}
-    fun onSuccess(code: Int, data: T) {}
     fun onError(code: Int, msg: String) {}
 }
 

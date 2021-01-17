@@ -23,6 +23,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
     buildFeatures {
         viewBinding = true
     }
@@ -31,6 +32,11 @@ android {
         sourceCompatibility 1.8
         targetCompatibility 1.8
     }
+
+    androidExtensions {
+        experimental = true
+    }
+
     tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
         kotlinOptions {
             jvmTarget = "1.8"

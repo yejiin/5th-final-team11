@@ -25,5 +25,9 @@ class SortBottomSheetDialog : BottomSheetMenu() {
         onSortSelectListener = listener
     }
 
+    fun setInitSort(sortType: SortType){
+        setSelectIndex(sortType.ordinal)
+    }
+
 
 }

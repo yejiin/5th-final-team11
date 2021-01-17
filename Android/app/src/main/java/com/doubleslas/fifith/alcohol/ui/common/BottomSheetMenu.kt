@@ -4,16 +4,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.doubleslas.fifith.alcohol.R
 import com.doubleslas.fifith.alcohol.databinding.ItemMenuListBinding
 import com.doubleslas.fifith.alcohol.databinding.RecyclerviewBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-open class BottomSheetMenu : BottomSheetDialogFragment() {
+open class BottomSheetMenu() : BottomSheetDialogFragment() {
     private var binding: RecyclerviewBinding? = null
     private var list: List<String>? = null
     private var onItemClickListener: ((String) -> Unit)? = null
+    private var selectIndex: Int? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,6 +32,10 @@ open class BottomSheetMenu : BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         binding?.let {
             it.recyclerview.layoutManager = LinearLayoutManager(context)
+            val itemDecoration = DividerItemDecoration(context!!, 1).apply {
+                setDrawable(ContextCompat.getDrawable(context!!, R.drawable.divider)!!)
+            }
+            it.recyclerview.addItemDecoration(itemDecoration)
             it.recyclerview.adapter = Adapter()
         }
     }
@@ -40,8 +48,15 @@ open class BottomSheetMenu : BottomSheetDialogFragment() {
         onItemClickListener = listener
     }
 
+    fun setSelectIndex(position: Int) {
+        selectIndex = position
+    }
+
     inner class Adapter : RecyclerView.Adapter<Adapter.BottomSheetMenuViewHolder>() {
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Adapter.BottomSheetMenuViewHolder {
+        override fun onCreateViewHolder(
+            parent: ViewGroup,
+            viewType: Int
+        ): Adapter.BottomSheetMenuViewHolder {
             val binding =
                 ItemMenuListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
             return BottomSheetMenuViewHolder(binding)
@@ -53,6 +68,10 @@ open class BottomSheetMenu : BottomSheetDialogFragment() {
 
         override fun onBindViewHolder(holder: Adapter.BottomSheetMenuViewHolder, position: Int) {
             holder.binding.tv.text = list!![position]
+            if (selectIndex == null || selectIndex != position)
+                holder.binding.ivCheck.visibility = View.INVISIBLE
+            else
+                holder.binding.ivCheck.visibility = View.VISIBLE
         }
 
         inner class BottomSheetMenuViewHolder(val binding: ItemMenuListBinding) :
