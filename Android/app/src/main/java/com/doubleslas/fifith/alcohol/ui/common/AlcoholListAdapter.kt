@@ -87,6 +87,7 @@ class AlcoholListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         init {
             binding.root.setOnClickListener {
                 val activity = it.context as AppCompatActivity
+                sortDialog.setInitSort(sortType ?: SortType.Popular)
                 sortDialog.show(activity.supportFragmentManager, null)
             }
         }
