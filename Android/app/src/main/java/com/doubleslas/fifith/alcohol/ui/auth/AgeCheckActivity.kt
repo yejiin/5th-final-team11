@@ -17,6 +17,7 @@ class AgeCheckActivity : AppCompatActivity() {
         activityAgeCheckBinding.btnStart.setOnClickListener {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
+            finish()
         }
 
         activityAgeCheckBinding.btnStop.setOnClickListener {

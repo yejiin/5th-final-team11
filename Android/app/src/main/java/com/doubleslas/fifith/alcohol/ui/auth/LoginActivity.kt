@@ -36,10 +36,16 @@ class LoginActivity : AppCompatActivity() {
         activityLoginBinding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(activityLoginBinding.root)
 
+        activityLoginBinding.btnCustomFacebook.setOnClickListener {
+            activityLoginBinding.btnLoginFacebook.performClick()
+        }
         activityLoginBinding.btnBrowse.setOnClickListener {
             /*
                     추천창으로 이동
              */
+
+            // val intent = Intent(this, )
+
         }
 
 
@@ -52,10 +58,11 @@ class LoginActivity : AppCompatActivity() {
         val googleSignInClient = GoogleSignIn.getClient(this, googleSignInOption)
 
 
-        activityLoginBinding.btnLoginGoogle.setOnClickListener {
+        activityLoginBinding.btnCustomGoogle.setOnClickListener {
             val signInIntent = googleSignInClient.signInIntent
             startActivityForResult(signInIntent, GOOGLE_SIGN_IN)
         }
+
 
 
         activityLoginBinding.btnLoginKakao.setOnClickListener {
@@ -89,8 +96,6 @@ class LoginActivity : AppCompatActivity() {
             try {
                 val account = task.getResult(ApiException::class.java)
                 loginViewModel.firebaseAuthWithGoogle(account?.idToken!!)
-                val intent = Intent(this, RegisterActivity::class.java)
-                startActivity(intent)
             } catch (e: ApiException) {
                 LogUtil.e("Auth", "", e)
             }
@@ -105,9 +110,14 @@ class LoginActivity : AppCompatActivity() {
                     Toast.makeText(applicationContext, "로그인 완료", Toast.LENGTH_SHORT).show()
                     val intent = Intent(this, RegisterActivity::class.java)
                     startActivity(intent)
+                    finish()
                 }
                 is ApiStatus.Error -> {
-                    Toast.makeText(applicationContext, "로그인 ERROR - ${it.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        applicationContext,
+                        "로그인 ERROR - ${it.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         })

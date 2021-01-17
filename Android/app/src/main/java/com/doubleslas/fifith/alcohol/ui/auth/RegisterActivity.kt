@@ -23,21 +23,13 @@ class RegisterActivity : AppCompatActivity(), CustomDialogInterface {
         setContentView(activityRegisterBinding.root)
 
 
+
         activityRegisterBinding.btnEndRegister1.isEnabled = false
 
 
         activityRegisterBinding.cbAdmitAll.setOnClickListener {
             checkAll()
-            if (activityRegisterBinding.cbEssential1.isChecked && activityRegisterBinding.cbEssential2.isChecked && activityRegisterBinding.cbEssential3.isChecked) {
-                activityRegisterBinding.btnEndRegister1.isEnabled = true
-                activityRegisterBinding.btnEndRegister1.setBackgroundColor(Color.parseColor("#4638CE"))
-                activityRegisterBinding.btnEndRegister1.setTextColor(Color.parseColor("#FFFFFF"))
-            } else {
-                activityRegisterBinding.btnEndRegister1.isEnabled = false
-                activityRegisterBinding.btnEndRegister1.setBackgroundColor(Color.parseColor("#202425"))
-                activityRegisterBinding.btnEndRegister1.setTextColor(Color.parseColor("#575757"))
-
-            }
+            isChecked()
 
 
         }
@@ -59,6 +51,7 @@ class RegisterActivity : AppCompatActivity(), CustomDialogInterface {
 
 
 
+
         activityRegisterBinding.btnValidate.setOnClickListener {
             nickname = activityRegisterBinding.etNickname.text.toString()
             // 닉네임 중복 체크
@@ -69,9 +62,29 @@ class RegisterActivity : AppCompatActivity(), CustomDialogInterface {
                     is ApiStatus.Success -> {
                         it.data
                         onDialogBtnClicked("해당 닉네임은\n 사용 가능합니다.")
+                        nickname = activityRegisterBinding.etNickname.text.toString()
+                        if (activityRegisterBinding.cbEssential1.isChecked && activityRegisterBinding.cbEssential2.isChecked && activityRegisterBinding.cbEssential3.isChecked) {
+                            activityRegisterBinding.btnEndRegister1.isEnabled = true
+                            activityRegisterBinding.btnEndRegister1.setBackgroundColor(
+                                Color.parseColor(
+                                    "#4638CE"
+                                )
+                            )
+                            activityRegisterBinding.btnEndRegister1.setTextColor(Color.parseColor("#FFFFFF"))
+                        }
                     }
                     is ApiStatus.Error -> {
+                        nickname = ""
+                        activityRegisterBinding.etNickname.setText(nickname)
                         onDialogBtnClicked("해당 닉네임은\n 이미 사용 중입니다.")
+                        activityRegisterBinding.btnEndRegister1.isEnabled = false
+                        activityRegisterBinding.btnEndRegister1.setBackgroundColor(
+                            Color.parseColor(
+                                "#202425"
+                            )
+                        )
+                        activityRegisterBinding.btnEndRegister1.setTextColor(Color.parseColor("#575757"))
+
                     }
                 }
             })
@@ -80,19 +93,18 @@ class RegisterActivity : AppCompatActivity(), CustomDialogInterface {
         }
 
         activityRegisterBinding.btnEndRegister1.setOnClickListener {
-            if (nickname != "") {
+
+            if (nickname != activityRegisterBinding.etNickname.text.toString()) {
+                onDialogBtnClicked("중복 확인을\n 해주세요!")
+            }
+            if (nickname == activityRegisterBinding.etNickname.text.toString()) {
 
                 val intent = Intent(this, Register2Activity::class.java)
                 intent.putExtra("nickname", nickname)
                 startActivity(intent)
-            } else {
-                onDialogBtnClicked("닉네임을\n 입력하세요!")
-                nickname = ""
+                finish()
             }
-
         }
-
-
     }
 
 
@@ -102,30 +114,38 @@ class RegisterActivity : AppCompatActivity(), CustomDialogInterface {
             activityRegisterBinding.cbEssential2.isChecked = true
             activityRegisterBinding.cbEssential3.isChecked = true
             activityRegisterBinding.cbChoice1.isChecked = true
+
         } else {
             activityRegisterBinding.cbEssential1.isChecked = false
             activityRegisterBinding.cbEssential2.isChecked = false
             activityRegisterBinding.cbEssential3.isChecked = false
             activityRegisterBinding.cbChoice1.isChecked = false
         }
+
+
     }
 
     private fun isChecked() {
         if (activityRegisterBinding.cbAdmitAll.isChecked) {
             activityRegisterBinding.cbAdmitAll.isChecked = false
-        } else if (activityRegisterBinding.cbEssential1.isChecked && activityRegisterBinding.cbEssential2.isChecked && activityRegisterBinding.cbEssential3.isChecked && activityRegisterBinding.cbChoice1.isChecked) {
-            activityRegisterBinding.cbAdmitAll.isChecked = true
         }
-        if (activityRegisterBinding.cbEssential1.isChecked && activityRegisterBinding.cbEssential2.isChecked && activityRegisterBinding.cbEssential3.isChecked) {
+        if (activityRegisterBinding.cbEssential1.isChecked && activityRegisterBinding.cbEssential2.isChecked && activityRegisterBinding.cbEssential3.isChecked && activityRegisterBinding.cbChoice1.isChecked) {
+            activityRegisterBinding.cbAdmitAll.isChecked = true
+        } else if (activityRegisterBinding.cbEssential1.isChecked && activityRegisterBinding.cbEssential2.isChecked && activityRegisterBinding.cbEssential3.isChecked && activityRegisterBinding.cbChoice1.isChecked && nickname != "") {
+            activityRegisterBinding.btnEndRegister1.isEnabled = true
+        }
+        if (activityRegisterBinding.cbEssential1.isChecked && activityRegisterBinding.cbEssential2.isChecked && activityRegisterBinding.cbEssential3.isChecked && nickname != "") {
             activityRegisterBinding.btnEndRegister1.setBackgroundColor(Color.parseColor("#4638CE"))
             activityRegisterBinding.btnEndRegister1.setTextColor(Color.parseColor("#FFFFFF"))
             activityRegisterBinding.btnEndRegister1.isEnabled = true
 
+
         } else {
-            activityRegisterBinding.btnEndRegister1.isEnabled = false
             activityRegisterBinding.btnEndRegister1.setBackgroundColor(Color.parseColor("#202425"))
             activityRegisterBinding.btnEndRegister1.setTextColor(Color.parseColor("#575757"))
+            activityRegisterBinding.btnEndRegister1.isEnabled = false
         }
+
     }
 
 
@@ -137,10 +157,6 @@ class RegisterActivity : AppCompatActivity(), CustomDialogInterface {
 
 
     override fun onConfirmBtnClicked() {
-        nickname = activityRegisterBinding.etNickname.text.toString()
-        if (activityRegisterBinding.cbEssential1.isChecked && activityRegisterBinding.cbEssential2.isChecked && activityRegisterBinding.cbEssential3.isChecked) {
-            activityRegisterBinding.btnEndRegister1.isEnabled = true
-        }
         customDialog.dismiss()
     }
 

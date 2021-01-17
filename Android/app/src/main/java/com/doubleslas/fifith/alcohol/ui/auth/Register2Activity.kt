@@ -1,5 +1,6 @@
 package com.doubleslas.fifith.alcohol.ui.auth
 
+import android.content.Intent
 import android.graphics.Canvas
 import android.graphics.Color
 import android.os.Build
@@ -14,6 +15,7 @@ import com.doubleslas.fifith.alcohol.R
 import com.doubleslas.fifith.alcohol.databinding.ActivityRegister2Binding
 import com.doubleslas.fifith.alcohol.databinding.ActivityRegisterBinding
 import com.doubleslas.fifith.alcohol.model.network.base.ApiStatus
+import com.doubleslas.fifith.alcohol.ui.main.MainActivity
 import com.doubleslas.fifith.alcohol.viewmodel.RegisterViewModel
 
 class Register2Activity : AppCompatActivity(), SeekBar.OnSeekBarChangeListener {
@@ -83,6 +85,9 @@ class Register2Activity : AppCompatActivity(), SeekBar.OnSeekBarChangeListener {
                     }
                     is ApiStatus.Success -> {
                         it.data
+                        val intent = Intent(this, MainActivity::class.java)
+                        startActivity(intent)
+                        finish()
                     }
                     is ApiStatus.Error -> {
                     }
