@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="20dp"
+    app:cardBackgroundColor="#202425"
+    app:cardCornerRadius="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="16dp"
+        android:paddingTop="20dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/iv_alcohol"
+                android:layout_width="83dp"
+                android:layout_height="83dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="6dp"
+                android:textColor="#ffffff"
+                android:textSize="18sp"
+                app:layout_constraintLeft_toRightOf="@id/iv_alcohol"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="술수룻ㄹ" />
+
+            <TextView
+                android:id="@+id/tv_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textColor="#a5a5a5"
+                android:textSize="14sp"
+                app:layout_constraintLeft_toLeftOf="@id/tv_name"
+                app:layout_constraintTop_toBottomOf="@id/tv_name"
+                app:layout_goneMarginTop="12dp"
+                tools:text="종류라고" />
+
+            <androidx.appcompat.widget.AppCompatRatingBar
+                android:id="@+id/rating"
+                style="@style/RatingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:isIndicator="true"
+                android:max="10"
+                android:numStars="5"
+                android:stepSize="0.1"
+                app:layout_constraintLeft_toLeftOf="@id/tv_name"
+                app:layout_constraintTop_toBottomOf="@id/tv_type" />
+
+            <TextView
+                android:id="@+id/tv_rating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="@id/rating"
+                app:layout_constraintLeft_toRightOf="@+id/rating"
+                app:layout_constraintTop_toTopOf="@id/rating"
+                tools:text="4.5" />
+
+
+            <TextView
+                android:id="@+id/tv_reviewCnt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:textColor="#707070"
+                app:layout_constraintBottom_toBottomOf="@id/rating"
+                app:layout_constraintLeft_toRightOf="@+id/tv_rating"
+                app:layout_constraintTop_toTopOf="@id/rating"
+                tools:text="(5)" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="20dp"
+            android:background="#707070" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_review"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#cccccc"
+                android:textSize="14sp"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="@string/lorem_ipsum" />
+
+            <TextView
+                android:id="@+id/tv_date_label"
+                style="@style/MyReviewText.Label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/all_date"
+                android:layout_marginTop="26.5dp"
+                app:layout_constraintTop_toBottomOf="@id/tv_review"
+                app:layout_constraintLeft_toLeftOf="parent"/>
+
+            <TextView
+                android:id="@+id/tv_date"
+                style="@style/MyReviewText.Content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="2020.06.20"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_date_label"
+                app:layout_constraintLeft_toRightOf="@id/tv_date_label"/>
+
+            <TextView
+                android:id="@+id/tv_location_label"
+                style="@style/MyReviewText.Label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/all_location"
+                android:layout_marginTop="20dp"
+                app:layout_constraintTop_toBottomOf="@id/tv_date_label"
+                app:layout_constraintLeft_toLeftOf="parent"/>
+
+            <TextView
+                android:id="@+id/tv_location"
+                style="@style/MyReviewText.Content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="아늑한 우리집"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_location_label"
+                app:layout_constraintLeft_toRightOf="@id/tv_location_label"/>
+
+            <TextView
+                android:id="@+id/tv_capacity_label"
+                style="@style/MyReviewText.Label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/all_drink_capacity"
+                android:layout_marginTop="20dp"
+                app:layout_constraintTop_toBottomOf="@id/tv_location_label"
+                app:layout_constraintLeft_toLeftOf="parent"/>
+
+            <TextView
+                android:id="@+id/tv_capacity"
+                style="@style/MyReviewText.Content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="3"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_capacity_label"
+                app:layout_constraintLeft_toRightOf="@id/tv_capacity_label"/>
+
+
+            <TextView
+                android:id="@+id/tv_hangover_label"
+                style="@style/MyReviewText.Label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/all_hangover"
+                android:layout_marginTop="20dp"
+                app:layout_constraintTop_toBottomOf="@id/tv_capacity_label"
+                app:layout_constraintLeft_toLeftOf="parent"/>
+
+            <androidx.appcompat.widget.AppCompatSeekBar
+                
+                android:id="@+id/tv_hangover"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:max="5"
+                app:layout_constraintRight_toRightOf="parent"
+
+                app:layout_constraintTop_toTopOf="@id/tv_hangover_label"
+                app:layout_constraintLeft_toRightOf="@id/tv_hangover_label"/>
+
+
+            <TextView
+                android:id="@+id/tv_price_label"
+                style="@style/MyReviewText.Label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/all_price"
+                android:layout_marginTop="20dp"
+                app:layout_constraintTop_toBottomOf="@id/tv_hangover_label"
+                app:layout_constraintLeft_toLeftOf="parent"/>
+
+            <TextView
+                android:id="@+id/tv_price"
+                style="@style/MyReviewText.Content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="57000"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_price_label"
+                app:layout_constraintLeft_toRightOf="@id/tv_price_label"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="14dp"
+            android:paddingBottom="15dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/ic_open__1" />
+        </FrameLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
