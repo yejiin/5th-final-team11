@@ -32,6 +32,9 @@ class ReviewBottomSheetDialog : BaseBottomSheetDialogFragment<LayoutWriteReviewB
         super.onViewCreated(view, savedInstanceState)
 
         binding?.let { b ->
+            b.seekBarHangover.tvLabel1.text = getString(R.string.hangover_none)
+            b.seekBarHangover.tvLabel2.text = getString(R.string.hangover_heavy)
+
             b.ivDetailRecord.setImageResource(R.drawable.ic_review_button_plus)
             b.layoutDetailReview.visibility = View.GONE
 

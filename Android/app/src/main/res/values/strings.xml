@@ -16,7 +16,11 @@
     <string name="search_et_hint">술 종류, 이름</string>
     <string name="all_search">검색</string>
 
+    <string name="hangover_none">없음</string>
+    <string name="hangover_heavy">심함</string>
+
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="review_private">비공개</string>
 </resources>
