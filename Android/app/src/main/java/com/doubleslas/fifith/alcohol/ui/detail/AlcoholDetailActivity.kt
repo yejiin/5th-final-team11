@@ -13,11 +13,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.doubleslas.fifith.alcohol.R
 import com.doubleslas.fifith.alcohol.databinding.ActivityAlcoholDetailBinding
 import com.doubleslas.fifith.alcohol.model.network.base.ApiStatus
-import com.doubleslas.fifith.alcohol.ui.common.base.CalendarDialogFragment
-import com.doubleslas.fifith.alcohol.ui.common.base.ReviewBottomSheetDialog
+import com.doubleslas.fifith.alcohol.ui.reivew.ReviewBottomSheetDialog
 import com.doubleslas.fifith.alcohol.viewmodel.DetailViewModel
 import com.google.android.material.chip.Chip
-import kotlinx.android.synthetic.main.layout_write_review.*
 
 class AlcoholDetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAlcoholDetailBinding
@@ -33,7 +31,8 @@ class AlcoholDetailActivity : AppCompatActivity() {
 
 
         binding.btnWriteReview.setOnClickListener {
-            val bottomSheet = ReviewBottomSheetDialog()
+            val bottomSheet =
+                ReviewBottomSheetDialog()
 
             bottomSheet.show(supportFragmentManager, bottomSheet.tag)
         }
