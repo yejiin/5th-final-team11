@@ -9,6 +9,8 @@
 
     <color name="black">#000000</color>
     <color name="white">#ffffff</color>
+    <color name="light_gray">#707070</color>
+    <color name="orange">#ffa255</color>
 
     <color name="appbar_background">#202425</color>
 

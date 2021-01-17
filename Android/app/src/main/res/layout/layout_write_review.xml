@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/bottom_sheet"
@@ -12,9 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layout_detail_record"
+        <LinearLayout
+            android:id="@+id/layout_detail_toggle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
@@ -22,35 +20,24 @@
             android:layout_marginEnd="265dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/et_review">
+            app:layout_constraintTop_toBottomOf="@+id/et_comment">
 
-            <LinearLayout
+            <ImageView
+                android:id="@+id/iv__detail_record"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_review_button_plus" />
 
-                <ImageView
-                    android:id="@+id/iv__detail_record"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/ic_review_button_plus" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="상세기록"
-                    android:textColor="#A5A5A5"
-                    android:textSize="14sp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="상세기록"
+                android:textColor="#A5A5A5"
+                android:textSize="14sp" />
 
 
-            </LinearLayout>
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"
@@ -78,7 +65,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/et_review"
+            android:id="@+id/et_comment"
             android:layout_width="319dp"
             android:layout_height="152dp"
             android:layout_marginTop="118dp"
@@ -97,15 +84,15 @@
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/cl_review_detail"
+        android:id="@+id/layout_detail_review"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="18dp">
+        android:layout_marginTop="18dp"
+        android:paddingHorizontal="20dp">
 
 
         <TextView
-            android:id="@+id/tv_review_calendar"
+            android:id="@+id/tv_calendar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="날짜"
@@ -126,23 +113,24 @@
             android:gravity="center"
             android:inputType="none"
             android:maxLines="1"
+            android:nextFocusDown="@+id/et_place"
             android:textColor="#FFFFFF"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/tv_review_calendar"
+            app:layout_constraintStart_toEndOf="@+id/tv_calendar"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/tv_review_place"
+            android:id="@+id/tv_place"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="장소"
             android:textColor="#A5A5A5"
             android:textSize="16sp"
-            app:layout_constraintBaseline_toBaselineOf="@+id/et_review_place"
+            app:layout_constraintBaseline_toBaselineOf="@+id/et_place"
             app:layout_constraintStart_toStartOf="parent" />
 
         <EditText
-            android:id="@+id/et_review_place"
+            android:id="@+id/et_place"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="31dp"
@@ -152,23 +140,23 @@
             android:maxLines="1"
             android:textColor="#FFFFFF"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/tv_review_place"
+            app:layout_constraintStart_toEndOf="@id/tv_place"
             app:layout_constraintTop_toBottomOf="@id/et_calendar" />
 
 
         <TextView
-            android:id="@+id/tv_review_drink"
+            android:id="@+id/tv_drink"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="마신 주량"
             android:textColor="#A5A5A5"
             android:textSize="16sp"
-            app:layout_constraintBaseline_toBaselineOf="@+id/et_review_drink"
+            app:layout_constraintBaseline_toBaselineOf="@+id/et_drink"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_review_place" />
+            app:layout_constraintTop_toBottomOf="@id/tv_place" />
 
         <EditText
-            android:id="@+id/et_review_drink"
+            android:id="@+id/et_drink"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -179,73 +167,45 @@
             android:maxLines="1"
             android:textColor="#FFFFFF"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/tv_review_drink"
-            app:layout_constraintTop_toBottomOf="@id/et_review_place" />
+            app:layout_constraintStart_toEndOf="@id/tv_drink"
+            app:layout_constraintTop_toBottomOf="@id/et_place" />
 
         <TextView
-            android:id="@+id/tv_review_hangover"
+            android:id="@+id/tv_hangover"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="숙취"
             android:textColor="#A5A5A5"
             android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/seekBar_hangover"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_review_drink"
             app:layout_constraintTop_toTopOf="@+id/seekBar_hangover" />
 
-
-        <SeekBar
+        <include
             android:id="@+id/seekBar_hangover"
-            style="@style/Widget.AppCompat.SeekBar.Discrete"
-            android:layout_width="300dp"
+            layout="@layout/view_seekbar"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="31dp"
             android:layout_marginTop="19dp"
-            android:max="4"
-            android:min="0"
-            android:progressTint="#F3A663"
-            android:thumb="@drawable/seekbar_thumb"
-            android:tickMark="@drawable/tickmark"
-            app:layout_constraintStart_toEndOf="@id/tv_review_hangover"
-            app:layout_constraintTop_toBottomOf="@id/et_review_drink" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="74dp"
-            android:layout_marginTop="14dp"
-            android:text="없음"
-            android:textColor="#CCCCCC"
-            android:textSize="14sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_review_hangover" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="14dp"
-            android:layout_marginEnd="20dp"
-            android:text="심함"
-            android:textColor="#CCCCCC"
-            android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_review_hangover" />
-
+            app:layout_constraintStart_toEndOf="@+id/tv_hangover"
+            app:layout_constraintTop_toBottomOf="@+id/et_drink" />
 
         <TextView
-            android:id="@+id/tv_review_price"
+            android:id="@+id/tv_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="45dp"
             android:text="가격"
             android:textColor="#A5A5A5"
             android:textSize="16sp"
-            app:layout_constraintBaseline_toBaselineOf="@+id/et_review_price"
+            app:layout_constraintBaseline_toBaselineOf="@+id/et_price"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_review_hangover" />
+            app:layout_constraintTop_toBottomOf="@id/tv_hangover" />
 
         <EditText
-            android:id="@+id/et_review_price"
+            android:id="@+id/et_price"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="31dp"
@@ -255,8 +215,8 @@
             android:maxLines="1"
             android:textColor="#FFFFFF"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/tv_review_price"
-            app:layout_constraintTop_toBottomOf="@id/et_review_drink" />
+            app:layout_constraintStart_toEndOf="@id/tv_price"
+            app:layout_constraintTop_toBottomOf="@id/et_drink" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

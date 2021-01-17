@@ -80,7 +80,7 @@ class AlcoholDetailActivity : AppCompatActivity() {
                         binding.sbBody.progress = it.data.body
                     } else {
 
-                        binding.clBody.visibility = View.GONE
+                        binding.layoutBody.visibility = View.GONE
                         binding.sbTaste.visibility = View.GONE
                         binding.tvDry.visibility = View.GONE
                         binding.tvSweet.visibility = View.GONE
@@ -138,8 +138,8 @@ class AlcoholDetailActivity : AppCompatActivity() {
     }
 
     private fun onInfoBtnClicked() {
-        binding.clBasicInfo.visibility = View.VISIBLE
-        binding.clDescription.visibility = View.VISIBLE
+        binding.layoutBasicInfo.visibility = View.VISIBLE
+        binding.layoutDescription.visibility = View.VISIBLE
         binding.layoutInfo.visibility = View.VISIBLE
         binding.layoutReview.visibility = View.GONE
 
@@ -153,8 +153,8 @@ class AlcoholDetailActivity : AppCompatActivity() {
     }
 
     private fun onReviewBtnClicked() {
-        binding.clBasicInfo.visibility = View.GONE
-        binding.clDescription.visibility = View.GONE
+        binding.layoutBasicInfo.visibility = View.GONE
+        binding.layoutDescription.visibility = View.GONE
         binding.layoutInfo.visibility = View.GONE
         binding.layoutReview.visibility = View.VISIBLE
         binding.btnAlcoholInfo.setTextColor(Color.parseColor("#707070"))

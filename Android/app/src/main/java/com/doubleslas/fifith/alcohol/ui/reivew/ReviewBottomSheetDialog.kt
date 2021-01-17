@@ -8,7 +8,6 @@ import com.doubleslas.fifith.alcohol.R
 import com.doubleslas.fifith.alcohol.databinding.LayoutWriteReviewBinding
 import com.doubleslas.fifith.alcohol.ui.common.CalendarDialogFragment
 import com.doubleslas.fifith.alcohol.ui.common.base.BaseBottomSheetDialogFragment
-import kotlinx.android.synthetic.main.layout_write_review.*
 
 
 class ReviewBottomSheetDialog : BaseBottomSheetDialogFragment<LayoutWriteReviewBinding>() {
@@ -33,6 +32,9 @@ class ReviewBottomSheetDialog : BaseBottomSheetDialogFragment<LayoutWriteReviewB
         super.onViewCreated(view, savedInstanceState)
 
         binding?.let { b ->
+            b.ivDetailRecord.setImageResource(R.drawable.ic_review_button_plus)
+            b.layoutDetailReview.visibility = View.GONE
+
             b.etCalendar.setOnClickListener {
                 activity!!.supportFragmentManager.let { fm ->
                     calendarDialogFragment.show(fm, null)
@@ -45,14 +47,13 @@ class ReviewBottomSheetDialog : BaseBottomSheetDialogFragment<LayoutWriteReviewB
                 dismiss()
             }
 
-            b.layoutDetailRecord.setOnClickListener {
-                if (cl_review_detail.visibility == View.GONE) {
-                    iv__detail_record.setImageResource(R.drawable.ic_review_button_x)
-                    cl_review_detail.visibility = View.VISIBLE
+            b.layoutDetailToggle.setOnClickListener {
+                if (b.layoutDetailReview.visibility == View.GONE) {
+                    b.ivDetailRecord.setImageResource(R.drawable.ic_review_button_x)
+                    b.layoutDetailReview.visibility = View.VISIBLE
                 } else {
-                    iv__detail_record.setImageResource(R.drawable.ic_review_button_plus)
-                    cl_review_detail.visibility = View.GONE
-
+                    b.ivDetailRecord.setImageResource(R.drawable.ic_review_button_plus)
+                    b.layoutDetailReview.visibility = View.GONE
                 }
             }
         }

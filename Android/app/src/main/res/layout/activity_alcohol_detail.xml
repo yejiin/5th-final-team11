@@ -172,7 +172,7 @@
 
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/cl_basic_info"
+                android:id="@+id/layout_basic_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#1B1C1D">
@@ -290,7 +290,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/cl_description"
+                android:id="@+id/layout_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#1B1C1D">
@@ -321,7 +321,7 @@
 
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/cl_kinds"
+                    android:id="@+id/layout_kinds"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
@@ -373,7 +373,7 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/cl_taste"
+                    android:id="@+id/layout_taste"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
@@ -470,9 +470,14 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/cl_body"
+                    android:id="@+id/layout_body"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
+                    
+                    <include
+                        android:id="@+id/seekBar_body"
+                        layout="@layout/view_seekbar"
+                        />
 
                     <SeekBar
                         android:id="@+id/sb_body"
@@ -541,7 +546,7 @@
 
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/cl_similar"
+                    android:id="@+id/layout_similar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
