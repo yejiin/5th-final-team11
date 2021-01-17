@@ -1,5 +1,7 @@
 package com.doubleslash.fifth.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -13,6 +15,8 @@ import com.doubleslash.fifth.vo.AlcoholVO;
 public interface AlcoholRepository extends JpaRepository<AlcoholVO, Integer>{
 
 	public AlcoholVO findByAid(int aid);
+	
+	public List<AlcoholVO> findByCategory(String category);
 	
 	// 양주 조회
 	@Query(value = "select new com.doubleslash.fifth.dto.LiquorDTO(a.aid, a.name, a.category, a.image, a.lowestPrice, a.highestPrice, a.ml, a.abv, a.description, a.kind, l.flavor, AVG(r.star), COUNT(*)) from AlcoholVO as a, LiquorVO as l, ReviewVO as r where a.aid = l.aid and a.aid = r.aid and a.aid = ?1")
