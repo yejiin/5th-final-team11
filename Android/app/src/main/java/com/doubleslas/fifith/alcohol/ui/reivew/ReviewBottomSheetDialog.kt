@@ -4,13 +4,23 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.doubleslas.fifith.alcohol.R
 import com.doubleslas.fifith.alcohol.databinding.LayoutWriteReviewBinding
+import com.doubleslas.fifith.alcohol.model.network.base.ApiStatus
+import com.doubleslas.fifith.alcohol.model.network.dto.ReviewDetailData
 import com.doubleslas.fifith.alcohol.ui.common.CalendarDialogFragment
 import com.doubleslas.fifith.alcohol.ui.common.base.BaseBottomSheetDialogFragment
+import com.doubleslas.fifith.alcohol.viewmodel.ReviewViewModel
 
 
 class ReviewBottomSheetDialog : BaseBottomSheetDialogFragment<LayoutWriteReviewBinding>() {
+
+    private val viewModel by lazy {
+        ViewModelProvider(this).get(ReviewViewModel::class.java)
+    }
+
     private val calendarDialogFragment by lazy {
         CalendarDialogFragment().apply {
             setOnConfirmListener { year, month, day ->
@@ -46,8 +56,7 @@ class ReviewBottomSheetDialog : BaseBottomSheetDialogFragment<LayoutWriteReviewB
 
 
             b.btnReviewConfirm.setOnClickListener {
-                // TODO: 서버 전송
-                dismiss()
+                confirmReview()
             }
 
             b.layoutDetailToggle.setOnClickListener {
@@ -62,6 +71,58 @@ class ReviewBottomSheetDialog : BaseBottomSheetDialogFragment<LayoutWriteReviewB
         }
     }
 
+    private fun confirmReview() {
+        binding?.let { b ->
+            val detail = ReviewDetailData(
+                b.etComment.text.toString(),
+                b.etDrink.text.toString().toInt(),
+                b.seekBarHangover.seekBar.progress,
+                b.etPlace.text.toString(),
+                b.etPrice.text.toString().toInt(),
+                b.checkboxPrivate.isChecked
+            )
+
+            val liveData = viewModel.sendReview(
+                b.etComment.text.toString(),
+                b.ratingReview.progress,
+                detail
+            )
+
+            liveData.observe(viewLifecycleOwner, Observer {
+                when (it) {
+                    is ApiStatus.Loading -> {
+
+                    }
+                    is ApiStatus.Success -> {
+                        dismiss()
+                    }
+                    is ApiStatus.Error -> {
+                        processError(it.code)
+                    }
+                }
+            })
+        }
+    }
+
+    private fun processError(code: Int) {
+        when (code) {
+            ReviewViewModel.ErrorCode.COMMENT.ordinal -> {
+                binding?.etComment?.requestFocus()
+            }
+            ReviewViewModel.ErrorCode.DETAIL_DATE.ordinal -> {
+                binding?.etCalendar?.requestFocus()
+            }
+            ReviewViewModel.ErrorCode.DETAIL_PLACE.ordinal -> {
+                binding?.etPlace?.requestFocus()
+            }
+            ReviewViewModel.ErrorCode.DETAIL_DRINK.ordinal -> {
+                binding?.etDrink?.requestFocus()
+            }
+            ReviewViewModel.ErrorCode.DETAIL_PRICE.ordinal -> {
+                binding?.etPrice?.requestFocus()
+            }
+        }
+    }
 
 }
 
