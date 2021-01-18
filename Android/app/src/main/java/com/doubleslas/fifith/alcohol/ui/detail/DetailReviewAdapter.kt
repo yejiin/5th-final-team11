@@ -43,6 +43,13 @@ class DetailReviewAdapter(val context: Context): RecyclerView.Adapter<DetailRevi
                 review.text = item.review
                 rating.rating = item.rating
 
+                binding.layoutDetailReview.etCalendar.isEnabled = false
+                binding.layoutDetailReview.etDrink.isEnabled = false
+                binding.layoutDetailReview.etPlace.isEnabled = false
+                binding.layoutDetailReview.etPrice.isEnabled = false
+                binding.layoutDetailReview.seekBarHangover.seekBar.isEnabled = false
+                binding.layoutDetailReview.seekBarHangover.tvLabel1.text = "없음"
+                binding.layoutDetailReview.seekBarHangover.tvLabel2.text = "심함"
 
             }
 
