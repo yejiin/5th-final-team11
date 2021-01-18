@@ -81,6 +81,11 @@ class SearchHistoryFragment : BaseFragment<FragmentSearchHistoryBinding>() {
         binding?.etSearch?.requestFocus()
     }
 
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+        if (!hidden) binding?.etSearch?.requestFocus()
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {

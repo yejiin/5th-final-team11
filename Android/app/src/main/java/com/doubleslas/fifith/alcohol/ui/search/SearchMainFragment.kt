@@ -59,7 +59,6 @@ class SearchMainFragment : BaseFragment<FragmentSearchMainBinding>() {
 
             b.layoutSearch.setOnClickListener {
                 (parentFragment as? SearchFragment)?.openSearchHistoryFragment()
-//                startActivity(SearchHistoryActivity.getStartIntent(context!!))
             }
         }
     }
@@ -77,7 +76,6 @@ class SearchMainFragment : BaseFragment<FragmentSearchMainBinding>() {
         binding?.let { b ->
             setSupportActionBar(b.toolbar)
             getSupportActionBar()?.setDisplayShowTitleEnabled(false)
-
         }
     }
 

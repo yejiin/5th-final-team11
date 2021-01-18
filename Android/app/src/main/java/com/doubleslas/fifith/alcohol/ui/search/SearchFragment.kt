@@ -9,7 +9,7 @@ import com.doubleslas.fifith.alcohol.databinding.FragmentSearchBinding
 import com.doubleslas.fifith.alcohol.ui.common.base.BaseFragment
 
 class SearchFragment : BaseFragment<FragmentSearchBinding>() {
-    private val fragmentList by lazy { SearchMainFragment() }
+    private val fragment : SearchMainFragment by lazy { SearchMainFragment() }
 
     override fun createViewBinding(
         inflater: LayoutInflater,
@@ -22,14 +22,19 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
         super.onViewCreated(view, savedInstanceState)
 
         childFragmentManager.beginTransaction().apply {
-            replace(R.id.fragment, fragmentList)
+            replace(R.id.fragment, fragment)
             commit()
         }
     }
 
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+        childFragmentManager.fragments.last().onHiddenChanged(hidden)
+    }
+
     fun openSearchHistoryFragment() {
         childFragmentManager.beginTransaction().apply {
-            replace(R.id.fragment, SearchHistoryFragment() )
+            replace(R.id.fragment, SearchHistoryFragment())
             addToBackStack(null)
             commit()
         }
