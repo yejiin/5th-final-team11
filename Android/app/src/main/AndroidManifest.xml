@@ -14,20 +14,24 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
 
+        <activity android:name=".ui.auth.AgeCheckActivity"/>
+
+        <activity android:name=".ui.auth.LoginActivity">
+        </activity>
+
         <activity android:name=".ui.auth.Register2Activity"/>
 
         <activity android:name=".ui.auth.RegisterActivity"/>
 
-        <activity android:name=".ui.auth.AgeCheckActivity"/>
-
-        <activity android:name=".ui.main.MainActivity" />
-
-        <activity android:name=".ui.auth.LoginActivity">
+        <activity android:name=".ui.auth.firstinput.FirstInfoActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".ui.main.MainActivity" />
+
 
         <activity android:name=".ui.detail.AlcoholDetailActivity" />
 
