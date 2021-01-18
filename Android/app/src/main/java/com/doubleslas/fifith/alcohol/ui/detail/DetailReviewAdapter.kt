@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.doubleslas.fifith.alcohol.R
+import com.doubleslas.fifith.alcohol.databinding.ItemDetailReviewBinding
 import com.doubleslas.fifith.alcohol.model.network.dto.DetailReviewData
 import kotlinx.android.synthetic.main.item_alcohol_similar.view.*
 import kotlinx.android.synthetic.main.item_detail_review.view.*
@@ -23,16 +24,16 @@ class DetailReviewAdapter(val context: Context): RecyclerView.Adapter<DetailRevi
     )
 
 
-    inner class ReviewViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
-        LayoutInflater.from(parent.context).inflate(R.layout.item_detail_review, parent, false)
-    ) {
-        val nickname = itemView.tv_detail_nickname
-        val review = itemView.tv_detail_review
-        val rating = itemView.review_rating
+    inner class ReviewViewHolder(var binding: ItemDetailReviewBinding) : RecyclerView.ViewHolder(binding.root) {
+        val nickname = binding.tvDetailNickname
+        val review = binding.tvDetailReview
+        val rating = binding.reviewRating
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReviewViewHolder {
-        return ReviewViewHolder(parent)
+        val binding = ItemDetailReviewBinding.inflate(
+            LayoutInflater.from(parent.context), parent, false)
+        return ReviewViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ReviewViewHolder, position: Int) {
@@ -41,6 +42,7 @@ class DetailReviewAdapter(val context: Context): RecyclerView.Adapter<DetailRevi
                 nickname.text = item.nickname
                 review.text = item.review
                 rating.rating = item.rating
+
 
             }
 

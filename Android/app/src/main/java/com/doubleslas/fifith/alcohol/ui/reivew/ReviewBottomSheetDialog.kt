@@ -25,7 +25,7 @@ class ReviewBottomSheetDialog : BaseBottomSheetDialogFragment<LayoutWriteReviewB
         CalendarDialogFragment().apply {
             setOnConfirmListener { year, month, day ->
                 val txt = "${year}.${month}.${day}"
-                binding?.etCalendar?.setText(txt)
+                binding?.layoutDetail?.etCalendar?.setText(txt)
             }
         }
     }
@@ -42,13 +42,13 @@ class ReviewBottomSheetDialog : BaseBottomSheetDialogFragment<LayoutWriteReviewB
         super.onViewCreated(view, savedInstanceState)
 
         binding?.let { b ->
-            b.seekBarHangover.tvLabel1.text = getString(R.string.hangover_none)
-            b.seekBarHangover.tvLabel2.text = getString(R.string.hangover_heavy)
+            b.layoutDetail.seekBarHangover.tvLabel1.text = getString(R.string.hangover_none)
+            b.layoutDetail.seekBarHangover.tvLabel2.text = getString(R.string.hangover_heavy)
 
             b.ivDetailRecord.setImageResource(R.drawable.ic_review_button_plus)
-            b.layoutDetailReview.visibility = View.GONE
+            b.layoutDetail.layoutDetailReview.visibility = View.GONE
 
-            b.etCalendar.setOnClickListener {
+            b.layoutDetail.etCalendar.setOnClickListener {
                 activity!!.supportFragmentManager.let { fm ->
                     calendarDialogFragment.show(fm, null)
                 }
@@ -60,12 +60,12 @@ class ReviewBottomSheetDialog : BaseBottomSheetDialogFragment<LayoutWriteReviewB
             }
 
             b.layoutDetailToggle.setOnClickListener {
-                if (b.layoutDetailReview.visibility == View.GONE) {
+                if (b.layoutDetail.layoutDetailReview.visibility == View.GONE) {
                     b.ivDetailRecord.setImageResource(R.drawable.ic_review_button_x)
-                    b.layoutDetailReview.visibility = View.VISIBLE
+                    b.layoutDetail.layoutDetailReview.visibility = View.VISIBLE
                 } else {
                     b.ivDetailRecord.setImageResource(R.drawable.ic_review_button_plus)
-                    b.layoutDetailReview.visibility = View.GONE
+                    b.layoutDetail.layoutDetailReview.visibility = View.GONE
                 }
             }
         }
@@ -75,10 +75,10 @@ class ReviewBottomSheetDialog : BaseBottomSheetDialogFragment<LayoutWriteReviewB
         binding?.let { b ->
             val detail = ReviewDetailData(
                 b.etComment.text.toString(),
-                b.etDrink.text.toString().toInt(),
-                b.seekBarHangover.seekBar.progress,
-                b.etPlace.text.toString(),
-                b.etPrice.text.toString().toInt(),
+                b.layoutDetail.etDrink.text.toString().toInt(),
+                b.layoutDetail.seekBarHangover.seekBar.progress,
+                b.layoutDetail.etPlace.text.toString(),
+                b.layoutDetail.etPrice.text.toString().toInt(),
                 b.checkboxPrivate.isChecked
             )
 
@@ -110,16 +110,16 @@ class ReviewBottomSheetDialog : BaseBottomSheetDialogFragment<LayoutWriteReviewB
                 binding?.etComment?.requestFocus()
             }
             ReviewViewModel.ErrorCode.DETAIL_DATE.ordinal -> {
-                binding?.etCalendar?.requestFocus()
+                binding?.layoutDetail?.etCalendar?.requestFocus()
             }
             ReviewViewModel.ErrorCode.DETAIL_PLACE.ordinal -> {
-                binding?.etPlace?.requestFocus()
+                binding?.layoutDetail?.etPlace?.requestFocus()
             }
             ReviewViewModel.ErrorCode.DETAIL_DRINK.ordinal -> {
-                binding?.etDrink?.requestFocus()
+                binding?.layoutDetail?.etDrink?.requestFocus()
             }
             ReviewViewModel.ErrorCode.DETAIL_PRICE.ordinal -> {
-                binding?.etPrice?.requestFocus()
+                binding?.layoutDetail?.etPrice?.requestFocus()
             }
         }
     }
