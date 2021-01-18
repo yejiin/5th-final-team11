@@ -1,7 +1,6 @@
 package com.doubleslash.fifth.controller;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,13 +10,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.doubleslash.fifth.dto.ContentDTO;
-import com.doubleslash.fifth.dto.ReviewDTO;
+import com.doubleslash.fifth.dto.LoveClickDTO;
 import com.doubleslash.fifth.dto.ReviewWriteDTO;
 import com.doubleslash.fifth.dto.WrapperDTO;
 import com.doubleslash.fifth.service.AuthService;
@@ -26,6 +26,7 @@ import com.doubleslash.fifth.service.UserService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -46,21 +47,22 @@ public class ReviewController {
 	ReviewService reviewService;
 	
 	@ApiOperation(value = "리뷰 리스트 조회", notes="rid(리뷰id), nickname(닉네임), content(내용), love(하트 수), loveClick(하트 클릭 여부), reviewDate(리뷰작성 날짜), detail(상세 리뷰), comments(댓글 리스트)")
-	@ApiImplicitParam(name = "aid", required = true, dataType = "int", paramType = "query", value = "알코올 id")
-	@ApiResponses({
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "aid", required = true, dataType = "int", paramType = "query", example = "1", value = "알코올 id"),
+		@ApiImplicitParam(name = "page", required = true, dataType = "int", paramType = "query", 
+			example = "0", value = "페이지 번호(페이지당 데이터 20개)")
+	})
+		@ApiResponses({
 		@ApiResponse(code = 200, message = "Success"),
 		@ApiResponse(code = 404, message = "Alcohol Id Error")
 	})
 	@GetMapping(value = "")
 	@ResponseBody
-	public List<ReviewDTO> reviewList(@RequestParam("aid") int aid, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public Map<String, Object> reviewList(@RequestParam("aid") int aid, @RequestParam("page") int page, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String uid = authService.verifyToken(request);
 		int id = userService.getId(uid);
 
-		List<ReviewDTO> dto = new ArrayList<ReviewDTO>();
-		dto = reviewService.getReviewList(aid, id, response);
-		
-		return dto;
+		return reviewService.getReviewList(aid, page, id, response);
 	}
 	
 	
@@ -71,11 +73,12 @@ public class ReviewController {
 	})
 	@PostMapping(value ="")
 	@ResponseBody
-	public void reviewWrite(@RequestParam("aid") int aid, @RequestBody ReviewWriteDTO requestBody, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public WrapperDTO reviewWrite(@RequestParam("aid") int aid, @RequestBody ReviewWriteDTO requestBody, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String uid = authService.verifyToken(request);
 		int id = userService.getId(uid);
 	
-		reviewService.addReview(aid, id, requestBody, response);
+		WrapperDTO dto = reviewService.addReview(aid, id, requestBody, response);
+		return dto;
 	}
 	
 	
@@ -100,7 +103,7 @@ public class ReviewController {
 		@ApiResponse(code = 200, message = "Success"),
 		@ApiResponse(code = 404, message = "Review Id Error")
 	})
-	@PostMapping(value = "/report/{rid}")
+	@PutMapping(value = "/{rid}/report")
 	@ResponseBody
 	public WrapperDTO reviewReport(@PathVariable("rid") int rid, @RequestBody ContentDTO content, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String uid = authService.verifyToken(request);
@@ -116,7 +119,7 @@ public class ReviewController {
 		@ApiResponse(code = 200, message = "Success"),
 		@ApiResponse(code = 404, message = "Comment Id Error")
 	})
-	@PostMapping(value = "/comment/report/{cid}")
+	@PutMapping(value = "/comment/{cid}/report")
 	@ResponseBody
 	public WrapperDTO commentReport(@PathVariable("cid") int cid, @RequestBody ContentDTO content, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String uid = authService.verifyToken(request);
@@ -127,18 +130,25 @@ public class ReviewController {
 	}
 	
 	
-	@ApiOperation(value = "리뷰 좋아요")
+	@ApiOperation(value = "리뷰 좋아요", notes = "true : 리뷰 좋아요, false : 리뷰 좋아요 취소")
 	@ApiResponses({
 		@ApiResponse(code = 200, message = "Success"),
 		@ApiResponse(code = 404, message = "Review Id Error")
 	})
-	@PostMapping(value = "/love/{rid}")
+	@PutMapping(value = "/{rid}/love")
 	@ResponseBody
-	public WrapperDTO reviewLove(@PathVariable int rid, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public WrapperDTO reviewLove(@PathVariable int rid, @RequestBody LoveClickDTO loveClick, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String uid = authService.verifyToken(request);
 		int id = userService.getId(uid);
 
-		WrapperDTO dto = reviewService.loveReview(id, rid, response);
+		WrapperDTO dto = new WrapperDTO();
+		
+		if(loveClick.getLoveClick() == true) {
+			dto = reviewService.reviewLove(id, rid, response);
+		}else {
+			dto = reviewService.reviewLoveCancle(id, rid, response);
+		}
+
 		return dto;
 	}
 	

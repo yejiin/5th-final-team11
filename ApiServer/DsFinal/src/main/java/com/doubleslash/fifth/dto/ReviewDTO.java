@@ -3,7 +3,6 @@ package com.doubleslash.fifth.dto;
 import java.util.Date;
 import java.util.List;
 
-import com.doubleslash.fifth.vo.DetailReviewVO;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.AllArgsConstructor;

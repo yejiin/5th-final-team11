@@ -3,11 +3,16 @@ package com.doubleslash.fifth.service;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.doubleslash.fifth.dto.CommentDTO;
@@ -56,48 +61,45 @@ public class ReviewService {
 	AlcoholRepository alcoholRepository;
 
 	// 리뷰 조회
-	public List<ReviewDTO> getReviewList(int aid, int id, HttpServletResponse response) throws IOException {
+	public Map<String, Object> getReviewList(int aid, int page, int id, HttpServletResponse response) throws IOException {
 
-		List<ReviewDTO> reviewListDto = reviewRepository.findByAid(aid);
-
-		AlcoholVO alcoholChk = alcoholRepository.findByAid(aid);
-		
-		if(alcoholChk == null) {
-			response.sendError(404, "Alcohol Id Error");
-			return null;
-		}
-		for(int i = 0; i < reviewListDto.size(); i++) { 
-			int rid = reviewListDto.get(i).getRid();
+		Page<ReviewDTO> reviewDto = reviewRepository.findByAid(aid, PageRequest.of(page, 20, Sort.Direction.ASC,"rid"));
+	
+		for(int i = 0; i < reviewDto.getContent().size(); i++) { 
+			int rid = reviewDto.getContent().get(i).getRid();
 
 			// 해당 리뷰 하트 클릭 여부 확인
 			ReviewLoveVO loveClick = reviewLoveRepository.findByIdRid(id, rid);
 
 			if(loveClick != null) {
-				reviewListDto.get(i).setLoveClick(true);
+				reviewDto.getContent().get(i).setLoveClick(true);
 			}else {
-				reviewListDto.get(i).setLoveClick(false);
+				reviewDto.getContent().get(i).setLoveClick(false);
 			}
 
 			
 			// 해당 리뷰 상세 내용
 			DetailReviewDTO detailDto = detailReviewRepository.fineByRid(rid);
-			reviewListDto.get(i).setDetail(detailDto);
+			reviewDto.getContent().get(i).setDetail(detailDto);
 
 			
 			// 해당 리뷰 댓글
 			List<CommentDTO> commentDto = commentRepository.findByRid(rid);
 
 			if(commentDto != null) {
-				reviewListDto.get(i).setComments(commentDto);
+				reviewDto.getContent().get(i).setComments(commentDto);
 			}
 		} 
+		
+		Map<String, Object> res = new TreeMap<>();
+		res.put("reviewList", reviewDto.getContent());
+		res.put("totalCnt", reviewDto.getTotalElements());
 
-		return reviewListDto;
+		return res;
 	}
-
 	
 	// 리뷰 작성
-	public void addReview(int aid, int id, ReviewWriteDTO dto, HttpServletResponse response) throws ParseException, IOException {
+	public WrapperDTO addReview(int aid, int id, ReviewWriteDTO reveiwWriteDto, HttpServletResponse response) throws ParseException, IOException {
 		ReviewVO reviewVo = new ReviewVO();
 		DetailReviewVO detailVo = new DetailReviewVO();
 		
@@ -105,29 +107,33 @@ public class ReviewService {
 		
 		if(alcoholChk == null) {
 			response.sendError(404, "Alcohol Id Error");
-			return;
+			return null;
 		}
 
 		reviewVo.setId(id);
 		reviewVo.setAid(aid);
-		reviewVo.setStar(dto.getStar());
-		reviewVo.setContent(dto.getContent());
+		reviewVo.setStar(reveiwWriteDto.getStar());
+		reviewVo.setContent(reveiwWriteDto.getContent());
 		int rid = reviewRepository.save(reviewVo).getRid();
 		
 
-		if(dto.getDetail() == null) {
-			return;
+		if(reveiwWriteDto.getDetail() == null) {
+			return null;
 		} else {	// 상세 리뷰 있으면 상세 리뷰 저장
 			detailVo.setRid(rid);
-			detailVo.setDate(dto.getDetail().getDate());
-			detailVo.setPlace(dto.getDetail().getPlace());
-			detailVo.setDrink(dto.getDetail().getDrink());
-			detailVo.setHangover(dto.getDetail().getHangover());
-			detailVo.setPrice(dto.getDetail().getPrice());
-			detailVo.setSecurity(dto.getDetail().isSecurity());
+			detailVo.setDate(reveiwWriteDto.getDetail().getDate());
+			detailVo.setPlace(reveiwWriteDto.getDetail().getPlace());
+			detailVo.setDrink(reveiwWriteDto.getDetail().getDrink());
+			detailVo.setHangover(reveiwWriteDto.getDetail().getHangover());
+			detailVo.setPrice(reveiwWriteDto.getDetail().getPrice());
+			detailVo.setSecurity(reveiwWriteDto.getDetail().isSecurity());
 
 			detailReviewRepository.save(detailVo);
 		}
+		
+		WrapperDTO dto = new WrapperDTO("success");
+		
+		return dto;
 
 	}
 
@@ -193,7 +199,7 @@ public class ReviewService {
 	}
 	
 	// 리뷰 좋아요
-	public WrapperDTO loveReview(int id, int rid, HttpServletResponse response) throws IOException {
+	public WrapperDTO reviewLove(int id, int rid, HttpServletResponse response) throws IOException {
 		if(reviewChk(rid) == 0) {
 			response.sendError(404, "Review Id Error");
 			return null;
@@ -204,10 +210,27 @@ public class ReviewService {
 		loveVo.setRid(rid);
 		reviewLoveRepository.save(loveVo);
 		
-		WrapperDTO dto = new WrapperDTO("success");
+		WrapperDTO dto = new WrapperDTO("Review Love Success");
 		
 		return dto;
 	}
+	
+	// 리뷰 좋아요 취소
+		public WrapperDTO reviewLoveCancle(int id, int rid, HttpServletResponse response) throws IOException {
+			if(reviewChk(rid) == 0) {
+				response.sendError(404, "Review Id Error");
+				return null;
+			}
+			
+			ReviewLoveVO loveVo = new ReviewLoveVO();
+			loveVo.setId(id);
+			loveVo.setRid(rid);
+			reviewLoveRepository.delete(loveVo);
+			
+			WrapperDTO dto = new WrapperDTO("Review Love Cancle Success");
+			
+			return dto;
+		}
 	
 	// 리뷰 id 확인
 	public int reviewChk(int rid) {
