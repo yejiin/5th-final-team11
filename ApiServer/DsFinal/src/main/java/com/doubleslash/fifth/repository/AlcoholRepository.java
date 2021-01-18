@@ -9,6 +9,9 @@ import org.springframework.stereotype.Repository;
 import com.doubleslash.fifth.dto.BeerDTO;
 import com.doubleslash.fifth.dto.LiquorDTO;
 import com.doubleslash.fifth.dto.WineDTO;
+import com.doubleslash.fifth.storage.BeerStorage;
+import com.doubleslash.fifth.storage.LiquorStorage;
+import com.doubleslash.fifth.storage.WineStorage;
 import com.doubleslash.fifth.vo.AlcoholVO;
 
 @Repository
@@ -16,7 +19,17 @@ public interface AlcoholRepository extends JpaRepository<AlcoholVO, Integer>{
 
 	public AlcoholVO findByAid(int aid);
 	
-	public List<AlcoholVO> findByCategory(String category);
+	//양주 공통 + 세부 속성 조회
+	@Query(value = "select new com.doubleslash.fifth.storage.LiquorStorage(a.aid, a.lowestPrice, a.highestPrice, a.abv, a.kind, l.flavor, a.cb) from AlcoholVO as a, LiquorVO as l where a.aid = l.aid")
+	public List<LiquorStorage> AlcoholJoinLiquor();
+	
+	//와인 공통 + 세부 속성 조회
+	@Query(value = "select new com.doubleslash.fifth.storage.WineStorage(a.aid, a.lowestPrice, a.highestPrice, a.abv, a.kind, w.flavor, w.body, a.cb) from AlcoholVO as a, WineVO as w where a.aid = w.aid")
+	public List<WineStorage> AlcoholJoinWine();
+	
+	//맥주 공통 + 세부 속성 조회
+	@Query(value = "select new com.doubleslash.fifth.storage.BeerStorage(a.aid, a.lowestPrice, a.highestPrice, a.abv, a.kind, b.subKind, b.area, a.cb) from AlcoholVO as a, BeerVO as b where a.aid = b.aid")
+	public List<BeerStorage> AlcoholJoinBeer();
 	
 	// 양주 조회
 	@Query(value = "select new com.doubleslash.fifth.dto.LiquorDTO(a.aid, a.name, a.category, a.image, a.lowestPrice, a.highestPrice, a.ml, a.abv, a.description, a.kind, l.flavor, AVG(r.star), COUNT(*)) from AlcoholVO as a, LiquorVO as l, ReviewVO as r where a.aid = l.aid and a.aid = r.aid and a.aid = ?1")

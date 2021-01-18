@@ -14,5 +14,7 @@ public class BeerVO {
 	@Id
 	private int aid;
 	
+	private String subKind;
+	
 	private String area;
 }

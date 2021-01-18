@@ -37,6 +37,8 @@ public class AlcoholVO {
 	
 	private String kind;
 	
+	private int cb;
+	
 	//일대일 조인
 	//@OneToOne(fetch = FetchType.LAZY, mappedBy = "alcohol", cascade = CascadeType.ALL)
 	//@JsonBackReference

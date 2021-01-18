@@ -8,6 +8,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.domain.Sort.Order;
 import org.springframework.stereotype.Service;
 
 import com.doubleslash.fifth.dto.AlcoholSearchDTO;
@@ -15,8 +17,12 @@ import com.doubleslash.fifth.dto.RecommendDTO;
 import com.doubleslash.fifth.repository.AlcoholRepository;
 import com.doubleslash.fifth.repository.RecommendRepository;
 import com.doubleslash.fifth.repository.SearchRepository;
+import com.doubleslash.fifth.storage.BeerStorage;
+import com.doubleslash.fifth.storage.LiquorStorage;
+import com.doubleslash.fifth.storage.WineStorage;
 import com.doubleslash.fifth.vo.AlcoholVO;
 import com.doubleslash.fifth.vo.RecommendVO;
+import com.doubleslash.fifth.vo.ViewSearchVO;
 
 @Service
 public class RecommendService {
@@ -31,6 +37,7 @@ public class RecommendService {
 	AlcoholRepository alcoholRepository;
 	
 	//가중치
+	private final int FLAVOR_WEIGHT = 66;
 	private final int ABV_WEIGHT = 41;
 	private final int PRICE_WEIGHT = 40;
 	private final int CB_WEIGHT = 10;
@@ -44,7 +51,11 @@ public class RecommendService {
 		int maxPrice = calcPrice(rec.getMaxPrice());
 		int priceWeight = calcPriceWeight(rec.getMaxPrice() - rec.getMinPrice());
 		
-		String cb = rec.getCb();
+		int recCb = 2;
+		if(rec.getCb().equals("유")) recCb = 1;
+		else recCb = 0;
+		int cbWeight = CB_WEIGHT;
+		
 		//int celeb; 인지도
 		
 		//스코어링 Map
@@ -52,62 +63,185 @@ public class RecommendService {
 		
 		RecommendDTO.liquor liquor = rec.getAlcohol().getLiquor();
 		if(liquor != null) {
-			List<AlcoholVO> liquorCompTarget = alcoholRepository.findByCategory("양주");
-			HashMap<Integer, Integer> liquorScore = new HashMap<>();
+			List<LiquorStorage> liquorCompTarget = alcoholRepository.AlcoholJoinLiquor();
 
-			AlcoholVO target;
-			double abv;
-			int price;
+			LiquorStorage target;
+			String recKind = liquor.getKind();
+			String recFlavor = liquor.getFlavor();
 			
 			for(int i = 0; i < liquorCompTarget.size(); i++) {
 				target = liquorCompTarget.get(i); //타겟 설정
 				int aid = target.getAid();
-				liquorScore.put(aid, 0); //스코어링 데이터 삽입
+				score.put(aid, 0); //스코어링 데이터 삽입
 				
-				abv = target.getAbv(); //도수
-				price = (target.getHighestPrice() + target.getLowestPrice())/2; //가격
+				//맛 스코어링
+				String kind = target.getKind();
+				String flavor[] = target.getFlavor().split("#");
+				
+				int flavorWeight = FLAVOR_WEIGHT;
+				
+				if(recKind.contains(kind)) {
+					int point = 0;
+					for(String f : flavor) {
+						if(recFlavor.contains(f)) point += 1;
+					}
+					if(point == 0) flavorWeight = FLAVOR_WEIGHT - 15;
+					else if(point >= 2) flavorWeight = FLAVOR_WEIGHT + 10;
+				}else {
+					flavorWeight = FLAVOR_WEIGHT - 15;
+				}
+				score.put(aid, score.get(aid) + flavorWeight);	
+				
+				double abv = target.getAbv();
+				int price = (target.getHighestPrice() + target.getLowestPrice())/2;
+				int cb = target.getCb();
 				
 				//도수 스코어링
 				if(minAbv <= abv && abv <= maxAbv) 
-					liquorScore.put(aid, liquorScore.get(aid) + abvWeight);
+					score.put(aid, score.get(aid) + abvWeight);
 				//가격 스코어링
 				if(minPrice <= price && price <= maxPrice)
-					liquorScore.put(aid, liquorScore.get(aid) + priceWeight);
-//				if(target.getCb().equals(cb))
-//					score[i] += CB_WEIGHT;
-					
+					score.put(aid, score.get(aid) + priceWeight);
+				//탄산여부 스코어링
+				if(recCb == cb)
+					score.put(aid, score.get(aid) + cbWeight);				
 			}
 		}
+		
 		RecommendDTO.wine wine = rec.getAlcohol().getWine();
 		if(wine != null) {
+			List<WineStorage> wineCompTarget = alcoholRepository.AlcoholJoinWine();
+
+			WineStorage target;
+			String recKind = wine.getKind();
+			int recMinFlavor = wine.getFlavor()-1;
+			int recMaxFlavor = wine.getFlavor()+1;
+			int recMinBody = wine.getBody()-1;
+			int recMaxBody = wine.getBody()+1;
 			
+			for(int i = 0; i < wineCompTarget.size(); i++) {
+				target = wineCompTarget.get(i); //타겟 설정
+				int aid = target.getAid();
+				score.put(aid, 0); //스코어링 데이터 삽입
+				
+				//맛 스코어링
+				String kind = target.getKind();
+				int flavor = target.getFlavor();
+				int body = target.getBody();
+				
+				int flavorWeight = FLAVOR_WEIGHT;
+				
+				if(!recKind.equals(kind)) {
+					flavorWeight = 0;
+				}else {
+					if((recMinFlavor <= flavor && flavor <= recMaxFlavor) && (recMinBody <= body && body <= recMaxBody)) flavorWeight += 10;
+					else if(!((recMinFlavor <= flavor && flavor <= recMaxFlavor) && (recMinBody <= body && body <= recMaxBody))) flavorWeight -= 15;
+				}
+				score.put(aid, score.get(aid) + flavorWeight);	
+				
+				double abv = target.getAbv();
+				int price = (target.getHighestPrice() + target.getLowestPrice())/2;
+				int cb = target.getCb();
+				
+				//도수 스코어링
+				if(minAbv <= abv && abv <= maxAbv) 
+					score.put(aid, score.get(aid) + abvWeight);
+				//가격 스코어링
+				if(minPrice <= price && price <= maxPrice)
+					score.put(aid, score.get(aid) + priceWeight);
+				//탄산여부 스코어링
+				if(recCb == cb)
+					score.put(aid, score.get(aid) + cbWeight);				
+			}
 		}
 		RecommendDTO.beer beer = rec.getAlcohol().getBeer();
 		if(beer != null) {
+			List<BeerStorage> beerCompTarget = alcoholRepository.AlcoholJoinBeer();
+
+			BeerStorage target;
 			
+			String recKind = beer.getKind().getMainKind();
+			String recSubKind = beer.getKind().getSubKind();
+			String recArea = beer.getArea();
+			
+			for(int i = 0; i < beerCompTarget.size(); i++) {
+				target = beerCompTarget.get(i); //타겟 설정
+				int aid = target.getAid();
+				score.put(aid, 0); //스코어링 데이터 삽입
+				
+				//맛 스코어링
+				String kind = target.getKind();
+				String subKind = target.getSubKind();
+				String area = target.getArea();
+				
+				int flavorWeight = FLAVOR_WEIGHT;
+				
+				if(!recKind.contains(kind)) {
+					flavorWeight = 0;
+				}else {
+					if(!recSubKind.contains(subKind)) {
+						flavorWeight -= 7.5;
+					}
+				}
+				
+				if(recArea.contains(area)) flavorWeight += 5;
+				
+				score.put(aid, score.get(aid) + flavorWeight);	
+				
+				double abv = target.getAbv();
+				int price = (target.getHighestPrice() + target.getLowestPrice())/2;
+				int cb = target.getCb();
+				
+				//도수 스코어링
+				if(minAbv <= abv && abv <= maxAbv) 
+					score.put(aid, score.get(aid) + abvWeight);
+				//가격 스코어링
+				if(minPrice <= price && price <= maxPrice)
+					score.put(aid, score.get(aid) + priceWeight);
+				//탄산여부 스코어링
+				if(recCb == cb)
+					score.put(aid, score.get(aid) + cbWeight);				
+			}
 		}
 
 		//스코어링된 주류를 스코어기준 내림차순으로 전부 정렬함
 		List<Integer> sortedAid = descending(score);
 		
-		recommendRepository.deleteById(id); //기존 추천데이터 삭제
+		try {
+			recommendRepository.deleteById(id); //기존 추천데이터 삭제
+		}catch(Exception e) {
+			
+		}
 		
 		//새로운 추천데이터 생성
-		for(int i = 0; i < 10; i++) {
+		for(int i = 0; i < 6; i++) {
 			int aid = sortedAid.get(i);
 			int recScore = score.get(aid);
-			RecommendVO vo = new RecommendVO(id, aid, recScore);
-			recommendRepository.save(vo);
+			recommendRepository.insert(id, aid, recScore);
 		}
 	}
 	
-	public List<AlcoholSearchDTO> getRecommend(int id, String sort) {
+	public List<AlcoholSearchDTO> getRecommend(int id, String sort, String sortOption) {
 		if(sort == null) sort = "recScore";
+		if(sortOption == null) sortOption = "desc";
 		
-		//Recommend와 ViewSearch를 Join하고 정렬기준을 추천/리뷰/별점으로 설정하여 List로 가져온다.
-		//메소드는 SearchRepository에 NativeQuery를 사용하여 구현한다.
+		List<AlcoholSearchDTO> res = searchRepository.findById(id, sortOption(dirOption(sortOption), sort));
 		
-		return null;
+		return res;
+	}
+	
+	//정렬 기준을 동적으로 설정
+	private Sort sortOption(Direction direction, String property) {
+		List<Order> orders = new ArrayList<Sort.Order>();
+		orders.add(new Order(direction, property));
+		orders.add(new Order(Direction.ASC, "name"));
+		return Sort.by(orders);
+	}
+	
+	//정렬 기준별 오름차순, 내림차순 구분
+	private Direction dirOption(String sortOption) {
+		if(sortOption.equals("desc")) return Sort.Direction.DESC;
+		return Sort.Direction.ASC;
 	}
 	
 	//내림차순 정렬
