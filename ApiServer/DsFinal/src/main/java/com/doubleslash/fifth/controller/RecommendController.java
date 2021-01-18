@@ -69,7 +69,7 @@ public class RecommendController {
 			response.sendError(400, "Bad Request");
 			return null;
 		}
-		return new WrapperDTO(recommendService.getRecommend(id, sort, sortOption));
+		return new WrapperDTO(recommendService.getRecommend(id, category, sort, sortOption));
 	}
 
 	@ApiOperation(value = "추천 데이터 생성")

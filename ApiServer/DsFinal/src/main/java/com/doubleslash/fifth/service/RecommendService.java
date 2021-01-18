@@ -221,15 +221,17 @@ public class RecommendService {
 		}
 	}
 	
-	public List<AlcoholSearchDTO> getRecommend(int id, String sort, String sortOption) {
+	public List<AlcoholSearchDTO> getRecommend(int id, String category, String sort, String sortOption) {
 		if(sort == null) sort = "recScore";
 		if(sortOption == null) sortOption = "desc";
 		
 		List<AlcoholSearchDTO> res;
 		if(sort.equals("recScore")) {
-			res = searchRepository.getRecommendDefault(id);
+			if(category.equals("전체")) res = searchRepository.getRecommendDefaultAll(id);
+			else res = searchRepository.getRecommendDefault(id, category);
 		}else {
-			res = searchRepository.getRecommendSorting(id, sortOption(dirOption(sortOption), sort));
+			if(category.equals("전체")) res = searchRepository.getRecommendSorting(id, category, sortOption(dirOption(sortOption), sort));
+			else res = searchRepository.getRecommendSortingAll(id, sortOption(dirOption(sortOption), sort));
 		}
 		
 		return res;
