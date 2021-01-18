@@ -59,8 +59,8 @@ public class RecommendController {
 	@GetMapping(value = "/recommend")
 	@ResponseBody
 	public WrapperDTO getRecommend(HttpServletRequest request, HttpServletResponse response) throws Exception{
-//		String uid = authService.verifyToken(request);
-//		int id = userService.getId(uid);
+		String uid = authService.verifyToken(request);
+		int id = userService.getId(uid);
 		String category = request.getParameter("category");
 		String sort = request.getParameter("sort");
 		String sortOption = request.getParameter("sortOption");
@@ -69,7 +69,7 @@ public class RecommendController {
 			response.sendError(400, "Bad Request");
 			return null;
 		}
-		return new WrapperDTO(recommendService.getRecommend(325, sort, sortOption));
+		return new WrapperDTO(recommendService.getRecommend(id, sort, sortOption));
 	}
 
 	@ApiOperation(value = "추천 데이터 생성")
@@ -88,11 +88,11 @@ public class RecommendController {
 	})
 	@PostMapping(value = "/recommend")
 	@ResponseBody
-	public String createRecommend(@RequestBody RecommendDTO requestBody, HttpServletRequest request) throws Exception{
-		//String uid = authService.verifyToken(request);
-		//int id = userService.getId(uid);
-		
-		recommendService.createRecommend(requestBody, 325);		
+	public String createRecommend(@RequestBody RecommendDTO requestBody, HttpServletRequest request, HttpServletResponse response) throws Exception{
+		String uid = authService.verifyToken(request);
+		int id = userService.getId(uid);
+
+		recommendService.createRecommend(requestBody, id);		
 		return "{}";
 	}
 	

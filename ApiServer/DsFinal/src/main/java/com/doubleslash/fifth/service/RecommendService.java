@@ -225,7 +225,12 @@ public class RecommendService {
 		if(sort == null) sort = "recScore";
 		if(sortOption == null) sortOption = "desc";
 		
-		List<AlcoholSearchDTO> res = searchRepository.findById(id, sortOption(dirOption(sortOption), sort));
+		List<AlcoholSearchDTO> res;
+		if(sort.equals("recScore")) {
+			res = searchRepository.getRecommendDefault(id);
+		}else {
+			res = searchRepository.getRecommendSorting(id, sortOption(dirOption(sortOption), sort));
+		}
 		
 		return res;
 	}
