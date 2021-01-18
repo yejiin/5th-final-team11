@@ -1,6 +1,6 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/appbar_background</item>
@@ -71,5 +71,10 @@
     <style name="FirstInputStyle.SubTitle" parent="FirstInputStyle">
         <item name="android:textColor">#cccccc</item>
         <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="FirstInputStyle.Label" parent="FirstInputStyle">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">20sp</item>
     </style>
 </resources>

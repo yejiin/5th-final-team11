@@ -8,8 +8,8 @@
         android:id="@+id/layout_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/first_info_default_padding"
         android:layout_marginTop="80dp"
-        android:layout_marginLeft="20dp"
         android:orientation="vertical"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -114,5 +114,15 @@
             android:textColor="@drawable/color_selectable_orange" />
     </LinearLayout>
 
+    <Button
+        android:id="@+id/btn_next"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_button_next"
+        android:paddingVertical="16.5dp"
+        android:text="@string/all_next"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

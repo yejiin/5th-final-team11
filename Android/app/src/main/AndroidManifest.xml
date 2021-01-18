@@ -23,7 +23,7 @@
 
         <activity android:name=".ui.auth.RegisterActivity"/>
 
-        <activity android:name=".ui.auth.firstinput.FirstInfoActivity">
+        <activity android:name=".ui.auth.firstinput.FirstInputActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
