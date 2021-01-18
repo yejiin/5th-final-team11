@@ -1,6 +1,7 @@
 package com.doubleslas.fifith.alcohol.ui.common
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
@@ -60,6 +61,7 @@ class AlcoholListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 tvRating.text = item.star.toString()
                 tvReviewCnt.text = "(${item.reviewCnt})"
                 rating.rating = item.star
+                divider.visibility = if (position != itemCount - 1) View.VISIBLE else View.INVISIBLE
             }
         }
     }
