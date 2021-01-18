@@ -2,7 +2,6 @@ package com.doubleslash.fifth.service;
 
 import java.io.IOException;
 import java.text.ParseException;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.TreeMap;
@@ -61,9 +60,10 @@ public class ReviewService {
 	AlcoholRepository alcoholRepository;
 
 	// 리뷰 조회
-	public Map<String, Object> getReviewList(int aid, int page, int id, HttpServletResponse response) throws IOException {
+	public Map<String, Object> getReviewList(int aid, int reviewPage, Integer commentPage, Integer reviewId, int id, HttpServletResponse response) throws IOException {
+	
 
-		Page<ReviewDTO> reviewDto = reviewRepository.findByAid(aid, PageRequest.of(page, 20, Sort.Direction.ASC,"rid"));
+		Page<ReviewDTO> reviewDto = reviewRepository.findByAid(aid, PageRequest.of(reviewPage, 20, Sort.Direction.ASC,"rid"));
 	
 		for(int i = 0; i < reviewDto.getContent().size(); i++) { 
 			int rid = reviewDto.getContent().get(i).getRid();
@@ -81,14 +81,21 @@ public class ReviewService {
 			// 해당 리뷰 상세 내용
 			DetailReviewDTO detailDto = detailReviewRepository.fineByRid(rid);
 			reviewDto.getContent().get(i).setDetail(detailDto);
-
 			
 			// 해당 리뷰 댓글
-			List<CommentDTO> commentDto = commentRepository.findByRid(rid);
-
-			if(commentDto != null) {
-				reviewDto.getContent().get(i).setComments(commentDto);
+			Page<CommentDTO> commentDto = null;
+		
+			if(reviewId != null && rid == reviewId.intValue()) {
+					commentDto = commentRepository.findByRid(rid, PageRequest.of(commentPage.intValue(), 20));
+		
+			}else {
+					commentDto = commentRepository.findByRid(rid, PageRequest.of(0, 20));
 			}
+			
+			if(commentDto != null) {	
+				reviewDto.getContent().get(i).setComments(commentDto.getContent());
+			}
+
 		} 
 		
 		Map<String, Object> res = new TreeMap<>();
