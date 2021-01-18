@@ -37,7 +37,7 @@ class AlcoholDetailActivity : AppCompatActivity() {
             bottomSheet.show(supportFragmentManager, bottomSheet.tag)
         }
 
-        detailViewModel.getDetail(10).observe(this, Observer {
+        detailViewModel.getDetail(7).observe(this, Observer {
             when (it) {
                 is ApiStatus.Loading -> {
 
@@ -72,29 +72,60 @@ class AlcoholDetailActivity : AppCompatActivity() {
                     }
 
 
-                    if (it.data.country != null && it.data.area != null && it.data.wineKind != null && it.data.flavor != null && it.data.body != null) {
+                    // 와인 파트
+                    if (it.data.country != null && it.data.area != null && it.data.flavor != null && it.data.body != null) {
                         binding.tvNation.visibility = View.VISIBLE
                         binding.tvNationInfo.visibility = View.VISIBLE
                         binding.tvNationInfo.text = it.data.country + it.data.area
-                        binding.sbTaste.progress = it.data.flavor
-                        binding.sbBody.progress = it.data.body
+                        binding.layoutBody.visibility = View.VISIBLE
+                        binding.seekBarTaste.seekBar.progress = it.data.flavor
+                        binding.seekBarBody.seekBar.progress = it.data.body
+                        binding.seekBarBody.seekBar.isEnabled = false
+                        binding.seekBarTaste.seekBar.isEnabled = false
+
+                        binding.seekBarTaste.tvLabel1.text = "Dry"
+                        binding.seekBarTaste.tvLabel2.text = "Sweet"
+
+                        binding.seekBarBody.tvLabel1.text = "Light"
+                        binding.seekBarBody.tvLabel2.text = "Heavy"
                     } else {
 
                         binding.layoutBody.visibility = View.GONE
-                        binding.sbTaste.visibility = View.GONE
-                        binding.tvDry.visibility = View.GONE
-                        binding.tvSweet.visibility = View.GONE
+                        binding.seekBarTaste.seekBar.visibility = View.GONE
+                        binding.seekBarTaste.tvLabel1.visibility = View.GONE
+                        binding.seekBarTaste.tvLabel2.visibility = View.GONE
                     }
 
+
+                    // 맥주 파트
                     if (it.data.areas != null) {
+                        binding.layoutKinds.visibility = View.VISIBLE
+                        binding.layoutTaste.visibility = View.GONE
+                        binding.layoutBody.visibility = View.GONE
                         binding.tvNation.visibility = View.VISIBLE
                         binding.tvNationInfo.visibility = View.VISIBLE
                         binding.tvNationInfo.text = it.data.areas.toString()
+                        for (index in it.data.areas.indices) {
+                            val chip = Chip(binding.chipGroupAreas.context)
+                            chip.setTextColor(Color.parseColor("#FFFFFF"))
+                            chip.text = it.data.areas[index]
+                            chip.isClickable = false
+                            chip.isCheckable = false
+                            chip.chipBackgroundColor = ColorStateList.valueOf(
+                                ContextCompat.getColor(
+                                    this,
+                                    R.color.chipColor
+                                )
+                            )
+                            binding.chipGroupAreas.addView(chip)
+                        }
                     } else {
                         binding.tvNation.visibility = View.GONE
                         binding.tvNationInfo.visibility = View.GONE
+                        binding.layoutAreas.visibility = View.GONE
                     }
 
+                    // 양주 파트
                     if (it.data.flavors != null) {
                         for (index in it.data.flavors.indices) {
                             val chip = Chip(binding.chipGroupTaste.context)

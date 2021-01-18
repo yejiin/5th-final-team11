@@ -210,50 +210,41 @@
                     android:id="@+id/tv_price_info"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginEnd="223dp"
-                    android:paddingBottom="20dp"
+                    android:layout_marginTop="8dp"
                     android:text="가격정보 sample"
                     android:textColor="#FFFFFF"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginBottom="29dp"
+                    app:layout_constraintBottom_toTopOf="@id/tv_nation"
+                    app:layout_constraintStart_toStartOf="@id/tv_price"
                     app:layout_constraintTop_toBottomOf="@+id/tv_price" />
 
                 <TextView
                     android:id="@+id/tv_volume_info"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="190dp"
-                    android:layout_marginTop="14dp"
-                    android:layout_marginEnd="77dp"
-                    android:paddingBottom="20dp"
+                    android:layout_marginTop="8dp"
                     android:text="용량 도수 sample"
                     android:textColor="#FFFFFF"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_price_info"
+                    app:layout_constraintStart_toStartOf="@id/tv_volume"
                     app:layout_constraintTop_toBottomOf="@+id/tv_volume" />
 
                 <TextView
                     android:id="@+id/tv_nation"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="113dp"
-                    android:layout_marginEnd="220dp"
+                    android:layout_marginTop="33dp"
                     android:text="국가 / 지역"
                     android:textColor="#BEBEBE"
                     android:textSize="16sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:visibility="gone"/>
+                    app:layout_constraintStart_toStartOf="@id/tv_price"
+                    app:layout_constraintTop_toBottomOf="@id/tv_price_info"
+                    android:visibility="gone"
+                   />
 
 
 
@@ -261,20 +252,17 @@
                     android:id="@+id/tv_nation_info"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="149dp"
-                    android:layout_marginEnd="239dp"
-                    android:paddingBottom="20dp"
+                    android:layout_marginTop="14dp"
                     android:text="지역 sample"
                     android:textColor="#FFFFFF"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginBottom="29dp"
+                    app:layout_constraintStart_toStartOf="@id/tv_nation"
+                    app:layout_constraintTop_toBottomOf="@id/tv_nation"
                     android:visibility="gone"
-
-                    />
+                />
 
 
 
@@ -373,52 +361,78 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layout_areas"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                  >
+
+                    <TextView
+                        android:id="@+id/tv_areas"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:text="지역"
+                        android:textColor="#FFFFFF"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/imageView2"
+                        android:layout_width="350dp"
+                        android:layout_height="5dp"
+                        android:layout_marginStart="22dp"
+                        android:background="@drawable/dash_line"
+                        android:layerType="software"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/tv_areas"
+                        app:layout_constraintTop_toTopOf="parent" />
+                    <com.nex3z.flowlayout.FlowLayout
+                        android:id="@+id/fl_areas"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        app:flChildSpacing="auto"
+                        app:flChildSpacingForLastRow="align"
+                        app:flRowSpacing="auto"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_areas">
+
+
+                        <com.google.android.material.chip.ChipGroup
+                            android:id="@+id/chip_group_areas"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            />
+
+
+                    </com.nex3z.flowlayout.FlowLayout>
+
+
+
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/layout_taste"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-
-                    <SeekBar
-                        android:id="@+id/sb_taste"
-                        style="@style/Widget.AppCompat.SeekBar.Discrete"
-                        android:layout_width="280dp"
+                    <include
+                        android:id="@+id/seekBar_taste"
+                        layout="@layout/view_seekbar"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="33dp"
-                        android:layout_marginTop="32dp"
-                        android:layout_marginEnd="33dp"
-                        android:max="4"
-                        android:min="0"
-                        android:progressTint="#FFA255"
-                        android:thumb="@drawable/seekbar_thumb"
-                        android:tickMark="@drawable/tickmark"
+                        app:layout_constraintTop_toBottomOf="@id/tv_taste"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/tv_taste" />
-
-                    <TextView
-                        android:id="@+id/tv_dry"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="33dp"
-                        android:layout_marginTop="23dp"
-                        android:text="Dry"
-                        android:textColor="#CCCCCC"
-                        android:textSize="14sp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/sb_taste" />
-
-                    <TextView
-                        android:id="@+id/tv_sweet"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="23dp"
-                        android:layout_marginEnd="22dp"
-                        android:text="Sweet"
-                        android:textColor="#CCCCCC"
-                        android:textSize="14sp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/sb_taste" />
-
+                        app:layout_constraintStart_toStartOf="@id/tv_taste"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginEnd="20dp"
+                       />
 
                     <com.nex3z.flowlayout.FlowLayout
                         android:id="@+id/fl_taste"
@@ -473,50 +487,17 @@
                     android:id="@+id/layout_body"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
-                    
+
                     <include
                         android:id="@+id/seekBar_body"
                         layout="@layout/view_seekbar"
-                        />
-
-                    <SeekBar
-                        android:id="@+id/sb_body"
-                        style="@style/Widget.AppCompat.SeekBar.Discrete"
-                        android:layout_width="280dp"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="33dp"
-                        android:layout_marginTop="32dp"
-                        android:layout_marginEnd="33dp"
-                        android:max="4"
-                        android:min="0"
-                        android:progressTint="#FFA255"
-                        android:thumb="@drawable/seekbar_thumb"
-                        android:tickMark="@drawable/tickmark"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_body"
+                        app:layout_constraintStart_toStartOf="@id/tv_body"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/tv_body" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="33dp"
-                        android:layout_marginTop="23dp"
-                        android:text="Light"
-                        android:textColor="#CCCCCC"
-                        android:textSize="14sp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/sb_body" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="23dp"
-                        android:layout_marginEnd="22dp"
-                        android:text="Heavy"
-                        android:textColor="#CCCCCC"
-                        android:textSize="14sp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/sb_body" />
+                        android:layout_marginTop="20dp"
+                        android:layout_marginEnd="20dp"/>
 
 
                     <TextView

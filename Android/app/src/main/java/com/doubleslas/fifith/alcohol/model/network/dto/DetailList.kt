@@ -27,6 +27,6 @@ data class DetailList(
 
 
     // 맥주 추가속성
-    @SerializedName("areas") val areas: List<Any>?
+    @SerializedName("areas") val areas: List<String>?
 
 )

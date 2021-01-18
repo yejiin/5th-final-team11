@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.doubleslas.fifith.alcohol.R
+import com.doubleslas.fifith.alcohol.model.network.dto.DetailReviewData
 import kotlinx.android.synthetic.main.item_alcohol_similar.view.*
 import kotlinx.android.synthetic.main.item_detail_review.view.*
 
