@@ -15,7 +15,7 @@ import com.doubleslash.fifth.vo.ReviewVO;
 public interface ReviewRepository extends JpaRepository<ReviewVO, Integer> {
 
 	// 리뷰 리스트 조회
-	@Query(value = "select new com.doubleslash.fifth.dto.ReviewDTO(r.rid, u.nickname, r.content, r.love, r.create_time) from ReviewVO as r, UserVO as u where r.id = u.id and r.aid=?1")
+	@Query(value = "select new com.doubleslash.fifth.dto.ReviewDTO(r.rid, u.nickname, r.content, r.love, r.star, r.create_time) from ReviewVO as r, UserVO as u where r.id = u.id and r.aid=?1")
 	public Page<ReviewDTO> findByAid(int aid, Pageable pageable);
 	
 	// 리뷰 신고 수 증가
@@ -24,4 +24,7 @@ public interface ReviewRepository extends JpaRepository<ReviewVO, Integer> {
 	@Query(value = "update Review set report=report+1 where rid=?1", nativeQuery = true)
 	public void updateReport(int rid);
 	
+	@Query(value = "select rid from Review where aid = ?1 order by rid desc limit 1", nativeQuery = true)
+	public String findByAid(int aid);
 }
+	

@@ -46,8 +46,7 @@ public class ReviewController {
 	@Autowired
 	ReviewService reviewService;
 	
-	@ApiOperation(value = "리뷰 리스트 조회", notes="rid(리뷰id), nickname(닉네임), content(내용), love(하트 수), loveClick(하트 클릭 여부), reviewDate(리뷰작성 날짜), detail(상세 리뷰), comments(댓글 리스트)"
-			+"\n:: 특정 리뷰 댓글 페이징 필요시 commentRid, commentPage 파라미터 전달, 파라미터 입력 안했을 시 리뷰 당 댓글 데이터 20개 제공" )
+	@ApiOperation(value = "리뷰 리스트 조회", notes="특정 리뷰 댓글 페이징 필요시 commentRid, commentPage 파라미터 전달, 파라미터 입력 안했을 시 리뷰 당 댓글 데이터 20개 제공" )
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "aid", required = true, dataType = "int", paramType = "query", example = "1", value = "알코올 id"),
 		@ApiImplicitParam(name = "reviewPage", required = true, dataType = "int", paramType = "query", example = "0", value = "리뷰 페이지 번호(페이지당 데이터 20개)"),

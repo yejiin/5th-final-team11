@@ -95,6 +95,7 @@ public class ReviewService {
 			if(commentDto != null) {	
 				reviewDto.getContent().get(i).setComments(commentDto.getContent());
 			}
+			reviewDto.getContent().get(i).setCommentCnt(commentDto.getTotalElements());
 
 		} 
 		
