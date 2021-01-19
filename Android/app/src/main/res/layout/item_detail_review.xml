@@ -25,12 +25,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="14dp"
-                android:layout_marginBottom="18dp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@id/tv_detail_review"
                 app:layout_constraintTop_toBottomOf="@id/layout_detail_review"
-                app:layout_constraintStart_toStartOf="@id/tv_detail_review">
+                app:layout_constraintBottom_toTopOf="@id/layout_review_comment"
+                android:layout_marginBottom="10dp">
 
                 <ImageView
+                    android:id="@+id/iv_review_like"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -38,9 +39,10 @@
                     android:src="@drawable/ic_heart_lightgray" />
 
                 <TextView
+                    android:id="@+id/tv_like_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="3"
+                    android:text="0"
                     android:textColor="#A5A5A5"
                     android:textSize="12sp" />
 
@@ -52,13 +54,13 @@
                 android:id="@+id/btn_comment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="13dp"
-                android:layout_marginBottom="18dp"
                 android:text="댓글달기"
                 android:textColor="#A5A5A5"
                 android:textSize="12sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@id/tv_detail_review" />
+                app:layout_constraintTop_toTopOf="@+id/btn_like"
+                app:layout_constraintEnd_toEndOf="@id/tv_detail_review"
+                app:layout_constraintBottom_toTopOf="@id/layout_review_comment"
+                android:layout_marginBottom="10dp"/>
 
             <TextView
                 android:id="@+id/btn_report"
@@ -108,18 +110,66 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
 
+            <include
+                android:id="@+id/layout_detail_review"
+                layout="@layout/view_review_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_detail_review" />
 
-                <include
+
+
+            <RelativeLayout
+                android:id="@+id/layout_review_comment"
+                android:layout_width="288dp"
+                android:layout_height="128dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btn_comment"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:visibility="gone">
+
+                <EditText
+                    android:id="@+id/et_review_comment"
                     android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/background_review_edit_text"
+                    android:hint="의견을 남겨주세요!"
+                    android:textColor="#FFFFFF"
+                    android:textColorHint="#A5A5A5"
+                    android:paddingLeft="20dp"
+                    android:paddingBottom="95dp"
+                    android:paddingTop="13dp"/>
+
+                <TextView
+                    android:id="@+id/btn_comment_confirm"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/layout_detail_review"
-                    layout="@layout/view_review_detail"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_detail_review"
-                    android:layout_marginTop="10dp"/>
+                    android:text="등록"
+                    android:textSize="12sp"
+                    android:textColor="#FFFFFF"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginBottom="13dp"/>
+                <TextView
+                    android:id="@+id/btn_comment_cancel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="취소"
+                    android:textSize="12sp"
+                    android:textColor="#CCCCCC"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginRight="59dp"
+                    android:layout_marginBottom="13dp"/>
 
-
+            </RelativeLayout>
 
 
             <androidx.appcompat.widget.AppCompatRatingBar

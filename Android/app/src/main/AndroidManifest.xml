@@ -21,15 +21,24 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.main.MainActivity">
-
-
-        </activity>
-
         <activity android:name=".ui.detail.AlcoholDetailActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".ui.auth.Register2Activity" />
+
+        <activity android:name=".ui.auth.RegisterActivity" />
+
+        <activity android:name=".ui.auth.AgeCheckActivity" />
+
+        <activity android:name=".ui.main.MainActivity" >
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -48,7 +57,7 @@
                     android:host="oauth"
                     android:scheme="kakaof4ce9d07643e80606b97e6b009366095" />
             </intent-filter>
-        </activity>
+        </activity> <!-- region Facebook Auth -->
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
@@ -61,7 +70,8 @@
         <activity
             android:name="com.facebook.CustomTabActivity"
             android:exported="true">
-            <intent-filter><action android:name="android.intent.action.VIEW" />
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
@@ -69,7 +79,6 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-        <!-- endregion -->
     </application>
 
 </manifest>

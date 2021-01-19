@@ -10,12 +10,18 @@ import com.doubleslas.fifith.alcohol.R
 import com.doubleslas.fifith.alcohol.databinding.LayoutWriteReviewBinding
 import com.doubleslas.fifith.alcohol.model.network.base.ApiStatus
 import com.doubleslas.fifith.alcohol.model.network.dto.ReviewDetailData
+import com.doubleslas.fifith.alcohol.ui.auth.CustomDialog
+import com.doubleslas.fifith.alcohol.ui.auth.CustomDialogInterface
 import com.doubleslas.fifith.alcohol.ui.common.CalendarDialogFragment
 import com.doubleslas.fifith.alcohol.ui.common.base.BaseBottomSheetDialogFragment
 import com.doubleslas.fifith.alcohol.viewmodel.ReviewViewModel
+import kotlinx.android.synthetic.main.custom_dialog.*
 
 
-class ReviewBottomSheetDialog : BaseBottomSheetDialogFragment<LayoutWriteReviewBinding>() {
+class ReviewBottomSheetDialog : BaseBottomSheetDialogFragment<LayoutWriteReviewBinding>(),
+    CustomDialogInterface {
+    private val customDialog: CustomDialog by lazy { CustomDialog(context!!, this) }
+
 
     private val viewModel by lazy {
         ViewModelProvider(this).get(ReviewViewModel::class.java)
@@ -56,7 +62,9 @@ class ReviewBottomSheetDialog : BaseBottomSheetDialogFragment<LayoutWriteReviewB
 
 
             b.btnReviewConfirm.setOnClickListener {
-                confirmReview()
+
+                onDialogBtnClicked("리뷰를 작성해주셔서\n감사합니다.")
+
             }
 
             b.layoutDetailToggle.setOnClickListener {
@@ -94,7 +102,6 @@ class ReviewBottomSheetDialog : BaseBottomSheetDialogFragment<LayoutWriteReviewB
 
                     }
                     is ApiStatus.Success -> {
-                        dismiss()
                     }
                     is ApiStatus.Error -> {
                         processError(it.code)
@@ -122,6 +129,16 @@ class ReviewBottomSheetDialog : BaseBottomSheetDialogFragment<LayoutWriteReviewB
                 binding?.layoutDetail?.etPrice?.requestFocus()
             }
         }
+    }
+
+    override fun onConfirmBtnClicked() {
+        customDialog.dismiss()
+    }
+
+    private fun onDialogBtnClicked(text: String?) {
+        customDialog.show()
+        customDialog.tv_nicknameCheck?.text = text
+
     }
 
 }
