@@ -1,6 +1,7 @@
 package com.doubleslas.fifith.alcohol
 
 import android.app.Application
+
 import android.content.Context
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -42,5 +43,10 @@ class App : Application() {
                 app.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
             imm?.hideSoftInputFromWindow(edit?.windowToken, 0)
         }
+
+        fun isLogin(): Boolean {
+            return prefs.idToken.isNotEmpty()
+        }
+
     }
 }

@@ -3,4 +3,6 @@
     <dimen name="bottom_navigation_text" tools:ovveride="true">10sp</dimen>
 
     <dimen name="first_info_default_padding">20dp</dimen>
+    <dimen name="circle_seekBar_height">2dp</dimen>
+    <dimen name="circle_seekBar_radius">7dp</dimen>
 </resources>

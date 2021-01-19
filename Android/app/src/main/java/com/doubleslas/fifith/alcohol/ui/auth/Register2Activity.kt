@@ -15,6 +15,7 @@ import com.doubleslas.fifith.alcohol.R
 import com.doubleslas.fifith.alcohol.databinding.ActivityRegister2Binding
 import com.doubleslas.fifith.alcohol.databinding.ActivityRegisterBinding
 import com.doubleslas.fifith.alcohol.model.network.base.ApiStatus
+import com.doubleslas.fifith.alcohol.ui.detail.AlcoholDetailActivity
 import com.doubleslas.fifith.alcohol.ui.main.MainActivity
 import com.doubleslas.fifith.alcohol.viewmodel.RegisterViewModel
 
@@ -85,7 +86,7 @@ class Register2Activity : AppCompatActivity(), SeekBar.OnSeekBarChangeListener {
                     }
                     is ApiStatus.Success -> {
                         it.data
-                        val intent = Intent(this, MainActivity::class.java)
+                        val intent = Intent(this, AlcoholDetailActivity::class.java)
                         startActivity(intent)
                         finish()
                     }

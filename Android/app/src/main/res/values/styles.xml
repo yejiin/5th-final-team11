@@ -8,6 +8,10 @@
         <item name="android:windowBackground">@color/black</item>
     </style>
 
+    <style name="MyDatePicker">
+        <item name="android:textColorPrimary">@color/datePickerColor</item>
+    </style>
+
     <style name="AppBar">
         <item name="android:background">@color/appbar_background</item>
     </style>
