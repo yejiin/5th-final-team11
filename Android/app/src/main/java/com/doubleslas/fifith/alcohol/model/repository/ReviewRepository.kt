@@ -6,7 +6,7 @@ import com.doubleslas.fifith.alcohol.model.network.dto.WriteReviewData
 
 class ReviewRepository {
     private val service by lazy { RestClient.getReviewService() }
-    fun writeReview(data: WriteReviewData): ApiLiveData<Any> {
-        return service.writeReview(data)
+    fun writeReview(data: WriteReviewData, aid: Int): ApiLiveData<Any> {
+        return service.writeReview(aid, data)
     }
 }

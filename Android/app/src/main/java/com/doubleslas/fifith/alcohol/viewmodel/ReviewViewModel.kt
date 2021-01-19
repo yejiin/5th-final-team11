@@ -11,17 +11,22 @@ import com.doubleslas.fifith.alcohol.model.repository.ReviewRepository
 class ReviewViewModel(val reviewId: Int) : ViewModel() {
     private val repository by lazy { ReviewRepository() }
 
-    fun sendReview(comment: String, star: Int, detail: ReviewDetailData? = null): ApiLiveData<Any> {
+    fun sendReview(
+        comment: String,
+        star: Int,
+        detail: ReviewDetailData? = null,
+        aid: Int
+    ): ApiLiveData<Any> {
         val result = MediatorApiLiveData<Any>()
 
         val errorCode = checkData(comment, detail)
-        if (errorCode != -1){
+        if (errorCode != -1) {
             result.value = ApiStatus.Error(errorCode, "")
             return result
         }
 
         val data = WriteReviewData(comment, star, detail)
-        val liveData = repository.writeReview(data)
+        val liveData = repository.writeReview(data, aid)
         result.addSource(liveData)
 
         return result

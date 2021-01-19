@@ -24,7 +24,7 @@ class ReviewBottomSheetDialog : BaseBottomSheetDialogFragment<LayoutWriteReviewB
 
 
     private val viewModel by lazy {
-        ViewModelProvider(this).get(ReviewViewModel::class.java)
+        ReviewViewModel(6)
     }
 
     private val calendarDialogFragment by lazy {
@@ -63,7 +63,7 @@ class ReviewBottomSheetDialog : BaseBottomSheetDialogFragment<LayoutWriteReviewB
 
             b.btnReviewConfirm.setOnClickListener {
 
-                onDialogBtnClicked("리뷰를 작성해주셔서\n감사합니다.")
+                confirmReview()
 
             }
 
@@ -82,7 +82,7 @@ class ReviewBottomSheetDialog : BaseBottomSheetDialogFragment<LayoutWriteReviewB
     private fun confirmReview() {
         binding?.let { b ->
             val detail = ReviewDetailData(
-                b.etComment.text.toString(),
+                b.layoutDetail.etCalendar.text.toString(),
                 b.layoutDetail.etDrink.text.toString().toInt(),
                 b.layoutDetail.seekBarHangover.seekBar.progress,
                 b.layoutDetail.etPlace.text.toString(),
@@ -93,7 +93,8 @@ class ReviewBottomSheetDialog : BaseBottomSheetDialogFragment<LayoutWriteReviewB
             val liveData = viewModel.sendReview(
                 b.etComment.text.toString(),
                 b.ratingReview.progress,
-                detail
+                detail,
+                6
             )
 
             liveData.observe(viewLifecycleOwner, Observer {
@@ -102,6 +103,7 @@ class ReviewBottomSheetDialog : BaseBottomSheetDialogFragment<LayoutWriteReviewB
 
                     }
                     is ApiStatus.Success -> {
+                        onDialogBtnClicked("리뷰를 작성해주셔서\n감사합니다.")
                     }
                     is ApiStatus.Error -> {
                         processError(it.code)
