@@ -12,7 +12,7 @@ import com.doubleslas.fifith.alcohol.ui.common.base.BaseFragment
 import com.doubleslas.fifith.alcohol.viewmodel.FirstInfoViewModel
 
 class DrinkTypeSelectFragment : BaseFragment<FragmentDrinkTypeBinding>() {
-    private val viewModel by lazy { ViewModelProvider(this).get(FirstInfoViewModel::class.java) }
+    private val viewModel by lazy { ViewModelProvider(activity!!).get(FirstInfoViewModel::class.java) }
 
     override fun createViewBinding(
         inflater: LayoutInflater,
@@ -35,6 +35,11 @@ class DrinkTypeSelectFragment : BaseFragment<FragmentDrinkTypeBinding>() {
 
             b.layoutBeer.setOnClickListener {
                 viewModel.toggleCheckBeer()
+            }
+
+            b.btnNext.setOnClickListener {
+                val activity = activity as? FirstInputActivity
+                activity?.openSecondPage()
             }
         }
 

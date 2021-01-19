@@ -29,12 +29,11 @@
     <string name="all_wine_body">바디감</string>
 
 
-
     <string name="register2">주량과 숙취 정보를 입력하면 추천과\n통계 부분에 적용됩니다!</string>
-    <string name="first_input_drink_type_title">추천받고 싶은 주종을<br />선택해주세요.</string>
+    <string name="first_input_drink_type_title">추천받고 싶은 주종을\n선택해주세요.</string>
     <string name="first_input_drink_type_subtitle">주종은 중복 선택 가능합니다.</string>
-    <string name="first_input_detail_title">추천을 위한 세부 사항을<br />입력해 주세요!</string>
-    <string name="first_input_detail_subtitle">기본 정보는 전체 주종에 일괄적으로 적용되며,<br />선택 정보는 각 주종에 대해 적용됩니다.</string>
+    <string name="first_input_detail_title">추천을 위한 세부 사항을\n입력해 주세요!</string>
+    <string name="first_input_detail_subtitle">기본 정보는 전체 주종에 일괄적으로 적용되며,\n선택 정보는 각 주종에 대해 적용됩니다.</string>
     <string name="all_next">다음</string>
     <string name="first_input_default_info">기본 정보</string>
     <string name="first_input_select_info">선택 정보</string>

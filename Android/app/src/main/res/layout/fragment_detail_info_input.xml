@@ -2,6 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scrollview"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -42,6 +43,7 @@
                 android:layout_marginTop="50dp"
                 android:text="@string/first_input_default_info" />
         </LinearLayout>
+
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -86,13 +88,24 @@
                 app:layout_constraintTop_toBottomOf="@+id/tv_abv_label"
                 tools:text="10도 - 20도" />
 
-            <androidx.appcompat.widget.AppCompatSeekBar
+            <com.google.android.material.slider.RangeSlider
                 android:id="@+id/range_abv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="25dp"
                 android:layout_marginTop="30dp"
-                app:layout_constraintTop_toBottomOf="@+id/chip_abv" />
+                android:stepSize="1"
+                android:valueFrom="0"
+                android:valueTo="80"
+                app:haloColor="@color/orange"
+                app:haloRadius="-1dp"
+                app:labelBehavior="gone"
+                app:layout_constraintTop_toBottomOf="@+id/chip_abv"
+                app:thumbColor="@color/orange"
+                app:tickColor="@android:color/transparent"
+                app:trackColorActive="@color/orange"
+                app:trackColorInactive="@color/light_gray"
+                app:values="@array/range_abv_value" />
 
             <TextView
                 android:id="@+id/tv_abv_label_0"
@@ -140,47 +153,89 @@
                 app:layout_constraintStart_toEndOf="@+id/tv_price_label"
                 app:layout_constraintTop_toTopOf="@+id/tv_price_label" />
 
-            <TextView
-                android:id="@+id/tv_price_low"
+            <LinearLayout
+                android:id="@+id/layout_price_low"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/bg_round_rect_light_gray"
                 android:gravity="center"
-                android:paddingHorizontal="30dp"
+                android:orientation="horizontal"
                 android:paddingVertical="10dp"
-                android:textColor="#cccccc"
-                android:textSize="14sp"
                 app:layout_constraintEnd_toStartOf="@+id/dash_price"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_price_label"
-                tools:text="최소 1000" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_price_label">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0"
+                    android:paddingStart="20dp"
+                    android:text="최소"
+                    android:textColor="#cccccc"
+                    android:textSize="14sp" />
 
-            <TextView
-                android:id="@+id/tv_price_high"
+                <EditText
+                    android:id="@+id/et_price_low"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@color/transparent"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:paddingHorizontal="10dp"
+                    android:textColor="#cccccc"
+                    android:textSize="14sp"
+                    tools:text="1000" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_price_high"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_round_rect_light_gray"
                 android:gravity="center"
-                android:paddingHorizontal="30dp"
+                android:orientation="horizontal"
                 android:paddingVertical="10dp"
-                android:textColor="#cccccc"
-                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@+id/layout_price_low"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/dash_price"
-                app:layout_constraintTop_toTopOf="@+id/tv_price_low"
-                tools:text="최대 100,000" />
+                app:layout_constraintTop_toTopOf="@+id/layout_price_low">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0"
+                    android:paddingStart="20dp"
+                    android:text="최대"
+                    android:textColor="#cccccc"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/et_price_high"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@color/transparent"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:paddingHorizontal="10dp"
+                    android:textColor="#cccccc"
+                    android:textSize="14sp"
+                    tools:text="1000" />
+            </LinearLayout>
+            >
+
 
             <View
                 android:id="@+id/dash_price"
                 android:layout_width="20dp"
                 android:layout_height="3dp"
                 android:background="@color/white"
-                app:layout_constraintBottom_toBottomOf="@id/tv_price_low"
+                app:layout_constraintBottom_toBottomOf="@id/layout_price_low"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="@id/tv_price_low" />
+                app:layout_constraintTop_toTopOf="@id/layout_price_low" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -285,7 +340,6 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -315,10 +369,11 @@
             android:id="@+id/layout_liquor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingBottom="40dp">
+            android:animateLayoutChanges="true"
+            android:orientation="vertical">
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_liquor_label"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#994638ce"
@@ -339,7 +394,8 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/layout_liquor_content"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:paddingBottom="40dp">
 
                 <!-- region liquor_type -->
                 <TextView
@@ -395,10 +451,11 @@
             android:id="@+id/layout_wine"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingBottom="40dp">
+            android:animateLayoutChanges="true"
+            android:orientation="vertical">
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_wine_label"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#994638ce"
@@ -419,7 +476,8 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/layout_wine_content"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:paddingBottom="40dp">
 
                 <!-- region wine_type -->
                 <TextView
@@ -498,10 +556,11 @@
             android:id="@+id/layout_beer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingBottom="40dp">
+            android:animateLayoutChanges="true"
+            android:orientation="vertical">
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_beer_label"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#994638ce"
@@ -522,7 +581,8 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/layout_beer_content"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:paddingBottom="40dp">
 
                 <!-- region beer_type -->
                 <TextView

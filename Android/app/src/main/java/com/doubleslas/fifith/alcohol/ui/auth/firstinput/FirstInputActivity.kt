@@ -15,9 +15,14 @@ class FirstInputActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment, DetailInfoInputFragment())
+            .replace(R.id.fragment, DrinkTypeSelectFragment())
             .commit()
     }
 
-
+    fun openSecondPage() {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment, DetailInfoInputFragment())
+            .addToBackStack(null)
+            .commit()
+    }
 }
