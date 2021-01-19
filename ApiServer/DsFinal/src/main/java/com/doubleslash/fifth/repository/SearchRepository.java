@@ -25,10 +25,10 @@ public interface SearchRepository extends JpaRepository<ViewSearchVO, Integer>{
 	//주류명으로 검색해서 조회
 	public Page<SearchMapping> findByNameContaining(String name, Pageable pageable);
 	
-	@Query(value = "select new com.doubleslash.fifth.dto.AlcoholSearchDTO(v.aid, v.name, v.category, v.star, v.reviewCnt) from ViewSearchVO as v, RecommendVO as r where v.aid = r.aid and r.id = ?1 order by recScore")
+	@Query(value = "select new com.doubleslash.fifth.dto.AlcoholSearchDTO(v.aid, v.name, v.category, v.star, v.reviewCnt) from ViewSearchVO as v, RecommendVO as r where v.aid = r.aid and r.id = ?1 order by recScore desc")
 	public List<AlcoholSearchDTO> getRecommendDefaultAll(int id); 
 	
-	@Query(value = "select new com.doubleslash.fifth.dto.AlcoholSearchDTO(v.aid, v.name, v.category, v.star, v.reviewCnt) from ViewSearchVO as v, RecommendVO as r where v.aid = r.aid and r.id = ?1 and category = ?2 order by recScore")
+	@Query(value = "select new com.doubleslash.fifth.dto.AlcoholSearchDTO(v.aid, v.name, v.category, v.star, v.reviewCnt) from ViewSearchVO as v, RecommendVO as r where v.aid = r.aid and r.id = ?1 and category = ?2 order by recScore desc")
 	public List<AlcoholSearchDTO> getRecommendDefault(int id, String category); 
 	
 	@Query(value = "select new com.doubleslash.fifth.dto.AlcoholSearchDTO(v.aid, v.name, v.category, v.star, v.reviewCnt) from ViewSearchVO as v, RecommendVO as r where v.aid = r.aid and r.id = ?1")
