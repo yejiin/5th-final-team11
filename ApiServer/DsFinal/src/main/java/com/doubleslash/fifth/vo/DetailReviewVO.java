@@ -4,13 +4,8 @@ import java.util.Date;
 
 import javax.annotation.Nullable;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.Data;
 import lombok.ToString;
@@ -40,6 +35,6 @@ public class DetailReviewVO {
 	private int price;
 	
 	@Nullable
-	private boolean security;
+	private boolean privacy;
 	
 }

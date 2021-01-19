@@ -27,6 +27,6 @@ public class DetailReviewWriteDTO {
 	
 	private int price;
 	
-	private boolean security;
+	private boolean privacy;
 	
 }

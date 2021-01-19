@@ -35,8 +35,7 @@ public class ReviewDTO {
 	
 	@NonNull
 	private double star;
-	
-	private Long commentCnt;
+
 	
 	@NonNull
 	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy.MM.dd")
