@@ -154,6 +154,7 @@ public class RecommendService {
 					score.put(aid, score.get(aid) + cbWeight);				
 			}
 		}
+		
 		RecommendDTO.beer beer = rec.getAlcohol().getBeer();
 		if(beer != null) {
 			List<BeerStorage> beerCompTarget = alcoholRepository.AlcoholJoinBeer();
@@ -203,18 +204,18 @@ public class RecommendService {
 					score.put(aid, score.get(aid) + cbWeight);				
 			}
 		}
-
+		
 		//스코어링된 주류를 스코어기준 내림차순으로 전부 정렬함
 		List<Integer> sortedAid = descending(score);
 		
 		try {
-			recommendRepository.deleteById(id); //기존 추천데이터 삭제
+			recommendRepository.delete(id);
 		}catch(Exception e) {
-			
+
 		}
 		
 		//새로운 추천데이터 생성
-		for(int i = 0; i < 6; i++) {
+		for(int i = 0; i < 10; i++) {
 			int aid = sortedAid.get(i);
 			int recScore = score.get(aid);
 			recommendRepository.insert(id, aid, recScore);

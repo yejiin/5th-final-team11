@@ -17,4 +17,9 @@ public interface RecommendRepository extends JpaRepository<RecommendVO, Integer>
 	@Query(value = "insert into Recommend(id, aid, recScore) values(?1, ?2, ?3)", nativeQuery = true)
 	public void insert(int id, int aid, int recScore);
 	
+	@Modifying
+	@Transactional
+	@Query(value = "delete from Recommend where id = ?1", nativeQuery = true)
+	public void delete(int id);
+	
 }
