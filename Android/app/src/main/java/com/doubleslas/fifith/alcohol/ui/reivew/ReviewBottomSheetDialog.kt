@@ -81,6 +81,7 @@ class ReviewBottomSheetDialog : BaseBottomSheetDialogFragment<LayoutWriteReviewB
 
     private fun confirmReview() {
         binding?.let { b ->
+
             val detail = ReviewDetailData(
                 b.layoutDetail.etCalendar.text.toString(),
                 b.layoutDetail.etDrink.text.toString().toInt(),
@@ -89,6 +90,7 @@ class ReviewBottomSheetDialog : BaseBottomSheetDialogFragment<LayoutWriteReviewB
                 b.layoutDetail.etPrice.text.toString().toInt(),
                 b.checkboxPrivate.isChecked
             )
+
 
             val liveData = viewModel.sendReview(
                 b.etComment.text.toString(),

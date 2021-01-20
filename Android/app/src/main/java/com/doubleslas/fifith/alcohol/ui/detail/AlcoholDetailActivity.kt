@@ -31,8 +31,7 @@ class AlcoholDetailActivity : AppCompatActivity() {
         binding = ActivityAlcoholDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
-
+        reviewViewModel.readReview(6, 1)
         binding.btnWriteReview.setOnClickListener {
             val bottomSheet =
                 ReviewBottomSheetDialog()
