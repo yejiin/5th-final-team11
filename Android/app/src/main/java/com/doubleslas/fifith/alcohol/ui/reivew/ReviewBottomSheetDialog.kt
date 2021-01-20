@@ -24,7 +24,7 @@ class ReviewBottomSheetDialog : BaseBottomSheetDialogFragment<LayoutWriteReviewB
 
 
     private val viewModel by lazy {
-        ReviewViewModel(6)
+        ReviewViewModel()
     }
 
     private val calendarDialogFragment by lazy {

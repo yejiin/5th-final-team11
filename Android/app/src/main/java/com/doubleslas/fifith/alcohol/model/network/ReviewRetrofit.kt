@@ -5,7 +5,7 @@ import com.doubleslas.fifith.alcohol.model.network.dto.WriteReviewData
 import retrofit2.http.*
 
 interface ReviewRetrofit {
-    @POST("/review/{aid}")
+    @POST("/review")
     fun writeReview(
         @Query("aid") aid: Int,
         @Body data: WriteReviewData
@@ -15,5 +15,18 @@ interface ReviewRetrofit {
     fun readReview(
         @Query("aid") aid: Int,
         @Query("reviewPage") reviewPage: Int
-    )
+    ): ApiLiveData<Any>
+
+
+    @PUT("/review/{rid}/love")
+    fun clickLike(
+        @Path("rid") rid: Int,
+        @Body loveClick: Boolean
+    ): ApiLiveData<Any>
+
+    @PUT("/review/comment/{rid}")
+    fun writeComment(
+        @Path("rid") rid: Int,
+        @Body content: String
+    ): ApiLiveData<Any>
 }

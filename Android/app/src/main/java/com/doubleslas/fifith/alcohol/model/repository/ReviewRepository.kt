@@ -9,4 +9,12 @@ class ReviewRepository {
     fun writeReview(data: WriteReviewData, aid: Int): ApiLiveData<Any> {
         return service.writeReview(aid, data)
     }
+
+    fun readReview(aid: Int, reviewPage: Int): ApiLiveData<Any> {
+        return service.readReview(aid, reviewPage)
+    }
+
+    fun writeComment(rid: Int, content: String): ApiLiveData<Any> {
+        return service.writeComment(rid, content)
+    }
 }

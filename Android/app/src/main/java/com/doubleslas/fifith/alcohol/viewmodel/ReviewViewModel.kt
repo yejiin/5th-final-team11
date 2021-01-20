@@ -8,13 +8,13 @@ import com.doubleslas.fifith.alcohol.model.network.dto.ReviewDetailData
 import com.doubleslas.fifith.alcohol.model.network.dto.WriteReviewData
 import com.doubleslas.fifith.alcohol.model.repository.ReviewRepository
 
-class ReviewViewModel(val reviewId: Int) : ViewModel() {
+class ReviewViewModel() : ViewModel() {
     private val repository by lazy { ReviewRepository() }
 
     fun sendReview(
         comment: String,
         star: Int,
-        detail: ReviewDetailData? = null,
+        detail: ReviewDetailData,
         aid: Int
     ): ApiLiveData<Any> {
         val result = MediatorApiLiveData<Any>()
@@ -30,6 +30,15 @@ class ReviewViewModel(val reviewId: Int) : ViewModel() {
         result.addSource(liveData)
 
         return result
+    }
+
+    fun readReview(aid: Int, reviewPage: Int): ApiLiveData<Any> {
+        return repository.readReview(aid, reviewPage)
+    }
+
+
+    fun writeComment(rid: Int, content:String):ApiLiveData<Any> {
+        return repository.writeComment(rid, content)
     }
 
     fun checkData(comment: String, detail: ReviewDetailData? = null): Int {
@@ -54,6 +63,7 @@ class ReviewViewModel(val reviewId: Int) : ViewModel() {
 
         return -1
     }
+
 
     enum class ErrorCode {
         COMMENT,
