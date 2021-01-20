@@ -2,10 +2,7 @@ package com.doubleslas.fifith.alcohol.model.network.base
 
 import com.doubleslas.fifith.alcohol.App
 import com.doubleslas.fifith.alcohol.BuildConfig
-import com.doubleslas.fifith.alcohol.model.network.AuthRetrofit
-import com.doubleslas.fifith.alcohol.model.network.ReviewRetrofit
-import com.doubleslas.fifith.alcohol.model.network.SearchRetrofit
-import com.doubleslas.fifith.alcohol.model.network.UserRetrofit
+import com.doubleslas.fifith.alcohol.model.network.*
 import com.doubleslas.fifith.alcohol.model.network.dto.DetailRetrofit
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -21,6 +18,8 @@ object RestClient {
     fun getUserService(): UserRetrofit = retrofit.create(UserRetrofit::class.java)
     fun getSearchService(): SearchRetrofit = retrofit.create(SearchRetrofit::class.java)
     fun getReviewService(): ReviewRetrofit = retrofit.create(ReviewRetrofit::class.java)
+    fun getRecommendService(): RecommendRetrofit = retrofit.create(RecommendRetrofit::class.java)
+
 
     private val retrofit =
         Retrofit.Builder().run {

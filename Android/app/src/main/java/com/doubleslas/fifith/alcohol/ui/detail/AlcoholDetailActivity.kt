@@ -78,29 +78,29 @@ class AlcoholDetailActivity : AppCompatActivity() {
                         binding.tvNationInfo.visibility = View.VISIBLE
                         binding.tvNationInfo.text = it.data.country + it.data.area
                         binding.layoutBody.visibility = View.VISIBLE
-                        binding.seekBarTaste.seekBar.progress = it.data.flavor
+                        binding.seekBarFlavor.seekBar.progress = it.data.flavor
                         binding.seekBarBody.seekBar.progress = it.data.body
                         binding.seekBarBody.seekBar.isEnabled = false
-                        binding.seekBarTaste.seekBar.isEnabled = false
+                        binding.seekBarFlavor.seekBar.isEnabled = false
 
-                        binding.seekBarTaste.tvLabel1.text = "Dry"
-                        binding.seekBarTaste.tvLabel2.text = "Sweet"
+                        binding.seekBarFlavor.tvLabel1.text = "Dry"
+                        binding.seekBarFlavor.tvLabel2.text = "Sweet"
 
                         binding.seekBarBody.tvLabel1.text = "Light"
                         binding.seekBarBody.tvLabel2.text = "Heavy"
                     } else {
 
                         binding.layoutBody.visibility = View.GONE
-                        binding.seekBarTaste.seekBar.visibility = View.GONE
-                        binding.seekBarTaste.tvLabel1.visibility = View.GONE
-                        binding.seekBarTaste.tvLabel2.visibility = View.GONE
+                        binding.seekBarFlavor.seekBar.visibility = View.GONE
+                        binding.seekBarFlavor.tvLabel1.visibility = View.GONE
+                        binding.seekBarFlavor.tvLabel2.visibility = View.GONE
                     }
 
 
                     // 맥주 파트
                     if (it.data.areas != null) {
                         binding.layoutKinds.visibility = View.VISIBLE
-                        binding.layoutTaste.visibility = View.GONE
+                        binding.layoutFlavor.visibility = View.GONE
                         binding.layoutBody.visibility = View.GONE
                         binding.tvNation.visibility = View.VISIBLE
                         binding.tvNationInfo.visibility = View.VISIBLE
@@ -128,7 +128,7 @@ class AlcoholDetailActivity : AppCompatActivity() {
                     // 양주 파트
                     if (it.data.flavors != null) {
                         for (index in it.data.flavors.indices) {
-                            val chip = Chip(binding.chipGroupTaste.context)
+                            val chip = Chip(binding.chipGroupFlavor.context)
                             chip.setTextColor(Color.parseColor("#FFFFFF"))
                             chip.text = it.data.flavors[index]
                             chip.isClickable = false
@@ -139,7 +139,7 @@ class AlcoholDetailActivity : AppCompatActivity() {
                                     R.color.chipColor
                                 )
                             )
-                            binding.chipGroupTaste.addView(chip)
+                            binding.chipGroupFlavor.addView(chip)
                         }
                     }
                 }

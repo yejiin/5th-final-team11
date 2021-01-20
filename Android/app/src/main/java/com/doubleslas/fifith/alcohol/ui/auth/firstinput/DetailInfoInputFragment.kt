@@ -16,6 +16,7 @@ import com.doubleslas.fifith.alcohol.ui.common.base.BaseFragment
 import com.doubleslas.fifith.alcohol.viewmodel.FirstInfoViewModel
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
+import com.google.android.material.slider.RangeSlider
 import kotlinx.android.synthetic.main.fragment_detail_info_input.*
 
 
@@ -29,13 +30,13 @@ class DetailInfoInputFragment : BaseFragment<FragmentDetailInfoInputBinding>() {
         return FragmentDetailInfoInputBinding.inflate(inflater, container, false)
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding?.let { b ->
+
+            refreshAbv(b.rangeAbv)
             b.rangeAbv.addOnChangeListener { slider, value, fromUser ->
-                val text = "${slider.values[0].toInt()} 도 - ${slider.values[1].toInt()} 도"
-                b.chipAbv.text = text
+                refreshAbv(slider)
             }
 
             b.layoutLiquorLabel.setOnClickListener {
@@ -51,31 +52,31 @@ class DetailInfoInputFragment : BaseFragment<FragmentDetailInfoInputBinding>() {
 
 
             b.layoutLiquorTypeContent.let { layout ->
-                for (str in viewModel.getTextLiquorType()) {
+                for (str in viewModel.getLiquorTypeList()) {
                     createChip(layout, str)
                 }
             }
 
-            b.layoutLiquorTasteContent.let { layout ->
-                for (str in viewModel.getTextLiquorTaste()) {
+            b.layoutLiquorFlavorContent.let { layout ->
+                for (str in viewModel.getLiquorFlavorList()) {
                     createChip(layout, str)
                 }
             }
 
             b.layoutWineTypeContent.let { layout ->
-                for (str in viewModel.getTextWineType()) {
+                for (str in viewModel.getWineTypeList()) {
                     createChip(layout, str)
                 }
             }
 
-            b.seekBarWineTaste.tvLabel1.text = "Dry"
-            b.seekBarWineTaste.tvLabel2.text = "Sweet"
+            b.seekBarWineFlavor.tvLabel1.text = "Dry"
+            b.seekBarWineFlavor.tvLabel2.text = "Sweet"
 
             b.seekBarWineBody.tvLabel1.text = "Light"
             b.seekBarWineBody.tvLabel2.text = "Heavy"
 
             b.layoutBeerTypeContent.let { layout ->
-                val list = viewModel.getTextBeerType()
+                val list = viewModel.getBeerTypeList()
                 for (pair in list) {
                     val titleChip = createChip(layout, pair.first)
 
@@ -117,7 +118,18 @@ class DetailInfoInputFragment : BaseFragment<FragmentDetailInfoInputBinding>() {
 
                     layout.addView(group)
                     for (str in pair.second) {
-                        createChip(group, str)
+                        createChip(group, str).setOnClickListener {
+                            var ch = true
+                            for (child in group.children) {
+                                child as? Chip ?: continue
+                                if (!child.isChecked) {
+                                    ch = false
+                                    break
+                                }
+                            }
+
+                            titleChip.isChecked = ch
+                        }
                     }
 
                     titleChip.setOnClickListener {
@@ -132,11 +144,14 @@ class DetailInfoInputFragment : BaseFragment<FragmentDetailInfoInputBinding>() {
             }
 
             b.layoutBeerPlaceContent.let { layout ->
-                for (str in viewModel.getTextBeerPlace()) {
+                for (str in viewModel.getBeerPlaceList()) {
                     createChip(layout, str)
                 }
             }
 
+            b.btnNext.setOnClickListener {
+                submit()
+            }
         }
     }
 
@@ -160,12 +175,22 @@ class DetailInfoInputFragment : BaseFragment<FragmentDetailInfoInputBinding>() {
         scrollview.requestChildFocus(v, v)
     }
 
-    private fun createChip(parent: ViewGroup, text: String): View {
-
+    private fun createChip(parent: ViewGroup, text: String): Chip {
         val chip = ChipFirstInputBinding.inflate(layoutInflater).root
         chip.text = text
         parent.addView(chip)
 
         return chip
+    }
+
+    private fun refreshAbv(slider: RangeSlider) {
+        val text = "${slider.values[0].toInt()} 도 - ${slider.values[1].toInt()} 도"
+        binding?.chipAbv?.text = text
+    }
+
+    private fun submit() {
+        val binding = binding ?: return
+        val data = viewModel.createModel(binding) ?: return
+        viewModel.submit(data)
     }
 }
