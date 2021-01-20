@@ -24,6 +24,18 @@ public interface ReviewRepository extends JpaRepository<ReviewVO, Integer> {
 	@Query(value = "update Review set report=report+1 where rid=?1", nativeQuery = true)
 	public void updateReport(int rid);
 	
+	// 리뷰 좋아요 수 증가
+	@Transactional
+	@Modifying
+	@Query(value = "update Review set love=love+1 where rid=?1", nativeQuery = true)
+	public void updateLove(int rid);
+	
+	// 리뷰 좋아요 수 증가
+	@Transactional
+	@Modifying
+	@Query(value = "update Review set love=love-1 where rid=?1", nativeQuery = true)
+	public void updateLoveCancle(int rid);
+	
 	@Query(value = "select rid from Review where aid = ?1 order by rid desc limit 1", nativeQuery = true)
 	public String findByAid(int aid);
 }

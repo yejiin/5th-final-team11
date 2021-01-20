@@ -1,6 +1,7 @@
 package com.doubleslash.fifth.service;
 
 import java.io.IOException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
@@ -72,7 +73,6 @@ public class ReviewService {
 
 			// 해당 리뷰 하트 클릭 여부 확인
 			ReviewLoveVO loveClick = reviewLoveRepository.findByIdRid(id, rid);
-
 			if (loveClick != null) {
 				reviewDto.getContent().get(i).setLoveClick(true);
 			} else {
@@ -196,17 +196,15 @@ public class ReviewService {
 	}
 
 	// 리뷰 좋아요
-	public WrapperDTO reviewLove(int id, int rid, HttpServletResponse response) throws IOException {
+	public WrapperDTO reviewLove(int id, int rid, HttpServletResponse response) throws SQLIntegrityConstraintViolationException, IOException{
 		if (reviewChk(rid) == 0) {
 			response.sendError(404, "Review Id Error");
 			return null;
 		}
 
-		ReviewLoveVO loveVo = new ReviewLoveVO();
-		loveVo.setId(id);
-		loveVo.setRid(rid);
-		reviewLoveRepository.save(loveVo);
-
+		if(reviewLoveRepository.insert(id, rid)==1) {
+			reviewRepository.updateLove(rid);
+		}
 		WrapperDTO dto = new WrapperDTO("Review Love Success");
 
 		return dto;
@@ -222,8 +220,9 @@ public class ReviewService {
 		ReviewLoveVO loveVo = new ReviewLoveVO();
 		loveVo.setId(id);
 		loveVo.setRid(rid);
-		reviewLoveRepository.delete(loveVo);
-
+		if(reviewLoveRepository.delete(id, rid)==1) {
+			reviewRepository.updateLoveCancle(rid);
+		}
 		WrapperDTO dto = new WrapperDTO("Review Love Cancle Success");
 
 		return dto;
@@ -233,10 +232,11 @@ public class ReviewService {
 	public int reviewChk(int rid) {
 		int result = 0;
 
-		if (reviewRepository.findById(rid).isPresent() == true) {
+		if(reviewRepository.findById(rid).isPresent() == true) {
 			result = 1;
 		}
 
 		return result;
 	}
+
 }

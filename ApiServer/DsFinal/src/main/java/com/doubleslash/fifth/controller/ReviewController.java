@@ -46,7 +46,8 @@ public class ReviewController {
 	@Autowired
 	ReviewService reviewService;
 	
-	@ApiOperation(value = "리뷰 리스트 조회", notes="특정 리뷰 댓글 페이징 필요시 commentRid, commentPage 파라미터 전달, 파라미터 입력 안했을 시 리뷰 당 댓글 데이터 20개 제공")
+	@ApiOperation(value = "리뷰 리스트 조회", notes="특정 리뷰 댓글 페이징 필요시 commentRid, commentPage 파라미터 전달, 파라미터 입력 안했을 시 리뷰 당 댓글 데이터 20개 제공\n"
+			+ "로그인 안했을 시 loveClick 전부 false")
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "aid", required = true, dataType = "int", paramType = "query", example = "1", value = "알코올 id"),
 		@ApiImplicitParam(name = "reviewPage", required = true, dataType = "int", paramType = "query", example = "0", value = "리뷰 페이지 번호(페이지당 데이터 20개)"),
@@ -114,7 +115,7 @@ public class ReviewController {
 	public WrapperDTO reviewReport(@PathVariable("rid") int rid, @RequestBody ContentDTO content, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String uid = authService.verifyToken(request);
 		int id = userService.getId(uid);
-	
+
 		WrapperDTO dto = reviewService.reportReview(id, rid, content, response);
 		return dto;
 	}
