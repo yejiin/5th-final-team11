@@ -1,6 +1,7 @@
 package com.doubleslash.fifth.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.doubleslash.fifth.dto.BeerDTO;
 import com.doubleslash.fifth.dto.LiquorDTO;
+import com.doubleslash.fifth.dto.SimilarAlcoholDTO;
 import com.doubleslash.fifth.dto.WineDTO;
 import com.doubleslash.fifth.repository.AlcoholRepository;
 import com.doubleslash.fifth.repository.ReviewRepository;
@@ -61,7 +63,8 @@ public class AlcoholService {
 		if (id != -1) {
 			liquorMap.put("userDrink", getUserDrink(id, aid));
 		}
-
+		liquorMap.put("similar", getSimilar(aid));
+		
 		return liquorMap;
 	}
 
@@ -84,7 +87,7 @@ public class AlcoholService {
 		if (id != -1) {
 			beerMap.put("userDrink", getUserDrink(id, aid));
 		}
-
+		beerMap.put("similar", getSimilar(aid));
 		return beerMap;
 	}
 
@@ -100,6 +103,7 @@ public class AlcoholService {
 		if (id != -1) {
 			wineMap.put("userDrink", getUserDrink(id, aid));
 		}
+		wineMap.put("similar", getSimilar(aid));
 		return wineMap;
 	}
 
@@ -132,6 +136,21 @@ public class AlcoholService {
 		double userDrink = Math.round(sojuAmount / alcoholAmount * 10) / 10.0;
 		System.out.println("사용자 주량 : " + userDrink);
 		return userDrink;
+	}
+	
+	// 유사 주류 데이터
+	public List<Map<String, Object>> getSimilar(int aid){
+		List<SimilarAlcoholDTO> similarDto =  alcoholRepository.findSimilar(aid);
+		
+		List<Map<String, Object>> listResult = new ArrayList<Map<String,Object>>();
+		for(int i=0; i<similarDto.size(); i++) {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("aId", similarDto.get(i).getAid());
+			map.put("aImage", similarDto.get(i).getImage());
+			map.put("aName", similarDto.get(i).getName());
+			listResult.add(map);
+		}
+		return listResult;
 	}
 
 }
