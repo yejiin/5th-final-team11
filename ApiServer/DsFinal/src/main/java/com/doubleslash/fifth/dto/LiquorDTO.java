@@ -35,6 +35,6 @@ public class LiquorDTO{
 	
 	private double starAvg;
 	
-	private long starCnt;
+	private int starCnt;
 
 }

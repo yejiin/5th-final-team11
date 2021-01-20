@@ -13,4 +13,6 @@ interface AuthRetrofit {
 
     @POST("/auth/kakao")
     fun loginKaKao(@Body token: AccessTokenBody): ApiLiveData<CustomTokenData>
+
 }
+

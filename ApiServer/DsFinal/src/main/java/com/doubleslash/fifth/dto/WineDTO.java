@@ -41,5 +41,5 @@ public class WineDTO {
 	
 	private double starAvg;
 	
-	private Long starCnt;
+	private int starCnt;
 }

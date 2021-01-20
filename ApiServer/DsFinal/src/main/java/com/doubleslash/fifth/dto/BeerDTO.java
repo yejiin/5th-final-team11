@@ -36,5 +36,5 @@ public class BeerDTO {
 		
 	private double starAvg;
 	
-	private long starCnt;
+	private int starCnt;
 }

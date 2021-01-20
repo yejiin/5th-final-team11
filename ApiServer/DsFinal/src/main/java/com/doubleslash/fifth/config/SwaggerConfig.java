@@ -82,8 +82,12 @@ public class SwaggerConfig extends WebMvcConfigurationSupport{
     	String paths[] = {
     			"/test",
                 "/user/register",
+                "/review/*/*",
+                "/review/*/*/*",
+                "/review",
                 "/alcohol/detail/*",
                 "/alcohol/recommend"
+                
         };
     	
         for (String path: paths) {
@@ -115,6 +119,9 @@ public class SwaggerConfig extends WebMvcConfigurationSupport{
 		String[] includePathList = {
 				"/test",
                 "/user/register",
+                "/review/*/*",
+                "/review/*/*/*",
+                "/review",
                 "/alcohol/detail/*",
                 "/alcohol/recommend"
 		};
