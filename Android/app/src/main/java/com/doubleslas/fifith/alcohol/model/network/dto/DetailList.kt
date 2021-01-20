@@ -21,12 +21,10 @@ data class DetailList(
     @SerializedName("body") val body: Int?,
 
     // 양주 추가속성
-
-
     @SerializedName("flavors") val flavors: List<String>?,
-
 
     // 맥주 추가속성
     @SerializedName("areas") val areas: List<String>?
+
 
 )

@@ -2,6 +2,8 @@ package com.doubleslas.fifith.alcohol.model.repository
 
 import com.doubleslas.fifith.alcohol.model.network.base.ApiLiveData
 import com.doubleslas.fifith.alcohol.model.network.base.RestClient
+import com.doubleslas.fifith.alcohol.model.network.dto.ReviewData
+import com.doubleslas.fifith.alcohol.model.network.dto.ReviewList
 import com.doubleslas.fifith.alcohol.model.network.dto.WriteReviewData
 
 class ReviewRepository {
@@ -10,7 +12,7 @@ class ReviewRepository {
         return service.writeReview(aid, data)
     }
 
-    fun readReview(aid: Int, reviewPage: Int): ApiLiveData<Any> {
+    fun readReview(aid: Int, reviewPage: Int): ApiLiveData<ReviewList> {
         return service.readReview(aid, reviewPage)
     }
 

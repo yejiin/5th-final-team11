@@ -1,6 +1,8 @@
 package com.doubleslas.fifith.alcohol.model.network
 
 import com.doubleslas.fifith.alcohol.model.network.base.ApiLiveData
+import com.doubleslas.fifith.alcohol.model.network.dto.ReviewData
+import com.doubleslas.fifith.alcohol.model.network.dto.ReviewList
 import com.doubleslas.fifith.alcohol.model.network.dto.WriteReviewData
 import retrofit2.http.*
 
@@ -15,7 +17,7 @@ interface ReviewRetrofit {
     fun readReview(
         @Query("aid") aid: Int,
         @Query("reviewPage") reviewPage: Int
-    ): ApiLiveData<Any>
+    ): ApiLiveData<ReviewList>
 
 
     @PUT("/review/{rid}/love")

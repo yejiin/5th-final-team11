@@ -4,7 +4,9 @@ import androidx.lifecycle.ViewModel
 import com.doubleslas.fifith.alcohol.model.network.base.ApiLiveData
 import com.doubleslas.fifith.alcohol.model.network.base.ApiStatus
 import com.doubleslas.fifith.alcohol.model.network.base.MediatorApiLiveData
+import com.doubleslas.fifith.alcohol.model.network.dto.ReviewData
 import com.doubleslas.fifith.alcohol.model.network.dto.ReviewDetailData
+import com.doubleslas.fifith.alcohol.model.network.dto.ReviewList
 import com.doubleslas.fifith.alcohol.model.network.dto.WriteReviewData
 import com.doubleslas.fifith.alcohol.model.repository.ReviewRepository
 
@@ -32,7 +34,7 @@ class ReviewViewModel() : ViewModel() {
         return result
     }
 
-    fun readReview(aid: Int, reviewPage: Int): ApiLiveData<Any> {
+    fun readReview(aid: Int, reviewPage: Int): ApiLiveData<ReviewList> {
         return repository.readReview(aid, reviewPage)
     }
 

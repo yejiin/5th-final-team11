@@ -13,11 +13,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.doubleslas.fifith.alcohol.R
 import com.doubleslas.fifith.alcohol.databinding.ActivityAlcoholDetailBinding
 import com.doubleslas.fifith.alcohol.model.network.base.ApiStatus
+import com.doubleslas.fifith.alcohol.model.network.dto.ReviewData
 import com.doubleslas.fifith.alcohol.ui.reivew.ReviewBottomSheetDialog
 import com.doubleslas.fifith.alcohol.viewmodel.DetailViewModel
 import com.doubleslas.fifith.alcohol.viewmodel.ReviewViewModel
 import com.google.android.material.chip.Chip
-import kotlinx.android.synthetic.main.item_detail_review.view.*
 
 class AlcoholDetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAlcoholDetailBinding
@@ -25,13 +25,30 @@ class AlcoholDetailActivity : AppCompatActivity() {
     private val reviewViewModel by lazy { ReviewViewModel() }
     private val alcoholId by lazy { intent.getIntExtra(EXTRA_ALCOHOL_ID, 0) }
 
+    private val adapter by lazy { DetailReviewAdapter() }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAlcoholDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        reviewViewModel.readReview(6, 1)
+        binding.rvDetailReview.adapter = adapter
+
+        reviewViewModel.readReview(6, 0).observe(this, Observer {
+            when (it) {
+                is ApiStatus.Loading -> {
+
+                }
+                is ApiStatus.Success -> {
+                    adapter.setData(it.data.reviewList)
+                }
+                is ApiStatus.Error -> {
+
+                }
+
+            }
+        })
         binding.btnWriteReview.setOnClickListener {
             val bottomSheet =
                 ReviewBottomSheetDialog()
@@ -150,8 +167,8 @@ class AlcoholDetailActivity : AppCompatActivity() {
                 }
             }
         })
-        binding.rvAlcoholSimilar.adapter = AlcoholDetailAdapter(this)
-        binding.rvDetailReview.adapter = DetailReviewAdapter(this)
+
+        binding.rvAlcoholSimilar.adapter = SimilarAdapter(this)
 
         binding.rvAlcoholSimilar.layoutManager = LinearLayoutManager(this).also {
             it.orientation = LinearLayoutManager.HORIZONTAL

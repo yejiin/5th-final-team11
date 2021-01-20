@@ -6,5 +6,5 @@ data class ReviewDetailData(
     val hangover: Int,
     val place: String,
     val price: Int,
-    val privacy: Boolean
+    val privacy: Boolean = false
 )
