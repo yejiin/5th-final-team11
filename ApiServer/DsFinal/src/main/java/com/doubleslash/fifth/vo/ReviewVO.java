@@ -7,29 +7,21 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
-
 
 @Entity
-@Table(name = "Users")
+@Table(name = "Review")
 @Data
-@NoArgsConstructor
-@RequiredArgsConstructor
-public class UserVO {
+public class ReviewVO {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int rid;
+	
+	private int aid;
+	
 	private int id;
 	
-	@NonNull
-	private String uid;
+	private float star; 
 	
-	private String nickname;
-	
-	private double drink;
-	
-	private Integer hangover;
-	
+	// 수정 필요
 }
