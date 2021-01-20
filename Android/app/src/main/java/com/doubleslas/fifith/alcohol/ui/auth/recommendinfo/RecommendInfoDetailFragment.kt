@@ -1,4 +1,4 @@
-package com.doubleslas.fifith.alcohol.ui.auth.firstinput
+package com.doubleslas.fifith.alcohol.ui.auth.recommendinfo
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,24 +10,23 @@ import androidx.core.view.children
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import com.doubleslas.fifith.alcohol.R
-import com.doubleslas.fifith.alcohol.databinding.ChipFirstInputBinding
-import com.doubleslas.fifith.alcohol.databinding.FragmentDetailInfoInputBinding
+import com.doubleslas.fifith.alcohol.databinding.ChipRecommendInfoBinding
+import com.doubleslas.fifith.alcohol.databinding.FragmentRecommendInfoDetailBinding
 import com.doubleslas.fifith.alcohol.ui.common.base.BaseFragment
 import com.doubleslas.fifith.alcohol.viewmodel.FirstInfoViewModel
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.slider.RangeSlider
-import kotlinx.android.synthetic.main.fragment_detail_info_input.*
 
 
-class DetailInfoInputFragment : BaseFragment<FragmentDetailInfoInputBinding>() {
+class RecommendInfoDetailFragment : BaseFragment<FragmentRecommendInfoDetailBinding>() {
     private val viewModel by lazy { ViewModelProvider(activity!!).get(FirstInfoViewModel::class.java) }
 
     override fun createViewBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
-    ): FragmentDetailInfoInputBinding {
-        return FragmentDetailInfoInputBinding.inflate(inflater, container, false)
+    ): FragmentRecommendInfoDetailBinding {
+        return FragmentRecommendInfoDetailBinding.inflate(inflater, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -172,11 +171,11 @@ class DetailInfoInputFragment : BaseFragment<FragmentDetailInfoInputBinding>() {
     private fun toggleVisibility(v: View) {
         v.isVisible = !v.isVisible
 
-        scrollview.requestChildFocus(v, v)
+        binding?.scrollview?.requestChildFocus(v, v)
     }
 
     private fun createChip(parent: ViewGroup, text: String): Chip {
-        val chip = ChipFirstInputBinding.inflate(layoutInflater).root
+        val chip = ChipRecommendInfoBinding.inflate(layoutInflater).root
         chip.text = text
         parent.addView(chip)
 

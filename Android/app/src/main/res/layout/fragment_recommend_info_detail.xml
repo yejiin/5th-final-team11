@@ -19,25 +19,25 @@
             android:paddingHorizontal="@dimen/first_input_default_padding">
 
             <TextView
-                style="@style/FirstInputStyle.Page"
+                style="@style/RecommendInfoStyle.Page"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="2/3" />
 
             <TextView
-                style="@style/FirstInputStyle.Title"
+                style="@style/RecommendInfoStyle.Title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/first_input_detail_title" />
 
             <TextView
-                style="@style/FirstInputStyle.SubTitle"
+                style="@style/RecommendInfoStyle.SubTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/first_input_detail_subtitle" />
 
             <TextView
-                style="@style/FirstInputStyle.Label"
+                style="@style/RecommendInfoStyle.Label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="50dp"
@@ -55,7 +55,7 @@
             <!-- region ABV -->
             <TextView
                 android:id="@+id/tv_abv_label"
-                style="@style/FirstInputStyle.Label"
+                style="@style/RecommendInfoStyle.Label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/first_input_default_padding"
@@ -134,7 +134,7 @@
             <!-- region Price -->
             <TextView
                 android:id="@+id/tv_price_label"
-                style="@style/FirstInputStyle.Label"
+                style="@style/RecommendInfoStyle.Label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/first_input_default_padding"
@@ -263,7 +263,7 @@
             <!-- region carbonated -->
             <TextView
                 android:id="@+id/tv_carbonated_label"
-                style="@style/FirstInputStyle.Label"
+                style="@style/RecommendInfoStyle.Label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/first_input_default_padding"
@@ -351,14 +351,14 @@
             android:orientation="horizontal">
 
             <TextView
-                style="@style/FirstInputStyle.Label"
+                style="@style/RecommendInfoStyle.Label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/first_input_default_padding"
                 android:text="@string/first_input_select_info" />
 
             <TextView
-                style="@style/FirstInputStyle.Label"
+                style="@style/RecommendInfoStyle.Label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/first_input_default_padding"
@@ -385,7 +385,7 @@
                 android:paddingVertical="5dp">
 
                 <TextView
-                    style="@style/FirstInputStyle.Label"
+                    style="@style/RecommendInfoStyle.Label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/all_liquor"
@@ -404,7 +404,7 @@
                 <!-- region liquor_type -->
                 <TextView
                     android:id="@+id/tv_liquor_type_label"
-                    style="@style/FirstInputStyle.Label"
+                    style="@style/RecommendInfoStyle.Label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/first_input_default_padding"
@@ -434,7 +434,7 @@
                 <!-- region liquor_flavor -->
                 <TextView
                     android:id="@+id/tv_liquor_flavor_label"
-                    style="@style/FirstInputStyle.Label"
+                    style="@style/RecommendInfoStyle.Label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/first_input_default_padding"
@@ -480,7 +480,7 @@
                 android:paddingVertical="5dp">
 
                 <TextView
-                    style="@style/FirstInputStyle.Label"
+                    style="@style/RecommendInfoStyle.Label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/all_wine"
@@ -499,7 +499,7 @@
                 <!-- region wine_type -->
                 <TextView
                     android:id="@+id/tv_wine_type_label"
-                    style="@style/FirstInputStyle.Label"
+                    style="@style/RecommendInfoStyle.Label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/first_input_default_padding"
@@ -529,7 +529,7 @@
                 <!-- region wine_flavor -->
                 <TextView
                     android:id="@+id/tv_wine_flavor_label"
-                    style="@style/FirstInputStyle.Label"
+                    style="@style/RecommendInfoStyle.Label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/first_input_default_padding"
@@ -561,7 +561,7 @@
                 <!-- region wine_body -->
                 <TextView
                     android:id="@+id/tv_wine_body_label"
-                    style="@style/FirstInputStyle.Label"
+                    style="@style/RecommendInfoStyle.Label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/first_input_default_padding"
@@ -609,7 +609,7 @@
                 android:paddingVertical="5dp">
 
                 <TextView
-                    style="@style/FirstInputStyle.Label"
+                    style="@style/RecommendInfoStyle.Label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/all_beer"
@@ -628,7 +628,7 @@
                 <!-- region beer_type -->
                 <TextView
                     android:id="@+id/tv_beer_type_label"
-                    style="@style/FirstInputStyle.Label"
+                    style="@style/RecommendInfoStyle.Label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/first_input_default_padding"
@@ -659,7 +659,7 @@
                 <!-- region beer_place -->
                 <TextView
                     android:id="@+id/tv_beer_place_label"
-                    style="@style/FirstInputStyle.Label"
+                    style="@style/RecommendInfoStyle.Label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/first_input_default_padding"

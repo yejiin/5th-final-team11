@@ -19,7 +19,7 @@
         <activity android:name=".ui.auth.LoginActivity" />
 
         <activity android:name=".ui.main.MainActivity" />
-        <activity android:name=".ui.auth.firstinput.FirstInputActivity">
+        <activity android:name=".ui.auth.recommendinfo.RecommendInfoActivity">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

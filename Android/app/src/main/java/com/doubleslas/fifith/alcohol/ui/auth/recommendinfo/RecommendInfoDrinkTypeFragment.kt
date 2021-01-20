@@ -1,24 +1,23 @@
-package com.doubleslas.fifith.alcohol.ui.auth.firstinput
+package com.doubleslas.fifith.alcohol.ui.auth.recommendinfo
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.doubleslas.fifith.alcohol.databinding.FragmentDrinkTypeBinding
+import com.doubleslas.fifith.alcohol.databinding.FragmentRecommendInfoDrinkTypeBinding
 import com.doubleslas.fifith.alcohol.ui.common.base.BaseFragment
 import com.doubleslas.fifith.alcohol.viewmodel.FirstInfoViewModel
 
-class DrinkTypeSelectFragment : BaseFragment<FragmentDrinkTypeBinding>() {
+class RecommendInfoDrinkTypeFragment : BaseFragment<FragmentRecommendInfoDrinkTypeBinding>() {
     private val viewModel by lazy { ViewModelProvider(activity!!).get(FirstInfoViewModel::class.java) }
 
     override fun createViewBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
-    ): FragmentDrinkTypeBinding {
-        return FragmentDrinkTypeBinding.inflate(inflater, container, false)
+    ): FragmentRecommendInfoDrinkTypeBinding {
+        return FragmentRecommendInfoDrinkTypeBinding.inflate(inflater, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -38,7 +37,7 @@ class DrinkTypeSelectFragment : BaseFragment<FragmentDrinkTypeBinding>() {
             }
 
             b.btnNext.setOnClickListener {
-                val activity = activity as? FirstInputActivity
+                val activity = activity as? RecommendInfoActivity
                 activity?.openSecondPage()
             }
         }

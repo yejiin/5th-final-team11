@@ -7,13 +7,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.doubleslas.fifith.alcohol.R
-import com.doubleslas.fifith.alcohol.databinding.FragmentDetailInfoInputBinding
+import com.doubleslas.fifith.alcohol.databinding.FragmentRecommendInfoDetailBinding
 import com.doubleslas.fifith.alcohol.model.network.dto.recommend.*
 import com.doubleslas.fifith.alcohol.model.repository.RecommendInfoRepository
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 
-class FirstInfoViewModel : ViewModel() {
+class RecommendInfoViewModel : ViewModel() {
     private val repository by lazy { RecommendInfoRepository() }
 
     private val mCheckWine = MutableLiveData<Boolean>()
@@ -123,7 +123,7 @@ class FirstInfoViewModel : ViewModel() {
         repository.submit(data)
     }
 
-    fun createModel(binding: FragmentDetailInfoInputBinding): RecommendInfoData? {
+    fun createModel(binding: FragmentRecommendInfoDetailBinding): RecommendInfoData? {
 
         val liquorData =
             if (checkLiquor.value == true)

@@ -60,24 +60,24 @@
         <item name="android:background">@drawable/ic_facebook_login</item>
     </style>
 
-    <style name="FirstInputStyle" />
+    <style name="RecommendInfoStyle" />
 
-    <style name="FirstInputStyle.Page" parent="FirstInputStyle">
+    <style name="RecommendInfoStyle.Page" parent="RecommendInfoStyle">
         <item name="android:textColor">@color/orange</item>
         <item name="android:textSize">23sp</item>
     </style>
 
-    <style name="FirstInputStyle.Title" parent="FirstInputStyle">
+    <style name="RecommendInfoStyle.Title" parent="RecommendInfoStyle">
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">24sp</item>
     </style>
 
-    <style name="FirstInputStyle.SubTitle" parent="FirstInputStyle">
+    <style name="RecommendInfoStyle.SubTitle" parent="RecommendInfoStyle">
         <item name="android:textColor">#cccccc</item>
         <item name="android:textSize">14sp</item>
     </style>
 
-    <style name="FirstInputStyle.Label" parent="FirstInputStyle">
+    <style name="RecommendInfoStyle.Label" parent="RecommendInfoStyle">
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">20sp</item>
     </style>
