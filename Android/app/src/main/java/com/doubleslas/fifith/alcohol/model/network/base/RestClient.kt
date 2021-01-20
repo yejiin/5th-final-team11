@@ -3,6 +3,8 @@ package com.doubleslas.fifith.alcohol.model.network.base
 import com.doubleslas.fifith.alcohol.App
 import com.doubleslas.fifith.alcohol.BuildConfig
 import com.doubleslas.fifith.alcohol.model.network.AuthRetrofit
+import com.doubleslas.fifith.alcohol.model.network.SearchRetrofit
+import com.doubleslas.fifith.alcohol.model.network.UserRetrofit
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -13,6 +15,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object RestClient {
     fun getAuthService(): AuthRetrofit = retrofit.create(AuthRetrofit::class.java)
+    fun getUserService(): UserRetrofit = retrofit.create(UserRetrofit::class.java)
+    fun getSearchService(): SearchRetrofit = retrofit.create(SearchRetrofit::class.java)
 
     private val retrofit =
         Retrofit.Builder().run {

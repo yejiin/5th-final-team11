@@ -28,7 +28,7 @@ public class UserVO {
 	
 	private String nickname;
 	
-	private Float drink;
+	private double drink;
 	
 	private Integer hangover;
 	
