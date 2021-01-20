@@ -42,5 +42,10 @@ public class UserService {
 			System.out.println("user 등록 에러 : " + e);
 		}
 	}
+	
+	public int getId(String uid) {
+		return userRepository.findByUid(uid).getId();
+	}
+
 
 }
