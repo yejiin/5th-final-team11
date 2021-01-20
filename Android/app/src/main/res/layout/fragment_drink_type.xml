@@ -8,7 +8,7 @@
         android:id="@+id/layout_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/first_info_default_padding"
+        android:layout_marginHorizontal="@dimen/first_input_default_padding"
         android:layout_marginTop="80dp"
         android:orientation="vertical"
         app:layout_constraintLeft_toLeftOf="parent"

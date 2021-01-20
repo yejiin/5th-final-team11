@@ -2,7 +2,13 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <dimen name="bottom_navigation_text" tools:ovveride="true">10sp</dimen>
 
-    <dimen name="first_info_default_padding">20dp</dimen>
     <dimen name="circle_seekBar_height">2dp</dimen>
     <dimen name="circle_seekBar_radius">7dp</dimen>
+
+    <dimen name="first_input_default_padding">20dp</dimen>
+    <dimen name="first_input_beer_type_title_margin_top">23.5dp</dimen>
+    <dimen name="first_input_beer_type_title_margin_bottom">12.5dp</dimen>
+    <dimen name="first_input_beer_type_margin_vertical">15dp</dimen>
+    <dimen name="first_input_beer_type_margin_horizontal">49dp</dimen>
+
 </resources>
