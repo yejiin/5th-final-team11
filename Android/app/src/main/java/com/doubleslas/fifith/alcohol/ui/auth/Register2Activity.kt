@@ -11,10 +11,13 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.drawable.toDrawable
 import androidx.lifecycle.Observer
+import com.doubleslas.fifith.alcohol.App
 import com.doubleslas.fifith.alcohol.R
+import com.doubleslas.fifith.alcohol.databinding.ActivityMainBinding
 import com.doubleslas.fifith.alcohol.databinding.ActivityRegister2Binding
 import com.doubleslas.fifith.alcohol.databinding.ActivityRegisterBinding
 import com.doubleslas.fifith.alcohol.model.network.base.ApiStatus
+import com.doubleslas.fifith.alcohol.ui.auth.recommendinfo.RecommendInfoActivity
 import com.doubleslas.fifith.alcohol.ui.detail.AlcoholDetailActivity
 import com.doubleslas.fifith.alcohol.ui.main.MainActivity
 import com.doubleslas.fifith.alcohol.viewmodel.RegisterViewModel
@@ -85,8 +88,8 @@ class Register2Activity : AppCompatActivity(), SeekBar.OnSeekBarChangeListener {
                     is ApiStatus.Loading -> {
                     }
                     is ApiStatus.Success -> {
-                        it.data
-                        val intent = Intent(this, AlcoholDetailActivity::class.java)
+                        App.prefs.registerUserInfo = true
+                        val intent = Intent(this, RecommendInfoActivity::class.java)
                         startActivity(intent)
                         finish()
                     }

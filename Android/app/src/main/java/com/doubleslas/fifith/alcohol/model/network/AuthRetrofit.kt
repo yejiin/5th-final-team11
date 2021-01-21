@@ -8,8 +8,6 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 
 interface AuthRetrofit {
-    @GET("/test")
-    fun test(): ApiLiveData<Any>
 
     @POST("/auth/kakao")
     fun loginKaKao(@Body token: AccessTokenBody): ApiLiveData<CustomTokenData>

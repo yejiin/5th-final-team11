@@ -3,10 +3,14 @@ package com.doubleslas.fifith.alcohol
 import android.app.Application
 
 import android.content.Context
+import android.content.Intent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.annotation.StringRes
+import com.doubleslas.fifith.alcohol.ui.auth.LoginActivity
+import com.doubleslas.fifith.alcohol.ui.auth.recommendinfo.RecommendInfoActivity
+import com.doubleslas.fifith.alcohol.ui.main.MainActivity
 import com.doubleslas.fifith.alcohol.utils.SharedPreferenceUtil
 import com.facebook.FacebookSdk
 import com.facebook.appevents.AppEventsLogger

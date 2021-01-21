@@ -13,12 +13,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.doubleslas.fifith.alcohol.R
 import com.doubleslas.fifith.alcohol.databinding.ActivityAlcoholDetailBinding
 import com.doubleslas.fifith.alcohol.model.network.base.ApiStatus
-import com.doubleslas.fifith.alcohol.model.network.dto.ReviewData
 import com.doubleslas.fifith.alcohol.ui.reivew.ReviewBottomSheetDialog
 import com.doubleslas.fifith.alcohol.viewmodel.DetailViewModel
 import com.doubleslas.fifith.alcohol.viewmodel.ReviewViewModel
 import com.google.android.material.chip.Chip
-import kotlinx.android.synthetic.main.item_detail_review.view.*
 
 class AlcoholDetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAlcoholDetailBinding
@@ -36,7 +34,7 @@ class AlcoholDetailActivity : AppCompatActivity() {
 
         binding.rvDetailReview.adapter = adapter
 
-        reviewViewModel.readReview(6, 0).observe(this, Observer {
+        reviewViewModel.readReview(alcoholId, 0).observe(this, Observer {
             when (it) {
                 is ApiStatus.Loading -> {
 
@@ -59,7 +57,7 @@ class AlcoholDetailActivity : AppCompatActivity() {
 
 
 
-        detailViewModel.getDetail(6).observe(this, Observer {
+        detailViewModel.getDetail(alcoholId).observe(this, Observer {
             when (it) {
                 is ApiStatus.Loading -> {
 

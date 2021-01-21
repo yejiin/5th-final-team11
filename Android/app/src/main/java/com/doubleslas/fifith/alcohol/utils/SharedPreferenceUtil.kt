@@ -15,6 +15,10 @@ class SharedPreferenceUtil(private val context: Context) {
         get() = prefs.getString(PREFS_SEARCH_HISTORY_LIST, "[]") ?: "{}"
         set(value) = prefs.edit().putString(PREFS_SEARCH_HISTORY_LIST, value).apply()
 
+    var registerUserInfo: Boolean
+        get() = prefs.getBoolean(PREFS_REGISTER_USER_INFO, false)
+        set(value) = prefs.edit().putBoolean(PREFS_REGISTER_USER_INFO, value).apply()
+
     var submitRecommendInfo: Boolean
         get() = prefs.getBoolean(PREFS_SUBMIT_RECOMMEND_INFO, false)
         set(value) = prefs.edit().putBoolean(PREFS_SUBMIT_RECOMMEND_INFO, value).apply()
@@ -24,6 +28,7 @@ class SharedPreferenceUtil(private val context: Context) {
 
         private const val PREFS_ID_TOKEN = "PREFS_ID_TOKEN"
         private const val PREFS_SEARCH_HISTORY_LIST = "PREFS_SEARCH_HISTORY_LIST"
+        private const val PREFS_REGISTER_USER_INFO = "PREFS_REGISTER_USER_INFO"
         private const val PREFS_SUBMIT_RECOMMEND_INFO = "PREFS_SUBMIT_RECOMMEND_INFO"
     }
 }

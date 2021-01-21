@@ -5,10 +5,13 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import com.doubleslas.fifith.alcohol.App
 import com.doubleslas.fifith.alcohol.R
 import com.doubleslas.fifith.alcohol.databinding.ActivityLoginBinding
 import com.doubleslas.fifith.alcohol.model.network.base.ApiStatus
+import com.doubleslas.fifith.alcohol.ui.auth.recommendinfo.RecommendInfoActivity
 import com.doubleslas.fifith.alcohol.ui.detail.AlcoholDetailActivity
+import com.doubleslas.fifith.alcohol.ui.main.MainActivity
 import com.doubleslas.fifith.alcohol.utils.LogUtil
 import com.doubleslas.fifith.alcohol.viewmodel.LoginViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -109,7 +112,14 @@ class LoginActivity : AppCompatActivity() {
             when (it) {
                 is ApiStatus.Success -> {
                     Toast.makeText(applicationContext, "로그인 완료", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(this, AlcoholDetailActivity::class.java)
+                    val intent = Intent(
+                        applicationContext,
+                        when {
+                            App.prefs.submitRecommendInfo -> MainActivity::class.java
+                            App.prefs.registerUserInfo -> RegisterActivity::class.java
+                            else -> RegisterActivity::class.java
+                        }
+                    )
                     startActivity(intent)
                     finish()
                 }

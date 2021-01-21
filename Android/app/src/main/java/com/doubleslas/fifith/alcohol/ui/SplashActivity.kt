@@ -5,9 +5,9 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.doubleslas.fifith.alcohol.App
-import com.doubleslas.fifith.alcohol.R
 import com.doubleslas.fifith.alcohol.databinding.ActivitySplashBinding
 import com.doubleslas.fifith.alcohol.ui.auth.LoginActivity
+import com.doubleslas.fifith.alcohol.ui.auth.recommendinfo.RecommendInfoActivity
 import com.doubleslas.fifith.alcohol.ui.main.MainActivity
 
 class SplashActivity : AppCompatActivity() {
@@ -20,6 +20,8 @@ class SplashActivity : AppCompatActivity() {
         binding = ActivitySplashBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
+
         binding.animationView.addAnimatorListener(object : Animator.AnimatorListener {
             override fun onAnimationRepeat(animation: Animator?) {
 
@@ -27,8 +29,13 @@ class SplashActivity : AppCompatActivity() {
 
             override fun onAnimationEnd(animation: Animator?) {
                 val intent = Intent(
-                    application,
-                    if (App.isLogin()) MainActivity::class.java else LoginActivity::class.java
+                    applicationContext,
+                    when {
+                        !App.isLogin() -> LoginActivity::class.java
+                        App.prefs.submitRecommendInfo -> MainActivity::class.java
+                        App.prefs.registerUserInfo -> RecommendInfoActivity::class.java
+                        else -> LoginActivity::class.java
+                    }
                 )
                 startActivity(intent)
                 finish()
@@ -43,4 +50,5 @@ class SplashActivity : AppCompatActivity() {
             }
         })
     }
+
 }

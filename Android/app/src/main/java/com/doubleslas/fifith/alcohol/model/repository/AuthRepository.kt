@@ -4,6 +4,7 @@ import com.doubleslas.fifith.alcohol.App
 import com.doubleslas.fifith.alcohol.model.network.base.*
 import com.doubleslas.fifith.alcohol.model.network.dto.AccessTokenBody
 import com.doubleslas.fifith.alcohol.model.network.dto.CustomTokenData
+import com.doubleslas.fifith.alcohol.model.network.dto.SavePoint
 import com.doubleslas.fifith.alcohol.utils.LogUtil
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.ktx.auth
@@ -13,6 +14,7 @@ class AuthRepository {
 
     private val firebaseAuth by lazy { Firebase.auth }
     private val authService by lazy { RestClient.getAuthService() }
+    private val userService by lazy { RestClient.getUserService() }
 
     fun signInWithCredential(credential: AuthCredential): ApiLiveData<String> {
         val mediator = MediatorApiLiveData<String>()
@@ -72,7 +74,7 @@ class AuthRepository {
     }
 
     private fun getIdToken(): ApiLiveData<String> {
-        val result = MutableApiLiveData<String>()
+        val result = MediatorApiLiveData<String>()
 
         val user = firebaseAuth.currentUser
 
@@ -86,14 +88,38 @@ class AuthRepository {
             if (it.isSuccessful) {
                 val idToken = it.result?.token ?: ""
                 App.prefs.idToken = idToken
-                result.value = ApiStatus.Success(200, idToken)
-                authService.test() // TODO: Remove
+                result.addSource(
+                    refreshSavePoint(),
+                    object : MediatorApiCallback<SavePoint> {
+                        override fun onSuccess(code: Int, data: SavePoint) {
+                            result.value = ApiStatus.Success(200, idToken)
+                        }
+
+                        override fun onError(code: Int, msg: String) {
+                            result.value = ApiStatus.Success(200, idToken)
+                        }
+                    }
+                )
             } else {
                 result.value = ApiStatus.Error(ERROR_CODE_UNKNOWN, "Error Get Id Token")
             }
         }
 
         return result
+    }
+
+    private fun refreshSavePoint(): ApiLiveData<SavePoint> {
+        val mediator = MediatorApiLiveData<SavePoint>()
+        mediator.addSource(
+            userService.getSavePoint(),
+            object : MediatorApiSuccessCallback<SavePoint> {
+                override fun onSuccess(code: Int, data: SavePoint) {
+                    App.prefs.registerUserInfo = data.signUp
+                    App.prefs.submitRecommendInfo = data.recommend
+                }
+            })
+
+        return mediator
     }
 
     companion object {
