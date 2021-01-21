@@ -85,7 +85,7 @@ public class SwaggerConfig extends WebMvcConfigurationSupport{
                 "/review/*/*",
                 "/review/*/*/*",
                 "/review",
-                "/alcohol/detail/*",
+                "/alcohol/*/love",
                 "/alcohol/recommend"
                 
         };
@@ -122,7 +122,7 @@ public class SwaggerConfig extends WebMvcConfigurationSupport{
                 "/review/*/*",
                 "/review/*/*/*",
                 "/review",
-                "/alcohol/detail/*",
+                "/alcohol/*/love",
                 "/alcohol/recommend"
 		};
 		registry.addInterceptor(authInterceptor())

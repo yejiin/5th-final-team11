@@ -1,10 +1,13 @@
 package com.doubleslash.fifth.service;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +16,8 @@ import com.doubleslash.fifth.dto.BeerDTO;
 import com.doubleslash.fifth.dto.LiquorDTO;
 import com.doubleslash.fifth.dto.SimilarAlcoholDTO;
 import com.doubleslash.fifth.dto.WineDTO;
+import com.doubleslash.fifth.dto.WrapperDTO;
+import com.doubleslash.fifth.repository.AlcoholLoveRepository;
 import com.doubleslash.fifth.repository.AlcoholRepository;
 import com.doubleslash.fifth.repository.ReviewRepository;
 import com.doubleslash.fifth.repository.UserRepository;
@@ -31,6 +36,9 @@ public class AlcoholService {
 
 	@Autowired
 	UserRepository userRepository;
+	
+	@Autowired
+	AlcoholLoveRepository alcoholLoveRepository;
 
 	// category 조회
 	public String getCategory(int aid) {
@@ -152,5 +160,22 @@ public class AlcoholService {
 		}
 		return listResult;
 	}
+	
+	public WrapperDTO alcoholLove(int id, int aid) throws IOException {
+		
+		alcoholLoveRepository.insert(id, aid);
+		WrapperDTO dto = new WrapperDTO("Alcohol Love Success");
+	
+		return dto;
+	}
+	
+	public WrapperDTO alcoholLoveCancle(int id, int aid) {
+		
+		alcoholLoveRepository.delete(id, aid);
+		WrapperDTO dto = new WrapperDTO("Alcohol Love Cancle Success");
+
+		return dto;
+	}
+	
 
 }
