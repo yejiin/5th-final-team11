@@ -12,15 +12,16 @@ import androidx.lifecycle.ViewModelProvider
 import com.doubleslas.fifith.alcohol.R
 import com.doubleslas.fifith.alcohol.databinding.ChipRecommendInfoBinding
 import com.doubleslas.fifith.alcohol.databinding.FragmentRecommendInfoDetailBinding
+import com.doubleslas.fifith.alcohol.ui.common.NumberInputBottomSheetDialog
 import com.doubleslas.fifith.alcohol.ui.common.base.BaseFragment
-import com.doubleslas.fifith.alcohol.viewmodel.FirstInfoViewModel
+import com.doubleslas.fifith.alcohol.viewmodel.RecommendInfoViewModel
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.slider.RangeSlider
 
 
 class RecommendInfoDetailFragment : BaseFragment<FragmentRecommendInfoDetailBinding>() {
-    private val viewModel by lazy { ViewModelProvider(activity!!).get(FirstInfoViewModel::class.java) }
+    private val viewModel by lazy { ViewModelProvider(activity!!).get(RecommendInfoViewModel::class.java) }
 
     override fun createViewBinding(
         inflater: LayoutInflater,
@@ -65,6 +66,36 @@ class RecommendInfoDetailFragment : BaseFragment<FragmentRecommendInfoDetailBind
             b.layoutWineTypeContent.let { layout ->
                 for (str in viewModel.getWineTypeList()) {
                     createChip(layout, str)
+                }
+            }
+
+            b.tvPriceLow.text = viewModel.getMinPrice().toString()
+            b.tvPriceHigh.text = viewModel.getMaxPrice().toString()
+
+            b.layoutPriceLow.setOnClickListener {
+                val min = viewModel.getMinPrice()
+                val maxString = b.tvPriceHigh.text.toString()
+                val max = if (maxString.isEmpty()) viewModel.getMaxPrice() else maxString.toInt()
+                val dialog = NumberInputBottomSheetDialog().apply {
+                    setRange(min, max, 1000)
+                    setValue(b.tvPriceLow.text.toString().toInt())
+                }
+                dialog.show(fragmentManager!!, null) {
+                    b.tvPriceLow.text = it.toString()
+                }
+            }
+
+            b.layoutPriceHigh.setOnClickListener {
+                val minString = b.tvPriceLow.text.toString()
+                val min = if (minString.isEmpty()) viewModel.getMinPrice() else minString.toInt()
+                val max = viewModel.getMaxPrice()
+                val dialog = NumberInputBottomSheetDialog().apply {
+                    setRange(min, max, 1000)
+                    setValue(b.tvPriceHigh.text.toString().toInt())
+                }
+
+                dialog.show(fragmentManager!!, null) {
+                    b.tvPriceHigh.text = it.toString()
                 }
             }
 

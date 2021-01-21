@@ -8,10 +8,10 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.doubleslas.fifith.alcohol.databinding.FragmentRecommendInfoDrinkTypeBinding
 import com.doubleslas.fifith.alcohol.ui.common.base.BaseFragment
-import com.doubleslas.fifith.alcohol.viewmodel.FirstInfoViewModel
+import com.doubleslas.fifith.alcohol.viewmodel.RecommendInfoViewModel
 
 class RecommendInfoDrinkTypeFragment : BaseFragment<FragmentRecommendInfoDrinkTypeBinding>() {
-    private val viewModel by lazy { ViewModelProvider(activity!!).get(FirstInfoViewModel::class.java) }
+    private val viewModel by lazy { ViewModelProvider(activity!!).get(RecommendInfoViewModel::class.java) }
 
     override fun createViewBinding(
         inflater: LayoutInflater,

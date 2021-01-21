@@ -119,6 +119,14 @@ class RecommendInfoViewModel : ViewModel() {
         )
     }
 
+    fun getMinPrice() : Int{
+        return 1000
+    }
+
+    fun getMaxPrice(): Int{
+        return 300_000
+    }
+
     fun submit(data: RecommendInfoData) {
         repository.submit(data)
     }
@@ -164,8 +172,8 @@ class RecommendInfoViewModel : ViewModel() {
         val data = RecommendInfoData(
             binding.rangeAbv.values[0].toInt(),
             binding.rangeAbv.values[1].toInt(),
-            binding.etPriceLow.text.toString().toInt(),
-            binding.etPriceHigh.text.toString().toInt(),
+            binding.tvPriceLow.text.toString().toInt(),
+            binding.tvPriceHigh.text.toString().toInt(),
             when (binding.chipGroupCarbotanted.checkedChipId) {
                 R.id.chip_carbonated_yes -> "유"
                 R.id.chip_carbonated_no -> "무"

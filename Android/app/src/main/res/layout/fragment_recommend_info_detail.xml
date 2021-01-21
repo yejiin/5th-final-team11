@@ -175,14 +175,13 @@
                     android:textColor="#cccccc"
                     android:textSize="14sp" />
 
-                <EditText
-                    android:id="@+id/et_price_low"
+                <TextView
+                    android:id="@+id/tv_price_low"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@color/transparent"
                     android:gravity="center"
-                    android:inputType="number"
                     android:paddingHorizontal="10dp"
                     android:textColor="#cccccc"
                     android:textSize="14sp"
@@ -211,14 +210,13 @@
                     android:textColor="#cccccc"
                     android:textSize="14sp" />
 
-                <EditText
-                    android:id="@+id/et_price_high"
+                <TextView
+                    android:id="@+id/tv_price_high"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@color/transparent"
                     android:gravity="center"
-                    android:inputType="number"
                     android:paddingHorizontal="10dp"
                     android:textColor="#cccccc"
                     android:textSize="14sp"
