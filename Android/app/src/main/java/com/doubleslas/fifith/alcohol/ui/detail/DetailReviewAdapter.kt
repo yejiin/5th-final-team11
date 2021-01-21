@@ -21,10 +21,11 @@ class DetailReviewAdapter :
         var rating = binding.reviewRating
         var love = binding.tvLikeCount
         var loveClcik = false
-        var hangover = binding.layoutDetailReview.seekBarHangover.seekBar.progress
-        var place = binding.layoutDetailReview.etPlace.text.toString()
-        var price = binding.layoutDetailReview.etPrice.text.toString()
-        var date = binding.layoutDetailReview.etCalendar.text.toString()
+        var hangover = binding.layoutDetailReview.seekBarHangover.seekBar
+        var place = binding.layoutDetailReview.etPlace
+        var price = binding.layoutDetailReview.etPrice
+        var date = binding.layoutDetailReview.etCalendar
+        var drink = binding.layoutDetailReview.etDrink
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReviewViewHolder {
@@ -46,6 +47,16 @@ class DetailReviewAdapter :
                 content.text = item.content
                 rating.rating = item.star
                 love.text = item.love.toString()
+
+                if (item.detail != null) {
+                    hangover.progress = item.detail.hangover!!
+                    place.setText(item.detail.place)
+                    price.setText(item.detail.price.toString())
+                    date.setText(item.detail.date)
+                    drink.setText(item.detail.drink.toString())
+                } else {
+                    binding.layoutDetailReview.layoutDetailReview.visibility = View.GONE
+                }
 
 
                 binding.layoutDetailReview.etCalendar.isEnabled = false

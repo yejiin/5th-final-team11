@@ -48,10 +48,10 @@ class ReviewViewModel() : ViewModel() {
             return ErrorCode.COMMENT.ordinal
         } else if (detail != null) {
             when {
-                detail.date.isEmpty() -> {
+                detail.date!!.isEmpty() -> {
                     return ErrorCode.DETAIL_DATE.ordinal
                 }
-                detail.place.isEmpty() -> {
+                detail.place!!.isEmpty() -> {
                     return ErrorCode.DETAIL_PLACE.ordinal
                 }
                 detail.drink == 0 -> {
