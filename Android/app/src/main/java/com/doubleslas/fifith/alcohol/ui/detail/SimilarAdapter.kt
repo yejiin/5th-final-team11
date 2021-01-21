@@ -5,10 +5,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.doubleslas.fifith.alcohol.R
+import com.doubleslas.fifith.alcohol.model.network.dto.ReviewList
 import kotlinx.android.synthetic.main.item_alcohol_similar.view.*
 
-class AlcoholDetailAdapter(val context: Context) :
-    RecyclerView.Adapter<AlcoholDetailAdapter.DetailViewHolder>() {
+class SimilarAdapter(val context: Context) :
+    RecyclerView.Adapter<SimilarAdapter.DetailViewHolder>() {
     var items: MutableList<AlcoholDetailData> = mutableListOf(
         AlcoholDetailData("소주"),
         AlcoholDetailData("잭 다니엘"),
@@ -16,7 +17,6 @@ class AlcoholDetailAdapter(val context: Context) :
         AlcoholDetailData("하이트"),
         AlcoholDetailData("참이슬"),
         AlcoholDetailData("청하")
-
     )
 
 

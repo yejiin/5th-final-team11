@@ -1,35 +1,34 @@
 package com.doubleslas.fifith.alcohol.ui.detail
 
-import android.content.Context
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.doubleslas.fifith.alcohol.R
 import com.doubleslas.fifith.alcohol.databinding.ItemDetailReviewBinding
-import com.doubleslas.fifith.alcohol.model.network.dto.DetailReviewData
+import com.doubleslas.fifith.alcohol.model.network.dto.ReviewData
+import com.doubleslas.fifith.alcohol.ui.reivew.ReportBottomSheetDialog
 
-class DetailReviewAdapter(val context: Context) :
+class DetailReviewAdapter :
     RecyclerView.Adapter<DetailReviewAdapter.ReviewViewHolder>() {
-    var items: MutableList<DetailReviewData> = mutableListOf(
-        DetailReviewData("닉네임1", "리뷰 입니다1", 3.5f),
-        DetailReviewData("닉네임2", "리뷰 입니다2", 4.0f),
-        DetailReviewData("닉네임3", "리뷰 입니다3", 1.2f),
-        DetailReviewData("닉네임4", "리뷰 입니다4", 2.4f),
-        DetailReviewData("닉네임5", "리뷰 입니다5", 5.0f),
-        DetailReviewData("닉네임6", "리뷰 입니다6", 1.5f),
-        DetailReviewData("닉네임7", "리뷰 입니다7", 2.5f)
 
-
-    )
-
+    private var list: List<ReviewData>? = null
 
     inner class ReviewViewHolder(var binding: ItemDetailReviewBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        val nickname = binding.tvDetailNickname
-        val review = binding.tvDetailReview
-        val rating = binding.reviewRating
+        var nickname = binding.tvDetailNickname
+        var content = binding.tvDetailReview
+        var rating = binding.reviewRating
+        var love = binding.tvLikeCount
+        var loveClcik = false
+        var hangover = binding.layoutDetailReview.seekBarHangover.seekBar
+        var place = binding.layoutDetailReview.etPlace
+        var price = binding.layoutDetailReview.etPrice
+        var date = binding.layoutDetailReview.etCalendar
+        var drink = binding.layoutDetailReview.etDrink
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReviewViewHolder {
@@ -39,12 +38,29 @@ class DetailReviewAdapter(val context: Context) :
         return ReviewViewHolder(binding)
     }
 
+    fun setData(list: List<ReviewData>) {
+        this.list = list
+        notifyDataSetChanged()
+    }
+
     override fun onBindViewHolder(holder: ReviewViewHolder, position: Int) {
-        items[position].let { item ->
+        list!![position].let { item ->
             with(holder) {
                 nickname.text = item.nickname
-                review.text = item.review
-                rating.rating = item.rating
+                content.text = item.content
+                rating.rating = item.star
+                love.text = item.love.toString()
+
+                if (item.detail != null) {
+                    hangover.progress = item.detail.hangover!!
+                    place.setText(item.detail.place)
+                    price.setText(item.detail.price.toString())
+                    date.setText(item.detail.date)
+                    drink.setText(item.detail.drink.toString())
+                } else {
+                    binding.layoutDetailReview.layoutDetailReview.visibility = View.GONE
+                }
+
 
                 binding.layoutDetailReview.etCalendar.isEnabled = false
                 binding.layoutDetailReview.etDrink.isEnabled = false
@@ -83,6 +99,10 @@ class DetailReviewAdapter(val context: Context) :
 
                 binding.btnReport.setOnClickListener {
                     // 신고하기 버튼 눌렀을때의 처리
+                    val appCompatActivity = AppCompatActivity()
+                    val fragmentManager = appCompatActivity.supportFragmentManager
+                    val bottomSheet = ReportBottomSheetDialog()
+                    bottomSheet.show(fragmentManager, bottomSheet.tag)
 
                 }
 
@@ -92,6 +112,6 @@ class DetailReviewAdapter(val context: Context) :
     }
 
     override fun getItemCount(): Int {
-        return items.size
+        return list?.size ?: 0
     }
 }
