@@ -18,6 +18,7 @@ import com.doubleslas.fifith.alcohol.ui.reivew.ReviewBottomSheetDialog
 import com.doubleslas.fifith.alcohol.viewmodel.DetailViewModel
 import com.doubleslas.fifith.alcohol.viewmodel.ReviewViewModel
 import com.google.android.material.chip.Chip
+import kotlinx.android.synthetic.main.item_detail_review.view.*
 
 class AlcoholDetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAlcoholDetailBinding
@@ -55,6 +56,7 @@ class AlcoholDetailActivity : AppCompatActivity() {
 
             bottomSheet.show(supportFragmentManager, bottomSheet.tag)
         }
+
 
 
         detailViewModel.getDetail(6).observe(this, Observer {
