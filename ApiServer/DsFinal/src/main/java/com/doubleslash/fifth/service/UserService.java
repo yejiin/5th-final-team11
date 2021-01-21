@@ -5,6 +5,7 @@ import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.doubleslash.fifth.repository.RecommendRepository;
 import com.doubleslash.fifth.repository.UserRepository;
 import com.doubleslash.fifth.vo.UserVO;
 
@@ -13,6 +14,9 @@ public class UserService {
 
 	@Autowired
 	UserRepository userRepository;
+	
+	@Autowired
+	RecommendRepository recommendRepository;
 
 	// User 중복 체크 & User 추가
 	public void insertUser(String uid){
@@ -47,5 +51,14 @@ public class UserService {
 		return userRepository.findByUid(uid).getId();
 	}
 
-
+	public boolean isSignUpCheck(String uid) {
+		if(userRepository.findByUid(uid).getNickname() == null) return false;
+		return true;
+	}
+	
+	public boolean isRecommendCheck(int id) {
+		if(recommendRepository.findById(id).isEmpty()) return false;
+		return true;
+	}
+	
 }

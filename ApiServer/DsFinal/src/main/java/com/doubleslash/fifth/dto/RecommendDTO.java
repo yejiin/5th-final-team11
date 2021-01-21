@@ -54,8 +54,8 @@ public class RecommendDTO {
 	@Getter
 	@Setter
 	public static class beerKind{
-		String mainKind;
-		String subKind;
+		List<String> mainKind;
+		List<String> subKind;
 	}
 	
 }

@@ -19,7 +19,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
-@Api(value = "Auth", description = "Auth API")
+@Api(value = "Auth", description = "인증 API")
 @RequestMapping(value = "/auth")
 @Controller
 public class AuthController {

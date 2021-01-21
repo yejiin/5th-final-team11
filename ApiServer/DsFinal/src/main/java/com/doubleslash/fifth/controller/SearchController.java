@@ -25,7 +25,7 @@ import io.swagger.annotations.ExampleProperty;
 
 @Controller
 @RequestMapping(value = "/alcohol")
-@Api(value = "Alcohol", description = "Search API")
+@Api(value = "Alcohol", description = "검색 API")
 public class SearchController {
 	
 	@Autowired

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.doubleslash.fifth.dto.RegisterDTO;
+import com.doubleslash.fifth.dto.SavePointDTO;
 import com.doubleslash.fifth.service.AuthService;
 import com.doubleslash.fifth.service.UserService;
 import com.doubleslash.fifth.vo.UserVO;
@@ -25,7 +26,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
-@Api(value = "User", description = "User API")
+@Api(value = "User", description = "회원 API")
 @Controller
 @RequestMapping(value = "/user")
 public class UserController {
@@ -77,6 +78,16 @@ public class UserController {
 		
 		userService.registerUser(uid, nickname, drink, hangover);
 		return "{}";
+	}
+	
+	@ApiOperation(value = "SavePoint Check", notes = "true : pass\nfalse : non-pass")
+	@GetMapping(value = "/savepoint")
+	@ResponseBody
+	public SavePointDTO checkSavePoint(HttpServletRequest request) throws Exception{
+		String uid = authService.verifyToken(request);
+		int id = userService.getId(uid);
+		
+		return new SavePointDTO(userService.isSignUpCheck(uid), userService.isRecommendCheck(id));
 	}
 	
 	

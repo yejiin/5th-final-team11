@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.doubleslash.fifth.dto.RecommendDTO;
 import com.doubleslash.fifth.dto.WrapperDTO;
 import com.doubleslash.fifth.service.AuthService;
+import com.doubleslash.fifth.service.RatingService;
 import com.doubleslash.fifth.service.RecommendService;
 import com.doubleslash.fifth.service.UserService;
 
@@ -26,7 +27,7 @@ import io.swagger.annotations.ApiResponses;
 
 @Controller
 @RequestMapping(value = "/alcohol")
-@Api(value = "Recommend", description = "추천 API")
+@Api(value = "Recommend", description = "주류 추천 API")
 public class RecommendController {
 	
 	@Autowired

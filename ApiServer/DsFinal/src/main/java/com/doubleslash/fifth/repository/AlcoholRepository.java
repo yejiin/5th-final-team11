@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import com.doubleslash.fifth.dto.BeerDTO;
 import com.doubleslash.fifth.dto.LiquorDTO;
+import com.doubleslash.fifth.dto.RatingDTO;
 import com.doubleslash.fifth.dto.SimilarAlcoholDTO;
 import com.doubleslash.fifth.dto.WineDTO;
 import com.doubleslash.fifth.storage.BeerStorage;

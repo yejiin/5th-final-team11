@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import io.swagger.annotations.Api;
 
-@Api(value = "Health", description = "EB 서버 상태 체크 API")
+@Api(value = "Health", description = "Health API")
 @Controller
 @RequestMapping(value = {"/", "/health"})
 public class HealthController {

@@ -161,8 +161,8 @@ public class RecommendService {
 
 			BeerStorage target;
 			
-			String recKind = beer.getKind().getMainKind();
-			String recSubKind = beer.getKind().getSubKind();
+			List<String> recKind = beer.getKind().getMainKind();
+			List<String> recSubKind = beer.getKind().getSubKind();
 			String recArea = beer.getArea();
 			
 			for(int i = 0; i < beerCompTarget.size(); i++) {

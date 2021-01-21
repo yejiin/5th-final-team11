@@ -80,14 +80,14 @@ public class SwaggerConfig extends WebMvcConfigurationSupport{
     private List<SecurityContext> securityContext() { 
     	List<SecurityContext> securityContexts = new ArrayList<>();
     	String paths[] = {
-    			"/test",
                 "/user/register",
+                "/user/savepoint",
                 "/review/*/*",
                 "/review/*/*/*",
                 "/review",
                 "/alcohol/detail/*",
-                "/alcohol/recommend"
-                
+                "/alcohol/recommend",
+                "/alcohol/rating"
         };
     	
         for (String path: paths) {
@@ -117,13 +117,14 @@ public class SwaggerConfig extends WebMvcConfigurationSupport{
 	@Override
 	protected void addInterceptors(InterceptorRegistry registry) {
 		String[] includePathList = {
-				"/test",
                 "/user/register",
+                "/user/savepoint",
                 "/review/*/*",
                 "/review/*/*/*",
                 "/review",
                 "/alcohol/detail/*",
-                "/alcohol/recommend"
+                "/alcohol/recommend",
+                "/alcohol/rating"
 		};
 		registry.addInterceptor(authInterceptor())
 			.addPathPatterns(includePathList);

@@ -1,5 +1,7 @@
 package com.doubleslash.fifth.repository;
 
+import java.util.Optional;
+
 import javax.transaction.Transactional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -21,5 +23,8 @@ public interface RecommendRepository extends JpaRepository<RecommendVO, Integer>
 	@Transactional
 	@Query(value = "delete from Recommend where id = ?1", nativeQuery = true)
 	public void delete(int id);
+	
+	@Query(value = "select * from Recommend where id = ?1 limit 1", nativeQuery = true)
+	public Optional<RecommendVO> findById(int id);
 	
 }

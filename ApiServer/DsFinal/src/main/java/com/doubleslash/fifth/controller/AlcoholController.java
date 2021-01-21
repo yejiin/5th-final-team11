@@ -24,7 +24,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
-@Api(value = "Alcohol", description = "Alcohol API" )
+@Api(value = "Alcohol", description = "주류 상세 조회 API" )
 @Controller
 @RequestMapping(value = "/alcohol")
 public class AlcoholController {
