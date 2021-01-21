@@ -51,7 +51,7 @@ class AlcoholDetailActivity : AppCompatActivity() {
         })
         binding.btnWriteReview.setOnClickListener {
             val bottomSheet =
-                ReviewBottomSheetDialog()
+                ReviewBottomSheetDialog.create(alcoholId)
 
             bottomSheet.show(supportFragmentManager, bottomSheet.tag)
         }
