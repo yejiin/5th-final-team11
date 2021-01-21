@@ -20,7 +20,7 @@ import com.google.firebase.auth.FirebaseToken;
 import com.google.firebase.auth.UserRecord.CreateRequest;
 
 @Service
-public class AuthService {
+public class AuthService{
 	
 	@Autowired
 	UserService userService;

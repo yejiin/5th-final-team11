@@ -1,17 +1,16 @@
 package com.doubleslash.fifth.dto;
 
+
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AlcoholSearchDTO {
+public class BeerDTO {
 	
 	private int aid;
 	
@@ -19,8 +18,23 @@ public class AlcoholSearchDTO {
 	
 	private String category;
 	
-	private double star;
+	private String image;
 	
-	private int reviewCnt;
+	private int lowestPrice;
 	
+	private int highestPrice;
+	
+	private int ml;
+	
+	private double abv;
+	
+	private String description;
+	
+	private String kind;
+	
+	private String areas;
+		
+	private double starAvg;
+	
+	private int starCnt;
 }
