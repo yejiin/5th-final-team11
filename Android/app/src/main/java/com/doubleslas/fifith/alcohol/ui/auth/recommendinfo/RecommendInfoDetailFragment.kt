@@ -1,5 +1,6 @@
 package com.doubleslas.fifith.alcohol.ui.auth.recommendinfo
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,12 +9,15 @@ import android.widget.LinearLayout
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.children
 import androidx.core.view.isVisible
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.doubleslas.fifith.alcohol.R
 import com.doubleslas.fifith.alcohol.databinding.ChipRecommendInfoBinding
 import com.doubleslas.fifith.alcohol.databinding.FragmentRecommendInfoDetailBinding
+import com.doubleslas.fifith.alcohol.model.network.base.ApiStatus
 import com.doubleslas.fifith.alcohol.ui.common.NumberInputBottomSheetDialog
 import com.doubleslas.fifith.alcohol.ui.common.base.BaseFragment
+import com.doubleslas.fifith.alcohol.ui.main.MainActivity
 import com.doubleslas.fifith.alcohol.viewmodel.RecommendInfoViewModel
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
@@ -221,6 +225,14 @@ class RecommendInfoDetailFragment : BaseFragment<FragmentRecommendInfoDetailBind
     private fun submit() {
         val binding = binding ?: return
         val data = viewModel.createModel(binding) ?: return
-        viewModel.submit(data)
+        viewModel.submit(data).observe(viewLifecycleOwner, Observer {
+            when (it) {
+                is ApiStatus.Success -> {
+                    val intent = Intent(context, MainActivity::class.java)
+                    startActivity(intent)
+                    activity?.finish()
+                }
+            }
+        })
     }
 }

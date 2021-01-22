@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.doubleslas.fifith.alcohol.R
 import com.doubleslas.fifith.alcohol.databinding.FragmentRecommendInfoDetailBinding
+import com.doubleslas.fifith.alcohol.model.network.base.ApiLiveData
 import com.doubleslas.fifith.alcohol.model.network.dto.recommend.*
 import com.doubleslas.fifith.alcohol.model.repository.RecommendInfoRepository
 import com.google.android.material.chip.Chip
@@ -127,8 +128,8 @@ class RecommendInfoViewModel : ViewModel() {
         return 300_000
     }
 
-    fun submit(data: RecommendInfoData) {
-        repository.submit(data)
+    fun submit(data: RecommendInfoData): ApiLiveData<Any> {
+        return repository.submit(data)
     }
 
     fun createModel(binding: FragmentRecommendInfoDetailBinding): RecommendInfoData? {
