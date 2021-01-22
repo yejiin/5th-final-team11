@@ -163,7 +163,7 @@ public class RecommendService {
 			
 			List<String> recKind = beer.getKind().getMainKind();
 			List<String> recSubKind = beer.getKind().getSubKind();
-			String recArea = beer.getArea();
+			List<String> recArea = beer.getArea();
 			
 			for(int i = 0; i < beerCompTarget.size(); i++) {
 				target = beerCompTarget.get(i); //타겟 설정

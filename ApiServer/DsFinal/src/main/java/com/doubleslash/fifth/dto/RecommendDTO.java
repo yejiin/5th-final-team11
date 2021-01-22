@@ -48,7 +48,7 @@ public class RecommendDTO {
 	@Setter
 	public static class beer{
 		beerKind kind;
-		String area;
+		List<String> area;
 	}
 	
 	@Getter
