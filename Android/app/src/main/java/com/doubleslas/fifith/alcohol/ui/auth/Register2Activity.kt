@@ -31,8 +31,11 @@ class Register2Activity : AppCompatActivity(), SeekBar.OnSeekBarChangeListener {
         activityRegister2Binding = ActivityRegister2Binding.inflate(layoutInflater)
         setContentView(activityRegister2Binding.root)
         val intent = intent
-        activityRegister2Binding.sbDrinkingCapacity.setOnSeekBarChangeListener(this)
+        activityRegister2Binding.seekbarDrinkCapacity.seekBar.setOnSeekBarChangeListener(this)
         activityRegister2Binding.btnEndRegister2.isEnabled = false
+
+        activityRegister2Binding.seekbarDrinkCapacity.tvLabel1.text = "없음"
+        activityRegister2Binding.seekbarDrinkCapacity.tvLabel2.text = "심함"
 
 
         val nickname = intent.getStringExtra("nickname").toString()

@@ -68,6 +68,7 @@
         android:layout_width="288dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="509dp"
+        android:maxLines="1"
         android:backgroundTint="#707070"
         android:hint="10자 이하"
         android:textColor="#FFFFFF"
@@ -81,12 +82,14 @@
     <Button
         android:id="@+id/btn_validate"
         android:layout_width="76dp"
-        android:layout_height="27dp"
+        android:layout_height="30dp"
         android:textColor="#FFFFFF"
         android:textSize="14sp"
         android:text="중복 확인"
+        android:padding="1dp"
         android:background="@drawable/button_validate"
         app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="36dp"
         app:layout_constraintBaseline_toBaselineOf="@+id/et_nickname"
         />
 
