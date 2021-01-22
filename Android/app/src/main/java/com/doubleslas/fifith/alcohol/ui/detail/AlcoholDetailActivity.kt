@@ -14,6 +14,7 @@ import com.doubleslas.fifith.alcohol.R
 import com.doubleslas.fifith.alcohol.databinding.ActivityAlcoholDetailBinding
 import com.doubleslas.fifith.alcohol.model.network.base.ApiStatus
 import com.doubleslas.fifith.alcohol.model.network.dto.ReviewData
+import com.doubleslas.fifith.alcohol.ui.reivew.ReportBottomSheetDialog
 import com.doubleslas.fifith.alcohol.ui.reivew.ReviewBottomSheetDialog
 import com.doubleslas.fifith.alcohol.viewmodel.DetailViewModel
 import com.doubleslas.fifith.alcohol.viewmodel.ReviewViewModel
@@ -188,7 +189,9 @@ class AlcoholDetailActivity : AppCompatActivity() {
         binding.btnAlcoholReview.setOnClickListener {
             onReviewBtnClicked()
         }
+
     }
+
 
     private fun onInfoBtnClicked() {
         binding.layoutBasicInfo.visibility = View.VISIBLE

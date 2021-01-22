@@ -19,4 +19,8 @@ class ReviewRepository {
     fun writeComment(rid: Int, content: String): ApiLiveData<Any> {
         return service.writeComment(rid, content)
     }
+
+    fun reportReview(rid: Int, content: String): ApiLiveData<Any> {
+        return service.reportReview(rid, content)
+    }
 }

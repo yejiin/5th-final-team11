@@ -43,6 +43,10 @@ class ReviewViewModel() : ViewModel() {
         return repository.writeComment(rid, content)
     }
 
+    fun reportReview(rid: Int, content: String):ApiLiveData<Any> {
+        return repository.reportReview(rid, content)
+    }
+
     fun checkData(comment: String, detail: ReviewDetailData? = null): Int {
         if (comment.isEmpty()) {
             return ErrorCode.COMMENT.ordinal

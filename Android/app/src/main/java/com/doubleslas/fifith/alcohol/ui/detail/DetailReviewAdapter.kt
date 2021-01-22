@@ -5,12 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.doubleslas.fifith.alcohol.R
 import com.doubleslas.fifith.alcohol.databinding.ItemDetailReviewBinding
 import com.doubleslas.fifith.alcohol.model.network.dto.ReviewData
 import com.doubleslas.fifith.alcohol.ui.reivew.ReportBottomSheetDialog
+import kotlinx.android.synthetic.main.item_detail_review.view.*
 
 class DetailReviewAdapter :
     RecyclerView.Adapter<DetailReviewAdapter.ReviewViewHolder>() {
@@ -86,6 +86,14 @@ class DetailReviewAdapter :
                     binding.btnComment.setTextColor(Color.parseColor("#A5A5A5"))
                 }
 
+                binding.btnReport.setOnClickListener {
+                    val appCompatActivity = AppCompatActivity()
+                    val fragmentManager = appCompatActivity.supportFragmentManager
+
+                    val bottomSheet = ReportBottomSheetDialog()
+                    bottomSheet.show(fragmentManager, bottomSheet.tag)
+                }
+
                 var likeClicked = false
                 binding.btnLike.setOnClickListener {
                     // 리뷰 좋아요 버튼 눌렀을 때의 처리
@@ -97,21 +105,19 @@ class DetailReviewAdapter :
                     }
                 }
 
-                binding.btnReport.setOnClickListener {
-                    // 신고하기 버튼 눌렀을때의 처리
-                    val appCompatActivity = AppCompatActivity()
-                    val fragmentManager = appCompatActivity.supportFragmentManager
-                    val bottomSheet = ReportBottomSheetDialog()
-                    bottomSheet.show(fragmentManager, bottomSheet.tag)
-
-                }
 
             }
 
         }
+
+
     }
 
     override fun getItemCount(): Int {
         return list?.size ?: 0
     }
+
+
+
+
 }

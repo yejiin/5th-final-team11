@@ -1,7 +1,6 @@
 package com.doubleslas.fifith.alcohol.model.network
 
 import com.doubleslas.fifith.alcohol.model.network.base.ApiLiveData
-import com.doubleslas.fifith.alcohol.model.network.dto.ReviewData
 import com.doubleslas.fifith.alcohol.model.network.dto.ReviewList
 import com.doubleslas.fifith.alcohol.model.network.dto.WriteReviewData
 import retrofit2.http.*
@@ -28,6 +27,12 @@ interface ReviewRetrofit {
 
     @PUT("/review/comment/{rid}")
     fun writeComment(
+        @Path("rid") rid: Int,
+        @Body content: String
+    ): ApiLiveData<Any>
+
+    @PUT("/review/{rid}/report")
+    fun reportReview(
         @Path("rid") rid: Int,
         @Body content: String
     ): ApiLiveData<Any>
