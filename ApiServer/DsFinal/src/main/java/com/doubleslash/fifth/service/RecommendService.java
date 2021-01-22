@@ -66,8 +66,8 @@ public class RecommendService {
 			List<LiquorStorage> liquorCompTarget = alcoholRepository.AlcoholJoinLiquor();
 
 			LiquorStorage target;
-			String recKind = liquor.getKind();
-			String recFlavor = liquor.getFlavor();
+			List<String> recKind = liquor.getKind();
+			List<String> recFlavor = liquor.getFlavor();
 			
 			for(int i = 0; i < liquorCompTarget.size(); i++) {
 				target = liquorCompTarget.get(i); //타겟 설정
@@ -113,7 +113,7 @@ public class RecommendService {
 			List<WineStorage> wineCompTarget = alcoholRepository.AlcoholJoinWine();
 
 			WineStorage target;
-			String recKind = wine.getKind();
+			List<String> recKind = wine.getKind();
 			int recMinFlavor = wine.getFlavor()-1;
 			int recMaxFlavor = wine.getFlavor()+1;
 			int recMinBody = wine.getBody()-1;

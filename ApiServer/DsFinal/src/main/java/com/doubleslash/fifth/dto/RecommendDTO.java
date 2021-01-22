@@ -32,14 +32,14 @@ public class RecommendDTO {
 	@Getter
 	@Setter
 	public static class liquor{
-		String kind;
-		String flavor;
+		List<String> kind;
+		List<String> flavor;
 	}
 	
 	@Getter
 	@Setter
 	public static class wine{
-		String kind;
+		List<String> kind;
 		int flavor;
 		int body;
 	}
