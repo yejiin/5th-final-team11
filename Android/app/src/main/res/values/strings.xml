@@ -10,6 +10,10 @@
     <string name="sort_price_desc">가격높은순</string>
     <string name="sort_price_asc">가격낮은순</string>
 
+    <string name="sort_recommend">추천순</string>
+    <string name="sort_star">평점순</string>
+
+
     <string name="category_all">전체</string>
     <string name="category_liquor">양주</string>
     <string name="category_wine">와인</string>

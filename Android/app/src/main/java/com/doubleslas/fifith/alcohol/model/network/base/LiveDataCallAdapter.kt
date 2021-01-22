@@ -1,8 +1,9 @@
 package com.doubleslas.fifith.alcohol.model.network.base
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.doubleslas.fifith.alcohol.utils.LogUtil
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -11,11 +12,12 @@ import java.lang.reflect.ParameterizedType
 import java.lang.reflect.Type
 
 
-class LiveDataCallAdapter<R>(private val responseType: Type) : CallAdapter<R, LiveData<ApiStatus<R>>> {
+class LiveDataCallAdapter<R>(private val responseType: Type) :
+    CallAdapter<R, LiveData<ApiStatus<R>>> {
     override fun responseType(): Type = responseType
 
-    override fun adapt(call: Call<R>): LiveData<ApiStatus<R>> {
-        val liveData = MutableLiveData<ApiStatus<R>>()
+    override fun adapt(call: Call<R>): ApiLiveData<R> {
+        val liveData = MutableApiLiveData<R>()
         liveData.value = ApiStatus.Loading
 
         call.enqueue(object : Callback<R> {
@@ -33,24 +35,39 @@ class LiveDataCallAdapter<R>(private val responseType: Type) : CallAdapter<R, Li
                         return@launch
                     }
 
-                    // Error 처리
                     liveData.value = ApiStatus.Error(code, response.message())
 
-                    when (response.code()) {
-                        401 -> {
-                            // TODO : Error 처리
-                        }
-                    }
+//                    when (response.code()) {
+//                        401 -> {
+//                            Firebase.auth.currentUser?.getIdToken(true)
+//                                ?.addOnSuccessListener {
+//                                    process(call, liveData)
+//                                }
+//                                ?.addOnFailureListener {
+//                                    liveData.value = ApiStatus.Error(code, response.message())
+//                                }
+//                        }
+//                        else -> {
+//                            // Error 처리
+//                        }
+//                    }
+
                 }
             }
-
         })
 
         return liveData
     }
 
+    private fun process(call: Call<R>, liveData: MutableApiLiveData<R>) {
+    }
+
     class Factory : CallAdapter.Factory() {
-        override fun get(returnType: Type, annotations: Array<Annotation>, retrofit: Retrofit): CallAdapter<*, *>? {
+        override fun get(
+            returnType: Type,
+            annotations: Array<Annotation>,
+            retrofit: Retrofit
+        ): CallAdapter<*, *>? {
             if (getRawType(returnType) != LiveData::class.java) {
                 return null
             }

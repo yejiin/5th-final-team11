@@ -10,7 +10,6 @@ import androidx.viewpager2.widget.ViewPager2
 import com.doubleslas.fifith.alcohol.R
 import com.doubleslas.fifith.alcohol.databinding.FragmentSearchMainBinding
 import com.doubleslas.fifith.alcohol.databinding.TabCustomBinding
-import com.doubleslas.fifith.alcohol.enum.SortType
 import com.doubleslas.fifith.alcohol.ui.common.base.BaseFragment
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator

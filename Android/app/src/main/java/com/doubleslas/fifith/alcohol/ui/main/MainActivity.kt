@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             .add(R.id.main_fragment, statsFragment)
             .commit()
 
-        gotoSearch()
+        gotoRecommend()
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {

@@ -1,7 +1,7 @@
 package com.doubleslas.fifith.alcohol.model.repository
 
 import com.doubleslas.fifith.alcohol.App
-import com.doubleslas.fifith.alcohol.enum.SortType
+import com.doubleslas.fifith.alcohol.enum.SearchSortType
 import com.doubleslas.fifith.alcohol.model.network.base.ApiLiveData
 import com.doubleslas.fifith.alcohol.model.network.base.RestClient
 import com.doubleslas.fifith.alcohol.model.network.dto.SearchList
@@ -14,7 +14,7 @@ class SearchRepository {
     fun getList(
         category: String,
         page: Int,
-        sort: SortType
+        sort: SearchSortType
     ): ApiLiveData<SearchList> {
         return searchRetrofit.getList(category, page, sort.sort, sort.sortOption)
     }
@@ -22,7 +22,7 @@ class SearchRepository {
     fun search(
         keyword: String,
         page: Int,
-        sort: SortType
+        sort: SearchSortType
     ): ApiLiveData<SearchList> {
         return searchRetrofit.searchAlcohol(keyword, page, sort.sort, sort.sortOption)
     }

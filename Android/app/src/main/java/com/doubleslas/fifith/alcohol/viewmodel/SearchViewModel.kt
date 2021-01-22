@@ -1,12 +1,9 @@
 package com.doubleslas.fifith.alcohol.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.doubleslas.fifith.alcohol.enum.SortType
+import com.doubleslas.fifith.alcohol.enum.SearchSortType
 import com.doubleslas.fifith.alcohol.model.network.base.ApiLiveData
-import com.doubleslas.fifith.alcohol.model.network.base.ApiStatus
-import com.doubleslas.fifith.alcohol.model.network.base.MediatorApiSuccessCallback
 import com.doubleslas.fifith.alcohol.model.network.dto.AlcoholSimpleData
-import com.doubleslas.fifith.alcohol.model.network.dto.SearchList
 import com.doubleslas.fifith.alcohol.model.repository.SearchRepository
 import com.doubleslas.fifith.alcohol.viewmodel.base.PageLoader
 
@@ -16,7 +13,7 @@ class SearchViewModel : ViewModel() {
     private val pageLoader = PageLoader<AlcoholSimpleData>()
     val listLiveData: ApiLiveData<List<AlcoholSimpleData>> = pageLoader.liveData
 
-    private var sort = SortType.Popular
+    private var sort = SearchSortType.Popular
 
     fun getHistoryList(): List<String> = mHistoryList
 

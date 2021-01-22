@@ -1,4 +1,4 @@
-package com.doubleslas.fifith.alcohol.ui.search
+package com.doubleslas.fifith.alcohol.ui.recommend
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,16 +9,17 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.doubleslas.fifith.alcohol.databinding.RecyclerviewBinding
 import com.doubleslas.fifith.alcohol.model.network.base.ApiStatus
+import com.doubleslas.fifith.alcohol.ui.search.SearchAlcoholListAdapter
 import com.doubleslas.fifith.alcohol.ui.common.base.BaseFragment
-import com.doubleslas.fifith.alcohol.viewmodel.SearchListViewModel
+import com.doubleslas.fifith.alcohol.viewmodel.RecommendViewModel
 
-class SearchListFragment private constructor() : BaseFragment<RecyclerviewBinding>() {
+class RecommendListFragment private constructor() : BaseFragment<RecyclerviewBinding>() {
     private val category by lazy { arguments?.getString(ARGUMENT_CATEGORY) ?: "전체" }
     private val viewModel by lazy {
-        ViewModelProvider(this, SearchListViewModel.Factory(category))
-            .get(SearchListViewModel::class.java)
+        ViewModelProvider(this, RecommendViewModel.Factory(category))
+            .get(RecommendViewModel::class.java)
     }
-    private val adapter by lazy { SearchAlcoholListAdapter() }
+    private val adapter by lazy { RecommendAlcoholListAdapter() }
 
     override fun createViewBinding(
         inflater: LayoutInflater,
@@ -59,8 +60,8 @@ class SearchListFragment private constructor() : BaseFragment<RecyclerviewBindin
     companion object {
         private const val ARGUMENT_CATEGORY = "ARGUMENT_CATEGORY"
 
-        fun create(category: String): SearchListFragment {
-            val fragment = SearchListFragment()
+        fun create(category: String): RecommendListFragment {
+            val fragment = RecommendListFragment()
             fragment.arguments = Bundle().apply {
                 putString(ARGUMENT_CATEGORY, category)
             }

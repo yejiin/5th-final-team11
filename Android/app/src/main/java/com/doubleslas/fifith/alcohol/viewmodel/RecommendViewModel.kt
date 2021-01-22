@@ -2,14 +2,14 @@ package com.doubleslas.fifith.alcohol.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.doubleslas.fifith.alcohol.enum.SearchSortType
+import com.doubleslas.fifith.alcohol.enum.RecommendSortType
 import com.doubleslas.fifith.alcohol.model.network.base.ApiLiveData
 import com.doubleslas.fifith.alcohol.model.network.dto.AlcoholSimpleData
-import com.doubleslas.fifith.alcohol.model.repository.SearchRepository
+import com.doubleslas.fifith.alcohol.model.repository.RecommendRepository
 import com.doubleslas.fifith.alcohol.viewmodel.base.PageLoader
 
-class SearchListViewModel(private val category: String) : ViewModel() {
-    private val repository = SearchRepository()
+class RecommendViewModel(private val category: String) : ViewModel() {
+    private val repository = RecommendRepository()
     private val pageLoader = PageLoader<AlcoholSimpleData>()
     val listLiveData: ApiLiveData<List<AlcoholSimpleData>> = pageLoader.liveData
 
@@ -31,11 +31,11 @@ class SearchListViewModel(private val category: String) : ViewModel() {
         }
         if (!pageLoader.canLoadList()) return
 
-        val liveData = repository.getList(category, pageLoader.page++, sort)
+        val liveData = repository.getList(category, sort)
         pageLoader.addObserve(liveData)
     }
 
-    fun setSort(sortType: SearchSortType) {
+    fun setSort(sortType: RecommendSortType) {
         if (sort == sortType) return
         sort = sortType
         globalSortType = sortType
@@ -45,8 +45,8 @@ class SearchListViewModel(private val category: String) : ViewModel() {
 
     class Factory(private val param: String) : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return if (modelClass.isAssignableFrom(SearchListViewModel::class.java)) {
-                SearchListViewModel(param) as T
+            return if (modelClass.isAssignableFrom(RecommendViewModel::class.java)) {
+                RecommendViewModel(param) as T
             } else {
                 throw IllegalArgumentException()
             }
@@ -54,6 +54,6 @@ class SearchListViewModel(private val category: String) : ViewModel() {
     }
 
     companion object {
-        private var globalSortType: SearchSortType = SearchSortType.Popular
+        private var globalSortType: RecommendSortType = RecommendSortType.Recommend
     }
 }
