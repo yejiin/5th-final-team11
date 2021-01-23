@@ -27,4 +27,6 @@ public class WineStorage {
 	
 	int cb;
 	
+	int recognition;
+	
 }

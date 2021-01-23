@@ -114,9 +114,9 @@ public class ReviewService {
 		reviewVo.setStar(reveiwWriteDto.getStar());
 		reviewVo.setContent(reveiwWriteDto.getContent());
 		int rid = reviewRepository.save(reviewVo).getRid();
-
+		
 		if (reveiwWriteDto.getDetail() == null) {
-			return null;
+			return new WrapperDTO("success");
 		} else { // 상세 리뷰 있으면 상세 리뷰 저장
 			detailVo.setRid(rid);
 			detailVo.setDate(reveiwWriteDto.getDetail().getDate());
@@ -129,9 +129,7 @@ public class ReviewService {
 			detailReviewRepository.save(detailVo);
 		}
 
-		WrapperDTO dto = new WrapperDTO("success");
-
-		return dto;
+		return new WrapperDTO("success");
 
 	}
 

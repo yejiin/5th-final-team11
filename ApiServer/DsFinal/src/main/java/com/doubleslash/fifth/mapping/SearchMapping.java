@@ -8,6 +8,8 @@ public interface SearchMapping {
 	
 	String getCategory();
 	
+	String getThumbnail();
+	
 	double getStar();
 	
 	int getReviewCnt();

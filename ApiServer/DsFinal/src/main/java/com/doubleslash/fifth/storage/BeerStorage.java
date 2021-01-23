@@ -27,4 +27,6 @@ public class BeerStorage {
 	
 	int cb;
 	
+	int recognition;
+	
 }

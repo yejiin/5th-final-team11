@@ -22,7 +22,9 @@ public class RatingService {
 	@Autowired
 	RatingRepository ratingRepository;
 
-	private final Integer[] RATING_TARGET_AID_LIST = new Integer[]{6,7,8,9,10,11,12,13,14,15,16};
+	private final Integer[] RATING_TARGET_AID_LIST = new Integer[]
+			{36,36,47,51,55,62,65,68,69,71,72,77,80,81,84,85,90,91,94,95,100,
+			1,2,6,7,11,12,16,17,21,22,26,27};
 	
 	public List<RatingDTO.Response> getRatingTargetList(){
 
@@ -35,7 +37,7 @@ public class RatingService {
 		
 		for(int aid : aidList) {
 			temp = alcoholRepository.findByAid(aid);
-			res.add(new RatingDTO.Response(temp.getAid(), temp.getImage(), temp.getName(), temp.getCategory(), 0.0));
+			res.add(new RatingDTO.Response(temp.getAid(), temp.getThumbnail(), temp.getName(), temp.getCategory(), 0.0));
 		}
 
 		return res;

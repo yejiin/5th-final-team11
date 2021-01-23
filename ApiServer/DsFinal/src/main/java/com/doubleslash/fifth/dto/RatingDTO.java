@@ -29,7 +29,7 @@ public class RatingDTO {
 		
 		private int aid;
 		
-		private String image;
+		private String thumbnail;
 		
 		private String name;
 		

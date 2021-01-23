@@ -25,4 +25,6 @@ public class LiquorStorage {
 	
 	int cb;
 	
+	int recognition;
+	
 }

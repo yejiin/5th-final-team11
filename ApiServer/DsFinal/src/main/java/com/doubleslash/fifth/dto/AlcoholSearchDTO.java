@@ -19,6 +19,8 @@ public class AlcoholSearchDTO {
 	
 	private String category;
 	
+	private String thumbnail;
+	
 	private double star;
 	
 	private int reviewCnt;

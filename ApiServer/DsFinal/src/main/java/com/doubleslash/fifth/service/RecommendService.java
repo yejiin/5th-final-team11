@@ -104,7 +104,9 @@ public class RecommendService {
 					score.put(aid, score.get(aid) + priceWeight);
 				//탄산여부 스코어링
 				if(recCb == cb)
-					score.put(aid, score.get(aid) + cbWeight);				
+					score.put(aid, score.get(aid) + cbWeight);
+				
+				score.put(aid, score.get(aid) + target.getRecognition());
 			}
 		}
 		
@@ -151,7 +153,9 @@ public class RecommendService {
 					score.put(aid, score.get(aid) + priceWeight);
 				//탄산여부 스코어링
 				if(recCb == cb)
-					score.put(aid, score.get(aid) + cbWeight);				
+					score.put(aid, score.get(aid) + cbWeight);
+				
+				score.put(aid, score.get(aid) + target.getRecognition());
 			}
 		}
 		
@@ -201,7 +205,9 @@ public class RecommendService {
 					score.put(aid, score.get(aid) + priceWeight);
 				//탄산여부 스코어링
 				if(recCb == cb)
-					score.put(aid, score.get(aid) + cbWeight);				
+					score.put(aid, score.get(aid) + cbWeight);
+				
+				score.put(aid, score.get(aid) + target.getRecognition());
 			}
 		}
 		

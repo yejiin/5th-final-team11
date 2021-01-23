@@ -20,6 +20,8 @@ public class ViewSearchVO {
 	
 	private String category;
 	
+	private String thumbnail;
+	
 	private int price;
 	
 	private double abv;
