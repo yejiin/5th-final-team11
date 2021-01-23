@@ -26,6 +26,10 @@ class AlcoholDetailActivity : AppCompatActivity() {
 
     private val adapter by lazy { DetailReviewAdapter() }
 
+    override fun onResume() {
+        super.onResume()
+        adapter.notifyDataSetChanged()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,6 +56,22 @@ class AlcoholDetailActivity : AppCompatActivity() {
             val bottomSheet =
                 ReviewBottomSheetDialog.create(alcoholId)
 
+            bottomSheet.onListener {
+                reviewViewModel.readReview(alcoholId, 0).observe(this, Observer {
+                    when (it) {
+                        is ApiStatus.Loading -> {
+
+                        }
+                        is ApiStatus.Success -> {
+                            adapter.setData(it.data.reviewList)
+                        }
+                        is ApiStatus.Error -> {
+
+                        }
+
+                    }
+                })
+            }
             bottomSheet.show(supportFragmentManager, bottomSheet.tag)
         }
 

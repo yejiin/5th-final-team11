@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.doubleslas.fifith.alcohol.databinding.ItemAlcoholDetailBinding
 import com.doubleslas.fifith.alcohol.databinding.ItemSortBinding
 import com.doubleslas.fifith.alcohol.enum.SearchSortType
@@ -32,6 +33,9 @@ open class AlcoholListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() 
         when (holder) {
             is AlcoholViewHolder -> holder.binding.run {
                 val item = getItem(position)
+                Glide.with(ivAlcohol.context)
+                    .load(item.thumbnail)
+                    .into(ivAlcohol)
                 tvName.text = item.name
                 tvType.text = item.category
                 tvRating.text = item.star.toString()

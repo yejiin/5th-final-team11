@@ -25,7 +25,7 @@
             android:textColor="#202425"
             tools:text="7개" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_search"
             android:layout_width="17.6dp"
             android:layout_height="16.8dp"

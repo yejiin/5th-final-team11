@@ -15,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_search"
                 android:layout_width="17.6dp"
                 android:layout_height="16.8dp"

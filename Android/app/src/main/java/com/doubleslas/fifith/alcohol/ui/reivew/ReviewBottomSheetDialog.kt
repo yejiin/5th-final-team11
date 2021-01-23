@@ -73,9 +73,11 @@ class ReviewBottomSheetDialog private constructor() :
                 if (b.layoutDetail.layoutDetailReview.visibility == View.GONE) {
                     b.ivDetailRecord.setImageResource(R.drawable.ic_review_button_x)
                     b.layoutDetail.layoutDetailReview.visibility = View.VISIBLE
+                    b.checkboxPrivate.visibility = View.VISIBLE
                 } else {
                     b.ivDetailRecord.setImageResource(R.drawable.ic_review_button_plus)
                     b.layoutDetail.layoutDetailReview.visibility = View.GONE
+                    b.checkboxPrivate.visibility = View.INVISIBLE
                 }
             }
         }
@@ -112,6 +114,8 @@ class ReviewBottomSheetDialog private constructor() :
                     }
                     is ApiStatus.Success -> {
                         onDialogBtnClicked("리뷰를 작성해주셔서\n감사합니다.")
+                        listener?.invoke()
+                        dismiss()
                     }
                     is ApiStatus.Error -> {
                         processError(it.code)
@@ -145,10 +149,20 @@ class ReviewBottomSheetDialog private constructor() :
         customDialog.dismiss()
     }
 
+    private var listener: (() -> Unit)? = null
+    fun onListener(listener: () -> Unit) {
+        this.listener = listener
+    }
+
     private fun onDialogBtnClicked(text: String?) {
         customDialog.show()
         customDialog.tv_nicknameCheck?.text = text
-
+//        customDialog.customDialogInterface = object : CustomDialogInterface {
+//            override fun onConfirmBtnClicked() {
+//                customDialog.dismiss()
+//                dismiss()
+//            }
+//        }
     }
 
     companion object {

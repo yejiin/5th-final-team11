@@ -11,8 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingVertical="23dp">
-
-
+        
         <ImageView
             android:id="@+id/iv_alcohol"
             android:layout_width="83dp"
