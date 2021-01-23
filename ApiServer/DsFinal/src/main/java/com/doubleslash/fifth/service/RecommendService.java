@@ -80,15 +80,15 @@ public class RecommendService {
 				
 				int flavorWeight = FLAVOR_WEIGHT;
 				
-				if(recKind.contains(kind)) {
+				if(!recKind.contains(kind)) {
+					flavorWeight = 0;
+				}else {
 					int point = 0;
 					for(String f : flavor) {
 						if(recFlavor.contains(f)) point += 1;
 					}
 					if(point == 0) flavorWeight = FLAVOR_WEIGHT - 15;
 					else if(point >= 2) flavorWeight = FLAVOR_WEIGHT + 10;
-				}else {
-					flavorWeight = FLAVOR_WEIGHT - 15;
 				}
 				score.put(aid, score.get(aid) + flavorWeight);	
 				
