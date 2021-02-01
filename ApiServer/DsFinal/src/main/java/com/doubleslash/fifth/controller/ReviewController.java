@@ -99,7 +99,7 @@ public class ReviewController {
 	public WrapperDTO commentWrite(@PathVariable("rid") int rid, @RequestBody ContentDTO content, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String uid = authService.verifyToken(request);
 		int id = userService.getId(uid);
-
+	
 		WrapperDTO dto = reviewService.addComment(id, rid, content, response);
 		return dto;
 	}
@@ -152,7 +152,7 @@ public class ReviewController {
 		
 		if(loveClick.getLoveClick() == true) {
 			dto = reviewService.reviewLove(id, rid, response);
-		}else {
+		}else if(loveClick.getLoveClick() == false) {
 			dto = reviewService.reviewLoveCancle(id, rid, response);
 		}
 

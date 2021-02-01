@@ -197,10 +197,6 @@ public class ReviewService {
 
 	// 리뷰 좋아요
 	public WrapperDTO reviewLove(int id, int rid, HttpServletResponse response) throws SQLIntegrityConstraintViolationException, IOException{
-		if (reviewChk(rid) == 0) {
-			response.sendError(404, "Review Id Error");
-			return null;
-		}
 
 		if(reviewLoveRepository.insert(id, rid)==1) {
 			reviewRepository.updateLove(rid);
@@ -212,14 +208,7 @@ public class ReviewService {
 
 	// 리뷰 좋아요 취소
 	public WrapperDTO reviewLoveCancle(int id, int rid, HttpServletResponse response) throws IOException {
-		if (reviewChk(rid) == 0) {
-			response.sendError(404, "Review Id Error");
-			return null;
-		}
-
-		ReviewLoveVO loveVo = new ReviewLoveVO();
-		loveVo.setId(id);
-		loveVo.setRid(rid);
+		
 		if(reviewLoveRepository.delete(id, rid)==1) {
 			reviewRepository.updateLoveCancle(rid);
 		}
