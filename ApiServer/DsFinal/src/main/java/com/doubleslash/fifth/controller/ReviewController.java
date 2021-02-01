@@ -46,7 +46,7 @@ public class ReviewController {
 	@Autowired
 	ReviewService reviewService;
 	
-	@ApiOperation(value = "리뷰 리스트 조회", notes="특정 리뷰 댓글 페이징 필요시 commentRid, commentPage 파라미터 전달, 파라미터 입력 안했을 시 리뷰 당 댓글 데이터 20개 제공\n"
+	@ApiOperation(value = "리뷰 조회", notes="리뷰 당 최신 댓글 데이터 3개 제공\n"
 			+ "로그인 안했을 시 loveClick 전부 false")
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "aid", required = true, dataType = "int", paramType = "query", example = "1", value = "알코올 id"),
@@ -70,6 +70,18 @@ public class ReviewController {
 		}
 
 		return reviewService.getReviewList(aid, reviewPage, id, response);
+	}
+	
+	@ApiOperation(value = "댓글 조회")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "rid", required = true, dataType = "int", paramType = "query", example = "1", value = "리뷰 id"),
+		@ApiImplicitParam(name = "commentPage", required = true, dataType = "int", paramType = "query", example = "0", value = "댓글 페이지 번호(페이지당 데이터 20개)"),
+	})
+	@GetMapping(value ="/comment")
+	@ResponseBody
+	public WrapperDTO commentList(@RequestParam("rid") int rid, @RequestParam("commentPage") int commentPage) {
+		
+		return new WrapperDTO(reviewService.getComment(rid, commentPage));
 	}
 	
 	

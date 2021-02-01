@@ -84,7 +84,7 @@ public class ReviewService {
 			reviewDto.getContent().get(i).setDetail(detailDto);
 
 			// 해당 리뷰 댓글 (최신순 3개)
-			List<CommentDTO> commentDto = commentRepository.findByRid(rid, PageRequest.of(0, 3));
+			List<CommentDTO> commentDto = commentRepository.findByRid(rid, PageRequest.of(0, 3, Sort.Direction.DESC, "cid"));
 			reviewDto.getContent().get(i).setComments(commentDto);
 
 		}
@@ -94,6 +94,15 @@ public class ReviewService {
 		res.put("totalCnt", reviewDto.getTotalElements());
 
 		return res;
+	}
+	
+	// 댓글 조회
+	public List<CommentDTO> getComment(int rid, int commentPage) {
+		
+		// 오름차순
+		List<CommentDTO> commentDto = commentRepository.findByRid(rid, PageRequest.of(commentPage, 20,  Sort.Direction.ASC, "cid"));
+
+		return commentDto;
 	}
 
 	// 리뷰 작성

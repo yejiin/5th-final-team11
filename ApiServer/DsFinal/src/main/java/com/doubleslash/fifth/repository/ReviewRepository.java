@@ -10,10 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.doubleslash.fifth.dto.ReviewDTO;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.stereotype.Repository;
-
 import com.doubleslash.fifth.vo.ReviewVO;
 
 @Repository
