@@ -4,8 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.doubleslas.fifith.alcohol.R
 import com.doubleslas.fifith.alcohol.databinding.LayoutWriteReviewBinding
 import com.doubleslas.fifith.alcohol.model.network.base.ApiStatus
@@ -18,8 +18,10 @@ import com.doubleslas.fifith.alcohol.viewmodel.ReviewViewModel
 import kotlinx.android.synthetic.main.custom_dialog.*
 
 
-class ReviewBottomSheetDialog : BaseBottomSheetDialogFragment<LayoutWriteReviewBinding>(),
-    CustomDialogInterface {
+class ReviewBottomSheetDialog private constructor() :
+    BaseBottomSheetDialogFragment<LayoutWriteReviewBinding>(), CustomDialogInterface {
+
+    private val alcoholId by lazy { arguments!!.getInt(ARGUMENT_ALCOHOL_ID) }
     private val customDialog: CustomDialog by lazy { CustomDialog(context!!, this) }
 
 
@@ -82,21 +84,25 @@ class ReviewBottomSheetDialog : BaseBottomSheetDialogFragment<LayoutWriteReviewB
     private fun confirmReview() {
         binding?.let { b ->
 
-            val detail = ReviewDetailData(
-                b.layoutDetail.etCalendar.text.toString(),
-                b.layoutDetail.etDrink.text.toString().toInt(),
-                b.layoutDetail.seekBarHangover.seekBar.progress,
-                b.layoutDetail.etPlace.text.toString(),
-                b.layoutDetail.etPrice.text.toString().toInt(),
-                b.checkboxPrivate.isChecked
-            )
 
+            val detail =
+                if (b.layoutDetail.root.isVisible)
+                    ReviewDetailData(
+                        b.layoutDetail.etCalendar.text.toString(),
+                        b.layoutDetail.etDrink.text.toString().toInt(),
+                        b.layoutDetail.seekBarHangover.seekBar.progress,
+                        b.layoutDetail.etPlace.text.toString(),
+                        b.layoutDetail.etPrice.text.toString().toInt(),
+                        b.checkboxPrivate.isChecked
+                    )
+                else
+                    null
 
             val liveData = viewModel.sendReview(
                 b.etComment.text.toString(),
                 b.ratingReview.progress,
                 detail,
-                6
+                alcoholId
             )
 
             liveData.observe(viewLifecycleOwner, Observer {
@@ -143,6 +149,17 @@ class ReviewBottomSheetDialog : BaseBottomSheetDialogFragment<LayoutWriteReviewB
         customDialog.show()
         customDialog.tv_nicknameCheck?.text = text
 
+    }
+
+    companion object {
+        private const val ARGUMENT_ALCOHOL_ID = "ARGUMENT_ALCOHOL_ID"
+        fun create(id: Int): ReviewBottomSheetDialog {
+            return ReviewBottomSheetDialog().apply {
+                arguments = Bundle().apply {
+                    putInt(ARGUMENT_ALCOHOL_ID, id)
+                }
+            }
+        }
     }
 
 }

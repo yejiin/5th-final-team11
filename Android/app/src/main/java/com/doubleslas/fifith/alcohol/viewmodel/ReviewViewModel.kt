@@ -16,7 +16,7 @@ class ReviewViewModel() : ViewModel() {
     fun sendReview(
         comment: String,
         star: Int,
-        detail: ReviewDetailData,
+        detail: ReviewDetailData?,
         aid: Int
     ): ApiLiveData<Any> {
         val result = MediatorApiLiveData<Any>()
