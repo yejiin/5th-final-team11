@@ -8,12 +8,9 @@ import androidx.lifecycle.Observer
 import com.doubleslas.fifith.alcohol.App
 import com.doubleslas.fifith.alcohol.R
 import com.doubleslas.fifith.alcohol.databinding.ActivityLoginBinding
-import com.doubleslas.fifith.alcohol.model.network.base.ApiStatus
-import com.doubleslas.fifith.alcohol.ui.auth.recommendinfo.RecommendInfoActivity
-import com.doubleslas.fifith.alcohol.ui.detail.AlcoholDetailActivity
+import com.doubleslas.fifith.alcohol.model.base.ApiStatus
 import com.doubleslas.fifith.alcohol.ui.main.MainActivity
 import com.doubleslas.fifith.alcohol.utils.LogUtil
-import com.doubleslas.fifith.alcohol.viewmodel.LoginViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException

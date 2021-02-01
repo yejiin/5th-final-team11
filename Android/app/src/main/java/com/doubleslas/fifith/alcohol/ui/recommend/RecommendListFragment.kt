@@ -8,10 +8,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.doubleslas.fifith.alcohol.databinding.RecyclerviewBinding
-import com.doubleslas.fifith.alcohol.model.network.base.ApiStatus
-import com.doubleslas.fifith.alcohol.ui.search.SearchAlcoholListAdapter
+import com.doubleslas.fifith.alcohol.model.base.ApiStatus
 import com.doubleslas.fifith.alcohol.ui.common.base.BaseFragment
-import com.doubleslas.fifith.alcohol.viewmodel.RecommendViewModel
 
 class RecommendListFragment private constructor() : BaseFragment<RecyclerviewBinding>() {
     private val category by lazy { arguments?.getString(ARGUMENT_CATEGORY) ?: "전체" }

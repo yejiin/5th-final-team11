@@ -5,10 +5,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
-import com.doubleslas.fifith.alcohol.databinding.ItemSortBinding
 import com.doubleslas.fifith.alcohol.databinding.ItemSortRecommendBinding
 import com.doubleslas.fifith.alcohol.enum.RecommendSortType
-import com.doubleslas.fifith.alcohol.model.network.dto.AlcoholSimpleData
+import com.doubleslas.fifith.alcohol.dto.AlcoholSimpleData
 import com.doubleslas.fifith.alcohol.ui.auth.recommendinfo.RecommendInfoActivity
 import com.doubleslas.fifith.alcohol.ui.common.AlcoholListAdapter
 

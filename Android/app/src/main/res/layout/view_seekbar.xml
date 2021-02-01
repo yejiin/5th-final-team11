@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
 
-    <com.doubleslas.fifith.alcohol.ui.common.view.CircleSeekBar
+    <com.doubleslas.fifith.alcohol.view.CircleSeekBar
         android:id="@+id/seekBar"
         style="@style/Widget.AppCompat.SeekBar.Discrete"
         android:layout_width="0dp"

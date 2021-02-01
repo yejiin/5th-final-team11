@@ -3,13 +3,10 @@ package com.doubleslas.fifith.alcohol.ui.common
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.doubleslas.fifith.alcohol.databinding.ItemAlcoholDetailBinding
-import com.doubleslas.fifith.alcohol.databinding.ItemSortBinding
-import com.doubleslas.fifith.alcohol.enum.SearchSortType
-import com.doubleslas.fifith.alcohol.model.network.dto.AlcoholSimpleData
+import com.doubleslas.fifith.alcohol.dto.AlcoholSimpleData
 import com.doubleslas.fifith.alcohol.ui.detail.AlcoholDetailActivity
 
 open class AlcoholListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {

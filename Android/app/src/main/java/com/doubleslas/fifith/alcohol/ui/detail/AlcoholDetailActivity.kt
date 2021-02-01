@@ -12,10 +12,9 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.doubleslas.fifith.alcohol.R
 import com.doubleslas.fifith.alcohol.databinding.ActivityAlcoholDetailBinding
-import com.doubleslas.fifith.alcohol.model.network.base.ApiStatus
+import com.doubleslas.fifith.alcohol.model.base.ApiStatus
 import com.doubleslas.fifith.alcohol.ui.reivew.ReviewBottomSheetDialog
-import com.doubleslas.fifith.alcohol.viewmodel.DetailViewModel
-import com.doubleslas.fifith.alcohol.viewmodel.ReviewViewModel
+import com.doubleslas.fifith.alcohol.ui.reivew.ReviewViewModel
 import com.google.android.material.chip.Chip
 
 class AlcoholDetailActivity : AppCompatActivity() {

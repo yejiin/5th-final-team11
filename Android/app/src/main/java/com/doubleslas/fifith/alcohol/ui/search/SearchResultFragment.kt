@@ -9,9 +9,8 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.doubleslas.fifith.alcohol.R
 import com.doubleslas.fifith.alcohol.databinding.FragmentSearchResultBinding
-import com.doubleslas.fifith.alcohol.model.network.base.ApiStatus
+import com.doubleslas.fifith.alcohol.model.base.ApiStatus
 import com.doubleslas.fifith.alcohol.ui.common.base.BaseFragment
-import com.doubleslas.fifith.alcohol.viewmodel.SearchViewModel
 
 class SearchResultFragment private constructor() : BaseFragment<FragmentSearchResultBinding>() {
     private val keyword by lazy { arguments!!.getString(ARGUMENT_KEYWORD, "") }

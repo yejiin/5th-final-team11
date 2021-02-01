@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.doubleslas.fifith.alcohol.databinding.LayoutReportReviewBinding
 import com.doubleslas.fifith.alcohol.ui.common.base.BaseBottomSheetDialogFragment
-import com.doubleslas.fifith.alcohol.viewmodel.ReviewViewModel
 
 class ReportBottomSheetDialog: BaseBottomSheetDialogFragment<LayoutReportReviewBinding>() {
 

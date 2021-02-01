@@ -5,11 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.doubleslas.fifith.alcohol.R
 import com.doubleslas.fifith.alcohol.databinding.ItemDetailReviewBinding
-import com.doubleslas.fifith.alcohol.model.network.dto.ReviewData
+import com.doubleslas.fifith.alcohol.dto.ReviewData
 import com.doubleslas.fifith.alcohol.ui.reivew.ReportBottomSheetDialog
 
 class DetailReviewAdapter :

@@ -14,11 +14,10 @@ import androidx.lifecycle.ViewModelProvider
 import com.doubleslas.fifith.alcohol.R
 import com.doubleslas.fifith.alcohol.databinding.ChipRecommendInfoBinding
 import com.doubleslas.fifith.alcohol.databinding.FragmentRecommendInfoDetailBinding
-import com.doubleslas.fifith.alcohol.model.network.base.ApiStatus
+import com.doubleslas.fifith.alcohol.model.base.ApiStatus
 import com.doubleslas.fifith.alcohol.ui.common.NumberInputBottomSheetDialog
 import com.doubleslas.fifith.alcohol.ui.common.base.BaseFragment
 import com.doubleslas.fifith.alcohol.ui.main.MainActivity
-import com.doubleslas.fifith.alcohol.viewmodel.RecommendInfoViewModel
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.slider.RangeSlider

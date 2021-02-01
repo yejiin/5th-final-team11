@@ -8,13 +8,12 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import com.doubleslas.fifith.alcohol.R
 import com.doubleslas.fifith.alcohol.databinding.LayoutWriteReviewBinding
-import com.doubleslas.fifith.alcohol.model.network.base.ApiStatus
-import com.doubleslas.fifith.alcohol.model.network.dto.ReviewDetailData
+import com.doubleslas.fifith.alcohol.model.base.ApiStatus
+import com.doubleslas.fifith.alcohol.dto.ReviewDetailData
 import com.doubleslas.fifith.alcohol.ui.auth.CustomDialog
 import com.doubleslas.fifith.alcohol.ui.auth.CustomDialogInterface
 import com.doubleslas.fifith.alcohol.ui.common.CalendarDialogFragment
 import com.doubleslas.fifith.alcohol.ui.common.base.BaseBottomSheetDialogFragment
-import com.doubleslas.fifith.alcohol.viewmodel.ReviewViewModel
 import kotlinx.android.synthetic.main.custom_dialog.*
 
 
