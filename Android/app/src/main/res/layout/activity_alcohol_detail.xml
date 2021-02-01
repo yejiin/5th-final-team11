@@ -311,16 +311,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <com.nex3z.flowlayout.FlowLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
-                        app:flChildSpacing="auto"
-                        app:flChildSpacingForLastRow="align"
-                        app:flRowSpacing="auto"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/tv_kinds">
+
 
 
                         <com.google.android.material.chip.ChipGroup
@@ -328,7 +319,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"/>
 
-                    </com.nex3z.flowlayout.FlowLayout>
+
 
 
                     <TextView
@@ -387,17 +378,7 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toEndOf="@id/tv_areas"
                         app:layout_constraintTop_toTopOf="parent" />
-                    <com.nex3z.flowlayout.FlowLayout
-                        android:id="@+id/fl_areas"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
-                        app:flChildSpacing="auto"
-                        app:flChildSpacingForLastRow="align"
-                        app:flRowSpacing="auto"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/tv_areas">
+
 
 
                         <com.google.android.material.chip.ChipGroup
@@ -407,7 +388,7 @@
                             />
 
 
-                    </com.nex3z.flowlayout.FlowLayout>
+
 
 
 
@@ -432,17 +413,7 @@
                         android:layout_marginEnd="20dp"
                        />
 
-                    <com.nex3z.flowlayout.FlowLayout
-                        android:id="@+id/fl_taste"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
-                        app:flChildSpacing="auto"
-                        app:flChildSpacingForLastRow="align"
-                        app:flRowSpacing="auto"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/tv_taste">
+
 
 
                         <com.google.android.material.chip.ChipGroup
@@ -451,8 +422,6 @@
                             android:layout_height="wrap_content"
                            />
 
-
-                    </com.nex3z.flowlayout.FlowLayout>
 
 
                     <TextView
@@ -464,7 +433,6 @@
                         android:textColor="#FFFFFF"
                         android:textSize="20sp"
                         android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -472,11 +440,15 @@
                         android:layout_width="350dp"
                         android:layout_height="5dp"
                         android:layout_marginStart="22dp"
+                        android:layout_marginBottom="80dp"
                         android:background="@drawable/dash_line"
                         android:layerType="software"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toEndOf="@id/tv_taste"
                         app:layout_constraintTop_toTopOf="parent" />
+
+
+
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -507,7 +479,6 @@
                         android:textColor="#FFFFFF"
                         android:textSize="20sp"
                         android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -518,8 +489,9 @@
                         android:background="@drawable/dash_line"
                         android:layerType="software"
                         app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_marginBottom="80dp"
                         app:layout_constraintStart_toEndOf="@id/tv_body"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -99,15 +99,17 @@
 
             <TextView
                 android:id="@+id/tv_detail_review"
-                android:layout_width="288dp"
+                android:layout_width="0dp"
                 android:layout_height="108dp"
-                android:layout_marginTop="75dp"
+                android:layout_marginTop="13dp"
+                android:layout_marginEnd="16dp"
                 android:text="Review Sample"
                 android:textColor="#CCCCCC"
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintStart_toStartOf="@id/tv_detail_nickname"
+                app:layout_constraintBottom_toTopOf="@+id/layout_detail_review"
+                app:layout_constraintTop_toBottomOf="@id/review_rating" />
 
 
             <include
@@ -124,15 +126,16 @@
 
             <RelativeLayout
                 android:id="@+id/layout_review_comment"
-                android:layout_width="288dp"
+                android:layout_width="0dp"
                 android:layout_height="128dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toStartOf="@id/tv_detail_nickname"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/btn_comment"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
-                android:visibility="gone">
+                android:layout_marginEnd="16dp"
+              >
 
                 <EditText
                     android:id="@+id/et_review_comment"
