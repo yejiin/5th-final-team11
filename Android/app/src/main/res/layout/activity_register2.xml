@@ -135,7 +135,7 @@
     <Button
         android:id="@+id/btn_end_register2"
         android:layout_width="match_parent"
-        android:layout_height="62dp"
+        android:layout_height="63dp"
         android:background="@drawable/button_background_gradient"
         android:text="작성 완료"
         android:textColor="#FFFFFF"
