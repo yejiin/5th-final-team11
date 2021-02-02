@@ -8,8 +8,8 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import com.doubleslas.fifith.alcohol.R
 import com.doubleslas.fifith.alcohol.databinding.LayoutWriteReviewBinding
-import com.doubleslas.fifith.alcohol.model.base.ApiStatus
 import com.doubleslas.fifith.alcohol.dto.ReviewDetailData
+import com.doubleslas.fifith.alcohol.model.base.ApiStatus
 import com.doubleslas.fifith.alcohol.ui.auth.CustomDialog
 import com.doubleslas.fifith.alcohol.ui.auth.CustomDialogInterface
 import com.doubleslas.fifith.alcohol.ui.common.CalendarDialogFragment
@@ -117,28 +117,33 @@ class ReviewBottomSheetDialog private constructor() :
                         dismiss()
                     }
                     is ApiStatus.Error -> {
-                        processError(it.code)
+
                     }
+                    is ApiStatus.ValidateFail ->
+                        processValidate(it)
                 }
             })
         }
     }
 
-    private fun processError(code: Int) {
-        when (code) {
-            ReviewViewModel.ErrorCode.COMMENT.ordinal -> {
+    private fun processValidate(v: ApiStatus.ValidateFail) {
+        when (v) {
+            is ReviewViewModel.ReviewValidateFail.CommentEmpty -> {
                 binding?.etComment?.requestFocus()
             }
-            ReviewViewModel.ErrorCode.DETAIL_DATE.ordinal -> {
+            is ReviewViewModel.ReviewValidateFail.DetailDateEmpty -> {
                 binding?.layoutDetail?.etCalendar?.requestFocus()
             }
-            ReviewViewModel.ErrorCode.DETAIL_PLACE.ordinal -> {
+            is ReviewViewModel.ReviewValidateFail.DetailPlaceEmpty -> {
                 binding?.layoutDetail?.etPlace?.requestFocus()
             }
-            ReviewViewModel.ErrorCode.DETAIL_DRINK.ordinal -> {
+            is ReviewViewModel.ReviewValidateFail.DetailDrinkEmpty -> {
                 binding?.layoutDetail?.etDrink?.requestFocus()
             }
-            ReviewViewModel.ErrorCode.DETAIL_PRICE.ordinal -> {
+            is ReviewViewModel.ReviewValidateFail.DetailHangoutEmpty -> {
+
+            }
+            is ReviewViewModel.ReviewValidateFail.DetailPriceEmpty -> {
                 binding?.layoutDetail?.etPrice?.requestFocus()
             }
         }

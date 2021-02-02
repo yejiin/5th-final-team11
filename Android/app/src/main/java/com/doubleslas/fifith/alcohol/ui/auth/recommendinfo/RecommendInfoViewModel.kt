@@ -10,6 +10,7 @@ import com.doubleslas.fifith.alcohol.R
 import com.doubleslas.fifith.alcohol.databinding.FragmentRecommendInfoDetailBinding
 import com.doubleslas.fifith.alcohol.model.base.ApiLiveData
 import com.doubleslas.fifith.alcohol.dto.recommend.*
+import com.doubleslas.fifith.alcohol.model.base.ApiStatus
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 
@@ -200,5 +201,9 @@ class RecommendInfoViewModel : ViewModel() {
         }
 
         return list
+    }
+
+    sealed class RecommendInfoValidateFail : ApiStatus.ValidateFail() {
+
     }
 }
