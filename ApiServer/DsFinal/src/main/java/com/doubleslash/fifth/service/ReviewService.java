@@ -2,7 +2,10 @@ package com.doubleslash.fifth.service;
 
 import java.io.IOException;
 import java.sql.SQLIntegrityConstraintViolationException;
+import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -117,7 +120,20 @@ public class ReviewService {
 			response.sendError(404, "Alcohol Id Error");
 			return null;
 		}
+		
+		// 날짜 확인 후 리뷰 중복 조회
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Date date = new Date();
+		String dateToStr = dateFormat.format(date);
+		
+		ReviewVO chk = reviewRepository.findById(id, dateToStr);
 
+		System.out.println("CHK : " + chk);
+		if(chk != null) {
+			response.sendError(403, "Writing Restriction");
+			return null;
+		}
+		
 		reviewVo.setId(id);
 		reviewVo.setAid(aid);
 		reviewVo.setStar(reveiwWriteDto.getStar());

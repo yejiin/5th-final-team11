@@ -85,9 +85,10 @@ public class ReviewController {
 	}
 	
 	
-	@ApiOperation(value = "리뷰 작성", notes="상세 기록 안 적을 시 \"detail\": null 로 하여 requestBody에 포함")
+	@ApiOperation(value = "리뷰 작성", notes="상세 기록 안 적을 시 \"detail\": null 로 하여 requestBody에 포함, 일일 1회 리뷰 작성 제한")
 	@ApiResponses({
 		@ApiResponse(code = 200, message = "Success"),
+		@ApiResponse(code = 403, message = "Writing Restriction"),
 		@ApiResponse(code = 404, message = "Alcohol Id Error")
 	})
 	@PostMapping(value ="")
