@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.doubleslas.fifith.alcohol.databinding.ItemMyReviewBinding
-import com.doubleslas.fifith.alcohol.model.network.dto.MyReviewData
+import com.doubleslas.fifith.alcohol.dto.MyReviewData
 import com.doubleslas.fifith.alcohol.ui.common.SortViewHolder
 
 class MyReviewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {

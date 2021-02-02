@@ -5,11 +5,12 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import com.doubleslas.fifith.alcohol.App
 import com.doubleslas.fifith.alcohol.R
 import com.doubleslas.fifith.alcohol.databinding.ActivityLoginBinding
-import com.doubleslas.fifith.alcohol.model.network.base.ApiStatus
+import com.doubleslas.fifith.alcohol.model.base.ApiStatus
+import com.doubleslas.fifith.alcohol.ui.main.MainActivity
 import com.doubleslas.fifith.alcohol.utils.LogUtil
-import com.doubleslas.fifith.alcohol.viewmodel.LoginViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
@@ -18,7 +19,6 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.kakao.sdk.auth.LoginClient
 import com.kakao.sdk.common.KakaoSdk
-import com.kakao.sdk.user.UserApiClient
 
 
 class LoginActivity : AppCompatActivity() {
@@ -37,6 +37,18 @@ class LoginActivity : AppCompatActivity() {
         activityLoginBinding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(activityLoginBinding.root)
 
+        activityLoginBinding.btnCustomFacebook.setOnClickListener {
+            activityLoginBinding.btnLoginFacebook.performClick()
+        }
+        activityLoginBinding.btnBrowse.setOnClickListener {
+            /*
+                    추천창으로 이동
+             */
+
+            // val intent = Intent(this, )
+
+        }
+
 
         val googleSignInOption = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
@@ -47,10 +59,11 @@ class LoginActivity : AppCompatActivity() {
         val googleSignInClient = GoogleSignIn.getClient(this, googleSignInOption)
 
 
-        activityLoginBinding.btnLoginGoogle.setOnClickListener {
+        activityLoginBinding.btnCustomGoogle.setOnClickListener {
             val signInIntent = googleSignInClient.signInIntent
             startActivityForResult(signInIntent, GOOGLE_SIGN_IN)
         }
+
 
 
         activityLoginBinding.btnLoginKakao.setOnClickListener {
@@ -66,17 +79,6 @@ class LoginActivity : AppCompatActivity() {
                         loginViewModel.signInWithKaKao(token, error)
                     }
                 }
-            }
-        }
-        activityLoginBinding.btnSignoutGoogle.setOnClickListener {
-            // 구글 로그아웃
-            googleSignInClient.signOut()
-
-            // 파이어베이스 로그아웃
-            firebaseAuth.signOut()
-            // 카카오 로그아웃
-            UserApiClient.instance.logout {
-
             }
         }
 
@@ -107,9 +109,23 @@ class LoginActivity : AppCompatActivity() {
             when (it) {
                 is ApiStatus.Success -> {
                     Toast.makeText(applicationContext, "로그인 완료", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(
+                        applicationContext,
+                        when {
+                            App.prefs.submitRecommendInfo -> MainActivity::class.java
+                            App.prefs.registerUserInfo -> RegisterActivity::class.java
+                            else -> RegisterActivity::class.java
+                        }
+                    )
+                    startActivity(intent)
+                    finish()
                 }
                 is ApiStatus.Error -> {
-                    Toast.makeText(applicationContext, "로그인 ERROR - ${it.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        applicationContext,
+                        "로그인 ERROR - ${it.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         })

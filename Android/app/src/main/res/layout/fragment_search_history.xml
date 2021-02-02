@@ -15,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_search"
                 android:layout_width="17.6dp"
                 android:layout_height="16.8dp"
@@ -27,13 +27,14 @@
 
             <EditText
                 android:id="@+id/et_search"
-                android:textColorHint="#acacac"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:hint="@string/search_et_hint"
                 android:imeOptions="actionSearch"
-                android:textSize="16sp"
                 android:inputType="text"
+                android:textColor="@color/white"
+                android:textColorHint="#acacac"
+                android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toLeftOf="@id/btn_search"

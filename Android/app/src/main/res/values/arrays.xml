@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="range_abv_value">
+        <item>0</item>
+        <item>80</item>
+    </array>
+
+</resources>

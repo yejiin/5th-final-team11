@@ -8,10 +8,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.doubleslas.fifith.alcohol.databinding.RecyclerviewBinding
-import com.doubleslas.fifith.alcohol.model.network.base.ApiStatus
-import com.doubleslas.fifith.alcohol.ui.common.AlcoholListAdapter
+import com.doubleslas.fifith.alcohol.model.base.ApiStatus
 import com.doubleslas.fifith.alcohol.ui.common.base.BaseFragment
-import com.doubleslas.fifith.alcohol.viewmodel.SearchListViewModel
 
 class SearchListFragment private constructor() : BaseFragment<RecyclerviewBinding>() {
     private val category by lazy { arguments?.getString(ARGUMENT_CATEGORY) ?: "전체" }
@@ -19,7 +17,7 @@ class SearchListFragment private constructor() : BaseFragment<RecyclerviewBindin
         ViewModelProvider(this, SearchListViewModel.Factory(category))
             .get(SearchListViewModel::class.java)
     }
-    private val adapter by lazy { AlcoholListAdapter() }
+    private val adapter by lazy { SearchAlcoholListAdapter() }
 
     override fun createViewBinding(
         inflater: LayoutInflater,
