@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.doubleslas.fifith.alcohol.R
@@ -25,18 +26,26 @@ class AlcoholDetailActivity : AppCompatActivity() {
     private val alcoholId by lazy { intent.getIntExtra(EXTRA_ALCOHOL_ID, 0) }
 
     private val adapter by lazy { DetailReviewAdapter() }
-
+    private val viewPagerAdapter by lazy { DetailViewPagerAdapter(this) }
     override fun onResume() {
         super.onResume()
         adapter.notifyDataSetChanged()
     }
+
+    private val fragmentList = listOf<Fragment>(DetailInfoFragment(), DetailReviewFragment())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAlcoholDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
         binding.rvDetailReview.adapter = adapter
+
+
+        // 탭 레이아웃
+        binding.viewpagerDetail.adapter = viewPagerAdapter
+
 
         reviewViewModel.readReview(alcoholId, 0).observe(this, Observer {
             when (it) {
@@ -77,116 +86,116 @@ class AlcoholDetailActivity : AppCompatActivity() {
 
 
 
-        detailViewModel.getDetail(alcoholId).observe(this, Observer {
-            when (it) {
-                is ApiStatus.Loading -> {
-
-                }
-                is ApiStatus.Success -> {
-                    binding.tvPriceInfo.text =
-                        it.data.lowestPrice.toString() + "-" + it.data.highestPrice.toString() + " 원"
-                    binding.tvVolumeInfo.text =
-                        it.data.ml.toString() + " ml" + " / " + it.data.abv.toString() + " %"
-                    binding.detailRating.rating = it.data.starAvg
-                    binding.tvAlcoholName.text = it.data.name
-                    binding.tvDrinkName.text = it.data.name
-                    binding.tvDescription.text = it.data.description
-
-                    for (index in it.data.kind.indices) {
-                        val chip = Chip(binding.chipGroup.context)
-                        chip.background = ContextCompat.getDrawable(
-                            this,
-                            R.drawable.detail_button_active_background
-                        )
-                        chip.setTextColor(Color.parseColor("#FFFFFF"))
-                        chip.text = it.data.kind[index]
-                        chip.isClickable = false
-                        chip.isCheckable = false
-                        chip.chipBackgroundColor = ColorStateList.valueOf(
-                            ContextCompat.getColor(
-                                this,
-                                R.color.chipColor
-                            )
-                        )
-                        binding.chipGroup.addView(chip)
-                    }
-
-
-                    // 와인 파트
-                    if (it.data.country != null && it.data.area != null && it.data.flavor != null && it.data.body != null) {
-                        binding.tvNation.visibility = View.VISIBLE
-                        binding.tvNationInfo.visibility = View.VISIBLE
-                        binding.tvNationInfo.text = it.data.country + it.data.area
-                        binding.layoutBody.visibility = View.VISIBLE
-                        binding.seekBarFlavor.seekBar.progress = it.data.flavor
-                        binding.seekBarBody.seekBar.progress = it.data.body
-                        binding.seekBarBody.seekBar.isEnabled = false
-                        binding.seekBarFlavor.seekBar.isEnabled = false
-
-                        binding.seekBarFlavor.tvLabel1.text = "Dry"
-                        binding.seekBarFlavor.tvLabel2.text = "Sweet"
-
-                        binding.seekBarBody.tvLabel1.text = "Light"
-                        binding.seekBarBody.tvLabel2.text = "Heavy"
-                    } else {
-
-                        binding.layoutBody.visibility = View.GONE
-                        binding.seekBarFlavor.seekBar.visibility = View.GONE
-                        binding.seekBarFlavor.tvLabel1.visibility = View.GONE
-                        binding.seekBarFlavor.tvLabel2.visibility = View.GONE
-                    }
-
-
-                    // 맥주 파트
-                    if (it.data.areas != null) {
-                        binding.layoutKinds.visibility = View.VISIBLE
-                        binding.layoutFlavor.visibility = View.GONE
-                        binding.layoutBody.visibility = View.GONE
-                        binding.tvNation.visibility = View.VISIBLE
-                        binding.tvNationInfo.visibility = View.VISIBLE
-                        binding.tvNationInfo.text = it.data.areas.toString()
-                        for (index in it.data.areas.indices) {
-                            val chip = Chip(binding.chipGroupAreas.context)
-                            chip.setTextColor(Color.parseColor("#FFFFFF"))
-                            chip.text = it.data.areas[index]
-                            chip.isClickable = false
-                            chip.isCheckable = false
-                            chip.chipBackgroundColor = ColorStateList.valueOf(
-                                ContextCompat.getColor(
-                                    this,
-                                    R.color.chipColor
-                                )
-                            )
-                            binding.chipGroupAreas.addView(chip)
-                        }
-                    } else {
-                        binding.tvNation.visibility = View.GONE
-                        binding.tvNationInfo.visibility = View.GONE
-                        binding.layoutAreas.visibility = View.GONE
-                    }
-
-                    // 양주 파트
-                    if (it.data.flavors != null) {
-                        for (index in it.data.flavors.indices) {
-                            val chip = Chip(binding.chipGroupFlavor.context)
-                            chip.setTextColor(Color.parseColor("#FFFFFF"))
-                            chip.text = it.data.flavors[index]
-                            chip.isClickable = false
-                            chip.isCheckable = false
-                            chip.chipBackgroundColor = ColorStateList.valueOf(
-                                ContextCompat.getColor(
-                                    this,
-                                    R.color.chipColor
-                                )
-                            )
-                            binding.chipGroupFlavor.addView(chip)
-                        }
-                    }
-                }
-                is ApiStatus.Error -> {
-                }
-            }
-        })
+//        detailViewModel.getDetail(alcoholId).observe(this, Observer {
+//            when (it) {
+//                is ApiStatus.Loading -> {
+//
+//                }
+//                is ApiStatus.Success -> {
+//                    binding.tvPriceInfo.text =
+//                        it.data.lowestPrice.toString() + "-" + it.data.highestPrice.toString() + " 원"
+//                    binding.tvVolumeInfo.text =
+//                        it.data.ml.toString() + " ml" + " / " + it.data.abv.toString() + " %"
+//                    binding.detailRating.rating = it.data.starAvg
+//                    binding.tvAlcoholName.text = it.data.name
+//                    binding.tvDrinkName.text = it.data.name
+//                    binding.tvDescription.text = it.data.description
+//
+//                    for (index in it.data.kind.indices) {
+//                        val chip = Chip(binding.chipGroup.context)
+//                        chip.background = ContextCompat.getDrawable(
+//                            this,
+//                            R.drawable.detail_button_active_background
+//                        )
+//                        chip.setTextColor(Color.parseColor("#FFFFFF"))
+//                        chip.text = it.data.kind[index]
+//                        chip.isClickable = false
+//                        chip.isCheckable = false
+//                        chip.chipBackgroundColor = ColorStateList.valueOf(
+//                            ContextCompat.getColor(
+//                                this,
+//                                R.color.chipColor
+//                            )
+//                        )
+//                        binding.chipGroup.addView(chip)
+//                    }
+//
+//
+//                    // 와인 파트
+////                    if (it.data.country != null && it.data.area != null && it.data.flavor != null && it.data.body != null) {
+////                        binding.tvNation.visibility = View.VISIBLE
+////                        binding.tvNationInfo.visibility = View.VISIBLE
+////                        binding.tvNationInfo.text = it.data.country + it.data.area
+////                        binding.layoutBody.visibility = View.VISIBLE
+////                        binding.seekBarFlavor.seekBar.progress = it.data.flavor
+////                        binding.seekBarBody.seekBar.progress = it.data.body
+////                        binding.seekBarBody.seekBar.isEnabled = false
+////                        binding.seekBarFlavor.seekBar.isEnabled = false
+////
+////                        binding.seekBarFlavor.tvLabel1.text = "Dry"
+////                        binding.seekBarFlavor.tvLabel2.text = "Sweet"
+////
+////                        binding.seekBarBody.tvLabel1.text = "Light"
+////                        binding.seekBarBody.tvLabel2.text = "Heavy"
+////                    } else {
+////
+////                        binding.layoutBody.visibility = View.GONE
+////                        binding.seekBarFlavor.seekBar.visibility = View.GONE
+////                        binding.seekBarFlavor.tvLabel1.visibility = View.GONE
+////                        binding.seekBarFlavor.tvLabel2.visibility = View.GONE
+////                    }
+//
+//
+//                    // 맥주 파트
+////                    if (it.data.areas != null) {
+////                        binding.layoutKinds.visibility = View.VISIBLE
+////                        binding.layoutFlavor.visibility = View.GONE
+////                        binding.layoutBody.visibility = View.GONE
+////                        binding.tvNation.visibility = View.VISIBLE
+////                        binding.tvNationInfo.visibility = View.VISIBLE
+////                        binding.tvNationInfo.text = it.data.areas.toString()
+////                        for (index in it.data.areas.indices) {
+////                            val chip = Chip(binding.chipGroupAreas.context)
+////                            chip.setTextColor(Color.parseColor("#FFFFFF"))
+////                            chip.text = it.data.areas[index]
+////                            chip.isClickable = false
+////                            chip.isCheckable = false
+////                            chip.chipBackgroundColor = ColorStateList.valueOf(
+////                                ContextCompat.getColor(
+////                                    this,
+////                                    R.color.chipColor
+////                                )
+////                            )
+////                            binding.chipGroupAreas.addView(chip)
+////                        }
+////                    } else {
+////                        binding.tvNation.visibility = View.GONE
+////                        binding.tvNationInfo.visibility = View.GONE
+////                        binding.layoutAreas.visibility = View.GONE
+////                    }
+//
+//                    // 양주 파트
+//                    if (it.data.flavors != null) {
+//                        for (index in it.data.flavors.indices) {
+//                            val chip = Chip(binding.chipGroupFlavor.context)
+//                            chip.setTextColor(Color.parseColor("#FFFFFF"))
+//                            chip.text = it.data.flavors[index]
+//                            chip.isClickable = false
+//                            chip.isCheckable = false
+//                            chip.chipBackgroundColor = ColorStateList.valueOf(
+//                                ContextCompat.getColor(
+//                                    this,
+//                                    R.color.chipColor
+//                                )
+//                            )
+//                            binding.chipGroupFlavor.addView(chip)
+//                        }
+//                    }
+//                }
+//                is ApiStatus.Error -> {
+//                }
+//            }
+//        })
 
         binding.rvAlcoholSimilar.adapter = SimilarAdapter(this)
 
