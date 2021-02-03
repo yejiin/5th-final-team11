@@ -6,6 +6,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.doubleslas.fifith.alcohol.App
 import com.doubleslas.fifith.alcohol.databinding.ActivitySplashBinding
+import com.doubleslas.fifith.alcohol.ui.auth.AgeCheckActivity
 import com.doubleslas.fifith.alcohol.ui.auth.LoginActivity
 import com.doubleslas.fifith.alcohol.ui.auth.recommendinfo.RecommendInfoActivity
 import com.doubleslas.fifith.alcohol.ui.main.MainActivity
@@ -31,10 +32,10 @@ class SplashActivity : AppCompatActivity() {
                 val intent = Intent(
                     applicationContext,
                     when {
-                        !App.isLogin() -> LoginActivity::class.java
+                        !App.isLogin() -> AgeCheckActivity::class.java
                         App.prefs.submitRecommendInfo -> MainActivity::class.java
                         App.prefs.registerUserInfo -> RecommendInfoActivity::class.java
-                        else -> LoginActivity::class.java
+                        else -> AgeCheckActivity::class.java
                     }
                 )
                 startActivity(intent)

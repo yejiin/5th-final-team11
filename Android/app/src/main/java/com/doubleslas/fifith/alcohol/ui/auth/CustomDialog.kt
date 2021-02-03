@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.custom_dialog.*
 
 class CustomDialog(context: Context, customDialogInterface: CustomDialogInterface) : Dialog(context), View.OnClickListener {
 
-    private var customDialogInterface: CustomDialogInterface? = null
+    var customDialogInterface: CustomDialogInterface? = null
 
     init {
         this.customDialogInterface = customDialogInterface

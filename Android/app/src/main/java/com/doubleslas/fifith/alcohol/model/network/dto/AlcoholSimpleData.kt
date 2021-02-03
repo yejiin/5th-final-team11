@@ -5,6 +5,6 @@ data class AlcoholSimpleData(
     val name: String,
     val category: String,
     val star: Float,
-    val reviewCnt: Int
-
+    val reviewCnt: Int,
+    val thumbnail: String
 )

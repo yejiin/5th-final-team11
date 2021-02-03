@@ -47,6 +47,7 @@ object RestClient {
             baseUrl("http://double-slash.shop/") // 도메인 주소
             client(client)
 
+            addConverterFactory(NullOnEmptyConverterFactory())
             addCallAdapterFactory(LiveDataCallAdapter.Factory())
             addConverterFactory(GsonConverterFactory.create()) // GSON을 사요아기 위해 ConverterFactory에 GSON 지정
             build()
