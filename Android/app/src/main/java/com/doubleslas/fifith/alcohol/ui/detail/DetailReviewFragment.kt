@@ -1,60 +1,102 @@
 package com.doubleslas.fifith.alcohol.ui.detail
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.doubleslas.fifith.alcohol.R
+import com.doubleslas.fifith.alcohol.databinding.FragmentDetailInfoBinding
+import com.doubleslas.fifith.alcohol.databinding.FragmentDetailReviewBinding
+import com.doubleslas.fifith.alcohol.model.network.base.ApiStatus
+import com.doubleslas.fifith.alcohol.ui.reivew.ReviewBottomSheetDialog
+import com.doubleslas.fifith.alcohol.viewmodel.DetailViewModel
+import com.doubleslas.fifith.alcohol.viewmodel.ReviewViewModel
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [DetailReviewFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class DetailReviewFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private var _binding: FragmentDetailReviewBinding? = null
+    private val binding: FragmentDetailReviewBinding get() = _binding!!
+    private var reviewViewModel: ReviewViewModel? = null
+    private val adapter by lazy { DetailReviewAdapter() }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_detail_review, container, false)
+        _binding = FragmentDetailReviewBinding.inflate(inflater, container, false)
+
+        binding.rvDetailReview.adapter = adapter
+
+        binding.rvDetailReview.layoutManager = LinearLayoutManager(AlcoholDetailActivity()).also {
+            it.orientation = LinearLayoutManager.VERTICAL
+        }
+
+
+        binding.rvDetailReview.addItemDecoration(DetailReviewDecoration(5))
+
+
+        reviewViewModel?.readReview(6, 0)?.observe(this, Observer {
+            when (it) {
+                is ApiStatus.Loading -> {
+
+                }
+                is ApiStatus.Success -> {
+                    adapter.setData(it.data.reviewList)
+                }
+                is ApiStatus.Error -> {
+
+                }
+
+            }
+        })
+
+        binding.btnWriteReview.setOnClickListener {
+            val bottomSheet =
+                ReviewBottomSheetDialog.create(6)
+
+            bottomSheet.onListener {
+                reviewViewModel?.readReview(6, 0)?.observe(this, Observer {
+                    when (it) {
+                        is ApiStatus.Loading -> {
+
+                        }
+                        is ApiStatus.Success -> {
+                            adapter.setData(it.data.reviewList)
+                        }
+                        is ApiStatus.Error -> {
+
+                        }
+
+                    }
+                })
+            }
+
+            // 다음 작업에
+//            bottomSheet.show(supportFragmentManager, bottomSheet.tag)
+        }
+
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment DetailReviewFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            DetailReviewFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    override fun onResume() {
+        super.onResume()
+        adapter.notifyDataSetChanged()
+
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        reviewViewModel =  ViewModelProvider(AlcoholDetailActivity()).get(ReviewViewModel::class.java)
     }
 }
+
