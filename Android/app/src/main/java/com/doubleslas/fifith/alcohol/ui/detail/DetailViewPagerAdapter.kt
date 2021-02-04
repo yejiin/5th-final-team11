@@ -10,10 +10,14 @@ class DetailViewPagerAdapter(fragment: FragmentActivity) : FragmentStateAdapter(
 
     private var fragmentList = listOf<Fragment>(DetailInfoFragment(), DetailReviewFragment())
     override fun getItemCount(): Int {
-        return fragmentList.count()
+        return fragmentList.size
     }
 
     override fun createFragment(position: Int): Fragment {
-        return fragmentList[position]
+        return when(position){
+            0 -> DetailInfoFragment()
+            1 -> DetailReviewFragment()
+            else -> DetailReviewFragment()
+        }
     }
 }

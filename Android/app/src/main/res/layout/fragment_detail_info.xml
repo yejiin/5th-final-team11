@@ -118,7 +118,12 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/layout_basic_info"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
     <TextView
         android:id="@+id/tv_description"
         android:layout_width="match_parent"
@@ -395,9 +400,10 @@
 
 
 
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

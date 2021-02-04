@@ -61,7 +61,7 @@ open class AlcoholListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() 
             binding.root.setOnClickListener {
                 val context = it.context
                 val item = getItem(adapterPosition)
-                context.startActivity(AlcoholDetailActivity.getStartIntent(context, item.aid))
+//                context.startActivity(AlcoholDetailActivity.getStartIntent(context, item.aid))
             }
         }
     }

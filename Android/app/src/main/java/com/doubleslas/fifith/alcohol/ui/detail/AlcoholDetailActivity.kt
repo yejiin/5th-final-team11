@@ -23,7 +23,7 @@ class AlcoholDetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAlcoholDetailBinding
     private val detailViewModel by lazy { DetailViewModel() }
     private val reviewViewModel by lazy { ReviewViewModel() }
-    private val alcoholId by lazy { intent.getIntExtra(EXTRA_ALCOHOL_ID, 0) }
+//    private val alcoholId by lazy { intent.getIntExtra(EXTRA_ALCOHOL_ID, 0) }
 
     private val adapter by lazy { DetailReviewAdapter() }
     private val viewPagerAdapter by lazy { DetailViewPagerAdapter(this) }
@@ -32,7 +32,6 @@ class AlcoholDetailActivity : AppCompatActivity() {
         adapter.notifyDataSetChanged()
     }
 
-    private val fragmentList = listOf<Fragment>(DetailInfoFragment(), DetailReviewFragment())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,43 +46,42 @@ class AlcoholDetailActivity : AppCompatActivity() {
         binding.viewpagerDetail.adapter = viewPagerAdapter
 
 
-        reviewViewModel.readReview(alcoholId, 0).observe(this, Observer {
-            when (it) {
-                is ApiStatus.Loading -> {
-
-                }
-                is ApiStatus.Success -> {
-                    adapter.setData(it.data.reviewList)
-                }
-                is ApiStatus.Error -> {
-
-                }
-
-            }
-        })
-        binding.btnWriteReview.setOnClickListener {
-            val bottomSheet =
-                ReviewBottomSheetDialog.create(alcoholId)
-
-            bottomSheet.onListener {
-                reviewViewModel.readReview(alcoholId, 0).observe(this, Observer {
-                    when (it) {
-                        is ApiStatus.Loading -> {
-
-                        }
-                        is ApiStatus.Success -> {
-                            adapter.setData(it.data.reviewList)
-                        }
-                        is ApiStatus.Error -> {
-
-                        }
-
-                    }
-                })
-            }
-            bottomSheet.show(supportFragmentManager, bottomSheet.tag)
-        }
-
+//        reviewViewModel.readReview(alcoholId, 0).observe(this, Observer {
+//            when (it) {
+//                is ApiStatus.Loading -> {
+//
+//                }
+//                is ApiStatus.Success -> {
+//                    adapter.setData(it.data.reviewList)
+//                }
+//                is ApiStatus.Error -> {
+//
+//                }
+//
+//            }
+//        })
+//        binding.btnWriteReview.setOnClickListener {
+//            val bottomSheet =
+//                ReviewBottomSheetDialog.create(alcoholId)
+//
+//            bottomSheet.onListener {
+//                reviewViewModel.readReview(alcoholId, 0).observe(this, Observer {
+//                    when (it) {
+//                        is ApiStatus.Loading -> {
+//
+//                        }
+//                        is ApiStatus.Success -> {
+//                            adapter.setData(it.data.reviewList)
+//                        }
+//                        is ApiStatus.Error -> {
+//
+//                        }
+//
+//                    }
+//                })
+//            }
+//            bottomSheet.show(supportFragmentManager, bottomSheet.tag)
+//        }
 
 
 //        detailViewModel.getDetail(alcoholId).observe(this, Observer {
@@ -197,62 +195,64 @@ class AlcoholDetailActivity : AppCompatActivity() {
 //            }
 //        })
 
-        binding.rvAlcoholSimilar.adapter = SimilarAdapter(this)
+//        binding.rvAlcoholSimilar.adapter = SimilarAdapter(this)
+//
+//        binding.rvAlcoholSimilar.layoutManager = LinearLayoutManager(this).also {
+//            it.orientation = LinearLayoutManager.HORIZONTAL
+//        }
+//        binding.rvDetailReview.layoutManager = LinearLayoutManager(this).also {
+//            it.orientation = LinearLayoutManager.VERTICAL
+//        }
+//
+//        binding.rvAlcoholSimilar.addItemDecoration(DetailItemDecoration(5))
+//        binding.rvDetailReview.addItemDecoration(DetailReviewDecoration(5))
+//        binding.btnAlcoholInfo.setOnClickListener {
+//            onInfoBtnClicked()
+//        }
+//
+//        binding.btnAlcoholReview.setOnClickListener {
+//            onReviewBtnClicked()
+//        }
+//    }
+//
+//    private fun onInfoBtnClicked() {
+//        binding.layoutBasicInfo.visibility = View.VISIBLE
+//        binding.layoutDescription.visibility = View.VISIBLE
+//        binding.layoutInfo.visibility = View.VISIBLE
+//        binding.layoutReview.visibility = View.GONE
+//
+//        binding.btnAlcoholReview.setTextColor(Color.parseColor("#707070"))
+//        binding.btnAlcoholInfo.setTextColor(Color.parseColor("#FFFFFF"))
+//
+//        binding.btnAlcoholInfo.background =
+//            ContextCompat.getDrawable(this, R.drawable.detail_button_active_background)
+//        binding.btnAlcoholReview.background =
+//            ContextCompat.getDrawable(this, R.drawable.detail_button_inactive_background)
+//    }
+//
+//    private fun onReviewBtnClicked() {
+//        binding.layoutBasicInfo.visibility = View.GONE
+//        binding.layoutDescription.visibility = View.GONE
+//        binding.layoutInfo.visibility = View.GONE
+//        binding.layoutReview.visibility = View.VISIBLE
+//        binding.btnAlcoholInfo.setTextColor(Color.parseColor("#707070"))
+//        binding.btnAlcoholReview.setTextColor(Color.parseColor("#FFFFFF"))
+//        binding.btnAlcoholInfo.background =
+//            ContextCompat.getDrawable(this, R.drawable.detail_button_inactive_background)
+//        binding.btnAlcoholReview.background =
+//            ContextCompat.getDrawable(this, R.drawable.detail_button_active_background)
+//    }
 
-        binding.rvAlcoholSimilar.layoutManager = LinearLayoutManager(this).also {
-            it.orientation = LinearLayoutManager.HORIZONTAL
-        }
-        binding.rvDetailReview.layoutManager = LinearLayoutManager(this).also {
-            it.orientation = LinearLayoutManager.VERTICAL
-        }
+//    companion object {
+//        private const val EXTRA_ALCOHOL_ID = "EXTRA_ALCOHOL_ID"
+//        fun getStartIntent(context: Context, id: Int): Intent {
+//
+//            return Intent(context, AlcoholDetailActivity::class.java).apply {
+//                putExtra(EXTRA_ALCOHOL_ID, id)
+//            }
+//        }
+//    }
 
-        binding.rvAlcoholSimilar.addItemDecoration(DetailItemDecoration(5))
-        binding.rvDetailReview.addItemDecoration(DetailReviewDecoration(5))
-        binding.btnAlcoholInfo.setOnClickListener {
-            onInfoBtnClicked()
-        }
-
-        binding.btnAlcoholReview.setOnClickListener {
-            onReviewBtnClicked()
-        }
-    }
-
-    private fun onInfoBtnClicked() {
-        binding.layoutBasicInfo.visibility = View.VISIBLE
-        binding.layoutDescription.visibility = View.VISIBLE
-        binding.layoutInfo.visibility = View.VISIBLE
-        binding.layoutReview.visibility = View.GONE
-
-        binding.btnAlcoholReview.setTextColor(Color.parseColor("#707070"))
-        binding.btnAlcoholInfo.setTextColor(Color.parseColor("#FFFFFF"))
-
-        binding.btnAlcoholInfo.background =
-            ContextCompat.getDrawable(this, R.drawable.detail_button_active_background)
-        binding.btnAlcoholReview.background =
-            ContextCompat.getDrawable(this, R.drawable.detail_button_inactive_background)
-    }
-
-    private fun onReviewBtnClicked() {
-        binding.layoutBasicInfo.visibility = View.GONE
-        binding.layoutDescription.visibility = View.GONE
-        binding.layoutInfo.visibility = View.GONE
-        binding.layoutReview.visibility = View.VISIBLE
-        binding.btnAlcoholInfo.setTextColor(Color.parseColor("#707070"))
-        binding.btnAlcoholReview.setTextColor(Color.parseColor("#FFFFFF"))
-        binding.btnAlcoholInfo.background =
-            ContextCompat.getDrawable(this, R.drawable.detail_button_inactive_background)
-        binding.btnAlcoholReview.background =
-            ContextCompat.getDrawable(this, R.drawable.detail_button_active_background)
-    }
-
-    companion object {
-        private const val EXTRA_ALCOHOL_ID = "EXTRA_ALCOHOL_ID"
-        fun getStartIntent(context: Context, id: Int): Intent {
-
-            return Intent(context, AlcoholDetailActivity::class.java).apply {
-                putExtra(EXTRA_ALCOHOL_ID, id)
-            }
-        }
     }
 
 }
