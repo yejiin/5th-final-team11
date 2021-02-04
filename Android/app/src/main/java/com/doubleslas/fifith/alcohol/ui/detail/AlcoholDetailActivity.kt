@@ -1,25 +1,14 @@
 package com.doubleslas.fifith.alcohol.ui.detail
 
-import android.content.Context
-import android.content.Intent
-import android.content.res.ColorStateList
-import android.graphics.Color
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.doubleslas.fifith.alcohol.R
 import com.doubleslas.fifith.alcohol.databinding.ActivityAlcoholDetailBinding
-import com.doubleslas.fifith.alcohol.model.network.base.ApiStatus
-import com.doubleslas.fifith.alcohol.ui.reivew.ReviewBottomSheetDialog
 import com.doubleslas.fifith.alcohol.viewmodel.DetailViewModel
 import com.doubleslas.fifith.alcohol.viewmodel.ReviewViewModel
-import com.google.android.material.chip.Chip
+import com.google.android.material.tabs.TabLayoutMediator
 
 class AlcoholDetailActivity : AppCompatActivity() {
+    val tabLayoutTextArray = arrayOf("정보", "리뷰")
     private lateinit var binding: ActivityAlcoholDetailBinding
     private val detailViewModel by lazy { DetailViewModel() }
     private val reviewViewModel by lazy { ReviewViewModel() }
@@ -39,12 +28,15 @@ class AlcoholDetailActivity : AppCompatActivity() {
         setContentView(binding.root)
 
 
-        binding.rvDetailReview.adapter = adapter
+//        binding.rvDetailReview.adapter = adapter
 
 
-        // 탭 레이아웃
+        // viewpager2
         binding.viewpagerDetail.adapter = viewPagerAdapter
 
+        TabLayoutMediator(binding.tablayoutDetail, binding.viewpagerDetail) { tab, position ->
+            tab.text = tabLayoutTextArray[position]
+        }.attach()
 
 //        reviewViewModel.readReview(alcoholId, 0).observe(this, Observer {
 //            when (it) {
@@ -254,5 +246,7 @@ class AlcoholDetailActivity : AppCompatActivity() {
 //    }
 
     }
+
+
 
 }

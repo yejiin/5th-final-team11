@@ -8,7 +8,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 
 class DetailViewPagerAdapter(fragment: FragmentActivity) : FragmentStateAdapter(fragment) {
 
-    private var fragmentList = listOf<Fragment>(DetailInfoFragment(), DetailReviewFragment())
+    private var fragmentList = listOf(DetailInfoFragment(), DetailReviewFragment())
     override fun getItemCount(): Int {
         return fragmentList.size
     }
