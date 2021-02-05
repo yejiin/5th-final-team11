@@ -65,11 +65,9 @@ public class ReviewService {
 	AlcoholRepository alcoholRepository;
 
 	// 리뷰 조회
-	public Map<String, Object> getReviewList(int aid, int reviewPage, int id, HttpServletResponse response)
-			throws IOException {
+	public Map<String, Object> getReviewList(int aid, int reviewPage, int id, HttpServletResponse response) throws IOException {
 
-		Page<ReviewDTO> reviewDto = reviewRepository.findByAid(aid,
-				PageRequest.of(reviewPage, 20, Sort.Direction.ASC, "rid"));
+		Page<ReviewDTO> reviewDto = reviewRepository.findByAid(aid, id, PageRequest.of(reviewPage, 20, Sort.Direction.ASC, "rid"));
 
 		for (int i = 0; i < reviewDto.getContent().size(); i++) {
 			int rid = reviewDto.getContent().get(i).getRid();

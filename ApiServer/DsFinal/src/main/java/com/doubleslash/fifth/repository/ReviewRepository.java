@@ -16,8 +16,8 @@ import com.doubleslash.fifth.vo.ReviewVO;
 public interface ReviewRepository extends JpaRepository<ReviewVO, Integer> {
 
 	// 리뷰 리스트 조회
-	@Query(value = "select new com.doubleslash.fifth.dto.ReviewDTO(r.rid, u.nickname, r.content, r.love, r.star, r.create_time) from ReviewVO as r, UserVO as u where r.id = u.id and r.aid=?1")
-	public Page<ReviewDTO> findByAid(int aid, Pageable pageable);
+	@Query(value = "select new com.doubleslash.fifth.dto.ReviewDTO(r.rid, u.nickname, r.content, r.love, r.star, r.create_time) from ReviewVO as r, UserVO as u where r.id = u.id and r.aid=?1 order by field(u.id, ?2) desc")
+	public Page<ReviewDTO> findByAid(int aid, int id, Pageable pageable);
 	
 	@Query(value = "select rid, aid, id, star, content, love, report, create_time from Review where id=?1 and date(create_time)=?2", nativeQuery = true)
 	public ReviewVO findById(int id, String createTime);
