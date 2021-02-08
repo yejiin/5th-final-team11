@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 
 data class SearchList (
     @SerializedName("searchList") private val list: List<AlcoholSimpleData>,
-    @SerializedName("searchCnt") private val totalCount: Int
+    @SerializedName("totalCnt") private val totalCount: Int
 ) : IPageLoadData<AlcoholSimpleData>{
     override fun getTotalCount(): Int {
         return totalCount

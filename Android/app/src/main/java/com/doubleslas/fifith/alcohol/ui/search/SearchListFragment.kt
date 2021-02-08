@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.doubleslas.fifith.alcohol.databinding.RecyclerviewBinding
 import com.doubleslas.fifith.alcohol.model.base.ApiStatus
+import com.doubleslas.fifith.alcohol.ui.common.LoadingRecyclerViewAdapter
 import com.doubleslas.fifith.alcohol.ui.common.base.BaseFragment
 
 class SearchListFragment private constructor() : BaseFragment<RecyclerviewBinding>() {
@@ -18,6 +19,7 @@ class SearchListFragment private constructor() : BaseFragment<RecyclerviewBindin
             .get(SearchListViewModel::class.java)
     }
     private val adapter by lazy { SearchAlcoholListAdapter() }
+    private val loadingAdapter by lazy { LoadingRecyclerViewAdapter(adapter) }
 
     override fun createViewBinding(
         inflater: LayoutInflater,
@@ -31,17 +33,23 @@ class SearchListFragment private constructor() : BaseFragment<RecyclerviewBindin
         super.onViewCreated(view, savedInstanceState)
         binding?.let {
             it.recyclerview.layoutManager = LinearLayoutManager(context)
-            it.recyclerview.adapter = adapter
+            it.recyclerview.adapter = loadingAdapter
         }
 
         adapter.setOnSortChangeListener {
             viewModel.setSort(it)
         }
 
+        loadingAdapter.setOnBindLoadingListener {
+            viewModel.loadList()
+        }
+
         viewModel.listLiveData.observe(viewLifecycleOwner, Observer {
+            loadingAdapter.setVisibleLoading(!viewModel.isFinishList())
             when (it) {
                 is ApiStatus.Success -> {
                     adapter.setData(it.data)
+                    loadingAdapter.notifyDataSetChanged()
                 }
                 is ApiStatus.Error -> {
 

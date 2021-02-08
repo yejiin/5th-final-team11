@@ -45,7 +45,6 @@ open class AlcoholListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() 
 
     fun setData(list: List<AlcoholSimpleData>) {
         this.list = list
-        notifyDataSetChanged()
     }
 
     protected open fun getItem(position: Int): AlcoholSimpleData {

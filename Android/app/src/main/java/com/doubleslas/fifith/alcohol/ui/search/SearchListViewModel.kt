@@ -2,6 +2,7 @@ package com.doubleslas.fifith.alcohol.ui.search
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import bolts.Bolts
 import com.doubleslas.fifith.alcohol.enum.SearchSortType
 import com.doubleslas.fifith.alcohol.model.base.ApiLiveData
 import com.doubleslas.fifith.alcohol.dto.AlcoholSimpleData
@@ -45,6 +46,9 @@ class SearchListViewModel(private val category: String) : ViewModel() {
         loadList()
     }
 
+    fun isFinishList() : Boolean{
+        return pageLoader.isFinish()
+    }
     class Factory(private val param: String) : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             return if (modelClass.isAssignableFrom(SearchListViewModel::class.java)) {
