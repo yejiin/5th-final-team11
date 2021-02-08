@@ -8,10 +8,11 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.doubleslas.fifith.alcohol.App
 import com.doubleslas.fifith.alcohol.R
 import com.doubleslas.fifith.alcohol.databinding.FragmentSearchHistoryBinding
 import com.doubleslas.fifith.alcohol.ui.common.base.BaseFragment
-import com.doubleslas.fifith.alcohol.viewmodel.SearchViewModel
+
 
 class SearchHistoryFragment : BaseFragment<FragmentSearchHistoryBinding>() {
     private val adapter by lazy { SearchHistoryAdapter() }
@@ -28,8 +29,6 @@ class SearchHistoryFragment : BaseFragment<FragmentSearchHistoryBinding>() {
         super.onViewCreated(view, savedInstanceState)
 
         binding?.let { b ->
-
-
             b.etSearch.setOnEditorActionListener { v, actionId, event ->
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     search(b.etSearch.text.toString())
@@ -78,7 +77,13 @@ class SearchHistoryFragment : BaseFragment<FragmentSearchHistoryBinding>() {
     override fun onResume() {
         super.onResume()
         adapter.setList(vm.getHistoryList())
-        binding?.etSearch?.requestFocus()
+        requestInit()
+    }
+
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+        if (!hidden) requestInit()
+        else App.hideKeyboard(binding?.etSearch)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -96,6 +101,11 @@ class SearchHistoryFragment : BaseFragment<FragmentSearchHistoryBinding>() {
 
         vm.search(keyword)
         (parentFragment as? SearchFragment)?.openSearchResultFragment(keyword)
+    }
+
+    private fun requestInit() {
+        binding?.etSearch?.requestFocus()
+        App.showKeyboard(binding?.etSearch)
     }
 
 }

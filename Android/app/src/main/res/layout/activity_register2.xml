@@ -95,41 +95,16 @@
         app:layout_constraintStart_toStartOf="@id/textView8"
         app:layout_constraintTop_toBottomOf="@id/et_drinking_capacity" />
 
-    <SeekBar
-        android:id="@+id/sb_drinking_capacity"
-        style="@style/Widget.AppCompat.SeekBar.Discrete"
-        android:layout_width="270dp"
-        android:layout_height="wrap_content"
+    <include
+        android:id="@+id/seekbar_drink_capacity"
+        layout="@layout/view_seekbar"
         android:layout_marginTop="23dp"
-        android:layout_marginBottom="335dp"
-        app:layout_constraintStart_toStartOf="@id/textView9"
         app:layout_constraintTop_toBottomOf="@id/textView9"
-        android:max="4"
-        android:min="0"
-        android:thumb="@drawable/seekbar_thumb"
-        android:progressTint="#FFA255"
-        app:tickMark="@drawable/tickmark" />
-
-    <TextView
-        android:id="@+id/textView10"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="없음"
-        android:textColor="#B2B2B2"
-        android:textSize="14sp"
-        app:layout_constraintStart_toStartOf="@id/sb_drinking_capacity"
-        app:layout_constraintTop_toBottomOf="@id/sb_drinking_capacity" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="심함"
-        android:textColor="#B2B2B2"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="@id/sb_drinking_capacity"
-        app:layout_constraintTop_toBottomOf="@id/sb_drinking_capacity" />
+        app:layout_constraintStart_toStartOf="@id/textView9"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="36dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"/>
 
 
     <Button

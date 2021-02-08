@@ -85,8 +85,9 @@ public class SwaggerConfig extends WebMvcConfigurationSupport{
                 "/review/*/*",
                 "/review/*/*/*",
                 "/review",
-                "/alcohol/detail/*",
+                "/alcohol/*/love",
                 "/alcohol/recommend",
+                "/alcohol/detail/*",
                 "/alcohol/rating"
         };
     	
@@ -117,13 +118,14 @@ public class SwaggerConfig extends WebMvcConfigurationSupport{
 	@Override
 	protected void addInterceptors(InterceptorRegistry registry) {
 		String[] includePathList = {
-                "/user/register",
+				"/user/register",
                 "/user/savepoint",
                 "/review/*/*",
                 "/review/*/*/*",
                 "/review",
-                "/alcohol/detail/*",
+                "/alcohol/*/love",
                 "/alcohol/recommend",
+                "/alcohol/detail/*",
                 "/alcohol/rating"
 		};
 		registry.addInterceptor(authInterceptor())

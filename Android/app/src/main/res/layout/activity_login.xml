@@ -55,19 +55,16 @@
         android:layout_height="52dp"
         android:layout_marginStart="84dp"
         android:layout_marginTop="499dp"
-        android:layout_marginEnd="224dp"
+        android:layout_marginEnd="21dp"
         android:src="@drawable/ic_kakao_login"
         app:layout_constraintBottom_toBottomOf="@+id/btn_custom_google"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/btn_custom_google"
       />
 
     <FrameLayout
         android:id="@+id/btn_custom_google"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="157dp"
-        android:layout_marginEnd="151dp"
         android:layout_marginBottom="38dp"
         app:layout_constraintBottom_toTopOf="@+id/btn_browse"
         app:layout_constraintEnd_toEndOf="parent"
@@ -86,12 +83,12 @@
     <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="224dp"
+        android:layout_marginStart="21dp"
         android:layout_marginTop="499dp"
         android:layout_marginEnd="84dp"
         app:layout_constraintBottom_toBottomOf="@+id/btn_custom_google"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@id/btn_custom_google"
        >
 
 

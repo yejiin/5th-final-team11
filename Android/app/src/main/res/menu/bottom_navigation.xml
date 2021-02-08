@@ -2,17 +2,21 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/menu_recommend"
+        android:icon="@drawable/ic_menu_star"
         android:title="추천" />
 
     <item
         android:id="@+id/menu_search"
+        android:icon="@drawable/ic_menu_search"
         android:title="검색" />
 
     <item
         android:id="@+id/menu_record"
+        android:icon="@drawable/ic_menu_record"
         android:title="기록" />
 
     <item
         android:id="@+id/menu_stats"
+        android:icon="@drawable/ic_menu_statics"
         android:title="통계" />
 </menu>

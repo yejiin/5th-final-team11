@@ -6,8 +6,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.doubleslas.fifith.alcohol.databinding.ActivityRegisterBinding
-import com.doubleslas.fifith.alcohol.model.network.base.ApiStatus
-import com.doubleslas.fifith.alcohol.viewmodel.RegisterViewModel
+import com.doubleslas.fifith.alcohol.model.base.ApiStatus
 import kotlinx.android.synthetic.main.custom_dialog.*
 
 class RegisterActivity : AppCompatActivity(), CustomDialogInterface {

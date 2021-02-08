@@ -1,22 +1,17 @@
 package com.doubleslas.fifith.alcohol.ui.auth
 
 import android.content.Intent
-import android.graphics.Canvas
-import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.SeekBar
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.graphics.drawable.toDrawable
 import androidx.lifecycle.Observer
-import com.doubleslas.fifith.alcohol.R
+import com.doubleslas.fifith.alcohol.App
 import com.doubleslas.fifith.alcohol.databinding.ActivityRegister2Binding
-import com.doubleslas.fifith.alcohol.databinding.ActivityRegisterBinding
-import com.doubleslas.fifith.alcohol.model.network.base.ApiStatus
-import com.doubleslas.fifith.alcohol.ui.main.MainActivity
-import com.doubleslas.fifith.alcohol.viewmodel.RegisterViewModel
+import com.doubleslas.fifith.alcohol.model.base.ApiStatus
+import com.doubleslas.fifith.alcohol.ui.auth.recommendinfo.RecommendInfoActivity
 
 class Register2Activity : AppCompatActivity(), SeekBar.OnSeekBarChangeListener {
     private val registerViewModel by lazy { RegisterViewModel() }
@@ -27,8 +22,11 @@ class Register2Activity : AppCompatActivity(), SeekBar.OnSeekBarChangeListener {
         activityRegister2Binding = ActivityRegister2Binding.inflate(layoutInflater)
         setContentView(activityRegister2Binding.root)
         val intent = intent
-        activityRegister2Binding.sbDrinkingCapacity.setOnSeekBarChangeListener(this)
+        activityRegister2Binding.seekbarDrinkCapacity.seekBar.setOnSeekBarChangeListener(this)
         activityRegister2Binding.btnEndRegister2.isEnabled = false
+
+        activityRegister2Binding.seekbarDrinkCapacity.tvLabel1.text = "없음"
+        activityRegister2Binding.seekbarDrinkCapacity.tvLabel2.text = "심함"
 
 
         val nickname = intent.getStringExtra("nickname").toString()
@@ -84,8 +82,8 @@ class Register2Activity : AppCompatActivity(), SeekBar.OnSeekBarChangeListener {
                     is ApiStatus.Loading -> {
                     }
                     is ApiStatus.Success -> {
-                        it.data
-                        val intent = Intent(this, MainActivity::class.java)
+                        App.prefs.registerUserInfo = true
+                        val intent = Intent(this, RecommendInfoActivity::class.java)
                         startActivity(intent)
                         finish()
                     }

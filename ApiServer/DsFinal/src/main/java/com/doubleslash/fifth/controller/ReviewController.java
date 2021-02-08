@@ -46,7 +46,7 @@ public class ReviewController {
 	@Autowired
 	ReviewService reviewService;
 	
-	@ApiOperation(value = "리뷰 리스트 조회", notes="특정 리뷰 댓글 페이징 필요시 commentRid, commentPage 파라미터 전달, 파라미터 입력 안했을 시 리뷰 당 댓글 데이터 20개 제공\n"
+	@ApiOperation(value = "리뷰 조회", notes="리뷰 당 최신 댓글 데이터 3개 제공\n"
 			+ "로그인 안했을 시 loveClick 전부 false")
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "aid", required = true, dataType = "int", paramType = "query", example = "1", value = "알코올 id"),
@@ -72,10 +72,23 @@ public class ReviewController {
 		return reviewService.getReviewList(aid, reviewPage, id, response);
 	}
 	
+	@ApiOperation(value = "댓글 조회")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "rid", required = true, dataType = "int", paramType = "query", example = "1", value = "리뷰 id"),
+		@ApiImplicitParam(name = "commentPage", required = true, dataType = "int", paramType = "query", example = "0", value = "댓글 페이지 번호(페이지당 데이터 20개)"),
+	})
+	@GetMapping(value ="/comment")
+	@ResponseBody
+	public WrapperDTO commentList(@RequestParam("rid") int rid, @RequestParam("commentPage") int commentPage) {
+		
+		return new WrapperDTO(reviewService.getComment(rid, commentPage));
+	}
 	
-	@ApiOperation(value = "리뷰 작성", notes="상세 기록 안 적을 시 \"detail\": null 로 하여 requestBody에 포함")
+	
+	@ApiOperation(value = "리뷰 작성", notes="상세 기록 안 적을 시 \"detail\": null 로 하여 requestBody에 포함, 일일 1회 리뷰 작성 제한")
 	@ApiResponses({
 		@ApiResponse(code = 200, message = "Success"),
+		@ApiResponse(code = 403, message = "Writing Restriction"),
 		@ApiResponse(code = 404, message = "Alcohol Id Error")
 	})
 	@PostMapping(value ="")
@@ -94,12 +107,12 @@ public class ReviewController {
 		@ApiResponse(code = 200, message = "Success"),
 		@ApiResponse(code = 404, message = "Review Id Error")
 	})
-	@PutMapping(value = "/comment/{rid}")
+	@PostMapping(value = "/{rid}/comment")
 	@ResponseBody
 	public WrapperDTO commentWrite(@PathVariable("rid") int rid, @RequestBody ContentDTO content, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String uid = authService.verifyToken(request);
 		int id = userService.getId(uid);
-
+	
 		WrapperDTO dto = reviewService.addComment(id, rid, content, response);
 		return dto;
 	}
@@ -152,7 +165,7 @@ public class ReviewController {
 		
 		if(loveClick.getLoveClick() == true) {
 			dto = reviewService.reviewLove(id, rid, response);
-		}else {
+		}else if(loveClick.getLoveClick() == false) {
 			dto = reviewService.reviewLoveCancle(id, rid, response);
 		}
 

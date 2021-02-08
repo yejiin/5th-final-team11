@@ -2,7 +2,10 @@ package com.doubleslash.fifth.service;
 
 import java.io.IOException;
 import java.sql.SQLIntegrityConstraintViolationException;
+import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -62,11 +65,9 @@ public class ReviewService {
 	AlcoholRepository alcoholRepository;
 
 	// 리뷰 조회
-	public Map<String, Object> getReviewList(int aid, int reviewPage, int id, HttpServletResponse response)
-			throws IOException {
+	public Map<String, Object> getReviewList(int aid, int reviewPage, int id, HttpServletResponse response) throws IOException {
 
-		Page<ReviewDTO> reviewDto = reviewRepository.findByAid(aid,
-				PageRequest.of(reviewPage, 20, Sort.Direction.ASC, "rid"));
+		Page<ReviewDTO> reviewDto = reviewRepository.findByAid(aid, id, PageRequest.of(reviewPage, 20, Sort.Direction.ASC, "rid"));
 
 		for (int i = 0; i < reviewDto.getContent().size(); i++) {
 			int rid = reviewDto.getContent().get(i).getRid();
@@ -84,7 +85,7 @@ public class ReviewService {
 			reviewDto.getContent().get(i).setDetail(detailDto);
 
 			// 해당 리뷰 댓글 (최신순 3개)
-			List<CommentDTO> commentDto = commentRepository.findByRid(rid, PageRequest.of(0, 3));
+			List<CommentDTO> commentDto = commentRepository.findByRid(rid, PageRequest.of(0, 3, Sort.Direction.DESC, "cid"));
 			reviewDto.getContent().get(i).setComments(commentDto);
 
 		}
@@ -94,6 +95,15 @@ public class ReviewService {
 		res.put("totalCnt", reviewDto.getTotalElements());
 
 		return res;
+	}
+	
+	// 댓글 조회
+	public List<CommentDTO> getComment(int rid, int commentPage) {
+		
+		// 오름차순
+		List<CommentDTO> commentDto = commentRepository.findByRid(rid, PageRequest.of(commentPage, 20,  Sort.Direction.ASC, "cid"));
+
+		return commentDto;
 	}
 
 	// 리뷰 작성
@@ -108,7 +118,20 @@ public class ReviewService {
 			response.sendError(404, "Alcohol Id Error");
 			return null;
 		}
+		
+		// 날짜 확인 후 리뷰 중복 조회
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Date date = new Date();
+		String dateToStr = dateFormat.format(date);
+		
+		ReviewVO chk = reviewRepository.findById(id, dateToStr);
 
+		System.out.println("CHK : " + chk);
+		if(chk != null) {
+			response.sendError(403, "Writing Restriction");
+			return null;
+		}
+		
 		reviewVo.setId(id);
 		reviewVo.setAid(aid);
 		reviewVo.setStar(reveiwWriteDto.getStar());
@@ -195,10 +218,6 @@ public class ReviewService {
 
 	// 리뷰 좋아요
 	public WrapperDTO reviewLove(int id, int rid, HttpServletResponse response) throws SQLIntegrityConstraintViolationException, IOException{
-		if (reviewChk(rid) == 0) {
-			response.sendError(404, "Review Id Error");
-			return null;
-		}
 
 		if(reviewLoveRepository.insert(id, rid)==1) {
 			reviewRepository.updateLove(rid);
@@ -210,14 +229,7 @@ public class ReviewService {
 
 	// 리뷰 좋아요 취소
 	public WrapperDTO reviewLoveCancle(int id, int rid, HttpServletResponse response) throws IOException {
-		if (reviewChk(rid) == 0) {
-			response.sendError(404, "Review Id Error");
-			return null;
-		}
-
-		ReviewLoveVO loveVo = new ReviewLoveVO();
-		loveVo.setId(id);
-		loveVo.setRid(rid);
+		
 		if(reviewLoveRepository.delete(id, rid)==1) {
 			reviewRepository.updateLoveCancle(rid);
 		}

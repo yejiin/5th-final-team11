@@ -3,93 +3,160 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.auth.RegisterActivity"
-    android:background="#000000">
+    android:layout_height="match_parent">
 
 
-    <View
-        android:layout_width="288dp"
-        android:layout_height="1dp"
-        android:background="#707070"
-        app:layout_constraintTop_toBottomOf="@id/cb_admit_all"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="6dp"/>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="36dp"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp">
 
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="100dp"
-        android:layout_height="29dp"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="102dp"
-        android:layout_marginEnd="241dp"
-        android:layout_marginBottom="628dp"
-        android:text="회원가입"
-        android:textColor="#FFFFFF"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <View
+            android:layout_width="288dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="6dp"
+            android:background="#707070"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cb_admit_all" />
 
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="80dp"
-        android:layout_height="19dp"
-        android:layout_marginStart="17dp"
-        android:layout_marginTop="110dp"
-        android:layout_marginEnd="164dp"
-        android:layout_marginBottom="631dp"
-        android:text="필수 정보"
-        android:textColor="#969696"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView5"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="102dp"
+            android:layout_marginBottom="628dp"
+            android:text="회원가입"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/tv_nickname"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="54dp"
-        android:text="닉네임"
-        android:layout_marginStart="5dp"
-        android:textColor="#FFFFFF"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@id/et_nickname"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="110dp"
+            android:layout_marginBottom="631dp"
+            android:text="필수 정보"
+            android:textColor="#969696"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textView5"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/et_nickname"
-        android:layout_width="288dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="509dp"
-        android:backgroundTint="#707070"
-        android:hint="10자 이하"
-        android:textColor="#FFFFFF"
-        android:textColorHint="#969696"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.43"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_nickname" />
+        <TextView
+            android:id="@+id/tv_nickname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="54dp"
+            android:layout_marginBottom="10dp"
+            android:text="닉네임"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/et_nickname"
+            app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
-    <Button
-        android:id="@+id/btn_validate"
-        android:layout_width="76dp"
-        android:layout_height="27dp"
-        android:textColor="#FFFFFF"
-        android:textSize="14sp"
-        android:text="중복 확인"
-        android:background="@drawable/button_validate"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBaseline_toBaselineOf="@+id/et_nickname"
-        />
+        <EditText
+            android:id="@+id/et_nickname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#707070"
+            android:hint="10자 이하"
+            android:maxLines="1"
+            android:textSize="16sp"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#969696"
+            app:layout_constraintTop_toBottomOf="@+id/tv_nickname" />
 
+
+        <TextView
+            android:id="@+id/btn_validate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_validate"
+            android:paddingHorizontal="11dp"
+            android:paddingVertical="4dp"
+            android:text="중복 확인"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp"
+            app:layout_constraintTop_toTopOf="@+id/et_nickname"
+            app:layout_constraintEnd_toEndOf="@+id/et_nickname" />
+
+
+        <CheckBox
+            android:id="@+id/cb_admit_all"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:buttonTint="#FFFFFF"
+            android:text="전체 약관 동의"
+            android:textColor="#FFFFFF"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="@id/et_nickname"
+            app:layout_constraintTop_toBottomOf="@id/et_nickname" />
+
+
+        <CheckBox
+            android:id="@+id/cb_essential_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="66dp"
+            android:buttonTint="#FFFFFF"
+            android:text="필수    만 14세 이상 동의"
+            android:textColor="#FFFFFF"
+            android:textSize="12sp"
+            android:visibility="visible"
+            app:layout_constraintStart_toStartOf="@id/et_nickname"
+            app:layout_constraintTop_toBottomOf="@id/et_nickname" />
+
+
+        <CheckBox
+            android:id="@+id/cb_essential_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="91dp"
+            android:buttonTint="#FFFFFF"
+            android:text="필수    서비스 이용약관 동의"
+            android:textColor="#FFFFFF"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="@id/et_nickname"
+            app:layout_constraintTop_toBottomOf="@id/et_nickname" />
+
+
+        <CheckBox
+            android:id="@+id/cb_essential_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="116dp"
+            android:buttonTint="#FFFFFF"
+            android:text="필수    개인정보 취급방식 동의"
+            android:textColor="#FFFFFF"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="@id/et_nickname"
+            app:layout_constraintTop_toBottomOf="@id/et_nickname" />
+
+
+        <CheckBox
+            android:id="@+id/cb_choice_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="141dp"
+            android:buttonTint="#FFFFFF"
+            android:text="선택    마케팅 정보 수신 동의"
+            android:textColor="#FFFFFF"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="@id/et_nickname"
+            app:layout_constraintTop_toBottomOf="@id/et_nickname" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button
         android:id="@+id/btn_end_register1"
@@ -102,74 +169,4 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
-    <CheckBox
-        android:id="@+id/cb_admit_all"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:buttonTint="#FFFFFF"
-        android:text="전체 약관 동의"
-        android:textColor="#FFFFFF"
-        android:textSize="12sp"
-        app:layout_constraintStart_toStartOf="@id/et_nickname"
-        app:layout_constraintTop_toBottomOf="@id/et_nickname"
-  />
-
-
-    <CheckBox
-        android:id="@+id/cb_essential_1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="66dp"
-        android:buttonTint="#FFFFFF"
-        android:text="필수    만 14세 이상 동의"
-        android:textColor="#FFFFFF"
-        android:textSize="12sp"
-        android:visibility="visible"
-        app:layout_constraintStart_toStartOf="@id/et_nickname"
-        app:layout_constraintTop_toBottomOf="@id/et_nickname"
-        />
-
-
-    <CheckBox
-        android:id="@+id/cb_essential_2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="91dp"
-        android:buttonTint="#FFFFFF"
-        android:text="필수    서비스 이용약관 동의"
-        android:textColor="#FFFFFF"
-        android:textSize="12sp"
-        app:layout_constraintStart_toStartOf="@id/et_nickname"
-        app:layout_constraintTop_toBottomOf="@id/et_nickname"/>
-
-
-    <CheckBox
-        android:id="@+id/cb_essential_3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="116dp"
-        android:buttonTint="#FFFFFF"
-        android:text="필수    개인정보 취급방식 동의"
-        android:textColor="#FFFFFF"
-        android:textSize="12sp"
-        app:layout_constraintStart_toStartOf="@id/et_nickname"
-        app:layout_constraintTop_toBottomOf="@id/et_nickname"
-     />
-
-
-    <CheckBox
-        android:id="@+id/cb_choice_1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="141dp"
-        android:buttonTint="#FFFFFF"
-        android:text="선택    마케팅 정보 수신 동의"
-        android:textColor="#FFFFFF"
-        android:textSize="12sp"
-        app:layout_constraintStart_toStartOf="@id/et_nickname"
-        app:layout_constraintTop_toBottomOf="@id/et_nickname"/>
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

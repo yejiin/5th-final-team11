@@ -1,75 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingHorizontal="20dp">
 
-    <ImageView
-        android:id="@+id/iv_alcohol"
-        android:layout_width="83dp"
-        android:layout_height="83dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/tv_name"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="6dp"
-        android:textColor="#ffffff"
-        android:textSize="18sp"
-        app:layout_constraintLeft_toRightOf="@id/iv_alcohol"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="술수룻ㄹ" />
+        android:paddingVertical="23dp">
+        
+        <ImageView
+            android:id="@+id/iv_alcohol"
+            android:layout_width="83dp"
+            android:layout_height="83dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_star_gray"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/tv_type"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:textColor="#a5a5a5"
-        android:textSize="14sp"
-        app:layout_constraintLeft_toLeftOf="@id/tv_name"
-        app:layout_constraintTop_toBottomOf="@id/tv_name"
-        app:layout_goneMarginTop="12dp"
-        tools:text="종류라고" />
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="6dp"
+            android:textColor="#ffffff"
+            android:textSize="18sp"
+            app:layout_constraintLeft_toRightOf="@id/iv_alcohol"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="술수룻ㄹ" />
 
-    <androidx.appcompat.widget.AppCompatRatingBar
-        android:id="@+id/rating"
-        style="@style/RatingBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:isIndicator="true"
-        android:max="10"
-        android:numStars="5"
-        android:stepSize="0.1"
-        app:layout_constraintLeft_toLeftOf="@id/tv_name"
-        app:layout_constraintTop_toBottomOf="@id/tv_type" />
+        <TextView
+            android:id="@+id/tv_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:textColor="#a5a5a5"
+            android:textSize="14sp"
+            app:layout_constraintLeft_toLeftOf="@id/tv_name"
+            app:layout_constraintTop_toBottomOf="@id/tv_name"
+            app:layout_goneMarginTop="12dp"
+            tools:text="종류라고" />
 
-    <TextView
-        android:id="@+id/tv_rating"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="@id/rating"
-        app:layout_constraintLeft_toRightOf="@+id/rating"
-        app:layout_constraintTop_toTopOf="@id/rating"
-        tools:text="4.5" />
+        <androidx.appcompat.widget.AppCompatRatingBar
+            android:id="@+id/rating"
+            style="@style/RatingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:isIndicator="true"
+            android:max="10"
+            android:numStars="5"
+            android:stepSize="0.1"
+            app:layout_constraintLeft_toLeftOf="@id/tv_name"
+            app:layout_constraintBottom_toBottomOf="@id/iv_alcohol" />
+
+        <TextView
+            android:id="@+id/tv_rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="@id/rating"
+            app:layout_constraintLeft_toRightOf="@+id/rating"
+            app:layout_constraintTop_toTopOf="@id/rating"
+            tools:text="4.5" />
 
 
-    <TextView
-        android:id="@+id/tv_reviewCnt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:textColor="#707070"
-        app:layout_constraintBottom_toBottomOf="@id/rating"
-        app:layout_constraintLeft_toRightOf="@+id/tv_rating"
-        app:layout_constraintTop_toTopOf="@id/rating"
-        tools:text="(5)" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/tv_reviewCnt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:textColor="#707070"
+            app:layout_constraintBottom_toBottomOf="@id/rating"
+            app:layout_constraintLeft_toRightOf="@+id/tv_rating"
+            app:layout_constraintTop_toTopOf="@id/rating"
+            tools:text="(5)" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@drawable/divider" />
+</LinearLayout>

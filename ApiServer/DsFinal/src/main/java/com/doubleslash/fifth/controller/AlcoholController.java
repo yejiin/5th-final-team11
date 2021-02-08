@@ -11,9 +11,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.doubleslash.fifth.dto.LoveClickDTO;
+import com.doubleslash.fifth.dto.WrapperDTO;
 import com.doubleslash.fifth.service.AlcoholService;
 import com.doubleslash.fifth.service.AuthService;
 import com.doubleslash.fifth.service.UserService;
@@ -78,5 +82,28 @@ public class AlcoholController {
 		}
 		
 		return result;
+	}
+	
+	@ApiOperation(value = "주류 찜하기", notes = "true : 찜하기, false : 찜하기 취소")
+	@ApiResponses({
+		@ApiResponse(code = 200, message = "Success"),
+		@ApiResponse(code = 404, message = "Alcohol Id Error")
+	})
+	@PutMapping(value = "/{aid}/love")
+	@ResponseBody
+	public WrapperDTO alcoholLove(@PathVariable int aid, @RequestBody LoveClickDTO loveClick, HttpServletRequest request) throws Exception {
+		String uid = authService.verifyToken(request);
+		int id = userService.getId(uid);
+
+		WrapperDTO dto = new WrapperDTO();
+		
+		if(loveClick.getLoveClick() == true) {
+			dto = alcoholService.alcoholLove(id, aid);
+		} else if(loveClick.getLoveClick() == false) {
+			dto = alcoholService.alcoholLoveCancle(id, aid);
+		}
+		
+		return dto;
+
 	}
 }
