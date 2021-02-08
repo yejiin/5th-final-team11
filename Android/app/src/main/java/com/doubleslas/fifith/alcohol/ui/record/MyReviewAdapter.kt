@@ -1,4 +1,4 @@
-package com.doubleslas.fifith.alcohol.ui.collection
+package com.doubleslas.fifith.alcohol.ui.record
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
