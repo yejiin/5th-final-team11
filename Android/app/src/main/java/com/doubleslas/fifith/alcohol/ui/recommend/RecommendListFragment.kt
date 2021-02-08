@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.doubleslas.fifith.alcohol.databinding.RecyclerviewBinding
 import com.doubleslas.fifith.alcohol.model.base.ApiStatus
+import com.doubleslas.fifith.alcohol.ui.common.LoadingRecyclerViewAdapter
 import com.doubleslas.fifith.alcohol.ui.common.base.BaseFragment
 
 class RecommendListFragment private constructor() : BaseFragment<RecyclerviewBinding>() {
@@ -17,7 +18,9 @@ class RecommendListFragment private constructor() : BaseFragment<RecyclerviewBin
         ViewModelProvider(this, RecommendViewModel.Factory(category))
             .get(RecommendViewModel::class.java)
     }
-    private val adapter by lazy { RecommendAlcoholListAdapter() }
+    private val adapter by lazy {
+        RecommendAlcoholListAdapter()
+    }
 
     override fun createViewBinding(
         inflater: LayoutInflater,

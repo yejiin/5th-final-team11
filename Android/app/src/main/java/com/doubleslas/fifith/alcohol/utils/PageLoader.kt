@@ -1,10 +1,10 @@
 package com.doubleslas.fifith.alcohol.utils
 
+import com.doubleslas.fifith.alcohol.dto.interfaces.IPageLoadData
 import com.doubleslas.fifith.alcohol.model.base.ApiLiveData
 import com.doubleslas.fifith.alcohol.model.base.ApiStatus
 import com.doubleslas.fifith.alcohol.model.base.MediatorApiCallback
 import com.doubleslas.fifith.alcohol.model.base.MediatorApiLiveData
-import com.doubleslas.fifith.alcohol.dto.interfaces.IPageLoadData
 
 class PageLoader<T> {
     private val list = ArrayList<T>()
@@ -18,9 +18,13 @@ class PageLoader<T> {
         return totalCount == null
     }
 
+    fun isFinish(): Boolean {
+        return totalCount != null && list.size >= totalCount!!
+    }
+
     fun canLoadList(): Boolean {
         if (mediatorLiveData.value is ApiStatus.Loading) return false
-        if (totalCount != null && list.size >= totalCount!!) return false
+        if (isFinish()) return false
 
         return true
     }
