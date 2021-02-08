@@ -11,6 +11,7 @@ import com.doubleslas.fifith.alcohol.databinding.RecyclerviewBinding
 import com.doubleslas.fifith.alcohol.model.base.ApiStatus
 import com.doubleslas.fifith.alcohol.ui.common.LoadingRecyclerViewAdapter
 import com.doubleslas.fifith.alcohol.ui.common.base.BaseFragment
+import com.doubleslas.fifith.alcohol.utils.IPageLoaderViewModel
 
 class SearchListFragment private constructor() : BaseFragment<RecyclerviewBinding>() {
     private val category by lazy { arguments?.getString(ARGUMENT_CATEGORY) ?: "전체" }
