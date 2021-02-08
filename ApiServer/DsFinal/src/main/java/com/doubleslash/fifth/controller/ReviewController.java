@@ -107,7 +107,7 @@ public class ReviewController {
 		@ApiResponse(code = 200, message = "Success"),
 		@ApiResponse(code = 404, message = "Review Id Error")
 	})
-	@PutMapping(value = "/comment/{rid}")
+	@PostMapping(value = "/{rid}/comment")
 	@ResponseBody
 	public WrapperDTO commentWrite(@PathVariable("rid") int rid, @RequestBody ContentDTO content, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String uid = authService.verifyToken(request);
