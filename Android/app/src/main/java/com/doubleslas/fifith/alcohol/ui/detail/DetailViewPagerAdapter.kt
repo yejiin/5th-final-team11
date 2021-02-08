@@ -14,10 +14,7 @@ class DetailViewPagerAdapter(fragment: FragmentActivity) : FragmentStateAdapter(
     }
 
     override fun createFragment(position: Int): Fragment {
-        return when(position){
-            0 -> DetailInfoFragment()
-            1 -> DetailReviewFragment()
-            else -> DetailReviewFragment()
-        }
+        val fragment = fragmentList[position]
+        return fragment
     }
 }

@@ -65,4 +65,9 @@ class AlcoholDetailActivity : AppCompatActivity() {
         }
     }
 
+
+     fun refresh() {
+        viewPagerAdapter.notifyDataSetChanged()
+    }
+
 }

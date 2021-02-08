@@ -6,20 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.doubleslas.fifith.alcohol.R
-import com.doubleslas.fifith.alcohol.databinding.FragmentDetailInfoBinding
 import com.doubleslas.fifith.alcohol.databinding.FragmentDetailReviewBinding
 import com.doubleslas.fifith.alcohol.model.network.base.ApiStatus
 import com.doubleslas.fifith.alcohol.ui.reivew.ReviewBottomSheetDialog
-import com.doubleslas.fifith.alcohol.viewmodel.DetailViewModel
 import com.doubleslas.fifith.alcohol.viewmodel.ReviewViewModel
 
 class DetailReviewFragment : Fragment() {
-    private var _binding: FragmentDetailReviewBinding? = null
-    private val binding: FragmentDetailReviewBinding get() = _binding!!
-    private var reviewViewModel: ReviewViewModel? = null
+    private lateinit var binding: FragmentDetailReviewBinding
+    private val reviewViewModel by lazy { ReviewViewModel() }
     private val adapter by lazy { DetailReviewAdapter() }
 
 
@@ -27,7 +22,8 @@ class DetailReviewFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentDetailReviewBinding.inflate(inflater, container, false)
+
+        binding = FragmentDetailReviewBinding.inflate(inflater, container, false)
 
         binding.rvDetailReview.adapter = adapter
 
@@ -39,7 +35,7 @@ class DetailReviewFragment : Fragment() {
         binding.rvDetailReview.addItemDecoration(DetailReviewDecoration(5))
 
 
-        reviewViewModel?.readReview(6, 0)?.observe(this, Observer {
+        reviewViewModel?.readReview(148, 0)?.observe(this, Observer {
             when (it) {
                 is ApiStatus.Loading -> {
 
@@ -56,10 +52,10 @@ class DetailReviewFragment : Fragment() {
 
         binding.btnWriteReview.setOnClickListener {
             val bottomSheet =
-                ReviewBottomSheetDialog.create(6)
+                ReviewBottomSheetDialog.create(148)
 
             bottomSheet.onListener {
-                reviewViewModel?.readReview(6, 0)?.observe(this, Observer {
+                reviewViewModel?.readReview(148, 0)?.observe(this, Observer {
                     when (it) {
                         is ApiStatus.Loading -> {
 
@@ -76,27 +72,22 @@ class DetailReviewFragment : Fragment() {
             }
 
             // 다음 작업에
-//            bottomSheet.show(supportFragmentManager, bottomSheet.tag)
+            bottomSheet.show(childFragmentManager, bottomSheet.tag)
         }
 
         return binding.root
     }
 
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
     override fun onResume() {
         super.onResume()
+
+        val alcoholDetailActivity: AlcoholDetailActivity = AlcoholDetailActivity()
         adapter.notifyDataSetChanged()
 
+        alcoholDetailActivity.refresh()
+
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        reviewViewModel =  ViewModelProvider(AlcoholDetailActivity()).get(ReviewViewModel::class.java)
-    }
 }
 

@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.doubleslas.fifith.alcohol.R
 import com.doubleslas.fifith.alcohol.databinding.FragmentDetailInfoBinding
@@ -19,18 +18,31 @@ import com.google.android.material.chip.Chip
 
 
 class DetailInfoFragment : Fragment() {
-    private var _binding: FragmentDetailInfoBinding? = null
-    private val binding: FragmentDetailInfoBinding get() = _binding!!
-    private var detailViewModel : DetailViewModel? = null
+    private lateinit var binding: FragmentDetailInfoBinding
+    private val detailViewModel by lazy { DetailViewModel() }
 //    private val alcoholId by lazy { intent.getIntExtra(EXTRA_ALCOHOL_ID, 0) }
-
 
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentDetailInfoBinding.inflate(inflater, container, false)
+        binding = FragmentDetailInfoBinding.inflate(inflater, container, false)
+
+        return binding.root
+    }
+
+
+//    override fun onAttach(context: Context) {
+//        super.onAttach(context)
+//        mContext = context
+//
+//    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+//        val chip = Chip(activity?.applicationContext)
 
         binding.rvAlcoholSimilar.adapter = SimilarAdapter(AlcoholDetailActivity())
 
@@ -41,7 +53,7 @@ class DetailInfoFragment : Fragment() {
 
         binding.rvAlcoholSimilar.addItemDecoration(DetailItemDecoration(5))
 
-        detailViewModel?.getDetail(6)?.observe(this, Observer {
+        detailViewModel.getDetail(148).observe(this, Observer {
             when (it) {
                 is ApiStatus.Loading -> {
 
@@ -53,25 +65,27 @@ class DetailInfoFragment : Fragment() {
                         it.data.ml.toString() + " ml" + " / " + it.data.abv.toString() + " %"
 
                     binding.tvDescription.text = it.data.description
-
-                    for (index in it.data.kind.indices) {
-                        val chip = Chip(binding.chipGroup.context)
-                        chip.background = ContextCompat.getDrawable(
-                            AlcoholDetailActivity(),
-                            R.drawable.detail_button_active_background
-                        )
-                        chip.setTextColor(Color.parseColor("#FFFFFF"))
-                        chip.text = it.data.kind[index]
-                        chip.isClickable = false
-                        chip.isCheckable = false
-                        chip.chipBackgroundColor = ColorStateList.valueOf(
-                            ContextCompat.getColor(
-                                AlcoholDetailActivity(),
-                                R.color.chipColor
-                            )
-                        )
-                        binding.chipGroup.addView(chip)
-                    }
+//                    for (index in it.data.kind.indices) {
+//
+////                        chip.background = ContextCompat.getDrawable(
+////                            activity!!,
+////                            R.drawable.detail_button_active_background
+////
+////                        )
+//                        chip.setTextColor(Color.parseColor("#FFFFFF"))
+//                        chip.text = it.data.kind[index]
+//                        chip.isClickable = false
+//                        chip.isCheckable = false
+////                        chip.chipBackgroundColor = ColorStateList.valueOf(
+////                            ContextCompat.getColor(
+////                                activity!!,
+////                                R.color.chipColor
+////                            )
+////                        )
+//                        binding.chipGroup.addView(chip)
+//
+//
+//                    }
 
 
                     // 와인 파트
@@ -107,20 +121,20 @@ class DetailInfoFragment : Fragment() {
                         binding.tvNation.visibility = View.VISIBLE
                         binding.tvNationInfo.visibility = View.VISIBLE
                         binding.tvNationInfo.text = it.data.areas.toString()
-                        for (index in it.data.areas.indices) {
-                            val chip = Chip(binding.chipGroupAreas.context)
-                            chip.setTextColor(Color.parseColor("#FFFFFF"))
-                            chip.text = it.data.areas[index]
-                            chip.isClickable = false
-                            chip.isCheckable = false
-                            chip.chipBackgroundColor = ColorStateList.valueOf(
-                                ContextCompat.getColor(
-                                    AlcoholDetailActivity(),
-                                    R.color.chipColor
-                                )
-                            )
-                            binding.chipGroupAreas.addView(chip)
-                        }
+//                        for (index in it.data.areas.indices) {
+//                            val chip = Chip(binding.chipGroupAreas.context)
+//                            chip.setTextColor(Color.parseColor("#FFFFFF"))
+//                            chip.text = it.data.areas[index]
+//                            chip.isClickable = false
+//                            chip.isCheckable = false
+//                            chip.chipBackgroundColor = ColorStateList.valueOf(
+//                                ContextCompat.getColor(
+//                                    AlcoholDetailActivity(),
+//                                    R.color.chipColor
+//                                )
+//                            )
+//                            binding.chipGroupAreas.addView(chip)
+//                        }
                     } else {
                         binding.tvNation.visibility = View.GONE
                         binding.tvNationInfo.visibility = View.GONE
@@ -150,22 +164,12 @@ class DetailInfoFragment : Fragment() {
                 }
             }
         })
-        return binding.root
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
+    override fun onResume() {
+        super.onResume()
+        val alcoholDetailActivity: AlcoholDetailActivity = AlcoholDetailActivity()
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        detailViewModel = ViewModelProvider(AlcoholDetailActivity()).get(DetailViewModel::class.java)
-
+        alcoholDetailActivity.refresh()
     }
 }
