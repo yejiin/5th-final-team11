@@ -12,5 +12,6 @@ import com.doubleslash.fifth.vo.DetailReviewVO;
 public interface DetailReviewRepository extends JpaRepository<DetailReviewVO, Integer> {
 	
 	@Query(value = "select new com.doubleslash.fifth.dto.DetailReviewDTO(d.date, d.place, d.drink, d.hangover, d.price) from ReviewVO as r, DetailReviewVO as d where r.rid=d.rid and d.privacy=0 and r.rid=?1")
-	public DetailReviewDTO fineByRid(int rid);
+	public DetailReviewDTO findByRid(int rid);
+
 }

@@ -12,8 +12,6 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
-import com.doubleslash.fifth.interceptor.AuthInterceptor;
-
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -25,6 +23,8 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
+import com.doubleslash.fifth.interceptor.AuthInterceptor;
 
 @Configuration
 @EnableSwagger2
@@ -82,6 +82,7 @@ public class SwaggerConfig extends WebMvcConfigurationSupport{
     	String paths[] = {
                 "/user/register",
                 "/user/savepoint",
+                "/review/*",
                 "/review/*/*",
                 "/review/*/*/*",
                 "/review",
@@ -120,6 +121,7 @@ public class SwaggerConfig extends WebMvcConfigurationSupport{
 		String[] includePathList = {
 				"/user/register",
                 "/user/savepoint",
+                "/review/*",
                 "/review/*/*",
                 "/review/*/*/*",
                 "/review",
