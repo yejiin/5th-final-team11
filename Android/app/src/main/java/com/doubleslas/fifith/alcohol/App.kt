@@ -2,6 +2,7 @@ package com.doubleslas.fifith.alcohol
 
 import android.app.Application
 import android.content.Context
+import android.content.res.Resources
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
@@ -52,6 +53,10 @@ class App : Application() {
 
         fun isLogin(): Boolean {
             return prefs.idToken.isNotEmpty()
+        }
+
+        fun getResources(): Resources {
+            return app.resources
         }
 
     }

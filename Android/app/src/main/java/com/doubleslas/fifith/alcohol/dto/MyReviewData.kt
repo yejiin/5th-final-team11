@@ -9,5 +9,6 @@ data class MyReviewData(
     val star: Float,
     val thumbnail: String,
     val content: String,
-    val detail: ReviewDetailData
+    val detail: ReviewDetailData?,
+    var visibleReview: Boolean = false
 )

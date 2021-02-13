@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="20dp"
+    android:layout_marginVertical="10dp"
     app:cardBackgroundColor="#202425"
     app:cardCornerRadius="10dp">
 
@@ -94,7 +95,8 @@
             android:layout_marginTop="20dp"
             android:background="#707070" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
+            android:id="@+id/layout_review"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="14dp"
@@ -109,118 +111,221 @@
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="@string/lorem_ipsum" />
 
-            <TextView
-                android:id="@+id/tv_date_label"
-                style="@style/MyReviewText.Label"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/layout_detail"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/all_date"
-                android:layout_marginTop="26.5dp"
-                app:layout_constraintTop_toBottomOf="@id/tv_review"
-                app:layout_constraintLeft_toLeftOf="parent"/>
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tv_date"
-                style="@style/MyReviewText.Content"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="2020.06.20"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="@id/tv_date_label"
-                app:layout_constraintLeft_toRightOf="@id/tv_date_label"/>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layout_date"
+                    style="@style/MyReviewDetailLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/tv_location_label"
-                style="@style/MyReviewText.Label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/all_location"
-                android:layout_marginTop="20dp"
-                app:layout_constraintTop_toBottomOf="@id/tv_date_label"
-                app:layout_constraintLeft_toLeftOf="parent"/>
+                    <TextView
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:id="@+id/tv_date_label"
+                        style="@style/MyReviewText.Label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/all_date" />
 
-            <TextView
-                android:id="@+id/tv_location"
-                style="@style/MyReviewText.Content"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="아늑한 우리집"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="@id/tv_location_label"
-                app:layout_constraintLeft_toRightOf="@id/tv_location_label"/>
+                    <TextView
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/tv_date_label"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginStart="20dp"
+                        android:gravity="center"
+                        android:id="@+id/tv_date"
+                        style="@style/MyReviewText.Content"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        tools:text="2020.06.20" />
 
-            <TextView
-                android:id="@+id/tv_capacity_label"
-                style="@style/MyReviewText.Label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/all_drink_capacity"
-                android:layout_marginTop="20dp"
-                app:layout_constraintTop_toBottomOf="@id/tv_location_label"
-                app:layout_constraintLeft_toLeftOf="parent"/>
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="3dp"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_date"
+                        android:background="#707070"
+                        app:layout_constraintStart_toStartOf="@+id/tv_date"
+                        app:layout_constraintEnd_toEndOf="@+id/tv_date"
+                        />
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <TextView
-                android:id="@+id/tv_capacity"
-                style="@style/MyReviewText.Content"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="3"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="@id/tv_capacity_label"
-                app:layout_constraintLeft_toRightOf="@id/tv_capacity_label"/>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layout_place"
+                    style="@style/MyReviewDetailLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:id="@+id/tv_place_label"
+                        style="@style/MyReviewText.Label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/all_place" />
+
+                    <TextView
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/tv_place_label"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginStart="20dp"
+                        android:gravity="center"
+                        android:id="@+id/tv_place"
+                        style="@style/MyReviewText.Content"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        tools:text="아늑한 우리집" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="3dp"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_place"
+                        android:background="#707070"
+                        app:layout_constraintStart_toStartOf="@+id/tv_place"
+                        app:layout_constraintEnd_toEndOf="@+id/tv_place"
+                        />
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-            <TextView
-                android:id="@+id/tv_hangover_label"
-                style="@style/MyReviewText.Label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/all_hangover"
-                android:layout_marginTop="20dp"
-                app:layout_constraintTop_toBottomOf="@id/tv_capacity_label"
-                app:layout_constraintLeft_toLeftOf="parent"/>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layout_drink"
+                    style="@style/MyReviewDetailLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
-            <androidx.appcompat.widget.AppCompatSeekBar
-                
-                android:id="@+id/tv_hangover"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:max="5"
-                app:layout_constraintRight_toRightOf="parent"
+                    <TextView
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:id="@+id/tv_drink_label"
+                        style="@style/MyReviewText.Label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/all_drink_capacity" />
 
-                app:layout_constraintTop_toTopOf="@id/tv_hangover_label"
-                app:layout_constraintLeft_toRightOf="@id/tv_hangover_label"/>
+                    <TextView
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/tv_drink_label"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginStart="20dp"
+                        android:gravity="center"
+                        android:id="@+id/tv_drink"
+                        style="@style/MyReviewText.Content"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        tools:text="3" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="3dp"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_drink"
+                        android:background="#707070"
+                        app:layout_constraintStart_toStartOf="@+id/tv_drink"
+                        app:layout_constraintEnd_toEndOf="@+id/tv_drink"
+                        />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layout_hangover"
+                    style="@style/MyReviewDetailLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:id="@+id/tv_hangover_label"
+                        style="@style/MyReviewText.Label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/all_hangover" />
+
+                    <include
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/tv_hangover_label"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginStart="20dp"
+                        android:id="@+id/seekBar_hangover"
+                        layout="@layout/view_seekbar"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+
+                    android:id="@+id/layout_price"
+                    style="@style/MyReviewDetailLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:id="@+id/tv_price_label"
+                        style="@style/MyReviewText.Label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/all_price" />
+
+                    <TextView
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/tv_price_label"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginStart="20dp"
+                        android:gravity="center"
+                        android:id="@+id/tv_price"
+                        style="@style/MyReviewText.Content"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        tools:text="57000" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="3dp"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_price"
+                        android:background="#707070"
+                        app:layout_constraintStart_toStartOf="@+id/tv_price"
+                        app:layout_constraintEnd_toEndOf="@+id/tv_price"
+                        />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
 
 
-            <TextView
-                android:id="@+id/tv_price_label"
-                style="@style/MyReviewText.Label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/all_price"
-                android:layout_marginTop="20dp"
-                app:layout_constraintTop_toBottomOf="@id/tv_hangover_label"
-                app:layout_constraintLeft_toLeftOf="parent"/>
-
-            <TextView
-                android:id="@+id/tv_price"
-                style="@style/MyReviewText.Content"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="57000"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="@id/tv_price_label"
-                app:layout_constraintLeft_toRightOf="@id/tv_price_label"/>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
 
         <FrameLayout
+            android:id="@+id/layout_bottom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="14dp"
-            android:paddingBottom="15dp">
+            android:paddingVertical="17dp">
 
             <ImageView
+                android:id="@+id/iv_bottom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"

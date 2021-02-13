@@ -1,14 +1,19 @@
 package com.doubleslas.fifith.alcohol.ui.record
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.doubleslas.fifith.alcohol.App
+import com.doubleslas.fifith.alcohol.R
 import com.doubleslas.fifith.alcohol.databinding.ItemMyReviewBinding
 import com.doubleslas.fifith.alcohol.databinding.ItemSortBinding
 import com.doubleslas.fifith.alcohol.dto.MyReviewData
-import com.doubleslas.fifith.alcohol.dto.MyReviewList
 import com.doubleslas.fifith.alcohol.enum.SearchSortType
-import kotlinx.coroutines.channels.ticker
 
 class MyReviewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var list: List<MyReviewData>? = null
@@ -61,7 +66,24 @@ class MyReviewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     inner class ReviewViewHolder(private val binding: ItemMyReviewBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: MyReviewData) {
+
+        init {
+            binding.layoutBottom.setOnClickListener {
+                val item = getItem(adapterPosition)
+                item.visibleReview = !item.visibleReview
+                setVisibleDetail(item.visibleReview)
+            }
+
+            binding.seekBarHangover.seekBar.isEnabled = false
+            binding.seekBarHangover.tvLabel1.text = App.getString(R.string.hangover_none)
+            binding.seekBarHangover.tvLabel2.text = App.getString(R.string.hangover_heavy)
+        }
+
+        fun bind() {
+            val item = getItem(adapterPosition)
+            Glide.with(binding.ivAlcohol)
+                .load(item.thumbnail)
+                .into(binding.ivAlcohol)
             binding.tvName.text = item.alcoholName
 //            binding.tvType.text = item.alcoholType
             binding.rating.rating = item.star
@@ -69,11 +91,43 @@ class MyReviewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             binding.tvReview.text = item.content
 
 
-//            if (item.detail == null) {
-//
-//            }
-//            binding.tvDate.text = item.detail
-//            binding.tvLocation.text = item.location
+            val detail = item.detail
+            if (detail == null) {
+                binding.layoutDetail.visibility = View.GONE
+            } else {
+                binding.layoutDetail.visibility = View.VISIBLE
+                setDetailText(binding.tvDate, detail.date)
+                setDetailText(binding.tvPlace, detail.place)
+                setDetailText(binding.tvDrink, detail.drink?.toString())
+                setDetailText(binding.tvPrice, detail.price?.toString())
+
+                if (detail.hangover == null) {
+                    binding.layoutHangover.visibility = View.GONE
+                } else {
+                    binding.layoutHangover.visibility = View.VISIBLE
+                    binding.seekBarHangover.seekBar.progress = detail.hangover
+                }
+            }
+
+            setVisibleDetail(item.visibleReview)
+        }
+
+        private fun setDetailText(textView: TextView, text: String?) {
+            if (text == null) {
+                (textView.parent as View).visibility = View.GONE
+            } else {
+                (textView.parent as View).visibility = View.VISIBLE
+                textView.text = text
+            }
+        }
+
+        private fun setVisibleDetail(visible: Boolean) {
+            binding.layoutReview.isVisible = visible
+            if (visible) {
+                binding.ivBottom.rotation = 180f
+            } else {
+                binding.ivBottom.rotation = 0f
+            }
         }
     }
 
