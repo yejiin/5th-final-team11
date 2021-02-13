@@ -6,7 +6,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.doubleslas.fifith.alcohol.databinding.ItemMyReviewBinding
 import com.doubleslas.fifith.alcohol.databinding.ItemSortBinding
 import com.doubleslas.fifith.alcohol.dto.MyReviewData
+import com.doubleslas.fifith.alcohol.dto.MyReviewList
 import com.doubleslas.fifith.alcohol.enum.SearchSortType
+import kotlinx.coroutines.channels.ticker
 
 class MyReviewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var list: List<MyReviewData>? = null
@@ -53,17 +55,25 @@ class MyReviewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         return list!![position - 1]
     }
 
+    fun setData(list: List<MyReviewData>) {
+        this.list = list
+    }
 
     inner class ReviewViewHolder(private val binding: ItemMyReviewBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: MyReviewData) {
             binding.tvName.text = item.alcoholName
-            binding.tvType.text = item.alcoholType
+//            binding.tvType.text = item.alcoholType
             binding.rating.rating = item.star
             binding.tvRating.text = item.star.toString()
-            binding.tvReview.text = item.review
-            binding.tvDate.text = item.date
-            binding.tvLocation.text = item.location
+            binding.tvReview.text = item.content
+
+
+//            if (item.detail == null) {
+//
+//            }
+//            binding.tvDate.text = item.detail
+//            binding.tvLocation.text = item.location
         }
     }
 

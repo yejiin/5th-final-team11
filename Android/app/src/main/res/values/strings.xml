@@ -9,6 +9,7 @@
     <string name="sort_abv">도수순</string>
     <string name="sort_price_desc">가격높은순</string>
     <string name="sort_price_asc">가격낮은순</string>
+    <string name="sort_time">시간순</string>
 
     <string name="sort_recommend">추천순</string>
     <string name="sort_star">평점순</string>

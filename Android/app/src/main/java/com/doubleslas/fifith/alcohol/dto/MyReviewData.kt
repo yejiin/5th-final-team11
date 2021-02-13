@@ -1,11 +1,13 @@
 package com.doubleslas.fifith.alcohol.dto
 
+import com.google.gson.annotations.SerializedName
+
 data class MyReviewData(
-    val alcoholName: String,
-    val alcoholType: String,
+    val rid: Int,
+    val aid: Int,
+    @SerializedName("name") val alcoholName: String,
     val star: Float,
-    val review: String,
-    val date: String,
-    val location: String,
-    val price: String
+    val thumbnail: String,
+    val content: String,
+    val detail: ReviewDetailData
 )

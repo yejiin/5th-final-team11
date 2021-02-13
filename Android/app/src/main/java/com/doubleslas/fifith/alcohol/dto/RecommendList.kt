@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 
 data class RecommendList(
     @SerializedName("response") private val list: List<AlcoholSimpleData>
-): IPageLoadData<AlcoholSimpleData> {
+) : IPageLoadData<AlcoholSimpleData> {
     override fun getTotalCount(): Int {
         return list.size
     }
