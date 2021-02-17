@@ -1,4 +1,4 @@
-package com.doubleslas.fifith.alcohol.ui.record
+package com.doubleslas.fifith.alcohol.ui.record.myreview
 
 import com.doubleslas.fifith.alcohol.dto.MyReviewList
 import com.doubleslas.fifith.alcohol.enum.MyReviewSortType

@@ -1,4 +1,4 @@
-package com.doubleslas.fifith.alcohol.ui.record
+package com.doubleslas.fifith.alcohol.ui.record.myreview
 
 import android.view.LayoutInflater
 import android.view.View
@@ -44,7 +44,7 @@ class MyReviewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             is SortViewHolder -> holder.binding.run {
                 tvSort.text = sortType?.text ?: SearchSortType.Popular.text
             }
-            is ReviewViewHolder -> holder.bind(getItem(position))
+            is ReviewViewHolder -> holder.bind()
         }
     }
 

@@ -1,4 +1,4 @@
-package com.doubleslas.fifith.alcohol.ui.detail
+package com.doubleslas.fifith.alcohol.dto
 
 import android.graphics.drawable.Drawable
 

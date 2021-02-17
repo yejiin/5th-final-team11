@@ -6,8 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.doubleslas.fifith.alcohol.R
 import com.doubleslas.fifith.alcohol.databinding.ActivityMainBinding
 import com.doubleslas.fifith.alcohol.ui.recommend.RecommendFragment
-import com.doubleslas.fifith.alcohol.ui.record.MyReviewFragment
 import com.doubleslas.fifith.alcohol.ui.record.RecordFragment
+import com.doubleslas.fifith.alcohol.ui.record.myreview.MyReviewFragment
 import com.doubleslas.fifith.alcohol.ui.search.SearchFragment
 import com.doubleslas.fifith.alcohol.ui.stats.StatsFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     private lateinit var binding: ActivityMainBinding
     private val recommendFragment by lazy { RecommendFragment() }
     private val searchFragment by lazy { SearchFragment() }
-    private val recordFragment by lazy { MyReviewFragment() }
+    private val recordFragment by lazy { RecordFragment() }
     private val statsFragment by lazy { StatsFragment() }
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -16,6 +16,7 @@
         android:usesCleartextTraffic="true">
 
         <activity android:name=".ui.SplashActivity">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -28,7 +29,9 @@
         <activity android:name=".ui.auth.recommendinfo.RecommendInfoActivity"/>
 
 
-        <activity android:name=".ui.detail.AlcoholDetailActivity" />
+        <activity android:name=".ui.detail.AlcoholDetailActivity" >
+
+        </activity>
 
         <activity android:name=".ui.auth.Register2Activity" />
 

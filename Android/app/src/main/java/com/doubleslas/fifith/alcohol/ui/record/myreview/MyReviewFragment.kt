@@ -1,4 +1,4 @@
-package com.doubleslas.fifith.alcohol.ui.record
+package com.doubleslas.fifith.alcohol.ui.record.myreview
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -37,6 +37,7 @@ class MyReviewFragment : BaseFragment<RecyclerviewBinding>() {
             when (it) {
                 is ApiStatus.Success -> {
                     adapter.setData(it.data)
+                    loadingAdapter.notifyDataSetChanged()
                 }
             }
         })
