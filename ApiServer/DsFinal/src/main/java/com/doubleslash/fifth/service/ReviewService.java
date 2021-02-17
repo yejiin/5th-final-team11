@@ -6,7 +6,6 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.TreeMap;
@@ -65,9 +64,9 @@ public class ReviewService {
 	AlcoholRepository alcoholRepository;
 
 	// 리뷰 조회
-	public Map<String, Object> getReviewList(int aid, int reviewPage, int id, HttpServletResponse response) throws IOException {
+	public Map<String, Object> getReviewList(int aid, int page, int id, HttpServletResponse response) throws IOException {
 
-		Page<ReviewDTO> reviewDto = reviewRepository.findByAid(aid, id, PageRequest.of(reviewPage, 20, Sort.Direction.ASC, "rid"));
+		Page<ReviewDTO> reviewDto = reviewRepository.findByAid(aid, id, PageRequest.of(page, 20, Sort.Direction.ASC, "rid"));
 
 		for (int i = 0; i < reviewDto.getContent().size(); i++) {
 			int rid = reviewDto.getContent().get(i).getRid();
@@ -85,8 +84,8 @@ public class ReviewService {
 			reviewDto.getContent().get(i).setDetail(detailDto);
 
 			// 해당 리뷰 댓글 (최신순 3개)
-			List<CommentDTO> commentDto = commentRepository.findByRid(rid, PageRequest.of(0, 3, Sort.Direction.DESC, "cid"));
-			reviewDto.getContent().get(i).setComments(commentDto);
+			Page<CommentDTO> commentDto = commentRepository.findByRid(rid, PageRequest.of(0, 3, Sort.Direction.DESC, "cid"));
+			reviewDto.getContent().get(i).setComments(commentDto.getContent());
 
 		}
 
@@ -98,12 +97,16 @@ public class ReviewService {
 	}
 	
 	// 댓글 조회
-	public List<CommentDTO> getComment(int rid, int commentPage) {
+	public Map<String, Object> getComment(int rid, int page) {
 		
 		// 오름차순
-		List<CommentDTO> commentDto = commentRepository.findByRid(rid, PageRequest.of(commentPage, 20,  Sort.Direction.ASC, "cid"));
+		Page<CommentDTO> commentDto = commentRepository.findByRid(rid, PageRequest.of(page, 20,  Sort.Direction.ASC, "cid"));
 
-		return commentDto;
+		Map<String, Object> res = new TreeMap<>();
+		res.put("commentList", commentDto.getContent());
+		res.put("totalCnt", commentDto.getTotalElements());
+		
+		return res;
 	}
 
 	// 리뷰 작성
@@ -126,7 +129,6 @@ public class ReviewService {
 		
 		ReviewVO chk = reviewRepository.findById(id, dateToStr);
 
-		System.out.println("CHK : " + chk);
 		if(chk != null) {
 			response.sendError(403, "Writing Restriction");
 			return null;

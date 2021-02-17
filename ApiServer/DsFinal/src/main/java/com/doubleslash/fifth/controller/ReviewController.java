@@ -50,7 +50,7 @@ public class ReviewController {
 			+ "로그인 안했을 시 loveClick 전부 false")
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "aid", required = true, dataType = "int", paramType = "query", example = "1", value = "알코올 id"),
-		@ApiImplicitParam(name = "reviewPage", required = true, dataType = "int", paramType = "query", example = "0", value = "리뷰 페이지 번호(페이지당 데이터 20개)"),
+		@ApiImplicitParam(name = "page", required = true, dataType = "int", paramType = "query", example = "0", value = "페이지 번호(페이지당 데이터 20개)"),
 	})
 		@ApiResponses({
 		@ApiResponse(code = 200, message = "Success"),
@@ -59,7 +59,7 @@ public class ReviewController {
 	@ApiImplicitParam(name = "Authorization", value = "idToken", required = false, paramType = "header")
 	@GetMapping(value = "/list")
 	@ResponseBody
-	public Map<String, Object> reviewList(@RequestParam("aid") int aid, @RequestParam(value="reviewPage") int reviewPage, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public Map<String, Object> reviewList(@RequestParam("aid") int aid, @RequestParam(value="page") int page, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String uid = authService.verifyToken(request);
 		int id;
 		
@@ -69,19 +69,19 @@ public class ReviewController {
 			id = userService.getId(uid);
 		}
 
-		return reviewService.getReviewList(aid, reviewPage, id, response);
+		return reviewService.getReviewList(aid, page, id, response);
 	}
 	
 	@ApiOperation(value = "댓글 조회")
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "rid", required = true, dataType = "int", paramType = "query", example = "1", value = "리뷰 id"),
-		@ApiImplicitParam(name = "commentPage", required = true, dataType = "int", paramType = "query", example = "0", value = "댓글 페이지 번호(페이지당 데이터 20개)"),
+		@ApiImplicitParam(name = "page", required = true, dataType = "int", paramType = "query", example = "0", value = "페이지 번호(페이지당 데이터 20개)"),
 	})
 	@GetMapping(value ="/comment")
 	@ResponseBody
-	public WrapperDTO commentList(@RequestParam("rid") int rid, @RequestParam("commentPage") int commentPage) {
+	public Map<String, Object> commentList(@RequestParam("rid") int rid, @RequestParam("page") int page) {
 		
-		return new WrapperDTO(reviewService.getComment(rid, commentPage));
+		return reviewService.getComment(rid, page);
 	}
 	
 	
