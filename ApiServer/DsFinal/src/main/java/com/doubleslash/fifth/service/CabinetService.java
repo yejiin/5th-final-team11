@@ -62,7 +62,14 @@ public class CabinetService {
 		res.put("totalCnt", cabinetDto.getTotalElements());
 		
 		return res;
+			
+	}
+	
+	public void deleteLoveAlcohol(int id, List<Integer> aid) {
 		
+		for(int i : aid) {
+			alcoholLoveRepository.delete(id, i);
+		}
 		
 	}
 	

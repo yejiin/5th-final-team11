@@ -1,5 +1,7 @@
 package com.doubleslash.fifth.repository;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.springframework.data.domain.Page;
@@ -10,10 +12,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.doubleslash.fifth.dto.CabinetDTO;
-import com.doubleslash.fifth.vo.ReviewLoveVO;
+import com.doubleslash.fifth.vo.AlcoholLoveVO;
 
 @Repository
-public interface AlcoholLoveRepository extends JpaRepository<ReviewLoveVO, Integer>{
+public interface AlcoholLoveRepository extends JpaRepository<AlcoholLoveVO, Integer>{
 
 	@Modifying
 	@Transactional
@@ -32,4 +34,5 @@ public interface AlcoholLoveRepository extends JpaRepository<ReviewLoveVO, Integ
 	// 마시고 싶은 술 조회 (도수순)
 	@Query(value = "select new com.doubleslash.fifth.dto.CabinetDTO(al.aid, a.image) from AlcoholVO as a, AlcoholLoveVO as al where al.aid = a.aid and al.id = ?1")
 	public Page<CabinetDTO> findLoveAlcoholOrderAbv(int id, Pageable pageable);
+
 }

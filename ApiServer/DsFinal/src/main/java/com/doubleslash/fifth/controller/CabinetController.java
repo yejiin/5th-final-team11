@@ -1,5 +1,6 @@
 package com.doubleslash.fifth.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -7,7 +8,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -47,6 +50,7 @@ public class CabinetController {
 		@ApiImplicitParam(name = "sortOption", required = true, dataType = "string", paramType = "query", example = "desc", value = "asc / desc")
 	})
 	@ApiResponses({
+		@ApiResponse(code = 200, message = "Success"),
 		@ApiResponse(code = 422, message = "Wrong Sort input / Wrong SortOption input")
 	})
 	@GetMapping(value = "")
@@ -78,6 +82,7 @@ public class CabinetController {
 		@ApiImplicitParam(name = "sortOption", required = true, dataType = "string", paramType = "query", example = "desc", value = "asc / desc")
 	})
 	@ApiResponses({
+		@ApiResponse(code = 200, message = "Success"),
 		@ApiResponse(code = 422, message = "Wrong Sort input / Wrong SortOption input")
 	})
 	@GetMapping(value = "/love")
@@ -98,5 +103,21 @@ public class CabinetController {
 		
 		return cabinetService.getLoveAlcohol(id, page, sort, sortOption);
 	}
+	
+	@ApiOperation(value = "마시고 싶은 술 삭제")
+	@ApiImplicitParam(name = "aid", required = true, paramType = "path", value = "여러 개의 aid는 콤마(,)로 구분 \n ex) 1, 2, 3")
+	@ApiResponses({
+		@ApiResponse(code = 200, message = "Success"),
+	})
+	@DeleteMapping(value = "/love/{aid}")
+	@ResponseBody
+	public String deleteLoveAlcohol(@PathVariable List<Integer> aid, HttpServletRequest request) throws Exception {
+		String uid = authService.verifyToken(request);
+		int id = userService.getId(uid);
+		
+		cabinetService.deleteLoveAlcohol(id, aid);
+		return "{}";
+	}
+	
  
 }
