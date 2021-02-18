@@ -89,7 +89,7 @@ public class SwaggerConfig extends WebMvcConfigurationSupport{
                 "/alcohol/recommend",
                 "/alcohol/detail/*",
                 "/alcohol/rating",
-                "/cabinet"
+                "/cabinet/**"
         };
     	
         for (String path: paths) {
@@ -128,7 +128,7 @@ public class SwaggerConfig extends WebMvcConfigurationSupport{
                 "/alcohol/recommend",
                 "/alcohol/detail/*",
                 "/alcohol/rating",
-                "/cabinet"
+                "/cabinet/**"
 		};
 		registry.addInterceptor(authInterceptor())
 			.addPathPatterns(includePathList);

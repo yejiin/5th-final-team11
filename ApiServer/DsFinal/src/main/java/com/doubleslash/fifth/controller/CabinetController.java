@@ -3,6 +3,7 @@ package com.doubleslash.fifth.controller;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,6 +20,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 @Api(value = "Cabinet", description = "장식장 API")
 @Controller
@@ -43,14 +46,57 @@ public class CabinetController {
 				+ "도수순 : abv "),
 		@ApiImplicitParam(name = "sortOption", required = true, dataType = "string", paramType = "query", example = "desc", value = "asc / desc")
 	})
+	@ApiResponses({
+		@ApiResponse(code = 422, message = "Wrong Sort input / Wrong SortOption input")
+	})
 	@GetMapping(value = "")
 	@ResponseBody
-	public Map<String, Object> drinkAlcohol(@RequestParam("page") int page, @RequestParam("sort") String sort, @RequestParam("sortOption") String sortOption, HttpServletRequest request) throws Exception {
+	public Map<String, Object> drinkAlcohol(@RequestParam("page") int page, @RequestParam("sort") String sort, @RequestParam("sortOption") String sortOption, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String uid = authService.verifyToken(request);
 		int id = userService.getId(uid);
-	
+
+		if(!sort.equals("latest") && !sort.equals("abv")) {
+			response.sendError(422, "Wrong Sort input");
+			return null;
+		}
+		
+		if(!sortOption.equals("asc") && !sortOption.equals("desc")) {
+			response.sendError(422, "Wrong SortOption input");
+			return null;
+		}
+		
 		return cabinetService.getDrinkAlcohol(id, page, sort, sortOption);
 	}
 	
-
+	@ApiOperation(value = "마시고 싶은 술 조회")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "page", required = true, dataType = "int", paramType = "query", example = "0", value = "페이지 번호(페이지당 데이터 20개)"),
+		@ApiImplicitParam(name = "sort", required = true, dataType = "string", paramType = "query",
+		example = "latest",
+		value = "시간순 : latest \n"
+				+ "도수순 : abv "),
+		@ApiImplicitParam(name = "sortOption", required = true, dataType = "string", paramType = "query", example = "desc", value = "asc / desc")
+	})
+	@ApiResponses({
+		@ApiResponse(code = 422, message = "Wrong Sort input / Wrong SortOption input")
+	})
+	@GetMapping(value = "/love")
+	@ResponseBody
+	public Map<String, Object> loveAlcohol(@RequestParam("page") int page, @RequestParam("sort") String sort, @RequestParam("sortOption") String sortOption, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String uid = authService.verifyToken(request);
+		int id = userService.getId(uid);
+		
+		if(!sort.equals("latest") && !sort.equals("abv")) {
+			response.sendError(422, "Wrong Sort input");
+			return null;
+		}
+		
+		if(!sortOption.equals("asc") && !sortOption.equals("desc")) {
+			response.sendError(422, "Wrong SortOption input");
+			return null;
+		}
+		
+		return cabinetService.getLoveAlcohol(id, page, sort, sortOption);
+	}
+ 
 }

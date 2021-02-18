@@ -14,6 +14,7 @@ import org.springframework.data.domain.Sort.Order;
 import org.springframework.stereotype.Service;
 
 import com.doubleslash.fifth.dto.CabinetDTO;
+import com.doubleslash.fifth.repository.AlcoholLoveRepository;
 import com.doubleslash.fifth.repository.ReviewRepository;
 
 
@@ -22,6 +23,10 @@ public class CabinetService {
 
 	@Autowired
 	ReviewRepository reviewRepository;
+	
+	@Autowired
+	AlcoholLoveRepository alcoholLoveRepository;
+	
 	public Map<String, Object> getDrinkAlcohol(int id, int page, String sort, String sortOption) {
 		if(!sort.equals("abv")) sort = "create_time";
 		
@@ -34,11 +39,31 @@ public class CabinetService {
 		}
 		
 		Map<String, Object> res = new TreeMap<>();
-		res.put("DrinkList", cabinetDto.getContent());
+		res.put("AlcoholList", cabinetDto.getContent());
 		res.put("totalCnt", cabinetDto.getTotalElements());
 		
 		return res;
 	
+	}
+	
+	public Map<String, Object> getLoveAlcohol(int id, int page, String sort, String sortOption) {
+		if(!sort.equals("abv")) sort = "create_time";
+		
+		Page<CabinetDTO> cabinetDto;
+		
+		if(sort.equals("create_time")) {
+			cabinetDto = alcoholLoveRepository.findLoveAlcoholOrderTime(id, PageRequest.of(page, 20, dirOption(sortOption), sort));
+		}else {
+			cabinetDto = alcoholLoveRepository.findLoveAlcoholOrderAbv(id, PageRequest.of(page, 20, dirOption(sortOption), "abv"));
+		}
+		
+		Map<String, Object> res = new TreeMap<>();
+		res.put("AlcoholList", cabinetDto.getContent());
+		res.put("totalCnt", cabinetDto.getTotalElements());
+		
+		return res;
+		
+		
 	}
 	
 	//정렬 기준을 동적으로 설정
