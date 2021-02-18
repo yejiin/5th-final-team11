@@ -5,6 +5,7 @@ import java.sql.SQLIntegrityConstraintViolationException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
 import java.util.Optional;
@@ -16,11 +17,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.domain.Sort.Order;
 import org.springframework.stereotype.Service;
 
 import com.doubleslash.fifth.dto.CommentDTO;
 import com.doubleslash.fifth.dto.ContentDTO;
 import com.doubleslash.fifth.dto.DetailReviewDTO;
+import com.doubleslash.fifth.dto.MyReviewDTO;
 import com.doubleslash.fifth.dto.ReviewDTO;
 import com.doubleslash.fifth.dto.ReviewWriteDTO;
 import com.doubleslash.fifth.dto.WrapperDTO;
@@ -80,7 +84,7 @@ public class ReviewService {
 			}
 
 			// 해당 리뷰 상세 내용
-			DetailReviewDTO detailDto = detailReviewRepository.fineByRid(rid);
+			DetailReviewDTO detailDto = detailReviewRepository.findByRid(rid);
 			reviewDto.getContent().get(i).setDetail(detailDto);
 
 			// 해당 리뷰 댓글 (최신순 3개)
@@ -249,6 +253,75 @@ public class ReviewService {
 		}
 
 		return result;
+	}
+
+	//내 기록 조회
+	public Map<String, Object> getMyReviewList(int id, String sort, String sortOption, int page) {
+		if(!sort.equals("abv")) sort = "create_time";
+		Page<MyReviewDTO> myReviewTemp;
+		if(sort.equals("create_time")) {
+			myReviewTemp = reviewRepository.getMyReviewListOrderByLatest(id, PageRequest.of(page, 20, dirOption(sortOption), sort));
+		}else {
+			myReviewTemp = reviewRepository.getMyReviewListOrderByAbv(id, PageRequest.of(page, 20));
+		}
+		
+		List<MyReviewDTO> dto = new ArrayList<MyReviewDTO>();
+		
+		for(MyReviewDTO m : myReviewTemp) {
+			DetailReviewDTO detailReview = detailReviewRepository.findByRid(m.getRid());
+			dto.add(new MyReviewDTO(m.getRid(), m.getAid(), m.getName(), m.getStar(), m.getThumbnail(), m.getContent(), detailReview));
+		}
+		
+		Map<String, Object> res = new TreeMap<>();
+		res.put("reviewList", dto);
+		res.put("totalCnt", myReviewTemp.getTotalElements());
+		
+		return res;
+	}
+
+	
+	//내 기록 수정
+	public WrapperDTO updateMyReview(ReviewWriteDTO requestBody, int id, int rid) {
+		ReviewVO reviewVo = new ReviewVO();
+		DetailReviewVO detailVo = new DetailReviewVO();
+		
+		reviewRepository.updateReview(rid, requestBody.getStar(), requestBody.getContent());
+		
+		if (requestBody.getDetail() == null) {
+			return new WrapperDTO("success");
+		} else { // 상세 리뷰 있으면 상세 리뷰 저장
+			detailVo.setRid(rid);
+			detailVo.setDate(requestBody.getDetail().getDate());
+			detailVo.setPlace(requestBody.getDetail().getPlace());
+			detailVo.setDrink(requestBody.getDetail().getDrink());
+			detailVo.setHangover(requestBody.getDetail().getHangover());
+			detailVo.setPrice(requestBody.getDetail().getPrice());
+			detailVo.setPrivacy(requestBody.getDetail().isPrivacy());
+
+			detailReviewRepository.save(detailVo);
+		}
+
+		return new WrapperDTO("success");
+		
+	}
+	
+	
+	//내 기록 삭제
+	public void deleteMyReview(int rid) {
+		reviewRepository.deleteById(rid);
+	}
+	
+	//정렬 기준을 동적으로 설정
+	private Sort sortOption(Direction direction, String property) {
+		List<Order> orders = new ArrayList<Sort.Order>();
+		orders.add(new Order(direction, property));
+		return Sort.by(orders);
+	}
+	
+	//정렬 기준별 오름차순, 내림차순 구분
+	private Direction dirOption(String sortOption) {
+		if(sortOption.equals("desc")) return Sort.Direction.DESC;
+		return Sort.Direction.ASC;
 	}
 
 }

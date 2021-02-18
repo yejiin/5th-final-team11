@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -170,6 +171,62 @@ public class ReviewController {
 		}
 
 		return dto;
+	}
+	
+	@ApiOperation(value = "내 기록 조회")
+	@ApiImplicitParams({
+        @ApiImplicitParam(name = "page", required = true, dataType = "string", paramType = "query",
+				example = "0",
+				value = "페이지 번호(페이지당 데이터 20개)"),
+        @ApiImplicitParam(name = "sort", required = true, dataType = "string", paramType = "query", 
+        		example = "latest",
+        		value = "시간순 : latest(default) / desc\n"
+        				+ "도수순 : abv / desc\n"),
+        @ApiImplicitParam(name = "sortOption", required = true, dataType = "string", paramType = "query",
+				example = "desc",
+				value = "asc / desc")
+	})
+	@ApiResponses({
+		@ApiResponse(code = 200, message = "Success"),
+		@ApiResponse(code = 400, message = "Bad Request")
+	})
+	@GetMapping(value = "")
+	@ResponseBody
+	public Map<String, Object> getMyReviewList(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String uid = authService.verifyToken(request);
+		int id = userService.getId(uid);
+		
+		String sort = request.getParameter("sort");
+		String sortOption = request.getParameter("sortOption");
+		int page = Integer.parseInt(request.getParameter("page"));
+		
+		return reviewService.getMyReviewList(id, sort, sortOption, page);
+	}
+	
+	@ApiOperation(value = "내 기록 수정")
+	@ApiResponses({
+		@ApiResponse(code = 200, message = "Success"),
+		@ApiResponse(code = 400, message = "Bad Request")
+	})
+	@PutMapping(value = "/{rid}")
+	@ResponseBody
+	public String updateMyReviewList(HttpServletRequest request, HttpServletResponse response, @RequestBody ReviewWriteDTO requestBody, @PathVariable int rid) throws Exception {
+		String uid = authService.verifyToken(request);
+		int id = userService.getId(uid);
+		
+		reviewService.updateMyReview(requestBody, id, rid);
+		return "{}";
+	}
+	
+	@ApiOperation(value = "내 기록 삭제")
+	@ApiResponses({
+		@ApiResponse(code = 200, message = "Success"),
+	})
+	@DeleteMapping(value = "/{rid}")
+	@ResponseBody
+	public String DeleteMyReviewList(@PathVariable int rid, HttpServletRequest request) throws Exception {		
+		reviewService.deleteMyReview(rid);
+		return "{}";
 	}
 	
 }
