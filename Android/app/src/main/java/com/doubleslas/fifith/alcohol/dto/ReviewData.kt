@@ -9,5 +9,6 @@ data class ReviewData(
     val star: Float,
     val reviewDate: String,
     val detail: ReviewDetailData,
-    val comments: List<ReviewCommentData>
+    val comments: List<ReviewCommentData>,
+    var isLove: Boolean
 )

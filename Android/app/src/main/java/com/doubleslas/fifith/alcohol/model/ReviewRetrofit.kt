@@ -28,7 +28,7 @@ interface ReviewRetrofit {
     @GET("/review/list")
     fun readReview(
         @Query("aid") aid: Int,
-        @Query("reviewPage") reviewPage: Int
+        @Query("page") reviewPage: Int
     ): ApiLiveData<ReviewList>
 
 

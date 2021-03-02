@@ -7,65 +7,71 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.doubleslas.fifith.alcohol.R
 import com.doubleslas.fifith.alcohol.databinding.FragmentDetailInfoBinding
+import com.doubleslas.fifith.alcohol.dto.DetailData
 import com.doubleslas.fifith.alcohol.model.base.ApiStatus
+import com.doubleslas.fifith.alcohol.ui.common.base.BaseFragment
 import com.google.android.material.chip.Chip
 
 
-class DetailInfoFragment : Fragment() {
-    private lateinit var binding: FragmentDetailInfoBinding
+class DetailInfoFragment : BaseFragment<FragmentDetailInfoBinding>() {
     private val detailViewModel by lazy { ViewModelProvider(activity!!).get(DetailViewModel::class.java) }
-//    private val alcoholId by lazy { intent.getIntExtra(EXTRA_ALCOHOL_ID, 0) }
 
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentDetailInfoBinding.inflate(inflater, container, false)
-
-        return binding.root
+    override fun createViewBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentDetailInfoBinding {
+        return FragmentDetailInfoBinding.inflate(inflater, container, false)
     }
 
-
-//    override fun onAttach(context: Context) {
-//        super.onAttach(context)
-//        mContext = context
-//
-//    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
 //        val chip = Chip(activity?.applicationContext)
 
-        binding.rvAlcoholSimilar.adapter = SimilarAdapter(AlcoholDetailActivity())
+        binding?.let { b ->
+            b.rvAlcoholSimilar.adapter = SimilarAdapter(AlcoholDetailActivity())
 
-        binding.rvAlcoholSimilar.layoutManager = LinearLayoutManager(AlcoholDetailActivity()).also {
-            it.orientation = LinearLayoutManager.HORIZONTAL
+            b.rvAlcoholSimilar.layoutManager = LinearLayoutManager(AlcoholDetailActivity()).also {
+                it.orientation = LinearLayoutManager.HORIZONTAL
+            }
+
+            b.rvAlcoholSimilar.addItemDecoration(DetailItemDecoration(5))
         }
 
 
-        binding.rvAlcoholSimilar.addItemDecoration(DetailItemDecoration(5))
-
-        detailViewModel.getDetail().observe(this, Observer {
+        detailViewModel.infoLiveData.observe(this, Observer {
             when (it) {
                 is ApiStatus.Loading -> {
 
                 }
                 is ApiStatus.Success -> {
-                    binding.tvPriceInfo.text =
-                        it.data.lowestPrice.toString() + "-" + it.data.highestPrice.toString() + " 원"
-                    binding.tvVolumeInfo.text =
-                        it.data.ml.toString() + " ml" + " / " + it.data.abv.toString() + " %"
+                    notifyDataChanged(it.data)
+                }
+                is ApiStatus.Error -> {
 
-                    binding.tvDescription.text = it.data.description
-//                    for (index in it.data.kind.indices) {
+                }
+            }
+        })
+    }
+
+    private fun notifyDataChanged(data: DetailData) {
+
+        binding?.let { b ->
+            b.tvPriceInfo.text =
+                data.lowestPrice.toString() + "-" + data.highestPrice.toString() + " 원"
+            b.tvVolumeInfo.text =
+                data.ml.toString() + " ml" + " / " + data.abv.toString() + " %"
+
+            b.tvDescription.text = data.description
+
+//                    for (index in data.kind.indices) {
 //
 ////                        chip.background = ContextCompat.getDrawable(
 ////                            activity!!,
@@ -73,7 +79,7 @@ class DetailInfoFragment : Fragment() {
 ////
 ////                        )
 //                        chip.setTextColor(Color.parseColor("#FFFFFF"))
-//                        chip.text = it.data.kind[index]
+//                        chip.text = data.kind[index]
 //                        chip.isClickable = false
 //                        chip.isCheckable = false
 ////                        chip.chipBackgroundColor = ColorStateList.valueOf(
@@ -82,49 +88,49 @@ class DetailInfoFragment : Fragment() {
 ////                                R.color.chipColor
 ////                            )
 ////                        )
-//                        binding.chipGroup.addView(chip)
+//                        b.chipGroup.addView(chip)
 //
 //
 //                    }
 
 
-                    // 와인 파트
-                    if (it.data.country != null && it.data.area != null && it.data.flavor != null && it.data.body != null) {
-                        binding.tvNation.visibility = View.VISIBLE
-                        binding.tvNationInfo.visibility = View.VISIBLE
-                        binding.tvNationInfo.text = it.data.country + it.data.area
-                        binding.layoutBody.visibility = View.VISIBLE
-                        binding.seekBarFlavor.seekBar.progress = it.data.flavor
-                        binding.seekBarBody.seekBar.progress = it.data.body
-                        binding.seekBarBody.seekBar.isEnabled = false
-                        binding.seekBarFlavor.seekBar.isEnabled = false
+            // 와인 파트
+            if (data.country != null && data.area != null && data.flavor != null && data.body != null) {
+                b.tvNation.visibility = View.VISIBLE
+                b.tvNationInfo.visibility = View.VISIBLE
+                b.tvNationInfo.text = data.country + data.area
+                b.layoutBody.visibility = View.VISIBLE
+                b.seekBarFlavor.seekBar.progress = data.flavor
+                b.seekBarBody.seekBar.progress = data.body
+                b.seekBarBody.seekBar.isEnabled = false
+                b.seekBarFlavor.seekBar.isEnabled = false
 
-                        binding.seekBarFlavor.tvLabel1.text = "Dry"
-                        binding.seekBarFlavor.tvLabel2.text = "Sweet"
+                b.seekBarFlavor.tvLabel1.text = "Dry"
+                b.seekBarFlavor.tvLabel2.text = "Sweet"
 
-                        binding.seekBarBody.tvLabel1.text = "Light"
-                        binding.seekBarBody.tvLabel2.text = "Heavy"
-                    } else {
+                b.seekBarBody.tvLabel1.text = "Light"
+                b.seekBarBody.tvLabel2.text = "Heavy"
+            } else {
 
-                        binding.layoutBody.visibility = View.GONE
-                        binding.seekBarFlavor.seekBar.visibility = View.GONE
-                        binding.seekBarFlavor.tvLabel1.visibility = View.GONE
-                        binding.seekBarFlavor.tvLabel2.visibility = View.GONE
-                    }
+                b.layoutBody.visibility = View.GONE
+                b.seekBarFlavor.seekBar.visibility = View.GONE
+                b.seekBarFlavor.tvLabel1.visibility = View.GONE
+                b.seekBarFlavor.tvLabel2.visibility = View.GONE
+            }
 
 
 //                    // 맥주 파트
-                    if (it.data.areas != null) {
-                        binding.layoutKinds.visibility = View.VISIBLE
-                        binding.layoutFlavor.visibility = View.GONE
-                        binding.layoutBody.visibility = View.GONE
-                        binding.tvNation.visibility = View.VISIBLE
-                        binding.tvNationInfo.visibility = View.VISIBLE
-                        binding.tvNationInfo.text = it.data.areas.toString()
-//                        for (index in it.data.areas.indices) {
-//                            val chip = Chip(binding.chipGroupAreas.context)
+            if (data.areas != null) {
+                b.layoutKinds.visibility = View.VISIBLE
+                b.layoutFlavor.visibility = View.GONE
+                b.layoutBody.visibility = View.GONE
+                b.tvNation.visibility = View.VISIBLE
+                b.tvNationInfo.visibility = View.VISIBLE
+                b.tvNationInfo.text = data.areas.toString()
+//                        for (index in data.areas.indices) {
+//                            val chip = Chip(b.chipGroupAreas.context)
 //                            chip.setTextColor(Color.parseColor("#FFFFFF"))
-//                            chip.text = it.data.areas[index]
+//                            chip.text = data.areas[index]
 //                            chip.isClickable = false
 //                            chip.isCheckable = false
 //                            chip.chipBackgroundColor = ColorStateList.valueOf(
@@ -133,36 +139,32 @@ class DetailInfoFragment : Fragment() {
 //                                    R.color.chipColor
 //                                )
 //                            )
-//                            binding.chipGroupAreas.addView(chip)
+//                            b.chipGroupAreas.addView(chip)
 //                        }
-                    } else {
-                        binding.tvNation.visibility = View.GONE
-                        binding.tvNationInfo.visibility = View.GONE
-                        binding.layoutAreas.visibility = View.GONE
-                    }
+            } else {
+                b.tvNation.visibility = View.GONE
+                b.tvNationInfo.visibility = View.GONE
+                b.layoutAreas.visibility = View.GONE
+            }
 
-                    // 양주 파트
-                    if (it.data.flavors != null) {
-                        for (index in it.data.flavors.indices) {
-                            val chip = Chip(binding.chipGroupFlavor.context)
-                            chip.setTextColor(Color.parseColor("#FFFFFF"))
-                            chip.text = it.data.flavors[index]
-                            chip.isClickable = false
-                            chip.isCheckable = false
-                            chip.chipBackgroundColor = ColorStateList.valueOf(
-                                ContextCompat.getColor(
-                                    AlcoholDetailActivity(),
-                                    R.color.chipColor
-                                )
-                            )
-                            binding.chipGroupFlavor.addView(chip)
-                        }
-                    }
-                }
-                is ApiStatus.Error -> {
-
+            // 양주 파트
+            if (data.flavors != null) {
+                for (index in data.flavors.indices) {
+                    val chip = Chip(b.chipGroupFlavor.context)
+                    chip.setTextColor(Color.parseColor("#FFFFFF"))
+                    chip.text = data.flavors[index]
+                    chip.isClickable = false
+                    chip.isCheckable = false
+                    chip.chipBackgroundColor = ColorStateList.valueOf(
+                        ContextCompat.getColor(
+                            AlcoholDetailActivity(),
+                            R.color.chipColor
+                        )
+                    )
+                    b.chipGroupFlavor.addView(chip)
                 }
             }
-        })
+        }
     }
+
 }

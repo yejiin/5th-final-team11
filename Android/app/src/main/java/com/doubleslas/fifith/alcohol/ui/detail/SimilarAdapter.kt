@@ -5,18 +5,17 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.doubleslas.fifith.alcohol.R
-import com.doubleslas.fifith.alcohol.dto.AlcoholDetailData
 import kotlinx.android.synthetic.main.item_alcohol_similar.view.*
 
 class SimilarAdapter(val context: Context) :
     RecyclerView.Adapter<SimilarAdapter.DetailViewHolder>() {
-    var items: MutableList<AlcoholDetailData> = mutableListOf(
-        AlcoholDetailData("소주"),
-        AlcoholDetailData("잭 다니엘"),
-        AlcoholDetailData("카스"),
-        AlcoholDetailData("하이트"),
-        AlcoholDetailData("참이슬"),
-        AlcoholDetailData("청하")
+    var items: MutableList<Any> = mutableListOf(
+//        AlcoholDetailData("소주"),
+//        AlcoholDetailData("잭 다니엘"),
+//        AlcoholDetailData("카스"),
+//        AlcoholDetailData("하이트"),
+//        AlcoholDetailData("참이슬"),
+//        AlcoholDetailData("청하")
     )
 
 
@@ -33,7 +32,6 @@ class SimilarAdapter(val context: Context) :
     override fun onBindViewHolder(holder: DetailViewHolder, position: Int) {
         items[position].let { item ->
             with(holder) {
-                alcoholName.text = item.alcoholName
 
             }
         }

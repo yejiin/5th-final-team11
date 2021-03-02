@@ -32,10 +32,6 @@ class ReviewViewModel() : ViewModel() {
         return result
     }
 
-    fun readReview(aid: Int, reviewPage: Int): ApiLiveData<ReviewList> {
-        return repository.readReview(aid, reviewPage)
-    }
-
 
     fun writeComment(rid: Int, content: String): ApiLiveData<Any> {
         return repository.writeComment(rid, content)

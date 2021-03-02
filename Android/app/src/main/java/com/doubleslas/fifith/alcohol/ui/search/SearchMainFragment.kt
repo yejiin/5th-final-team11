@@ -49,12 +49,8 @@ class SearchMainFragment : BaseFragment<FragmentSearchMainBinding>() {
 
             TabLayoutMediator(b.tabLayout, b.viewPager) { tab, position ->
                 tab.text = categoryList[position].first
+                tab.customView = getTabView(position)
             }.attach()
-
-            for (i in 0 until b.tabLayout.tabCount) {
-                val tab: TabLayout.Tab = b.tabLayout.getTabAt(i)!!
-                tab.customView = getTabView(i)
-            }
 
             b.layoutSearch.setOnClickListener {
                 (parentFragment as? SearchFragment)?.openSearchHistoryFragment()

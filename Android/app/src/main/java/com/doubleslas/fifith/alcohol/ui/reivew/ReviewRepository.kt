@@ -11,7 +11,7 @@ class ReviewRepository {
         return service.writeReview(aid, data)
     }
 
-    fun readReview(aid: Int, reviewPage: Int): ApiLiveData<ReviewList> {
+    fun loadReviewList(aid: Int, reviewPage: Int): ApiLiveData<ReviewList> {
         return service.readReview(aid, reviewPage)
     }
 

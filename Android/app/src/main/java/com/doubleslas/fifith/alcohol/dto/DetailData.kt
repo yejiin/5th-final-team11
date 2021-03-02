@@ -2,7 +2,9 @@ package com.doubleslas.fifith.alcohol.dto
 
 import com.google.gson.annotations.SerializedName
 
-data class DetailList(
+data class DetailData(
+    val image: String,
+
     // 주류 공통속성
     @SerializedName("highestPrice") val highestPrice: Int,
     @SerializedName("lowestPrice") val lowestPrice: Int,

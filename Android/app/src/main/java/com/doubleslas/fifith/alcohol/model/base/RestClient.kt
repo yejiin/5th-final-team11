@@ -2,7 +2,7 @@ package com.doubleslas.fifith.alcohol.model.base
 
 import com.doubleslas.fifith.alcohol.App
 import com.doubleslas.fifith.alcohol.BuildConfig
-import com.doubleslas.fifith.alcohol.dto.DetailRetrofit
+import com.doubleslas.fifith.alcohol.model.DetailRetrofit
 import com.doubleslas.fifith.alcohol.model.*
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -13,7 +13,8 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object RestClient {
-    fun getDetailService(): DetailRetrofit = retrofit.create(DetailRetrofit::class.java)
+    fun getDetailService(): DetailRetrofit = retrofit.create(
+        DetailRetrofit::class.java)
     fun getAuthService(): AuthRetrofit = retrofit.create(AuthRetrofit::class.java)
     fun getUserService(): UserRetrofit = retrofit.create(UserRetrofit::class.java)
     fun getSearchService(): SearchRetrofit = retrofit.create(SearchRetrofit::class.java)
