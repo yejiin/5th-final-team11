@@ -7,6 +7,7 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.annotation.StringRes
+import com.doubleslas.fifith.alcohol.utils.LogUtil
 import com.doubleslas.fifith.alcohol.utils.SharedPreferenceUtil
 import com.facebook.FacebookSdk
 import com.facebook.appevents.AppEventsLogger
@@ -22,7 +23,9 @@ class App : Application() {
 
         Firebase.auth.addIdTokenListener(IdTokenListener {
             prefs.idToken = it.token ?: ""
+            LogUtil.d("Auth-Token", prefs.idToken ?: "-")
         })
+        LogUtil.d("Auth-Token", prefs.idToken ?: "-")
 
 
         // Firebase SDK init

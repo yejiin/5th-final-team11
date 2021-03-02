@@ -1,46 +1,56 @@
 package com.doubleslas.fifith.alcohol.ui.detail
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.doubleslas.fifith.alcohol.R
-import kotlinx.android.synthetic.main.item_alcohol_similar.view.*
+import com.bumptech.glide.Glide
+import com.doubleslas.fifith.alcohol.databinding.ItemAlcoholSimilarBinding
+import com.doubleslas.fifith.alcohol.dto.SimilarAlcoholData
 
-class SimilarAdapter(val context: Context) :
+class SimilarAdapter :
     RecyclerView.Adapter<SimilarAdapter.DetailViewHolder>() {
-    var items: MutableList<Any> = mutableListOf(
-//        AlcoholDetailData("소주"),
-//        AlcoholDetailData("잭 다니엘"),
-//        AlcoholDetailData("카스"),
-//        AlcoholDetailData("하이트"),
-//        AlcoholDetailData("참이슬"),
-//        AlcoholDetailData("청하")
-    )
+
+    private var list: List<SimilarAlcoholData>? = null
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DetailViewHolder {
-        return DetailViewHolder(parent)
+        val inflater = LayoutInflater.from(parent.context)
+        val binding = ItemAlcoholSimilarBinding.inflate(inflater, parent, false)
+        return DetailViewHolder(binding)
     }
 
 
     override fun getItemCount(): Int {
-        return items.size
+        return list?.size ?: 0
     }
 
 
     override fun onBindViewHolder(holder: DetailViewHolder, position: Int) {
-        items[position].let { item ->
-            with(holder) {
+        val item = list!![position]
 
-            }
+        holder.binding.let { b ->
+            b.tvName.text = item.name
+            Glide.with(b.root)
+                .load(item.image)
+                .into(b.ivAlcohol)
         }
     }
 
-    inner class DetailViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
-        LayoutInflater.from(parent.context).inflate(R.layout.item_alcohol_similar, parent, false)
-    ) {
-        val alcoholName = itemView.tv_similar_name
+    fun setData(list: List<SimilarAlcoholData>) {
+        this.list = list
+    }
+
+    inner class DetailViewHolder(val binding: ItemAlcoholSimilarBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+
+        init {
+            binding.root.setOnClickListener {
+                val context = binding.root.context
+                val item = list!![adapterPosition]
+                val intent = AlcoholDetailActivity.getStartIntent(context, item.id)
+                context.startActivity(intent)
+            }
+        }
     }
 }
 

@@ -17,7 +17,7 @@ import com.google.android.material.chip.Chip
 
 class DetailInfoFragment : BaseFragment<FragmentDetailInfoBinding>() {
     private val detailViewModel by lazy { ViewModelProvider(activity!!).get(DetailViewModel::class.java) }
-
+    private val adapter by lazy { SimilarAdapter() }
 
     override fun createViewBinding(
         inflater: LayoutInflater,
@@ -30,16 +30,10 @@ class DetailInfoFragment : BaseFragment<FragmentDetailInfoBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        val chip = Chip(activity?.applicationContext)
-
         binding?.let { b ->
-            b.rvAlcoholSimilar.adapter = SimilarAdapter(AlcoholDetailActivity())
-
-            b.rvAlcoholSimilar.layoutManager = LinearLayoutManager(AlcoholDetailActivity()).also {
-                it.orientation = LinearLayoutManager.HORIZONTAL
-            }
-
-            b.rvAlcoholSimilar.addItemDecoration(DetailItemDecoration(5))
+            b.rvAlcoholSimilar.adapter = adapter
+            b.rvAlcoholSimilar.layoutManager =
+                LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         }
 
 
@@ -59,6 +53,8 @@ class DetailInfoFragment : BaseFragment<FragmentDetailInfoBinding>() {
     }
 
     private fun notifyDataChanged(data: DetailData) {
+        adapter.setData(data.similar)
+        adapter.notifyDataSetChanged()
 
         binding?.let { b ->
             b.tvPriceInfo.text =
