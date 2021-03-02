@@ -24,7 +24,7 @@ class DetailViewModel(val aid: Int) : ViewModel() {
         _infoLiveData.addSource(liveData)
     }
 
-    fun resetReview(){
+    fun resetReview() {
         reviewPageLoader.reset()
     }
 
@@ -35,6 +35,9 @@ class DetailViewModel(val aid: Int) : ViewModel() {
         reviewPageLoader.addObserve(liveData)
     }
 
+    fun isFinishReview(): Boolean {
+        return reviewPageLoader.isFinish()
+    }
 
     class Factory(private val param: Int) : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {

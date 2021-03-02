@@ -11,15 +11,12 @@ import com.doubleslas.fifith.alcohol.databinding.ItemDetailReviewBinding
 import com.doubleslas.fifith.alcohol.dto.ReviewData
 import com.doubleslas.fifith.alcohol.ui.reivew.ReportBottomSheetDialog
 
-class DetailReviewAdapter :
-    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-
+class DetailReviewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var list: List<ReviewData>? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReviewViewHolder {
-        val binding = ItemDetailReviewBinding.inflate(
-            LayoutInflater.from(parent.context), parent, false
-        )
+        val binding =
+            ItemDetailReviewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ReviewViewHolder(binding)
     }
 
@@ -32,19 +29,19 @@ class DetailReviewAdapter :
         if (holder !is ReviewViewHolder) return
         val item = list!![position]
         with(holder.binding) {
-            tvDetailNickname.text = item.nickname
-            tvDetailReview.text = item.content
+            tvNickname.text = item.nickname
+            tvReview.text = item.content
             reviewRating.rating = item.star
             tvLikeCount.text = item.love.toString()
 
             if (item.detail != null) {
-                layoutDetailReview.seekBarHangover.seekBar.progress = item.detail.hangover!!
-                layoutDetailReview.etPlace.setText(item.detail.place)
-                layoutDetailReview.etPrice.setText(item.detail.price.toString())
-                layoutDetailReview.etCalendar.setText(item.detail.date)
-                layoutDetailReview.etDrink.setText(item.detail.drink.toString())
+                layoutReview.seekBarHangover.seekBar.progress = item.detail.hangover!!
+                layoutReview.etPlace.setText(item.detail.place)
+                layoutReview.etPrice.setText(item.detail.price.toString())
+                layoutReview.etCalendar.setText(item.detail.date)
+                layoutReview.etDrink.setText(item.detail.drink.toString())
             } else {
-                layoutDetailReview.layoutDetailReview.visibility = View.GONE
+                layoutReview.layoutDetailReview.visibility = View.GONE
             }
 
 
@@ -64,7 +61,7 @@ class DetailReviewAdapter :
                 btnComment.setTextColor(Color.parseColor("#A5A5A5"))
             }
 
-            btnLike.setOnClickListener {
+            layoutLike.setOnClickListener {
                 // 리뷰 좋아요 버튼 눌렀을 때의 처리
                 if (item.isLove) {
                     ivReviewLike.setImageResource(R.drawable.ic_heart_gray)
@@ -92,7 +89,7 @@ class DetailReviewAdapter :
     inner class ReviewViewHolder(var binding: ItemDetailReviewBinding) :
         RecyclerView.ViewHolder(binding.root) {
         init {
-            with(binding.layoutDetailReview) {
+            with(binding.layoutReview) {
                 etCalendar.isEnabled = false
                 etDrink.isEnabled = false
                 etPlace.isEnabled = false
