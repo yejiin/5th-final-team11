@@ -54,6 +54,7 @@
     <style name="MyReviewText.Label" parent="MyReviewText">
         <item name="android:textColor">#a5a5a5</item>
     </style>
+
     <style name="MyReviewText.Content" parent="MyReviewText">
         <item name="android:textColor">#ffffff</item>
     </style>
@@ -96,4 +97,19 @@
     <style name="MyReviewDetailLayout">
         <item name="android:layout_marginTop">20dp</item>
     </style>
+
+    <style name="AlcoholDetailText" />
+
+
+    <style name="AlcoholDetailText.Label" parent="AlcoholDetailText">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#BEBEBE</item>
+    </style>
+
+    <style name="AlcoholDetailText.Info" parent="AlcoholDetailText">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
 </resources>

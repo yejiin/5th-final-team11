@@ -1,16 +1,13 @@
 package com.doubleslas.fifith.alcohol.ui.detail
 
-import android.content.res.ColorStateList
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.doubleslas.fifith.alcohol.R
+import com.doubleslas.fifith.alcohol.databinding.ChipRecommendInfoBinding
 import com.doubleslas.fifith.alcohol.databinding.FragmentDetailInfoBinding
 import com.doubleslas.fifith.alcohol.dto.DetailData
 import com.doubleslas.fifith.alcohol.model.base.ApiStatus
@@ -68,103 +65,98 @@ class DetailInfoFragment : BaseFragment<FragmentDetailInfoBinding>() {
                 data.lowestPrice.toString() + "-" + data.highestPrice.toString() + " 원"
             b.tvVolumeInfo.text =
                 data.ml.toString() + " ml" + " / " + data.abv.toString() + " %"
-
             b.tvDescription.text = data.description
 
-//                    for (index in data.kind.indices) {
-//
-////                        chip.background = ContextCompat.getDrawable(
-////                            activity!!,
-////                            R.drawable.detail_button_active_background
-////
-////                        )
-//                        chip.setTextColor(Color.parseColor("#FFFFFF"))
-//                        chip.text = data.kind[index]
-//                        chip.isClickable = false
-//                        chip.isCheckable = false
-////                        chip.chipBackgroundColor = ColorStateList.valueOf(
-////                            ContextCompat.getColor(
-////                                activity!!,
-////                                R.color.chipColor
-////                            )
-////                        )
-//                        b.chipGroup.addView(chip)
-//
-//
-//                    }
-
-
-            // 와인 파트
-            if (data.country != null && data.area != null && data.flavor != null && data.body != null) {
+            if (data.country != null) { // 나라
                 b.tvNation.visibility = View.VISIBLE
                 b.tvNationInfo.visibility = View.VISIBLE
-                b.tvNationInfo.text = data.country + data.area
-                b.layoutBody.visibility = View.VISIBLE
-                b.seekBarFlavor.seekBar.progress = data.flavor
-                b.seekBarBody.seekBar.progress = data.body
-                b.seekBarBody.seekBar.isEnabled = false
-                b.seekBarFlavor.seekBar.isEnabled = false
 
-                b.seekBarFlavor.tvLabel1.text = "Dry"
-                b.seekBarFlavor.tvLabel2.text = "Sweet"
-
-                b.seekBarBody.tvLabel1.text = "Light"
-                b.seekBarBody.tvLabel2.text = "Heavy"
-            } else {
-
-                b.layoutBody.visibility = View.GONE
-                b.seekBarFlavor.seekBar.visibility = View.GONE
-                b.seekBarFlavor.tvLabel1.visibility = View.GONE
-                b.seekBarFlavor.tvLabel2.visibility = View.GONE
-            }
-
-
-//                    // 맥주 파트
-            if (data.areas != null) {
-                b.layoutKinds.visibility = View.VISIBLE
-                b.layoutFlavor.visibility = View.GONE
-                b.layoutBody.visibility = View.GONE
-                b.tvNation.visibility = View.VISIBLE
-                b.tvNationInfo.visibility = View.VISIBLE
-                b.tvNationInfo.text = data.areas.toString()
-//                        for (index in data.areas.indices) {
-//                            val chip = Chip(b.chipGroupAreas.context)
-//                            chip.setTextColor(Color.parseColor("#FFFFFF"))
-//                            chip.text = data.areas[index]
-//                            chip.isClickable = false
-//                            chip.isCheckable = false
-//                            chip.chipBackgroundColor = ColorStateList.valueOf(
-//                                ContextCompat.getColor(
-//                                    AlcoholDetailActivity(),
-//                                    R.color.chipColor
-//                                )
-//                            )
-//                            b.chipGroupAreas.addView(chip)
-//                        }
+                b.tvNationInfo.text = data.country
             } else {
                 b.tvNation.visibility = View.GONE
                 b.tvNationInfo.visibility = View.GONE
-                b.layoutAreas.visibility = View.GONE
+            }
+
+            b.chipGroupKinds.removeAllViews()
+            for (str in data.kind) {
+                createChip(b.chipGroupKinds, str)
+            }
+
+            // 와인 파트
+            if (data.wineKind != null) { // 품종
+                b.tvRace.visibility = View.VISIBLE
+                b.tvRaceInfo.visibility = View.VISIBLE
+
+                b.tvRace.text = data.wineKind
+            } else {
+                b.tvRace.visibility = View.GONE
+                b.tvRaceInfo.visibility = View.GONE
+            }
+
+            if (data.flavor != null) { // 맛
+                b.layoutFlavor.visibility = View.VISIBLE
+                b.seekBarFlavor.root.visibility = View.VISIBLE
+                b.chipGroupFlavor.visibility = View.GONE
+
+                b.seekBarFlavor.seekBar.progress = data.flavor
+                b.seekBarFlavor.seekBar.isEnabled = false
+                b.seekBarFlavor.tvLabel1.text = "Dry"
+                b.seekBarFlavor.tvLabel2.text = "Sweet"
+            } else {
+                b.layoutFlavor.visibility = View.GONE
+            }
+
+            if (data.body != null) { // 바디감
+                b.layoutBody.visibility = View.VISIBLE
+
+                b.seekBarBody.seekBar.progress = data.body
+                b.seekBarBody.seekBar.isEnabled = false
+                b.seekBarBody.tvLabel1.text = "Light"
+                b.seekBarBody.tvLabel2.text = "Heavy"
+            } else {
+                b.layoutBody.visibility = View.GONE
+            }
+
+
+            // 맥주 파트
+            if (data.areas != null) {
+                b.chipGroupAreas.visibility = View.VISIBLE
+
+                b.chipGroupAreas.removeAllViews()
+                for (str in data.areas) {
+                    createChip(b.chipGroupAreas, str)
+                }
+            } else {
+                b.chipGroupAreas.visibility = View.GONE
             }
 
             // 양주 파트
             if (data.flavors != null) {
-                for (index in data.flavors.indices) {
-                    val chip = Chip(b.chipGroupFlavor.context)
-                    chip.setTextColor(Color.parseColor("#FFFFFF"))
-                    chip.text = data.flavors[index]
-                    chip.isClickable = false
-                    chip.isCheckable = false
-                    chip.chipBackgroundColor = ColorStateList.valueOf(
-                        ContextCompat.getColor(
-                            AlcoholDetailActivity(),
-                            R.color.chipColor
-                        )
-                    )
-                    b.chipGroupFlavor.addView(chip)
+                b.layoutFlavor.visibility = View.VISIBLE
+                b.chipGroupFlavor.visibility = View.VISIBLE
+                b.seekBarFlavor.root.visibility = View.GONE
+
+                b.chipGroupFlavor.removeAllViews()
+                for (str in data.flavors) {
+                    createChip(b.chipGroupFlavor, str)
                 }
+            } else {
+                b.layoutFlavor.visibility = View.GONE
             }
         }
+    }
+
+
+    private fun createChip(parent: ViewGroup, text: String): Chip {
+        val chip = ChipRecommendInfoBinding.inflate(layoutInflater).root
+        chip.text = text
+        parent.addView(chip)
+
+        chip.isChecked = true
+        chip.isCheckable = false
+        chip.isClickable = false
+
+        return chip
     }
 
 }

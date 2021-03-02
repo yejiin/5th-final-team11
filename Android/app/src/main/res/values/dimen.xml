@@ -10,5 +10,7 @@
     <dimen name="first_input_beer_type_title_margin_bottom">12.5dp</dimen>
     <dimen name="first_input_beer_type_margin_vertical">15dp</dimen>
     <dimen name="first_input_beer_type_margin_horizontal">49dp</dimen>
+    
+    <dimen name="detail_margin_label_content_distance">8dp</dimen>
 
 </resources>

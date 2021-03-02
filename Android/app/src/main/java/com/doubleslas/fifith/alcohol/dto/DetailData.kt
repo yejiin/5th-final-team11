@@ -9,7 +9,7 @@ data class DetailData(
     @SerializedName("highestPrice") val highestPrice: Int,
     @SerializedName("lowestPrice") val lowestPrice: Int,
     @SerializedName("ml") val ml: Int,
-    @SerializedName("abv") val abv: Double,
+    @SerializedName("abv") val abv: Float,
     @SerializedName("starAvg") val starAvg: Float,
     @SerializedName("name") val name: String,
     @SerializedName("kind") val kind: List<String>,
