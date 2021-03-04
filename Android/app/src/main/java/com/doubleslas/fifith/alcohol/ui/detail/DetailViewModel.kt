@@ -39,6 +39,14 @@ class DetailViewModel(val aid: Int) : ViewModel() {
         return reviewPageLoader.isFinish()
     }
 
+    fun likeReview(rid: Int, value: Boolean) {
+        reviewRepository.likeReview(rid, value)
+    }
+
+    fun commentReview(rid: Int, content: String): ApiLiveData<Any> {
+        return reviewRepository.commentReview(rid, content)
+    }
+
     class Factory(private val param: Int) : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             return if (modelClass.isAssignableFrom(DetailViewModel::class.java)) {

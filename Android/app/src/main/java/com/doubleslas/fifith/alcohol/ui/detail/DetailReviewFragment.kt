@@ -8,6 +8,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.doubleslas.fifith.alcohol.databinding.FragmentDetailReviewBinding
+import com.doubleslas.fifith.alcohol.dto.ReviewData
+import com.doubleslas.fifith.alcohol.model.base.ApiLiveData
 import com.doubleslas.fifith.alcohol.model.base.ApiStatus
 import com.doubleslas.fifith.alcohol.ui.common.LoadingRecyclerViewAdapter
 import com.doubleslas.fifith.alcohol.ui.common.base.BaseFragment
@@ -49,6 +51,16 @@ class DetailReviewFragment : BaseFragment<FragmentDetailReviewBinding>() {
         }
 
 
+        adapter.setListener(object : DetailReviewAdapter.ReviewItemListener{
+            override fun comment(item: ReviewData, comment: String) {
+                reviewViewModel.commentReview(item.rid, comment)
+            }
+
+            override fun like(item: ReviewData, value: Boolean) {
+                reviewViewModel.likeReview(item.rid, value)
+            }
+
+        })
         loadingAdapter.setOnBindLoadingListener {
             reviewViewModel.loadReview()
         }

@@ -1,8 +1,6 @@
 package com.doubleslas.fifith.alcohol.model
 
-import com.doubleslas.fifith.alcohol.dto.MyReviewList
-import com.doubleslas.fifith.alcohol.dto.ReviewList
-import com.doubleslas.fifith.alcohol.dto.WriteReviewData
+import com.doubleslas.fifith.alcohol.dto.*
 import com.doubleslas.fifith.alcohol.model.base.ApiLiveData
 import retrofit2.http.*
 
@@ -33,14 +31,14 @@ interface ReviewRetrofit {
 
 
     @PUT("/review/{rid}/love")
-    fun clickLike(
+    fun likeReview(
         @Path("rid") rid: Int,
-        @Body loveClick: Boolean
+        @Body loveClick: ReviewLikeBody
     ): ApiLiveData<Any>
 
-    @PUT("/review/comment/{rid}")
+    @POST("/review/{rid}/comment")
     fun writeComment(
         @Path("rid") rid: Int,
-        @Body content: String
+        @Body content: ReviewCommentBody
     ): ApiLiveData<Any>
 }

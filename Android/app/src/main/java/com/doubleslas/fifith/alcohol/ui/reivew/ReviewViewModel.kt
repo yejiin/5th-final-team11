@@ -33,10 +33,6 @@ class ReviewViewModel() : ViewModel() {
     }
 
 
-    fun writeComment(rid: Int, content: String): ApiLiveData<Any> {
-        return repository.writeComment(rid, content)
-    }
-
     fun checkValidate(comment: String, detail: ReviewDetailData? = null): ReviewValidateFail? {
         if (comment.isEmpty()) {
             return ReviewValidateFail.CommentEmpty
