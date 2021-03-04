@@ -7,6 +7,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -72,6 +73,8 @@ public class ReviewService {
 	public Map<String, Object> getReviewList(int aid, int page, int id, HttpServletResponse response) throws IOException {
 
 		Page<ReviewDTO> reviewDto = reviewRepository.findByAid(aid, id, PageRequest.of(page, 20, Sort.Direction.ASC, "rid"));
+		
+		
 
 		for (int i = 0; i < reviewDto.getContent().size(); i++) {
 			int rid = reviewDto.getContent().get(i).getRid();
@@ -81,7 +84,11 @@ public class ReviewService {
 			if (loveClick != null) {
 				reviewDto.getContent().get(i).setLoveClick(true);
 			} else {
-				reviewDto.getContent().get(i).setLoveClick(false);
+				if (id == -1) {
+					reviewDto.getContent().get(i).setLoveClick(null);
+				}else {
+					reviewDto.getContent().get(i).setLoveClick(false);					
+				}
 			}
 
 			// 해당 리뷰 상세 내용
@@ -91,12 +98,14 @@ public class ReviewService {
 			// 해당 리뷰 댓글 (최신순 3개)
 			Page<CommentDTO> commentDto = commentRepository.findByRid(rid, PageRequest.of(0, 3, Sort.Direction.DESC, "cid"));
 			reviewDto.getContent().get(i).setComments(commentDto.getContent());
+			reviewDto.getContent().get(i).setCommentTotalCnt(commentDto.getTotalElements());
 
 		}
 
 		Map<String, Object> res = new TreeMap<>();
 		res.put("reviewList", reviewDto.getContent());
 		res.put("totalCnt", reviewDto.getTotalElements());
+		
 
 		return res;
 	}
@@ -174,10 +183,22 @@ public class ReviewService {
 		commentVo.setId(id);
 		commentVo.setRid(rid);
 		commentVo.setContent(content.getContent());
-		commentRepository.save(commentVo);
+		CommentVO vo = commentRepository.save(commentVo);
 
-		WrapperDTO dto = new WrapperDTO("success");
-
+		CommentDTO commentDto = commentRepository.findByCid(vo.getCid());
+		
+		DateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd");
+		String date = dateFormat.format(commentDto.getCommentDate());
+		
+		Map<String, Object> res = new TreeMap<>();
+		
+		res.put("nickname", commentDto.getNickname());
+		res.put("content", commentDto.getContent());
+		res.put("date", date);
+	
+		WrapperDTO dto = new WrapperDTO(res);
+		
+		
 		return dto;
 	}
 
@@ -229,7 +250,12 @@ public class ReviewService {
 		if(reviewLoveRepository.insert(id, rid)==1) {
 			reviewRepository.updateLove(rid);
 		}
-		WrapperDTO dto = new WrapperDTO("Review Love Success");
+		
+		Map<String, Object> res = new TreeMap<>();
+		res.put("love", true);
+		res.put("loveTotalCnt", reviewRepository.findById(rid).get().getLove());
+		
+		WrapperDTO dto = new WrapperDTO(res);
 
 		return dto;
 	}
@@ -240,7 +266,12 @@ public class ReviewService {
 		if(reviewLoveRepository.delete(id, rid)==1) {
 			reviewRepository.updateLoveCancle(rid);
 		}
-		WrapperDTO dto = new WrapperDTO("Review Love Cancle Success");
+		
+		Map<String, Object> res = new TreeMap<>();
+		res.put("love", false);
+		res.put("loveTotalCnt", reviewRepository.findById(rid).get().getLove());
+		
+		WrapperDTO dto = new WrapperDTO(res);
 
 		return dto;
 	}

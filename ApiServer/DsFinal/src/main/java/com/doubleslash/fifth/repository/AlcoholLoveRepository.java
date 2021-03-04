@@ -34,5 +34,8 @@ public interface AlcoholLoveRepository extends JpaRepository<AlcoholLoveVO, Inte
 	// 마시고 싶은 술 조회 (도수순)
 	@Query(value = "select new com.doubleslash.fifth.dto.CabinetDTO(al.aid, a.image) from AlcoholVO as a, AlcoholLoveVO as al where al.aid = a.aid and al.id = ?1")
 	public Page<CabinetDTO> findLoveAlcoholOrderAbv(int id, Pageable pageable);
+	
+	@Query(value = "select count(aid) from AlcoholLoveVO where aid = ?1")
+	public int findCount(int aid);
 
 }

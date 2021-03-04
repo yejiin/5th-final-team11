@@ -45,4 +45,6 @@ public class ReviewDTO {
 	
 	private List<CommentDTO> comments;
 	
+	private long commentTotalCnt;
+	
 }

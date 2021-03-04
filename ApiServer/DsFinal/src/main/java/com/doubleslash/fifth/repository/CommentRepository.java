@@ -19,6 +19,9 @@ public interface CommentRepository extends JpaRepository<CommentVO, Integer> {
 	@Query(value = "select new com.doubleslash.fifth.dto.CommentDTO(c.cid, u.nickname, c.content, c.create_time) from CommentVO as c, UserVO as u where c.id=u.id and c.rid=?1")
 	public Page<CommentDTO> findByRid(int rid, Pageable pageable);
 	
+	@Query(value = "select new com.doubleslash.fifth.dto.CommentDTO(c.cid, u.nickname, c.content, c.create_time) from CommentVO as c, UserVO as u where c.id=u.id and c.cid = ?1")
+	public CommentDTO findByCid(int cid);
+
 	// 댓글 신고 수 증가
 	@Transactional
 	@Modifying

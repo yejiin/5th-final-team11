@@ -167,7 +167,12 @@ public class AlcoholService {
 	public WrapperDTO alcoholLove(int id, int aid) throws IOException {
 		
 		alcoholLoveRepository.insert(id, aid);
-		WrapperDTO dto = new WrapperDTO("Alcohol Love Success");
+		
+		Map<String, Object> res = new TreeMap<>();
+		res.put("love", true);
+		res.put("loveTotalCnt", alcoholLoveRepository.findCount(aid));
+		
+		WrapperDTO dto = new WrapperDTO(res);
 	
 		return dto;
 	}
@@ -175,8 +180,13 @@ public class AlcoholService {
 	public WrapperDTO alcoholLoveCancle(int id, int aid) {
 		
 		alcoholLoveRepository.delete(id, aid);
-		WrapperDTO dto = new WrapperDTO("Alcohol Love Cancle Success");
 
+		Map<String, Object> res = new TreeMap<>();
+		res.put("love", false);
+		res.put("loveTotalCnt", alcoholLoveRepository.findCount(aid));
+		
+		WrapperDTO dto = new WrapperDTO(res);
+	
 		return dto;
 	}
 	
