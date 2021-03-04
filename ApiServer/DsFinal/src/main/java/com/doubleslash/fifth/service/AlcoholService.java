@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -69,7 +70,7 @@ public class AlcoholService {
 		}
 		liquorMap.put("flavors", flavors);
 		if (id != -1) {
-			liquorMap.put("userDrink", getUserDrink(id, aid));
+			liquorMap.put("userDrink", getUserDrinkStr(id, aid));
 		}
 		liquorMap.put("similar", getSimilar(aid));
 		
@@ -93,7 +94,7 @@ public class AlcoholService {
 		beerMap.put("areas", areas);
 
 		if (id != -1) {
-			beerMap.put("userDrink", getUserDrink(id, aid));
+			beerMap.put("userDrink", getUserDrinkStr(id, aid));
 		}
 		beerMap.put("similar", getSimilar(aid));
 		return beerMap;
@@ -109,7 +110,7 @@ public class AlcoholService {
 		wineMap.put("kind", getKinds(wineDto.getKind()));
 
 		if (id != -1) {
-			wineMap.put("userDrink", getUserDrink(id, aid));
+			wineMap.put("userDrink", getUserDrinkStr(id, aid));
 		}
 		wineMap.put("similar", getSimilar(aid));
 		return wineMap;
@@ -126,7 +127,7 @@ public class AlcoholService {
 	}
 
 	// 주종별 사용자 주량
-	public double getUserDrink(int id, int aid) {
+	public String getUserDrinkStr(int id, int aid) {
 		Optional<UserVO> userVo = userRepository.findById(id);
 
 		// 소주 기준
@@ -142,8 +143,10 @@ public class AlcoholService {
 		double alcoholAmount = (alcoholAbv * alcoholMl / 100);
 
 		double userDrink = Math.round(sojuAmount / alcoholAmount * 10) / 10.0;
-		System.out.println("사용자 주량 : " + userDrink);
-		return userDrink;
+		
+		String res = "이 술에 맞는 " + userVo.get().getNickname() + " 님의 주량은 " + String.valueOf(userDrink) + " 병 입니다";
+	
+		return res;
 	}
 	
 	// 유사 주류 데이터

@@ -50,16 +50,18 @@ public class AlcoholController {
 		@ApiResponse(code = 400, message = "Alcohol Id Error"),
 	})
 	@ApiImplicitParam(name = "Authorization", value = "idToken", required = false, paramType = "header")
-	@GetMapping(value = "/detail/{aid}")
+	@GetMapping(value = "/{aid}", produces = "application/json; charset=utf8")
 	@ResponseBody
 	public String detail(@PathVariable("aid") int aid, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String uid = authService.verifyToken(request);
 		int id;
+		
 		if(uid == null) {
 			id = -1;
 		}else {
 			id = userService.getId(uid);
 		}
+
 		Map<String, Object> map = new HashMap<String, Object>();
 	
 		String category = alcoholService.getCategory(aid);

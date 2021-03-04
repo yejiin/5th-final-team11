@@ -82,13 +82,12 @@ public class SwaggerConfig extends WebMvcConfigurationSupport{
     	String paths[] = {
                 "/user/register",
                 "/user/savepoint",
-                "/review/*",
+                "/review/?????",
                 "/review/*/*",
                 "/review/*/*/*",
                 "/review",
                 "/alcohol/*/love",
                 "/alcohol/recommend",
-                "/alcohol/detail/*",
                 "/alcohol/rating",
                 "/cabinet/**"
         };
@@ -128,12 +127,18 @@ public class SwaggerConfig extends WebMvcConfigurationSupport{
                 "/review",
                 "/alcohol/*/love",
                 "/alcohol/recommend",
-                "/alcohol/detail/*",
                 "/alcohol/rating",
                 "/cabinet/**"
 		};
+		
+		String[] excludePathList = {
+				"/review/list",
+				"/review/comment"
+		};
+		
 		registry.addInterceptor(authInterceptor())
-			.addPathPatterns(includePathList);
+			.addPathPatterns(includePathList)
+			.excludePathPatterns(excludePathList);
 	}
 	
 	

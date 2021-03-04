@@ -57,7 +57,7 @@ public class UserService {
 	}
 	
 	public boolean isRecommendCheck(int id) {
-		if(recommendRepository.findById(id).isEmpty()) return false;
+		if(!recommendRepository.findById(id).isPresent()) return false;
 		return true;
 	}
 	
