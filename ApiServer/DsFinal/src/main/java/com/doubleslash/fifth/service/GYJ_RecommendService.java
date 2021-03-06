@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map.Entry;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -12,7 +13,6 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.domain.Sort.Order;
 import org.springframework.stereotype.Service;
 
-import com.doubleslash.fifth.dto.AlcoholSearchDTO;
 import com.doubleslash.fifth.dto.GYJ_AlcoholSearchDTO;
 import com.doubleslash.fifth.dto.RecommendDTO;
 import com.doubleslash.fifth.repository.AlcoholRepository;
@@ -44,6 +44,7 @@ public class GYJ_RecommendService {
 	private final int PRICE_WEIGHT = 40;
 	private final int CB_WEIGHT = 10;
 	
+	//추천 로직
 	public void createRecommend(RecommendDTO rec, int id){
 		double minAbv = rec.getMinAbv();
 		double maxAbv = calcAbv(rec.getMaxAbv());
@@ -61,7 +62,7 @@ public class GYJ_RecommendService {
 		//int celeb; 인지도
 		
 		//스코어링 Map
-		HashMap<Integer, Integer> score = new HashMap<>();
+		HashMap<Integer, RecommendDTO.map> score = new HashMap<>();
 		
 		RecommendDTO.liquor liquor = rec.getAlcohol().getLiquor();
 		if(liquor != null) {
@@ -74,7 +75,7 @@ public class GYJ_RecommendService {
 			for(int i = 0; i < liquorCompTarget.size(); i++) {
 				target = liquorCompTarget.get(i); //타겟 설정
 				int aid = target.getAid();
-				score.put(aid, 0); //스코어링 데이터 삽입
+				score.put(aid, new RecommendDTO.map("양주", 0)); //스코어링 데이터 삽입
 				
 				//맛 스코어링
 				String kind = target.getKind();
@@ -92,7 +93,7 @@ public class GYJ_RecommendService {
 					if(point == 0) flavorWeight = FLAVOR_WEIGHT - 15;
 					else if(point >= 2) flavorWeight = FLAVOR_WEIGHT + 10;
 				}
-				score.put(aid, score.get(aid) + flavorWeight);	
+				score.put(aid, new RecommendDTO.map("양주", score.get(aid).getRecScore() + flavorWeight));
 				
 				double abv = target.getAbv();
 				int price = (target.getHighestPrice() + target.getLowestPrice())/2;
@@ -100,15 +101,15 @@ public class GYJ_RecommendService {
 				
 				//도수 스코어링
 				if(minAbv <= abv && abv <= maxAbv) 
-					score.put(aid, score.get(aid) + abvWeight);
+					score.put(aid, new RecommendDTO.map("양주", score.get(aid).getRecScore() + abvWeight));
 				//가격 스코어링
 				if(minPrice <= price && price <= maxPrice)
-					score.put(aid, score.get(aid) + priceWeight);
+					score.put(aid, new RecommendDTO.map("양주", score.get(aid).getRecScore() + priceWeight));
 				//탄산여부 스코어링
 				if(recCb == cb)
-					score.put(aid, score.get(aid) + cbWeight);
+					score.put(aid, new RecommendDTO.map("양주", score.get(aid).getRecScore() + cbWeight));
 				
-				score.put(aid, score.get(aid) + target.getRecognition());
+				score.put(aid, new RecommendDTO.map("양주", score.get(aid).getRecScore() + target.getRecognition()));
 			}
 		}
 		
@@ -126,7 +127,7 @@ public class GYJ_RecommendService {
 			for(int i = 0; i < wineCompTarget.size(); i++) {
 				target = wineCompTarget.get(i); //타겟 설정
 				int aid = target.getAid();
-				score.put(aid, 0); //스코어링 데이터 삽입
+				score.put(aid, new RecommendDTO.map("와인", 0)); //스코어링 데이터 삽입
 				
 				//맛 스코어링
 				String kind = target.getKind();
@@ -141,7 +142,7 @@ public class GYJ_RecommendService {
 					if((recMinFlavor <= flavor && flavor <= recMaxFlavor) && (recMinBody <= body && body <= recMaxBody)) flavorWeight += 10;
 					else if(!((recMinFlavor <= flavor && flavor <= recMaxFlavor) && (recMinBody <= body && body <= recMaxBody))) flavorWeight -= 15;
 				}
-				score.put(aid, score.get(aid) + flavorWeight);	
+				score.put(aid, new RecommendDTO.map("와인", score.get(aid).getRecScore() + flavorWeight));	
 				
 				double abv = target.getAbv();
 				int price = (target.getHighestPrice() + target.getLowestPrice())/2;
@@ -149,15 +150,15 @@ public class GYJ_RecommendService {
 				
 				//도수 스코어링
 				if(minAbv <= abv && abv <= maxAbv) 
-					score.put(aid, score.get(aid) + abvWeight);
+					score.put(aid, new RecommendDTO.map("와인", score.get(aid).getRecScore() + abvWeight));	
 				//가격 스코어링
 				if(minPrice <= price && price <= maxPrice)
-					score.put(aid, score.get(aid) + priceWeight);
+					score.put(aid, new RecommendDTO.map("와인", score.get(aid).getRecScore() + priceWeight));	
 				//탄산여부 스코어링
 				if(recCb == cb)
-					score.put(aid, score.get(aid) + cbWeight);
+					score.put(aid, new RecommendDTO.map("와인", score.get(aid).getRecScore() + cbWeight));	
 				
-				score.put(aid, score.get(aid) + target.getRecognition());
+				score.put(aid, new RecommendDTO.map("와인", score.get(aid).getRecScore() + target.getRecognition()));	
 			}
 		}
 		
@@ -174,7 +175,7 @@ public class GYJ_RecommendService {
 			for(int i = 0; i < beerCompTarget.size(); i++) {
 				target = beerCompTarget.get(i); //타겟 설정
 				int aid = target.getAid();
-				score.put(aid, 0); //스코어링 데이터 삽입
+				score.put(aid, new RecommendDTO.map("세계맥주", 0)); //스코어링 데이터 삽입
 				
 				//맛 스코어링
 				String kind = target.getKind();
@@ -193,28 +194,25 @@ public class GYJ_RecommendService {
 				
 				if(recArea.contains(area)) flavorWeight += 5;
 				
-				score.put(aid, score.get(aid) + flavorWeight);	
+				score.put(aid, new RecommendDTO.map("세계맥주", score.get(aid).getRecScore() + flavorWeight));
 				
 				double abv = target.getAbv();
 				int price = (target.getHighestPrice() + target.getLowestPrice())/2;
 				int cb = target.getCb();
 				
 				//도수 스코어링
-				if(minAbv <= abv && abv <= maxAbv) 
-					score.put(aid, score.get(aid) + abvWeight);
+				if(minAbv <= abv && abv <= maxAbv)
+					score.put(aid, new RecommendDTO.map("세계맥주", score.get(aid).getRecScore() + abvWeight));
 				//가격 스코어링
 				if(minPrice <= price && price <= maxPrice)
-					score.put(aid, score.get(aid) + priceWeight);
+					score.put(aid, new RecommendDTO.map("세계맥주", score.get(aid).getRecScore() + priceWeight));
 				//탄산여부 스코어링
 				if(recCb == cb)
-					score.put(aid, score.get(aid) + cbWeight);
-				
-				score.put(aid, score.get(aid) + target.getRecognition());
+					score.put(aid, new RecommendDTO.map("세계맥주", score.get(aid).getRecScore() + cbWeight));
+					
+				score.put(aid, new RecommendDTO.map("세계맥주", score.get(aid).getRecScore() + target.getRecognition()));
 			}
 		}
-		
-		//스코어링된 주류를 스코어기준 내림차순으로 전부 정렬함
-		List<Integer> sortedAid = descending(score);
 		
 		try {
 			recommendRepository.delete(id);
@@ -222,12 +220,30 @@ public class GYJ_RecommendService {
 
 		}
 		
-		//새로운 추천데이터 생성
+		List<Entry<Integer, RecommendDTO.map>> entries = new ArrayList<Entry<Integer, RecommendDTO.map>>(score.entrySet());
+		
 		for(int i = 0; i < 10; i++) {
-			int aid = sortedAid.get(i);
-			int recScore = score.get(aid);
+			Collections.sort(entries, new Comparator<Entry<Integer, RecommendDTO.map>>() {
+				public int compare(Entry<Integer, RecommendDTO.map> obj1, Entry<Integer, RecommendDTO.map> obj2)
+				{
+					return Integer.compare(obj2.getValue().getRecScore(), obj1.getValue().getRecScore());
+				}
+			});	
+			
+			Entry<Integer, RecommendDTO.map> entry = entries.get(i);
+			int aid = entry.getKey();
+			String category = entry.getValue().getCategory();
+			int recScore = entry.getValue().getRecScore();
+			
+			for(int j = i+1; j < entries.size(); j++) {
+				RecommendDTO.map temp = entries.get(j).getValue();
+				if(temp.getCategory().equals(category)){
+					temp.setRecScore(temp.getRecScore() - 10);
+				}
+			}
 			recommendRepository.insert(id, aid, recScore);
 		}
+
 	}
 	
 	public List<GYJ_AlcoholSearchDTO> getRecommend(int id, String category, String sort, String sortOption) {
