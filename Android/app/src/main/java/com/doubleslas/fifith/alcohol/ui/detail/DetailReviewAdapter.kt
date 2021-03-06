@@ -156,8 +156,10 @@ class DetailReviewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         fun refreshCommentList() {
             val item = list!![adapterPosition]
             if (item.visibleCommentList) {
+                item.visibleComment = false
                 binding.layoutCommentList.visibility = View.VISIBLE
-                binding.layoutReviewComment.visibility = View.GONE
+
+                refreshCommentWrite()
             } else {
                 binding.layoutCommentList.visibility = View.GONE
             }
@@ -166,9 +168,11 @@ class DetailReviewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         fun refreshCommentWrite() {
             val item = list!![adapterPosition]
             if (item.visibleComment) {
-                binding.layoutCommentList.visibility = View.GONE
+                item.visibleCommentList = false
                 binding.layoutReviewComment.visibility = View.VISIBLE
                 binding.btnComment.setTextColor(Color.WHITE)
+
+                refreshCommentList()
             } else {
                 binding.layoutReviewComment.visibility = View.GONE
                 binding.btnComment.setTextColor(Color.parseColor("#A5A5A5"))
