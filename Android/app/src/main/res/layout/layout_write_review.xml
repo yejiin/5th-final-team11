@@ -42,7 +42,6 @@
             android:id="@+id/et_comment"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
             android:layout_marginHorizontal="20dp"
             android:layout_marginTop="19.5dp"
             android:background="@drawable/background_review_edit_text"
@@ -51,6 +50,7 @@
             android:minHeight="150dp"
             android:paddingHorizontal="16dp"
             android:paddingVertical="12dp"
+            android:textColor="@color/white"
             android:textColorHint="#A5A5A5"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -61,8 +61,8 @@
             android:id="@+id/layout_detail_toggle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="@id/et_comment"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@id/et_comment"
             app:layout_constraintTop_toBottomOf="@+id/et_comment">
 
             <ImageView
@@ -88,17 +88,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/review_private"
-            android:visibility="invisible"
             android:textColor="@color/white"
-            app:layout_constraintTop_toBottomOf="@+id/et_comment"
-            app:layout_constraintRight_toRightOf="@id/et_comment" />
+            android:visibility="invisible"
+            app:layout_constraintRight_toRightOf="@id/et_comment"
+            app:layout_constraintTop_toBottomOf="@+id/et_comment" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-    <include
+    <com.doubleslas.fifith.alcohol.view.ReviewDetailView
         android:id="@+id/layout_detail"
-        layout="@layout/view_review_detail"/>
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="16dp" />
+
     <Button
         android:id="@+id/btn_review_confirm"
         android:layout_width="match_parent"

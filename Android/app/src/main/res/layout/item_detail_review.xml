@@ -71,11 +71,11 @@
             tools:text="@string/lorem_ipsum" />
 
 
-        <include
-            android:id="@+id/layout_review"
-            layout="@layout/view_review_detail"
+        <com.doubleslas.fifith.alcohol.view.ReviewDetailView
+            android:id="@+id/layout_detail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
             android:layout_marginTop="10dp"
             app:layout_constraintTop_toBottomOf="@+id/tv_review" />
 
@@ -91,7 +91,7 @@
             android:paddingLeft="8dp"
             android:textColor="#A5A5A5"
             app:layout_constraintStart_toStartOf="@+id/tv_review"
-            app:layout_constraintTop_toBottomOf="@+id/layout_review"
+            app:layout_constraintTop_toBottomOf="@+id/layout_detail"
             tools:text="0" />
 
 

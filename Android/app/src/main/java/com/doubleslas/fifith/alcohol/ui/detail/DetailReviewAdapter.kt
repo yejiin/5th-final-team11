@@ -76,13 +76,10 @@ class DetailReviewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             }
 
             if (item.detail != null) {
-                layoutReview.seekBarHangover.seekBar.progress = item.detail.hangover!!
-                layoutReview.etPlace.setText(item.detail.place)
-                layoutReview.etPrice.setText(item.detail.price.toString())
-                layoutReview.etCalendar.setText(item.detail.date)
-                layoutReview.etDrink.setText(item.detail.drink.toString())
+                layoutDetail.visibility = View.VISIBLE
+                layoutDetail.bind(item.detail)
             } else {
-                layoutReview.layoutDetailReview.visibility = View.GONE
+                layoutDetail.visibility = View.GONE
             }
 
             btnReport.setOnClickListener {
@@ -117,15 +114,7 @@ class DetailReviewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         val commentHolder = ArrayList<ItemReviewCommentBinding>()
 
         init {
-            with(binding.layoutReview) {
-                etCalendar.isEnabled = false
-                etDrink.isEnabled = false
-                etPlace.isEnabled = false
-                etPrice.isEnabled = false
-                seekBarHangover.seekBar.isEnabled = false
-                seekBarHangover.tvLabel1.text = "없음"
-                seekBarHangover.tvLabel2.text = "심함"
-            }
+            binding.layoutDetail.setIndicator(true)
 
             // Comment
             binding.btnComment.setOnClickListener {

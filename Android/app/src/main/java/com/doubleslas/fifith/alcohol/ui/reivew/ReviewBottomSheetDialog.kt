@@ -32,7 +32,9 @@ class ReviewBottomSheetDialog private constructor() :
         CalendarDialogFragment().apply {
             setOnConfirmListener { year, month, day ->
                 val txt = "${year}.${month}.${day}"
-                binding?.layoutDetail?.etCalendar?.setText(txt)
+                binding?.let {
+                    it.layoutDetail.tvDate.text = txt
+                }
             }
         }
     }
@@ -49,13 +51,10 @@ class ReviewBottomSheetDialog private constructor() :
         super.onViewCreated(view, savedInstanceState)
 
         binding?.let { b ->
-            b.layoutDetail.seekBarHangover.tvLabel1.text = getString(R.string.hangover_none)
-            b.layoutDetail.seekBarHangover.tvLabel2.text = getString(R.string.hangover_heavy)
-
             b.ivDetailRecord.setImageResource(R.drawable.ic_review_button_plus)
-            b.layoutDetail.layoutDetailReview.visibility = View.GONE
+            b.layoutDetail.visibility = View.GONE
 
-            b.layoutDetail.etCalendar.setOnClickListener {
+            b.layoutDetail.tvDate.setOnClickListener {
                 activity!!.supportFragmentManager.let { fm ->
                     calendarDialogFragment.show(fm, null)
                 }
@@ -69,13 +68,13 @@ class ReviewBottomSheetDialog private constructor() :
             }
 
             b.layoutDetailToggle.setOnClickListener {
-                if (b.layoutDetail.layoutDetailReview.visibility == View.GONE) {
+                if (b.layoutDetail.visibility == View.GONE) {
                     b.ivDetailRecord.setImageResource(R.drawable.ic_review_button_x)
-                    b.layoutDetail.layoutDetailReview.visibility = View.VISIBLE
+                    b.layoutDetail.visibility = View.VISIBLE
                     b.checkboxPrivate.visibility = View.VISIBLE
                 } else {
                     b.ivDetailRecord.setImageResource(R.drawable.ic_review_button_plus)
-                    b.layoutDetail.layoutDetailReview.visibility = View.GONE
+                    b.layoutDetail.visibility = View.GONE
                     b.checkboxPrivate.visibility = View.INVISIBLE
                 }
             }
@@ -87,9 +86,9 @@ class ReviewBottomSheetDialog private constructor() :
 
 
             val detail =
-                if (b.layoutDetail.root.isVisible)
+                if (b.layoutDetail.isVisible)
                     ReviewDetailData(
-                        b.layoutDetail.etCalendar.text.toString(),
+                        b.layoutDetail.tvDate.text.toString(),
                         b.layoutDetail.etDrink.text.toString().toInt(),
                         b.layoutDetail.seekBarHangover.seekBar.progress,
                         b.layoutDetail.etPlace.text.toString(),
@@ -132,7 +131,7 @@ class ReviewBottomSheetDialog private constructor() :
                 binding?.etComment?.requestFocus()
             }
             is ReviewViewModel.ReviewValidateFail.DetailDateEmpty -> {
-                binding?.layoutDetail?.etCalendar?.requestFocus()
+                binding?.layoutDetail?.tvDate?.requestFocus()
             }
             is ReviewViewModel.ReviewValidateFail.DetailPlaceEmpty -> {
                 binding?.layoutDetail?.etPlace?.requestFocus()

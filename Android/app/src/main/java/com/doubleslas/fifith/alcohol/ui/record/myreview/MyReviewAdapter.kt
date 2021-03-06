@@ -73,10 +73,7 @@ class MyReviewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 item.visibleReview = !item.visibleReview
                 setVisibleDetail(item.visibleReview)
             }
-
-            binding.seekBarHangover.seekBar.isEnabled = false
-            binding.seekBarHangover.tvLabel1.text = App.getString(R.string.hangover_none)
-            binding.seekBarHangover.tvLabel2.text = App.getString(R.string.hangover_heavy)
+            binding.layoutDetail.setIndicator(true)
         }
 
         fun bind() {
@@ -96,30 +93,12 @@ class MyReviewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 binding.layoutDetail.visibility = View.GONE
             } else {
                 binding.layoutDetail.visibility = View.VISIBLE
-                setDetailText(binding.tvDate, detail.date)
-                setDetailText(binding.tvPlace, detail.place)
-                setDetailText(binding.tvDrink, detail.drink?.toString())
-                setDetailText(binding.tvPrice, detail.price?.toString())
-
-                if (detail.hangover == null) {
-                    binding.layoutHangover.visibility = View.GONE
-                } else {
-                    binding.layoutHangover.visibility = View.VISIBLE
-                    binding.seekBarHangover.seekBar.progress = detail.hangover
-                }
+                binding.layoutDetail.bind(detail)
             }
 
             setVisibleDetail(item.visibleReview)
         }
 
-        private fun setDetailText(textView: TextView, text: String?) {
-            if (text == null) {
-                (textView.parent as View).visibility = View.GONE
-            } else {
-                (textView.parent as View).visibility = View.VISIBLE
-                textView.text = text
-            }
-        }
 
         private fun setVisibleDetail(visible: Boolean) {
             binding.layoutReview.isVisible = visible
