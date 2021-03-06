@@ -3,9 +3,10 @@ package com.doubleslas.fifith.alcohol.ui.detail
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.doubleslas.fifith.alcohol.dto.DetailData
+import com.doubleslas.fifith.alcohol.dto.LikeResponse
+import com.doubleslas.fifith.alcohol.dto.ReviewCommentData
 import com.doubleslas.fifith.alcohol.dto.ReviewData
-import com.doubleslas.fifith.alcohol.model.base.ApiLiveData
-import com.doubleslas.fifith.alcohol.model.base.MediatorApiLiveData
+import com.doubleslas.fifith.alcohol.model.base.*
 import com.doubleslas.fifith.alcohol.ui.reivew.ReviewRepository
 import com.doubleslas.fifith.alcohol.utils.PageLoader
 
@@ -17,6 +18,7 @@ class DetailViewModel(val aid: Int) : ViewModel() {
     private val _infoLiveData = MediatorApiLiveData<DetailData>()
     val infoLiveData: ApiLiveData<DetailData> = _infoLiveData
     val reviewLiveData = reviewPageLoader.liveData
+    private var isLoadingWriteComment = false
 
 
     fun getDetail() {
@@ -39,12 +41,59 @@ class DetailViewModel(val aid: Int) : ViewModel() {
         return reviewPageLoader.isFinish()
     }
 
-    fun likeReview(rid: Int, value: Boolean) {
-        reviewRepository.likeReview(rid, value)
+    fun likeReview(item: ReviewData, value: Boolean): ApiLiveData<Any> {
+        val mediator = MediatorApiLiveData<Any>()
+        mediator.addSource(
+            reviewRepository.likeReview(item.rid, value),
+            object : MediatorApiCallback<LikeResponse> {
+                override fun onLoading() {
+                    mediator.value = ApiStatus.Loading
+                }
+
+                override fun onSuccess(code: Int, data: LikeResponse) {
+                    item.loveCount = data.loveCount
+                    item.isLove = data.love
+                    mediator.value = ApiStatus.Success(code, data)
+                }
+
+                override fun onError(code: Int, msg: String) {
+                    item.isLove = !value
+                    mediator.value = ApiStatus.Error(code, msg)
+                }
+            }
+        )
+
+        return mediator
     }
 
-    fun commentReview(rid: Int, content: String): ApiLiveData<Any> {
-        return reviewRepository.commentReview(rid, content)
+    fun commentReview(item: ReviewData, content: String): ApiLiveData<Any>? {
+        if (isLoadingWriteComment) return null
+
+        val mediator = MediatorApiLiveData<Any>()
+
+        mediator.addSource(
+            reviewRepository.commentReview(item.rid, content),
+            object : MediatorApiCallback<ReviewCommentData> {
+                override fun onLoading() {
+                    isLoadingWriteComment = true
+                    mediator.value = ApiStatus.Loading
+                }
+
+                override fun onSuccess(code: Int, data: ReviewCommentData) {
+                    isLoadingWriteComment = false
+                    item.commentCount++
+                    item.comments.add(0, data)
+                    mediator.value = ApiStatus.Success(code, data)
+                }
+
+                override fun onError(code: Int, msg: String) {
+                    isLoadingWriteComment = false
+                    mediator.value = ApiStatus.Error(code, msg)
+                }
+            }
+        )
+
+        return mediator
     }
 
     class Factory(private val param: Int) : ViewModelProvider.Factory {

@@ -1,9 +1,6 @@
 package com.doubleslas.fifith.alcohol.ui.reivew
 
-import com.doubleslas.fifith.alcohol.dto.ReviewCommentBody
-import com.doubleslas.fifith.alcohol.dto.ReviewLikeBody
-import com.doubleslas.fifith.alcohol.dto.ReviewList
-import com.doubleslas.fifith.alcohol.dto.WriteReviewData
+import com.doubleslas.fifith.alcohol.dto.*
 import com.doubleslas.fifith.alcohol.model.base.ApiLiveData
 import com.doubleslas.fifith.alcohol.model.base.RestClient
 
@@ -17,11 +14,11 @@ class ReviewRepository {
         return service.readReview(aid, reviewPage)
     }
 
-    fun commentReview(rid: Int, content: String): ApiLiveData<Any> {
+    fun commentReview(rid: Int, content: String): ApiLiveData<ReviewCommentData> {
         return service.writeComment(rid, ReviewCommentBody(content))
     }
 
-    fun likeReview(rid: Int, value: Boolean): ApiLiveData<Any> {
+    fun likeReview(rid: Int, value: Boolean): ApiLiveData<LikeResponse> {
         return service.likeReview(rid, ReviewLikeBody(value))
     }
 }

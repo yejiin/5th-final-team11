@@ -4,10 +4,12 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.RecyclerView
 import com.doubleslas.fifith.alcohol.databinding.ItemDetailReviewBinding
+import com.doubleslas.fifith.alcohol.databinding.ItemReviewCommentBinding
 import com.doubleslas.fifith.alcohol.dto.ReviewData
 import com.doubleslas.fifith.alcohol.ui.reivew.ReportBottomSheetDialog
 
@@ -41,15 +43,36 @@ class DetailReviewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 checkboxLike.visibility = View.VISIBLE
                 checkboxLike.isChecked = item.isLove!!
             }
-            checkboxLike.text = item.love.toString()
+            checkboxLike.text = item.loveCount.toString()
             etReviewComment.setText(item.cacheComment)
 
             if (item.comments.isEmpty()) {
                 btnCommentList.visibility = View.GONE
             } else {
-                btnCommentList.text =
-                    if (item.comments.size > 99) "+99" else item.comments.size.toString()
+                btnCommentList.text = item.commentCount.toString()
                 btnCommentList.visibility = View.VISIBLE
+
+                val inflater = LayoutInflater.from(root.context)
+                for (index in item.comments.indices) {
+                    if (holder.commentHolder.size <= index) {
+                        val b =
+                            ItemReviewCommentBinding.inflate(inflater, layoutCommentList, false)
+                        holder.commentHolder.add(b)
+                        layoutCommentList.addView(b.root)
+                    }
+
+                    val c = item.comments[index]
+                    val layout = holder.commentHolder[index]
+
+                    layout.root.visibility = View.VISIBLE
+                    layout.tvNickname.text = c.nickname
+                    layout.tvDate.text = c.commentDate
+                    layout.tvContent.text = c.content
+                }
+
+                for (index in item.comments.size until holder.commentHolder.size) {
+                    holder.commentHolder[index].root.visibility = View.GONE
+                }
             }
 
             if (item.detail != null) {
@@ -71,7 +94,8 @@ class DetailReviewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             }
         }
 
-        holder.refreshComment()
+        holder.refreshCommentList()
+        holder.refreshCommentWrite()
     }
 
     override fun getItemCount(): Int {
@@ -83,12 +107,15 @@ class DetailReviewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     interface ReviewItemListener {
-        fun comment(item: ReviewData, comment: String)
-        fun like(item: ReviewData, value: Boolean)
+        fun comment(position: Int, item: ReviewData, comment: String)
+        fun like(position: Int, item: ReviewData, value: Boolean)
     }
 
     inner class ReviewViewHolder(var binding: ItemDetailReviewBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
+        val commentHolder = ArrayList<ItemReviewCommentBinding>()
+
         init {
             with(binding.layoutReview) {
                 etCalendar.isEnabled = false
@@ -98,14 +125,13 @@ class DetailReviewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 seekBarHangover.seekBar.isEnabled = false
                 seekBarHangover.tvLabel1.text = "없음"
                 seekBarHangover.tvLabel2.text = "심함"
-
             }
 
             // Comment
             binding.btnComment.setOnClickListener {
                 val item = list!![adapterPosition]
                 item.visibleComment = !item.visibleComment
-                refreshComment()
+                refreshCommentWrite()
             }
 
             binding.btnCommentCancel.setOnClickListener {
@@ -113,17 +139,17 @@ class DetailReviewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 item.visibleComment = false
                 item.cacheComment = ""
                 binding.etReviewComment.setText("")
-                refreshComment()
+                refreshCommentWrite()
             }
 
             binding.btnCommentConfirm.setOnClickListener {
                 val item = list!![adapterPosition]
-                listener?.comment(item, binding.etReviewComment.text.toString())
+                listener?.comment(adapterPosition, item, binding.etReviewComment.text.toString())
             }
 
-            binding.checkboxLike.setOnCheckedChangeListener { _, isChecked ->
+            binding.checkboxLike.setOnClickListener {
                 val item = list!![adapterPosition]
-                listener?.like(item, isChecked)
+                listener?.like(adapterPosition, item, (it as CheckBox).isChecked)
             }
 
             binding.etReviewComment.addTextChangedListener {
@@ -142,14 +168,16 @@ class DetailReviewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             val item = list!![adapterPosition]
             if (item.visibleCommentList) {
                 binding.layoutCommentList.visibility = View.VISIBLE
+                binding.layoutReviewComment.visibility = View.GONE
             } else {
                 binding.layoutCommentList.visibility = View.GONE
             }
         }
 
-        fun refreshComment() {
+        fun refreshCommentWrite() {
             val item = list!![adapterPosition]
             if (item.visibleComment) {
+                binding.layoutCommentList.visibility = View.GONE
                 binding.layoutReviewComment.visibility = View.VISIBLE
                 binding.btnComment.setTextColor(Color.WHITE)
             } else {

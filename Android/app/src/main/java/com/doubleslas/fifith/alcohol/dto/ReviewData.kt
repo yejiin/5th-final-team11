@@ -6,13 +6,14 @@ data class ReviewData(
     val rid: Int,
     val nickname: String,
     val content: String,
-    val love: Int,
     val star: Float,
     val reviewDate: String,
     val detail: ReviewDetailData?,
-    val comments: List<ReviewCommentData>,
+    val comments: MutableList<ReviewCommentData>,
+    @SerializedName("commentTotalCnt") var commentCount: Int,
+    @SerializedName("love") var loveCount: Int,
     @SerializedName("loveClick") var isLove: Boolean?
-){
+) {
 
     // 클라 전용
     var visibleComment: Boolean = false

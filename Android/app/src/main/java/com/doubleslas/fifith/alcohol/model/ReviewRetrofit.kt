@@ -34,11 +34,11 @@ interface ReviewRetrofit {
     fun likeReview(
         @Path("rid") rid: Int,
         @Body loveClick: ReviewLikeBody
-    ): ApiLiveData<Any>
+    ): ApiLiveData<LikeResponse>
 
     @POST("/review/{rid}/comment")
     fun writeComment(
         @Path("rid") rid: Int,
         @Body content: ReviewCommentBody
-    ): ApiLiveData<Any>
+    ): ApiLiveData<ReviewCommentData>
 }
