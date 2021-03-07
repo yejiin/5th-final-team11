@@ -2,6 +2,7 @@ package com.doubleslash.fifth.dto;
 
 import java.util.List;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -56,6 +57,14 @@ public class RecommendDTO {
 	public static class beerKind{
 		List<String> mainKind;
 		List<String> subKind;
+	}
+	
+	@Getter
+	@Setter
+	@AllArgsConstructor
+	public static class map{
+		String category;
+		int recScore;
 	}
 	
 }

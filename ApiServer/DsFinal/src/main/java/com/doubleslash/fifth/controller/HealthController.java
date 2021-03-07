@@ -18,4 +18,9 @@ public class HealthController {
 		return "Server Status : ON";
 	}
 	
+	@RequestMapping(value = "/privacy")
+	public String privacy() {
+		return "privacy";
+	}
+	
 }
