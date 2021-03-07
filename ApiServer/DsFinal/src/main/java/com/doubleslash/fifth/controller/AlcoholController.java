@@ -2,6 +2,7 @@ package com.doubleslash.fifth.controller;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -93,19 +94,19 @@ public class AlcoholController {
 	})
 	@PutMapping(value = "/{aid}/love")
 	@ResponseBody
-	public WrapperDTO alcoholLove(@PathVariable int aid, @RequestBody LoveClickDTO loveClick, HttpServletRequest request) throws Exception {
+	public Map<String, Object> alcoholLove(@PathVariable int aid, @RequestBody LoveClickDTO loveClick, HttpServletRequest request) throws Exception {
 		String uid = authService.verifyToken(request);
 		int id = userService.getId(uid);
 
-		WrapperDTO dto = new WrapperDTO();
+		Map<String, Object> res = new TreeMap<>();
 		
 		if(loveClick.getLoveClick() == true) {
-			dto = alcoholService.alcoholLove(id, aid);
+			res = alcoholService.alcoholLove(id, aid);
 		} else if(loveClick.getLoveClick() == false) {
-			dto = alcoholService.alcoholLoveCancle(id, aid);
+			res = alcoholService.alcoholLoveCancle(id, aid);
 		}
 		
-		return dto;
+		return res;
 
 	}
 }

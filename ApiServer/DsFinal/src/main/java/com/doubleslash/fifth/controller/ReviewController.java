@@ -1,6 +1,7 @@
 package com.doubleslash.fifth.controller;
 
 import java.util.Map;
+import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -110,12 +111,11 @@ public class ReviewController {
 	})
 	@PostMapping(value = "/{rid}/comment")
 	@ResponseBody
-	public WrapperDTO commentWrite(@PathVariable("rid") int rid, @RequestBody ContentDTO content, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public Map<String, Object> commentWrite(@PathVariable("rid") int rid, @RequestBody ContentDTO content, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String uid = authService.verifyToken(request);
 		int id = userService.getId(uid);
-	
-		WrapperDTO dto = reviewService.addComment(id, rid, content, response);
-		return dto;
+		
+		return reviewService.addComment(id, rid, content, response);
 	}
 	
 	
@@ -158,19 +158,19 @@ public class ReviewController {
 	})
 	@PutMapping(value = "/{rid}/love")
 	@ResponseBody
-	public WrapperDTO reviewLove(@PathVariable int rid, @RequestBody LoveClickDTO loveClick, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public Map<String, Object> reviewLove(@PathVariable int rid, @RequestBody LoveClickDTO loveClick, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String uid = authService.verifyToken(request);
 		int id = userService.getId(uid);
-
-		WrapperDTO dto = new WrapperDTO();
+		
+		Map<String, Object> res = new TreeMap<>();
 		
 		if(loveClick.getLoveClick() == true) {
-			dto = reviewService.reviewLove(id, rid, response);
+			res = reviewService.reviewLove(id, rid, response);
 		}else if(loveClick.getLoveClick() == false) {
-			dto = reviewService.reviewLoveCancle(id, rid, response);
+			res = reviewService.reviewLoveCancle(id, rid, response);
 		}
 
-		return dto;
+		return res;
 	}
 	
 	@ApiOperation(value = "내 기록 조회")

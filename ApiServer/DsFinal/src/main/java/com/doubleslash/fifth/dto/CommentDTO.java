@@ -15,13 +15,13 @@ import lombok.Setter;
 @AllArgsConstructor
 public class CommentDTO {
 	
-	private int cid;
+	private int id;
 	
 	private String nickname;
 	
 	private String content;
 	
-	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy.MM.dd")
+	@JsonFormat(pattern="yyyy.MM.dd", timezone = "Asia/Seoul")
 	private Date commentDate;
 	
 }

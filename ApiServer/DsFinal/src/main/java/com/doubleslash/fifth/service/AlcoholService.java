@@ -164,31 +164,26 @@ public class AlcoholService {
 		return listResult;
 	}
 	
-	public WrapperDTO alcoholLove(int id, int aid) throws IOException {
+	public Map<String, Object> alcoholLove(int id, int aid) throws IOException {
 		
 		alcoholLoveRepository.insert(id, aid);
 		
 		Map<String, Object> res = new TreeMap<>();
 		res.put("love", true);
 		res.put("loveTotalCnt", alcoholLoveRepository.findCount(aid));
-		
-		WrapperDTO dto = new WrapperDTO(res);
 	
-		return dto;
+		return res;
 	}
 	
-	public WrapperDTO alcoholLoveCancle(int id, int aid) {
+	public Map<String, Object> alcoholLoveCancle(int id, int aid) {
 		
 		alcoholLoveRepository.delete(id, aid);
 
 		Map<String, Object> res = new TreeMap<>();
 		res.put("love", false);
 		res.put("loveTotalCnt", alcoholLoveRepository.findCount(aid));
-		
-		WrapperDTO dto = new WrapperDTO(res);
 	
-		return dto;
+		return res;
 	}
 	
-
 }

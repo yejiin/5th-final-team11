@@ -173,7 +173,7 @@ public class ReviewService {
 	}
 
 	// 댓글 작성
-	public WrapperDTO addComment(int id, int rid, ContentDTO content, HttpServletResponse response) throws IOException {
+	public Map<String, Object> addComment(int id, int rid, ContentDTO content, HttpServletResponse response) throws IOException {
 		if (reviewChk(rid) == 0) {
 			response.sendError(404, "Review Id Error");
 			return null;
@@ -192,14 +192,12 @@ public class ReviewService {
 		
 		Map<String, Object> res = new TreeMap<>();
 		
+		res.put("rid", commentDto.getId());
 		res.put("nickname", commentDto.getNickname());
 		res.put("content", commentDto.getContent());
 		res.put("date", date);
-	
-		WrapperDTO dto = new WrapperDTO(res);
 		
-		
-		return dto;
+		return res;
 	}
 
 	// 리뷰 신고
@@ -245,7 +243,7 @@ public class ReviewService {
 	}
 
 	// 리뷰 좋아요
-	public WrapperDTO reviewLove(int id, int rid, HttpServletResponse response) throws SQLIntegrityConstraintViolationException, IOException{
+	public Map<String, Object>  reviewLove(int id, int rid, HttpServletResponse response) throws SQLIntegrityConstraintViolationException, IOException{
 
 		if(reviewLoveRepository.insert(id, rid)==1) {
 			reviewRepository.updateLove(rid);
@@ -254,14 +252,12 @@ public class ReviewService {
 		Map<String, Object> res = new TreeMap<>();
 		res.put("love", true);
 		res.put("loveTotalCnt", reviewRepository.findById(rid).get().getLove());
-		
-		WrapperDTO dto = new WrapperDTO(res);
 
-		return dto;
+		return res;
 	}
 
 	// 리뷰 좋아요 취소
-	public WrapperDTO reviewLoveCancle(int id, int rid, HttpServletResponse response) throws IOException {
+	public Map<String, Object> reviewLoveCancle(int id, int rid, HttpServletResponse response) throws IOException {
 		
 		if(reviewLoveRepository.delete(id, rid)==1) {
 			reviewRepository.updateLoveCancle(rid);
@@ -270,10 +266,8 @@ public class ReviewService {
 		Map<String, Object> res = new TreeMap<>();
 		res.put("love", false);
 		res.put("loveTotalCnt", reviewRepository.findById(rid).get().getLove());
-		
-		WrapperDTO dto = new WrapperDTO(res);
 
-		return dto;
+		return res;
 	}
 
 	// 리뷰 id 확인
