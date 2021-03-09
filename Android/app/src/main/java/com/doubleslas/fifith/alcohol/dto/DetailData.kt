@@ -15,6 +15,7 @@ data class DetailData(
     @SerializedName("kind") val kind: List<String>,
     @SerializedName("description") val description: String,
     val similar: List<SimilarAlcoholData>,
+    val userDrink: String?,
 
     // 와인 추가속성
     @SerializedName("country") val country: String?,

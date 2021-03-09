@@ -139,6 +139,13 @@ class DetailInfoFragment : BaseFragment<FragmentDetailInfoBinding>() {
             } else {
                 b.layoutFlavor.visibility = View.GONE
             }
+
+            if (data.userDrink != null) {
+                b.tvAbvInfo.visibility = View.VISIBLE
+                b.tvAbvInfo.text = data.userDrink
+            } else {
+                b.tvAbvInfo.visibility = View.GONE
+            }
         }
     }
 
