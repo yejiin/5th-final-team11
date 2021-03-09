@@ -54,6 +54,6 @@ class LoadingRecyclerViewAdapter<A : RecyclerView.Adapter<RecyclerView.ViewHolde
         RecyclerView.ViewHolder(binding.root)
 
     companion object {
-        private const val VIEW_TYPE_LOADING = -1000
+        const val VIEW_TYPE_LOADING = -1000
     }
 }

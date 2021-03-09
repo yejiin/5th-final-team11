@@ -20,7 +20,7 @@ object RestClient {
     fun getSearchService(): SearchRetrofit = retrofit.create(SearchRetrofit::class.java)
     fun getReviewService(): ReviewRetrofit = retrofit.create(ReviewRetrofit::class.java)
     fun getRecommendService(): RecommendRetrofit = retrofit.create(RecommendRetrofit::class.java)
-
+    fun getCupboardService(): CupboardRetrofit = retrofit.create(CupboardRetrofit::class.java)
 
     private val retrofit =
         Retrofit.Builder().run {
