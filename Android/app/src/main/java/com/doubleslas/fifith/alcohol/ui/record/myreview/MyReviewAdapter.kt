@@ -3,21 +3,30 @@ package com.doubleslas.fifith.alcohol.ui.record.myreview
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.core.content.res.ResourcesCompat
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.doubleslas.fifith.alcohol.App
-import com.doubleslas.fifith.alcohol.R
 import com.doubleslas.fifith.alcohol.databinding.ItemMyReviewBinding
 import com.doubleslas.fifith.alcohol.databinding.ItemSortBinding
 import com.doubleslas.fifith.alcohol.dto.MyReviewData
-import com.doubleslas.fifith.alcohol.enum.SearchSortType
+import com.doubleslas.fifith.alcohol.sort.SortBottomSheetDialog
+import com.doubleslas.fifith.alcohol.sort.enum.MyReviewSortType
+import com.doubleslas.fifith.alcohol.sort.enum.SearchSortType
 
 class MyReviewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var list: List<MyReviewData>? = null
-    private var sortType: SearchSortType? = null
+    private var sortType: MyReviewSortType? = null
+
+    private var onSortChangeListener: ((MyReviewSortType) -> Unit)? = null
+    private val sortDialog by lazy {
+        SortBottomSheetDialog(MyReviewSortType.values()).apply {
+            setOnSortSelectListener {
+                sortType = it
+                onSortChangeListener?.invoke(it)
+            }
+        }
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -62,6 +71,10 @@ class MyReviewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     fun setData(list: List<MyReviewData>) {
         this.list = list
+    }
+
+    fun setOnChangeSortListener(listener: ((MyReviewSortType) -> Unit)?) {
+        this.onSortChangeListener = listener
     }
 
     inner class ReviewViewHolder(private val binding: ItemMyReviewBinding) :
@@ -115,9 +128,11 @@ class MyReviewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         RecyclerView.ViewHolder(binding.root) {
         init {
             binding.root.setOnClickListener {
-//                val activity = it.context as AppCompatActivity
-//                sortDialog.setInitSort(sortType ?: SearchSortType.Popular)
-//                sortDialog.show(activity.supportFragmentManager, null)
+                val activity = it.context as AppCompatActivity
+                sortDialog.show(
+                    activity.supportFragmentManager,
+                    sortType ?: MyReviewSortType.Time
+                )
             }
         }
     }

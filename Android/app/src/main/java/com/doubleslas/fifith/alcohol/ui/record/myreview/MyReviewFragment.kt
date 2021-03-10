@@ -1,7 +1,10 @@
 package com.doubleslas.fifith.alcohol.ui.record.myreview
 
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,7 +17,13 @@ import com.doubleslas.fifith.alcohol.ui.record.RecordMenuBottomSheetDialog
 
 class MyReviewFragment : BaseFragment<RecyclerviewBinding>() {
     private val viewModel by lazy { ViewModelProvider(this).get(MyReviewViewModel::class.java) }
-    private val adapter by lazy { MyReviewAdapter() }
+    private val adapter by lazy {
+        MyReviewAdapter().apply {
+            setOnChangeSortListener {
+                viewModel.setSort(it)
+            }
+        }
+    }
     private val loadingAdapter by lazy { LoadingRecyclerViewAdapter(adapter) }
 
 
@@ -53,8 +62,8 @@ class MyReviewFragment : BaseFragment<RecyclerviewBinding>() {
         when (item.itemId) {
             R.id.menu -> {
                 RecordMenuBottomSheetDialog().apply {
-                    setOnItemClickListener {
-                        when (it) {
+                    setOnItemClickListener { _, value ->
+                        when (value) {
                             getString(R.string.record_delete) -> setDeleteMode()
                         }
                     }

@@ -1,7 +1,7 @@
 package com.doubleslas.fifith.alcohol.ui.search
 
 import androidx.lifecycle.ViewModel
-import com.doubleslas.fifith.alcohol.enum.SearchSortType
+import com.doubleslas.fifith.alcohol.sort.enum.SearchSortType
 import com.doubleslas.fifith.alcohol.model.base.ApiLiveData
 import com.doubleslas.fifith.alcohol.dto.AlcoholSimpleData
 import com.doubleslas.fifith.alcohol.utils.PageLoader

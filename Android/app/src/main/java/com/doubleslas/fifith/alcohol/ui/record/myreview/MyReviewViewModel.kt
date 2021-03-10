@@ -2,9 +2,8 @@ package com.doubleslas.fifith.alcohol.ui.record.myreview
 
 import androidx.lifecycle.ViewModel
 import com.doubleslas.fifith.alcohol.dto.MyReviewData
-import com.doubleslas.fifith.alcohol.enum.MyReviewSortType
+import com.doubleslas.fifith.alcohol.sort.enum.MyReviewSortType
 import com.doubleslas.fifith.alcohol.model.base.ApiLiveData
-import com.doubleslas.fifith.alcohol.ui.record.myreview.MyReviewRepository
 import com.doubleslas.fifith.alcohol.utils.IPageLoaderViewModel
 import com.doubleslas.fifith.alcohol.utils.PageLoader
 

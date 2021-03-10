@@ -1,8 +1,7 @@
 package com.doubleslas.fifith.alcohol.ui.record.cupboard
 
 import com.doubleslas.fifith.alcohol.dto.CupboardList
-import com.doubleslas.fifith.alcohol.enum.CupboardSortType
-import com.doubleslas.fifith.alcohol.enum.MyReviewSortType
+import com.doubleslas.fifith.alcohol.sort.enum.CupboardSortType
 import com.doubleslas.fifith.alcohol.model.base.ApiLiveData
 import com.doubleslas.fifith.alcohol.model.base.RestClient
 

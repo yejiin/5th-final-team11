@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.doubleslas.fifith.alcohol.dto.AlcoholSimpleData
 import com.doubleslas.fifith.alcohol.dto.RecommendList
-import com.doubleslas.fifith.alcohol.enum.RecommendSortType
+import com.doubleslas.fifith.alcohol.sort.enum.RecommendSortType
 import com.doubleslas.fifith.alcohol.model.base.ApiLiveData
 import com.doubleslas.fifith.alcohol.model.base.MediatorApiCallback
 import com.doubleslas.fifith.alcohol.utils.PageLoader

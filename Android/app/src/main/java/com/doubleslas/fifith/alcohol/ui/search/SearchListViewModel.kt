@@ -3,7 +3,7 @@ package com.doubleslas.fifith.alcohol.ui.search
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.doubleslas.fifith.alcohol.dto.AlcoholSimpleData
-import com.doubleslas.fifith.alcohol.enum.SearchSortType
+import com.doubleslas.fifith.alcohol.sort.enum.SearchSortType
 import com.doubleslas.fifith.alcohol.model.base.ApiLiveData
 import com.doubleslas.fifith.alcohol.utils.IPageLoaderViewModel
 import com.doubleslas.fifith.alcohol.utils.PageLoader

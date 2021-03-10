@@ -13,7 +13,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.doubleslas.fifith.alcohol.R
 import com.doubleslas.fifith.alcohol.databinding.ItemSortRecommendBinding
 import com.doubleslas.fifith.alcohol.dto.AlcoholSimpleData
-import com.doubleslas.fifith.alcohol.enum.RecommendSortType
+import com.doubleslas.fifith.alcohol.sort.SortBottomSheetDialog
+import com.doubleslas.fifith.alcohol.sort.enum.RecommendSortType
 import com.doubleslas.fifith.alcohol.ui.auth.recommendinfo.RecommendInfoActivity
 import com.doubleslas.fifith.alcohol.ui.common.AlcoholListAdapter
 
@@ -21,7 +22,7 @@ class RecommendAlcoholListAdapter : AlcoholListAdapter() {
     private var sortType: RecommendSortType? = null
     private var onSortChangeListener: ((RecommendSortType) -> Unit)? = null
     private val sortDialog by lazy {
-        RecommendSortBottomSheetDialog().apply {
+        SortBottomSheetDialog(RecommendSortType.values()).apply {
             setOnSortSelectListener {
                 sortType = it
                 onSortChangeListener?.invoke(it)
@@ -128,8 +129,10 @@ class RecommendAlcoholListAdapter : AlcoholListAdapter() {
         init {
             binding.layoutSort.setOnClickListener {
                 val activity = it.context as AppCompatActivity
-                sortDialog.setInitSort(sortType ?: RecommendSortType.Recommend)
-                sortDialog.show(activity.supportFragmentManager, null)
+                sortDialog.show(
+                    activity.supportFragmentManager,
+                    sortType ?: RecommendSortType.Recommend
+                )
             }
 
             binding.layoutRecommend.setOnClickListener {

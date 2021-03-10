@@ -1,7 +1,7 @@
 package com.doubleslas.fifith.alcohol.ui.record.myreview
 
 import com.doubleslas.fifith.alcohol.dto.MyReviewList
-import com.doubleslas.fifith.alcohol.enum.MyReviewSortType
+import com.doubleslas.fifith.alcohol.sort.enum.MyReviewSortType
 import com.doubleslas.fifith.alcohol.model.base.ApiLiveData
 import com.doubleslas.fifith.alcohol.model.base.RestClient
 

@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.doubleslas.fifith.alcohol.databinding.ItemCupboardBinding
 import com.doubleslas.fifith.alcohol.dto.CupboardData
+import com.doubleslas.fifith.alcohol.ui.detail.AlcoholDetailActivity
 
 class CupboardAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var list: List<CupboardData>? = null
@@ -35,6 +36,15 @@ class CupboardAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
 
-    class CupboardViewHolder(val binding: ItemCupboardBinding) :
-        RecyclerView.ViewHolder(binding.root)
+    inner class CupboardViewHolder(val binding: ItemCupboardBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        init {
+            binding.root.setOnClickListener {
+                val context = binding.root.context
+                val item = list!![adapterPosition]
+                val intent = AlcoholDetailActivity.getStartIntent(context, item.aid)
+                context.startActivity(intent)
+            }
+        }
+    }
 }

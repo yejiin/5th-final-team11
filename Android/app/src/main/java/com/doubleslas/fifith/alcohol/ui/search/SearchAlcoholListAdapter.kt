@@ -5,15 +5,16 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.doubleslas.fifith.alcohol.databinding.ItemSortBinding
-import com.doubleslas.fifith.alcohol.enum.SearchSortType
 import com.doubleslas.fifith.alcohol.dto.AlcoholSimpleData
+import com.doubleslas.fifith.alcohol.sort.SortBottomSheetDialog
+import com.doubleslas.fifith.alcohol.sort.enum.SearchSortType
 import com.doubleslas.fifith.alcohol.ui.common.AlcoholListAdapter
 
 class SearchAlcoholListAdapter : AlcoholListAdapter() {
     private var sortType: SearchSortType? = null
     private var onSortChangeListener: ((SearchSortType) -> Unit)? = null
     private val sortDialog by lazy {
-        SearchSortBottomSheetDialog().apply {
+        SortBottomSheetDialog(SearchSortType.values()).apply {
             setOnSortSelectListener {
                 sortType = it
                 onSortChangeListener?.invoke(it)
@@ -72,8 +73,7 @@ class SearchAlcoholListAdapter : AlcoholListAdapter() {
         init {
             binding.root.setOnClickListener {
                 val activity = it.context as AppCompatActivity
-                sortDialog.setInitSort(sortType ?: SearchSortType.Popular)
-                sortDialog.show(activity.supportFragmentManager, null)
+                sortDialog.show(activity.supportFragmentManager, sortType ?: SearchSortType.Popular)
             }
         }
     }

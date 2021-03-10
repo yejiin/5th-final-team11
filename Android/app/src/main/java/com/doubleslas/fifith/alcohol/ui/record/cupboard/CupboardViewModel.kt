@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.doubleslas.fifith.alcohol.dto.CupboardData
-import com.doubleslas.fifith.alcohol.enum.CupboardSortType
+import com.doubleslas.fifith.alcohol.sort.enum.CupboardSortType
 import com.doubleslas.fifith.alcohol.utils.PageLoader
 
 class CupboardViewModel : ViewModel() {
@@ -23,6 +23,7 @@ class CupboardViewModel : ViewModel() {
     fun setSort(type: CupboardSortType) {
         _cupboardSort.value = type
         pageLoader.reset()
+        loadCupboardList()
     }
 
     fun loadCupboardList() {

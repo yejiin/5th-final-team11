@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.doubleslas.fifith.alcohol.R
 import com.doubleslas.fifith.alcohol.databinding.FragmentCupboardBinding
 import com.doubleslas.fifith.alcohol.model.base.ApiStatus
+import com.doubleslas.fifith.alcohol.sort.SortBottomSheetDialog
+import com.doubleslas.fifith.alcohol.sort.enum.CupboardSortType
 import com.doubleslas.fifith.alcohol.ui.common.LoadingRecyclerViewAdapter
 import com.doubleslas.fifith.alcohol.ui.common.LoadingRecyclerViewAdapter.Companion.VIEW_TYPE_LOADING
 import com.doubleslas.fifith.alcohol.ui.common.base.BaseFragment
@@ -22,10 +24,8 @@ class CupboardFragment : BaseFragment<FragmentCupboardBinding>() {
     private val loadingAdapter by lazy { LoadingRecyclerViewAdapter(adapter) }
 
     private val sortBottomSheetDialog by lazy {
-        CupboardSortBottomSheetDialog().apply {
-            setOnSortSelectListener {
-                viewModel.setSort(it)
-            }
+        SortBottomSheetDialog(CupboardSortType.values()).apply {
+            setOnSortSelectListener { viewModel.setSort(it) }
         }
     }
 
@@ -54,8 +54,7 @@ class CupboardFragment : BaseFragment<FragmentCupboardBinding>() {
             it.recyclerview.adapter = loadingAdapter
 
             it.layoutSort.root.setOnClickListener {
-                sortBottomSheetDialog.setInitSort(viewModel.cupboardSort.value!!)
-                sortBottomSheetDialog.show(fragmentManager!!, null)
+                sortBottomSheetDialog.show(fragmentManager!!, viewModel.cupboardSort.value!!)
             }
         }
 
@@ -83,8 +82,8 @@ class CupboardFragment : BaseFragment<FragmentCupboardBinding>() {
         when (item.itemId) {
             R.id.menu -> {
                 RecordMenuBottomSheetDialog().apply {
-                    setOnItemClickListener {
-                        when (it) {
+                    setOnItemClickListener { _, value ->
+                        when (value) {
                             getString(R.string.record_delete) -> setDeleteMode()
                         }
                     }
