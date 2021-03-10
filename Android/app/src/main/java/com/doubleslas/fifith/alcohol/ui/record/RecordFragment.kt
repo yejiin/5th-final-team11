@@ -1,14 +1,11 @@
 package com.doubleslas.fifith.alcohol.ui.record
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.doubleslas.fifith.alcohol.R
-import com.doubleslas.fifith.alcohol.databinding.FragmentRecommendBinding
 import com.doubleslas.fifith.alcohol.databinding.FragmentRecordBinding
 import com.doubleslas.fifith.alcohol.ui.common.base.BaseFragment
 import com.doubleslas.fifith.alcohol.ui.record.cupboard.CupboardFragment
@@ -31,6 +28,9 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>() {
         adapter = RecordViewPagerAdapter()
 
         binding?.let { b ->
+            setSupportActionBar(b.toolbar)
+
+
             b.viewPager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
             b.viewPager.adapter = adapter
 
@@ -42,6 +42,24 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>() {
                 }
             }.attach()
         }
+
+        getSupportActionBar()?.apply {
+            setDisplayShowTitleEnabled(false)
+            setHasOptionsMenu(true)
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.record_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return getCurrentFragment()?.onOptionsItemSelected(item) ?: false
+    }
+
+    private fun getCurrentFragment(): Fragment? {
+        val index = binding?.viewPager?.currentItem ?: -1
+        return childFragmentManager.findFragmentByTag("f${index}")
     }
 
     private inner class RecordViewPagerAdapter : FragmentStateAdapter(this) {

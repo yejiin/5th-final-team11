@@ -57,4 +57,8 @@
     <string name="first_input_default_info">기본 정보</string>
     <string name="first_input_select_info">선택 정보</string>
     <string name="first_input_select_info_sub">옵션 미선택 / 중복 선택 가능</string>
+
+
+    <string name="record_delete">삭제하기</string>
+    <string name="record_select_all">전체 선택</string>
 </resources>
