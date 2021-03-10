@@ -2,8 +2,10 @@ package com.doubleslas.fifith.alcohol.ui.recommend
 
 import android.content.Intent
 import android.content.res.Resources
+import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
@@ -26,6 +28,7 @@ class RecommendAlcoholListAdapter : AlcoholListAdapter() {
             }
         }
     }
+    private var rankList: List<AlcoholSimpleData>? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -58,19 +61,29 @@ class RecommendAlcoholListAdapter : AlcoholListAdapter() {
             }
             else -> {
                 super.onBindViewHolder(holder, position)
+
+                val rank = getRank(getItem(position))
+
                 if (holder is AlcoholViewHolder) {
                     holder.binding.let { b ->
-                        b.ivAlcohol.background =
-                            getRankBackground(position, holder.binding.root.resources)
-                        b.tvRank.setBackgroundResource(
-                            when (position) {
-                                0 -> R.drawable.ic_1st
-                                1 -> R.drawable.ic_2nd
-                                2 -> R.drawable.ic_3rd
-                                else -> R.drawable.ic_etc
-                            }
-                        )
-                        b.tvRank.setText(position + 1)
+                        if (rank == -1) {
+                            b.ivAlcohol.background = null
+                            b.tvRank.visibility = View.GONE
+                        } else {
+                            b.ivAlcohol.background =
+                                getRankBackground(rank, holder.binding.root.resources)
+                            b.tvRank.visibility = View.VISIBLE
+                            b.tvRank.setBackgroundResource(
+                                when (rank) {
+                                    0 -> R.drawable.ic_1st
+                                    1 -> R.drawable.ic_2nd
+                                    2 -> R.drawable.ic_3rd
+                                    else -> R.drawable.ic_etc
+                                }
+                            )
+                            b.tvRank.setTextColor(if (rank < 3) Color.WHITE else Color.BLACK)
+                            b.tvRank.text = (rank + 1).toString()
+                        }
                     }
                 }
             }
@@ -90,9 +103,17 @@ class RecommendAlcoholListAdapter : AlcoholListAdapter() {
         onSortChangeListener = listener
     }
 
+    fun setRankList(list: List<AlcoholSimpleData>) {
+        rankList = list
+    }
 
-    private fun getRankBackground(position: Int, resources: Resources): Drawable? {
-        val id = when (position) {
+    private fun getRank(item: AlcoholSimpleData): Int {
+        return rankList?.indexOf(item) ?: -1
+    }
+
+
+    private fun getRankBackground(rank: Int, resources: Resources): Drawable? {
+        val id = when (rank) {
             0 -> R.drawable.bg_1st
             1 -> R.drawable.bg_2nd
             2 -> R.drawable.bg_3rd

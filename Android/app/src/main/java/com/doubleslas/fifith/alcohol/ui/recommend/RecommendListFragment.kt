@@ -45,6 +45,8 @@ class RecommendListFragment private constructor() : BaseFragment<RecyclerviewBin
             when (it) {
                 is ApiStatus.Success -> {
                     adapter.setData(it.data)
+                    adapter.setRankList(RecommendViewModel.rankList)
+                    adapter.notifyDataSetChanged()
                 }
                 is ApiStatus.Error -> {
 
