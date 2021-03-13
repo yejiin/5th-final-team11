@@ -176,7 +176,7 @@ public class ReviewService {
 		commentVo.setContent(content.getContent());
 		commentRepository.save(commentVo);
 
-		CommentDTO commentDto = commentRepository.findByCid(vo.getCid());
+		CommentDTO commentDto = commentRepository.findByCid(commentVo.getCid());
 		
 		DateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd");
 		String date = dateFormat.format(commentDto.getCommentDate());
@@ -188,7 +188,7 @@ public class ReviewService {
 		res.put("content", commentDto.getContent());
 		res.put("date", date);
 		
-		return dto;
+		return res;
 	}
 
 	// 리뷰 신고
