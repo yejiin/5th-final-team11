@@ -116,6 +116,7 @@ class AuthRepository {
                 override fun onSuccess(code: Int, data: SavePoint) {
                     App.prefs.registerUserInfo = data.signUp
                     App.prefs.submitRecommendInfo = data.recommend
+                    mediator.value = ApiStatus.Success(code, data)
                 }
             })
 

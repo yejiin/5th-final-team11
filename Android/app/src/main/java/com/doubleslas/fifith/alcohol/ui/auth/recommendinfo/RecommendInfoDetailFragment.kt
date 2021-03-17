@@ -176,8 +176,8 @@ class RecommendInfoDetailFragment : BaseFragment<FragmentRecommendInfoDetailBind
                 }
             }
 
-            b.layoutBeerPlaceContent.let { layout ->
-                for (str in viewModel.getBeerPlaceList()) {
+            b.layoutBeerFlavorContent.let { layout ->
+                for (str in viewModel.getBeerFlavorList()) {
                     createChip(layout, str)
                 }
             }

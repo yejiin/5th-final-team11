@@ -8,8 +8,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.doubleslas.fifith.alcohol.R
 import com.doubleslas.fifith.alcohol.databinding.FragmentRecommendInfoDetailBinding
-import com.doubleslas.fifith.alcohol.model.base.ApiLiveData
 import com.doubleslas.fifith.alcohol.dto.recommend.*
+import com.doubleslas.fifith.alcohol.model.base.ApiLiveData
 import com.doubleslas.fifith.alcohol.model.base.ApiStatus
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
@@ -110,21 +110,25 @@ class RecommendInfoViewModel : ViewModel() {
         )
     }
 
-    fun getBeerPlaceList(): List<String> {
+    fun getBeerFlavorList(): List<String> {
         return listOf(
-            "한국",
-            "미국",
-            "유럽",
-            "일본",
-            "그 외"
+            "청량한",
+            "씁슬한",
+            "고소한",
+            "달달한",
+            "텁텁한",
+            "스파이시함",
+            "꽃향의",
+            "신맛의",
+            "과일향의"
         )
     }
 
-    fun getMinPrice() : Int{
+    fun getMinPrice(): Int {
         return 1000
     }
 
-    fun getMaxPrice(): Int{
+    fun getMaxPrice(): Int {
         return 300_000
     }
 
@@ -164,7 +168,7 @@ class RecommendInfoViewModel : ViewModel() {
 
                 RecommendInfoBeer(
                     RecommendInfoBeerType(mainType, subType),
-                    convertChipToList(binding.layoutBeerPlaceContent)
+                    convertChipToList(binding.layoutBeerFlavorContent)
                 )
             } else {
                 null

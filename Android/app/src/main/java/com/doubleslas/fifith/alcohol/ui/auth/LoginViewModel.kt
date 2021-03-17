@@ -68,9 +68,4 @@ class LoginViewModel : ViewModel() {
         mSignInLiveData.addSource(result)
     }
 
-    enum class AuthenticationState {
-        AUTHENTICATED, UNAUTHENTICATED, INVALID_AUTHENTICATION
-    }
-
-
 }

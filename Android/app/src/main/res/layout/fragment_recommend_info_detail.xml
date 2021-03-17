@@ -654,9 +654,9 @@
 
                 <!-- endregion -->
 
-                <!-- region beer_place -->
+                <!-- region beer_flavor -->
                 <TextView
-                    android:id="@+id/tv_beer_place_label"
+                    android:id="@+id/tv_beer_flavor_label"
                     style="@style/RecommendInfoStyle.Label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -671,18 +671,18 @@
                     android:layout_height="2dp"
                     android:layout_marginStart="20dp"
                     android:background="@drawable/dash_line"
-                    app:layout_constraintBottom_toBottomOf="@+id/tv_beer_place_label"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_beer_flavor_label"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/tv_beer_place_label"
-                    app:layout_constraintTop_toTopOf="@+id/tv_beer_place_label" />
+                    app:layout_constraintStart_toEndOf="@+id/tv_beer_flavor_label"
+                    app:layout_constraintTop_toTopOf="@+id/tv_beer_flavor_label" />
 
 
                 <com.google.android.material.chip.ChipGroup
-                    android:id="@+id/layout_beer_place_content"
+                    android:id="@+id/layout_beer_flavor_content"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingHorizontal="20dp"
-                    app:layout_constraintTop_toBottomOf="@id/tv_beer_place_label" />
+                    app:layout_constraintTop_toBottomOf="@id/tv_beer_flavor_label" />
                 <!-- endregion -->
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
