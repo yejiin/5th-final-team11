@@ -37,6 +37,10 @@ class DetailViewModel(val aid: Int) : ViewModel() {
         reviewPageLoader.addObserve(liveData)
     }
 
+    fun setFavorite(value: Boolean) {
+        detailRepository.setFavorite(aid, value)
+    }
+
     fun isFinishReview(): Boolean {
         return reviewPageLoader.isFinish()
     }

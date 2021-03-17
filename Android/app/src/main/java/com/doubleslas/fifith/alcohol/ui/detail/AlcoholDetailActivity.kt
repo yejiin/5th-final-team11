@@ -3,6 +3,7 @@ package com.doubleslas.fifith.alcohol.ui.detail
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -40,6 +41,10 @@ class AlcoholDetailActivity : AppCompatActivity() {
             tab.text = tabLayoutTextArray[position]
         }.attach()
 
+        binding.btnFavorite.setOnClickListener {
+            detailViewModel.setFavorite(binding.btnFavorite.isChecked)
+        }
+
         detailViewModel.infoLiveData.observe(this, Observer {
             when (it) {
                 is ApiStatus.Loading -> {
@@ -53,6 +58,7 @@ class AlcoholDetailActivity : AppCompatActivity() {
                     binding.detailRating.rating = it.data.starAvg
                     binding.tvAlcoholName.text = it.data.name
                     binding.tvDrinkName.text = it.data.name
+//                    binding.btnFavorite.isChecked = it.data
                 }
                 is ApiStatus.Error -> {
                 }
