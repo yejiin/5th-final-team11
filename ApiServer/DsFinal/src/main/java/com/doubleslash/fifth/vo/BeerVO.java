@@ -16,5 +16,5 @@ public class BeerVO {
 	
 	private String subKind;
 	
-	private String area;
+	private String flavor;
 }

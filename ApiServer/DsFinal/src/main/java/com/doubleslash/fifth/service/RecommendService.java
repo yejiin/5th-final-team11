@@ -181,7 +181,7 @@ public class RecommendService {
 				//맛 스코어링
 				String kind = target.getKind();
 				String subKind = target.getSubKind();
-				String area = target.getArea();
+				String flavor = target.getFlavor();
 				
 				int flavorWeight = FLAVOR_WEIGHT;
 				
@@ -193,7 +193,7 @@ public class RecommendService {
 					}
 				}
 				
-				if(recArea.contains(area)) flavorWeight += 5;
+				if(recArea.contains(flavor)) flavorWeight += 5;
 				
 				score.put(aid, new RecommendDTO.map("세계맥주", score.get(aid).getRecScore() + flavorWeight));
 				

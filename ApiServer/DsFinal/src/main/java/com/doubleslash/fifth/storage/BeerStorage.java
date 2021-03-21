@@ -23,7 +23,7 @@ public class BeerStorage {
 	
 	String subKind;
 	
-	String area;
+	String flavor;
 	
 	int cb;
 	

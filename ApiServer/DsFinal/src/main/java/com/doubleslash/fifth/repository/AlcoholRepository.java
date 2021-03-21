@@ -35,7 +35,7 @@ public interface AlcoholRepository extends JpaRepository<AlcoholVO, Integer>{
 	public List<WineStorage> AlcoholJoinWine();
 	
 	//맥주 공통 + 세부 속성 조회
-	@Query(value = "select new com.doubleslash.fifth.storage.BeerStorage(a.aid, a.lowestPrice, a.highestPrice, a.abv, a.kind, b.subKind, b.area, a.cb, a.recognition) from AlcoholVO as a, BeerVO as b where a.aid = b.aid")
+	@Query(value = "select new com.doubleslash.fifth.storage.BeerStorage(a.aid, a.lowestPrice, a.highestPrice, a.abv, a.kind, b.subKind, b.flavor, a.cb, a.recognition) from AlcoholVO as a, BeerVO as b where a.aid = b.aid")
 	public List<BeerStorage> AlcoholJoinBeer();
 	
 	// 양주 조회
@@ -43,7 +43,7 @@ public interface AlcoholRepository extends JpaRepository<AlcoholVO, Integer>{
 	public LiquorDTO findByAidLiquor(int aid);
 
 	// 맥주 조회
-	@Query(value = "select new com.doubleslash.fifth.dto.BeerDTO(a.aid, a.name, a.category, a.image, a.lowestPrice, a.highestPrice, a.ml, a.abv, a.description, a.kind, b.area, v.star, v.reviewCnt) from AlcoholVO as a, BeerVO as b, ViewSearchVO as v where a.aid = b.aid and a.aid = v.aid and a.aid = ?1")
+	@Query(value = "select new com.doubleslash.fifth.dto.BeerDTO(a.aid, a.name, a.category, a.image, a.lowestPrice, a.highestPrice, a.ml, a.abv, a.description, a.kind, b.flavor, v.star, v.reviewCnt) from AlcoholVO as a, BeerVO as b, ViewSearchVO as v where a.aid = b.aid and a.aid = v.aid and a.aid = ?1")
 	public BeerDTO findByAidBeer(int aid);
 	
 	// 와인 조회

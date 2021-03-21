@@ -86,12 +86,12 @@ public class AlcoholService {
 		beerMap.put("kind", getKinds(beerDto.getKind()));
 
 		// 지역 데이터 가공
-		List<String> areas = new ArrayList<String>();
-		String atemp[] = beerDto.getAreas().split("#");
+		List<String> flavors = new ArrayList<String>();
+		String atemp[] = beerDto.getFlavors().split("#");
 		for (int i = 0; i < atemp.length; i++) {
-			areas.add(atemp[i]);
+			flavors.add(atemp[i]);
 		}
-		beerMap.put("areas", areas);
+		beerMap.put("flavors", flavors);
 
 		if (id != -1) {
 			beerMap.put("userDrink", getUserDrinkStr(id, aid));
