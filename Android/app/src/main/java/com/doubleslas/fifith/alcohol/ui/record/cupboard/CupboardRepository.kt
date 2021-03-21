@@ -11,4 +11,9 @@ class CupboardRepository {
     fun loadList(page: Int, sortType: CupboardSortType): ApiLiveData<CupboardList> {
         return service.getCupboardList(page, sortType.sort, sortType.sortOption)
     }
+
+
+    fun loadLoveList(page: Int, sortType: CupboardSortType): ApiLiveData<CupboardList> {
+        return service.getLoveList(page, sortType.sort, sortType.sortOption)
+    }
 }

@@ -6,11 +6,10 @@
 
     <include
         android:id="@+id/layout_sort"
-        layout="@layout/item_sort"
-        />
+        layout="@layout/item_sort" />
 
     <CheckBox
-        android:visibility="gone"
+        android:id="@+id/checkbox_all"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
@@ -18,11 +17,12 @@
         android:paddingStart="8dp"
         android:text="@string/record_select_all"
         android:textColor="@color/white"
+        android:visibility="gone"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/switch_type" />
+        app:layout_constraintTop_toTopOf="@+id/switch_mode" />
 
     <androidx.appcompat.widget.SwitchCompat
-        android:id="@+id/switch_type"
+        android:id="@+id/switch_mode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/white"
@@ -37,5 +37,5 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/switch_type" />
+        app:layout_constraintTop_toBottomOf="@+id/switch_mode" />
 </androidx.constraintlayout.widget.ConstraintLayout>

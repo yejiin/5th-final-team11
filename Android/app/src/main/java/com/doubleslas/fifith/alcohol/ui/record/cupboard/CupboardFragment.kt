@@ -29,6 +29,16 @@ class CupboardFragment : BaseFragment<FragmentCupboardBinding>() {
         }
     }
 
+    private val menuBottomSheetDialog by lazy {
+        RecordMenuBottomSheetDialog().apply {
+            setOnItemClickListener { _, value ->
+                when (value) {
+                    getString(R.string.record_delete) -> setDeleteMode()
+                }
+            }
+        }
+    }
+
     override fun createViewBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -56,11 +66,20 @@ class CupboardFragment : BaseFragment<FragmentCupboardBinding>() {
             it.layoutSort.root.setOnClickListener {
                 sortBottomSheetDialog.show(fragmentManager!!, viewModel.cupboardSort.value!!)
             }
+
+            it.switchMode.setOnClickListener {
+                viewModel.toggleMode()
+            }
         }
 
+
         loadingAdapter.setOnBindLoadingListener {
-            viewModel.loadCupboardList()
+            viewModel.loadList()
         }
+
+//        viewModel.isLoveMode.observe(viewLifecycleOwner, Observer {
+//            binding?.switchMode?.isChecked = it
+//        })
 
         viewModel.cupboardSort.observe(viewLifecycleOwner, Observer {
             binding?.layoutSort?.tvSort?.text = it.text
@@ -73,6 +92,11 @@ class CupboardFragment : BaseFragment<FragmentCupboardBinding>() {
                     adapter.setData(it.data)
                     loadingAdapter.notifyDataSetChanged()
                 }
+                null -> {
+                    loadingAdapter.setVisibleLoading(!viewModel.isFinish())
+                    adapter.setData(null)
+                    loadingAdapter.notifyDataSetChanged()
+                }
             }
         })
     }
@@ -81,14 +105,7 @@ class CupboardFragment : BaseFragment<FragmentCupboardBinding>() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.menu -> {
-                RecordMenuBottomSheetDialog().apply {
-                    setOnItemClickListener { _, value ->
-                        when (value) {
-                            getString(R.string.record_delete) -> setDeleteMode()
-                        }
-                    }
-                    show(fragmentManager!!, null)
-                }
+                menuBottomSheetDialog.show(fragmentManager!!, null)
             }
         }
         return super.onOptionsItemSelected(item)
@@ -96,7 +113,21 @@ class CupboardFragment : BaseFragment<FragmentCupboardBinding>() {
 
 
     private fun setDeleteMode() {
-
+        viewModel.deleteMode = !viewModel.deleteMode
+        binding?.let { b ->
+            if (viewModel.deleteMode) {
+                b.layoutSort.root.visibility = View.GONE
+                b.checkboxAll.visibility = View.VISIBLE
+                adapter.setSelectMode(true)
+                loadingAdapter.notifyDataSetChanged()
+            } else {
+                b.layoutSort.root.visibility = View.VISIBLE
+                b.checkboxAll.visibility = View.GONE
+                b.checkboxAll.isChecked = false
+                adapter.setSelectMode(false)
+                loadingAdapter.notifyDataSetChanged()
+            }
+        }
     }
 
 }

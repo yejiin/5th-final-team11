@@ -12,4 +12,11 @@ interface CupboardRetrofit {
         @Query("sort") sort: String,
         @Query("sortOption") sortOption: String
     ): ApiLiveData<CupboardList>
+
+    @GET("/cabinet/love")
+    fun getLoveList(
+        @Query("page") page: Int,
+        @Query("sort") sort: String,
+        @Query("sortOption") sortOption: String
+    ): ApiLiveData<CupboardList>
 }

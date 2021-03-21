@@ -10,6 +10,8 @@ import com.doubleslas.fifith.alcohol.ui.detail.AlcoholDetailActivity
 
 class CupboardAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var list: List<CupboardData>? = null
+    private var selectMode = false
+    private val selectedItems = ArrayList<CupboardData>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -35,6 +37,10 @@ class CupboardAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         this.list = list
     }
 
+    fun setSelectMode(value: Boolean) {
+        selectMode = true
+        selectedItems.clear()
+    }
 
     inner class CupboardViewHolder(val binding: ItemCupboardBinding) :
         RecyclerView.ViewHolder(binding.root) {
