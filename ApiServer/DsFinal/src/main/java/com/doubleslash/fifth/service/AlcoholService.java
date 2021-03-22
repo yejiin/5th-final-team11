@@ -8,8 +8,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.TreeMap;
 
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +15,6 @@ import com.doubleslash.fifth.dto.BeerDTO;
 import com.doubleslash.fifth.dto.LiquorDTO;
 import com.doubleslash.fifth.dto.SimilarAlcoholDTO;
 import com.doubleslash.fifth.dto.WineDTO;
-import com.doubleslash.fifth.dto.WrapperDTO;
 import com.doubleslash.fifth.repository.AlcoholLoveRepository;
 import com.doubleslash.fifth.repository.AlcoholRepository;
 import com.doubleslash.fifth.repository.ReviewRepository;
@@ -60,7 +57,6 @@ public class AlcoholService {
 		LiquorDTO liquorDto = alcoholRepository.findByAidLiquor(aid);
 
 		Map<String, Object> liquorMap = objectMapper.convertValue(liquorDto, Map.class);
-		liquorMap.put("kind", getKinds(liquorDto.getKind()));
 
 		// 맛 데이터 가공
 		List<String> flavors = new ArrayList<String>();
@@ -83,9 +79,8 @@ public class AlcoholService {
 		BeerDTO beerDto = alcoholRepository.findByAidBeer(aid);
 
 		Map<String, Object> beerMap = objectMapper.convertValue(beerDto, Map.class);
-		beerMap.put("kind", getKinds(beerDto.getKind()));
 
-		// 지역 데이터 가공
+		// 맛 데이터 가공
 		List<String> flavors = new ArrayList<String>();
 		String atemp[] = beerDto.getFlavors().split("#");
 		for (int i = 0; i < atemp.length; i++) {
@@ -107,23 +102,12 @@ public class AlcoholService {
 
 		Map<String, Object> wineMap = objectMapper.convertValue(wineDto, Map.class);
 
-		wineMap.put("kind", getKinds(wineDto.getKind()));
 
 		if (id != -1) {
 			wineMap.put("userDrink", getUserDrinkStr(id, aid));
 		}
 		wineMap.put("similar", getSimilar(aid));
 		return wineMap;
-	}
-
-	// 종류(공통 속성) 데이터 가공
-	public List<String> getKinds(String kind) {
-		List<String> kinds = new ArrayList<String>();
-		String ktemp[] = kind.split("#");
-		for (int i = 0; i < ktemp.length; i++) {
-			kinds.add(ktemp[i]);
-		}
-		return kinds;
 	}
 
 	// 주종별 사용자 주량

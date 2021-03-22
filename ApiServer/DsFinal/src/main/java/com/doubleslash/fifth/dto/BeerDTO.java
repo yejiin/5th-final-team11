@@ -32,6 +32,8 @@ public class BeerDTO {
 	
 	private String kind;
 	
+	private String subKind;
+	
 	private String flavors;
 		
 	private double starAvg;
