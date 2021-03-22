@@ -74,16 +74,14 @@ class DetailInfoFragment : BaseFragment<FragmentDetailInfoBinding>() {
             }
 
             b.chipGroupKinds.removeAllViews()
-            for (str in data.kind) {
-                createChip(b.chipGroupKinds, str)
-            }
+            createChip(b.chipGroupKinds, data.kind)
+
 
             // 와인 파트
-            if (data.wineKind != null) { // 품종
+            if (data.subKind != null) { // 품종
                 b.tvRace.visibility = View.VISIBLE
                 b.tvRaceInfo.visibility = View.VISIBLE
-
-                b.tvRace.text = data.wineKind
+                b.tvRace.text = data.subKind
             } else {
                 b.tvRace.visibility = View.GONE
                 b.tvRaceInfo.visibility = View.GONE
@@ -111,19 +109,6 @@ class DetailInfoFragment : BaseFragment<FragmentDetailInfoBinding>() {
                 b.seekBarBody.tvLabel2.text = "Heavy"
             } else {
                 b.layoutBody.visibility = View.GONE
-            }
-
-
-            // 맥주 파트
-            if (data.areas != null) {
-                b.chipGroupAreas.visibility = View.VISIBLE
-
-                b.chipGroupAreas.removeAllViews()
-                for (str in data.areas) {
-                    createChip(b.chipGroupAreas, str)
-                }
-            } else {
-                b.chipGroupAreas.visibility = View.GONE
             }
 
             // 양주 파트
