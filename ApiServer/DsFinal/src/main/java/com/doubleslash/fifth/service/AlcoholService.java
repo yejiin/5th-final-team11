@@ -57,7 +57,7 @@ public class AlcoholService {
 		LiquorDTO liquorDto = alcoholRepository.findByAidLiquor(aid);
 
 		Map<String, Object> liquorMap = objectMapper.convertValue(liquorDto, Map.class);
-
+		
 		// 맛 데이터 가공
 		List<String> flavors = new ArrayList<String>();
 		String ftemp[] = liquorDto.getFlavors().split("#");
@@ -66,7 +66,14 @@ public class AlcoholService {
 		}
 		liquorMap.put("flavors", flavors);
 		if (id != -1) {
+			if(alcoholLoveRepository.findCount(id, aid) == 1) {
+				liquorMap.put("loveClick", true);
+			}else {
+				liquorMap.put("loveClick", false);
+			}
 			liquorMap.put("userDrink", getUserDrinkStr(id, aid));
+		}else {
+			liquorMap.put("loveClick", false);
 		}
 		liquorMap.put("similar", getSimilar(aid));
 		
@@ -89,7 +96,14 @@ public class AlcoholService {
 		beerMap.put("flavors", flavors);
 
 		if (id != -1) {
+			if(alcoholLoveRepository.findCount(id, aid) == 1) {
+				beerMap.put("loveClick", true);
+			}else {
+				beerMap.put("loveClick", false);
+			}
 			beerMap.put("userDrink", getUserDrinkStr(id, aid));
+		}else {
+			beerMap.put("loveClick", false);
 		}
 		beerMap.put("similar", getSimilar(aid));
 		return beerMap;
@@ -104,7 +118,14 @@ public class AlcoholService {
 
 
 		if (id != -1) {
+			if(alcoholLoveRepository.findCount(id, aid) == 1) {
+				wineMap.put("loveClick", true);
+			}else {
+				wineMap.put("loveClick", false);
+			}
 			wineMap.put("userDrink", getUserDrinkStr(id, aid));
+		}else {
+			wineMap.put("loveClick", false);
 		}
 		wineMap.put("similar", getSimilar(aid));
 		return wineMap;
@@ -154,7 +175,7 @@ public class AlcoholService {
 		
 		Map<String, Object> res = new TreeMap<>();
 		res.put("love", true);
-		res.put("loveTotalCnt", alcoholLoveRepository.findCount(aid));
+		res.put("loveTotalCnt", alcoholLoveRepository.findAidCount(aid));
 	
 		return res;
 	}
@@ -165,7 +186,7 @@ public class AlcoholService {
 
 		Map<String, Object> res = new TreeMap<>();
 		res.put("love", false);
-		res.put("loveTotalCnt", alcoholLoveRepository.findCount(aid));
+		res.put("loveTotalCnt", alcoholLoveRepository.findAidCount(aid));
 	
 		return res;
 	}

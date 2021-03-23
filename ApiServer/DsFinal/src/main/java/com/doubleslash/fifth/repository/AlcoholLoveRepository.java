@@ -1,7 +1,5 @@
 package com.doubleslash.fifth.repository;
 
-import java.util.List;
-
 import javax.transaction.Transactional;
 
 import org.springframework.data.domain.Page;
@@ -36,6 +34,9 @@ public interface AlcoholLoveRepository extends JpaRepository<AlcoholLoveVO, Inte
 	public Page<CabinetDTO> findLoveAlcoholOrderAbv(int id, Pageable pageable);
 	
 	@Query(value = "select count(aid) from AlcoholLoveVO where aid = ?1")
-	public int findCount(int aid);
+	public int findAidCount(int aid);
+	
+	@Query(value = "select count(aid) from AlcoholLoveVO where id = ?1 and aid = ?2")
+	public int findCount(int id, int aid);
 
 }
