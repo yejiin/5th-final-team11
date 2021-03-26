@@ -63,4 +63,6 @@ class PageLoader<T> {
         totalCount = null
         list.clear()
     }
+
+    fun getList(): List<T> = list
 }

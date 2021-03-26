@@ -16,9 +16,10 @@ import com.doubleslas.fifith.alcohol.sort.enum.CupboardSortType
 import com.doubleslas.fifith.alcohol.ui.common.LoadingRecyclerViewAdapter
 import com.doubleslas.fifith.alcohol.ui.common.LoadingRecyclerViewAdapter.Companion.VIEW_TYPE_LOADING
 import com.doubleslas.fifith.alcohol.ui.common.base.BaseFragment
+import com.doubleslas.fifith.alcohol.ui.main.IOnBackPressed
 import com.doubleslas.fifith.alcohol.ui.record.RecordMenuBottomSheetDialog
 
-class CupboardFragment : BaseFragment<FragmentCupboardBinding>() {
+class CupboardFragment : BaseFragment<FragmentCupboardBinding>(), IOnBackPressed {
     private val viewModel by lazy { ViewModelProvider(this).get(CupboardViewModel::class.java) }
     private val adapter by lazy { CupboardAdapter() }
     private val loadingAdapter by lazy { LoadingRecyclerViewAdapter(adapter) }
@@ -33,7 +34,7 @@ class CupboardFragment : BaseFragment<FragmentCupboardBinding>() {
         RecordMenuBottomSheetDialog().apply {
             setOnItemClickListener { _, value ->
                 when (value) {
-                    getString(R.string.record_delete) -> setDeleteMode()
+                    getString(R.string.record_delete) -> setDeleteMode(true)
                 }
             }
         }
@@ -70,6 +71,10 @@ class CupboardFragment : BaseFragment<FragmentCupboardBinding>() {
             it.switchMode.setOnClickListener {
                 viewModel.toggleMode()
             }
+
+            it.btnDelete.setOnClickListener {
+                viewModel.deleteList()
+            }
         }
 
 
@@ -101,6 +106,10 @@ class CupboardFragment : BaseFragment<FragmentCupboardBinding>() {
         })
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.allReset()
+    }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
@@ -111,18 +120,25 @@ class CupboardFragment : BaseFragment<FragmentCupboardBinding>() {
         return super.onOptionsItemSelected(item)
     }
 
+    override fun onBackPressed(): Boolean {
+        if (!viewModel.deleteMode) return false
+        setDeleteMode(false)
+        return true
+    }
 
-    private fun setDeleteMode() {
-        viewModel.deleteMode = !viewModel.deleteMode
+    private fun setDeleteMode(value: Boolean) {
+        viewModel.deleteMode = value
         binding?.let { b ->
             if (viewModel.deleteMode) {
                 b.layoutSort.root.visibility = View.GONE
                 b.checkboxAll.visibility = View.VISIBLE
+                b.btnDelete.visibility = View.VISIBLE
                 adapter.setSelectMode(true)
                 loadingAdapter.notifyDataSetChanged()
             } else {
                 b.layoutSort.root.visibility = View.VISIBLE
                 b.checkboxAll.visibility = View.GONE
+                b.btnDelete.visibility = View.GONE
                 b.checkboxAll.isChecked = false
                 adapter.setSelectMode(false)
                 loadingAdapter.notifyDataSetChanged()

@@ -3,11 +3,11 @@ package com.doubleslas.fifith.alcohol.ui.main
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentManager
 import com.doubleslas.fifith.alcohol.R
 import com.doubleslas.fifith.alcohol.databinding.ActivityMainBinding
 import com.doubleslas.fifith.alcohol.ui.recommend.RecommendFragment
 import com.doubleslas.fifith.alcohol.ui.record.RecordFragment
-import com.doubleslas.fifith.alcohol.ui.record.myreview.MyReviewFragment
 import com.doubleslas.fifith.alcohol.ui.search.SearchFragment
 import com.doubleslas.fifith.alcohol.ui.stats.StatsFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -63,11 +63,24 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     }
 
     override fun onBackPressed() {
+        if (onBackPressedFragment(supportFragmentManager)) return
+
         if (searchFragment.childFragmentManager.backStackEntryCount >= 1) {
             searchFragment.childFragmentManager.popBackStackImmediate()
         } else {
             super.onBackPressed()
         }
+    }
+
+    private fun onBackPressedFragment(fm: FragmentManager): Boolean {
+        for (f in fm.fragments) {
+            if (!f.isVisible) continue
+            if (onBackPressedFragment(f.childFragmentManager)) return true
+            if (f is IOnBackPressed) {
+                if (f.onBackPressed()) return true
+            }
+        }
+        return false
     }
 
 

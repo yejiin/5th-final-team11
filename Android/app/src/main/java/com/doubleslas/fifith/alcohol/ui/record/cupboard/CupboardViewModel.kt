@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import com.doubleslas.fifith.alcohol.dto.CupboardData
+import com.doubleslas.fifith.alcohol.model.base.ApiStatus
 import com.doubleslas.fifith.alcohol.model.base.MediatorApiLiveData
 import com.doubleslas.fifith.alcohol.sort.enum.CupboardSortType
 import com.doubleslas.fifith.alcohol.utils.PageLoader
@@ -36,6 +37,7 @@ class CupboardViewModel : ViewModel() {
             if (!isLoveMode) return@Observer
             _listLiveData.value = it
         })
+
     }
 
 
@@ -57,6 +59,20 @@ class CupboardViewModel : ViewModel() {
         else loadCupboardList()
     }
 
+    fun deleteList() {
+        val pageLoader = if (isLoveMode) lovePageLoader else pageLoader
+        val list = pageLoader.getList()
+        val liveData = repository.deleteLoveList(list)
+
+        _listLiveData.addSource(liveData, Observer {
+            if (it is ApiStatus.Success) {
+                pageLoader.reset()
+                loadList()
+            }
+            if (it !is ApiStatus.Loading) _listLiveData.removeSource(liveData)
+        })
+    }
+
     private fun loadCupboardList() {
         if (!pageLoader.canLoadList()) return
 
@@ -74,6 +90,11 @@ class CupboardViewModel : ViewModel() {
     fun isFinish(): Boolean {
         return if (isLoveMode) lovePageLoader.isFinish()
         else pageLoader.isFinish()
+    }
+
+    fun allReset(){
+        pageLoader.reset()
+        lovePageLoader.reset()
     }
 
 }
