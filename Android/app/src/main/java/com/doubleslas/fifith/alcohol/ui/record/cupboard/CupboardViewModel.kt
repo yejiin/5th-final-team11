@@ -1,5 +1,6 @@
 package com.doubleslas.fifith.alcohol.ui.record.cupboard
 
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
@@ -25,6 +26,7 @@ class CupboardViewModel : ViewModel() {
 
     private val _listLiveData = MediatorApiLiveData<List<CupboardData>>()
     val listLiveData = _listLiveData
+
 
     init {
         setSort(CupboardSortType.Time)
@@ -52,6 +54,7 @@ class CupboardViewModel : ViewModel() {
         isLoveMode = !isLoveMode
         _listLiveData.value =
             if (isLoveMode) lovePageLoader.liveData.value else pageLoader.liveData.value
+
     }
 
     fun loadList() {

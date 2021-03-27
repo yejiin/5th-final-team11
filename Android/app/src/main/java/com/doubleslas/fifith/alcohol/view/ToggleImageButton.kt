@@ -2,6 +2,7 @@ package com.doubleslas.fifith.alcohol.view
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.View
 import android.widget.Checkable
 import com.doubleslas.fifith.alcohol.R
 
@@ -11,6 +12,8 @@ class ToggleImageButton(context: Context, attrs: AttributeSet?, defStyle: Int) :
     , Checkable {
     constructor(context: Context) : this(context, null, 0)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
+
+    private var onCheckedChangedListener: ((View, Boolean) -> Unit)? = null
 
     init {
         if (attrs != null) {
@@ -33,6 +36,11 @@ class ToggleImageButton(context: Context, attrs: AttributeSet?, defStyle: Int) :
 
     override fun setChecked(checked: Boolean) {
         isSelected = checked
+        onCheckedChangedListener?.invoke(this, checked)
+    }
+
+    fun setOnCheckedChangeListener(listener: (View, Boolean) -> Unit) {
+        onCheckedChangedListener = listener
     }
 
     private fun setChecked(attrs: AttributeSet) {
@@ -40,5 +48,4 @@ class ToggleImageButton(context: Context, attrs: AttributeSet?, defStyle: Int) :
         isChecked = a.getBoolean(R.styleable.ToggleImageButton_android_checked, false)
         a.recycle()
     }
-
 }

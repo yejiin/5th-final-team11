@@ -32,6 +32,7 @@ class CupboardAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 .into(b.ivAlcohol)
 
             b.checkbox.visibility = if (selectMode) View.VISIBLE else View.GONE
+            b.bgSelected.visibility = if (selectMode && item.isSelected) View.VISIBLE else View.GONE
             b.checkbox.isChecked = item.isSelected
         }
     }
@@ -67,6 +68,9 @@ class CupboardAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             binding.checkbox.setOnCheckedChangeListener { _, isChecked ->
                 val item = list!![adapterPosition]
                 item.isSelected = isChecked
+                notifyItemChanged(adapterPosition)
+                binding.bgSelected.visibility =
+                    if (item.isSelected) View.VISIBLE else View.GONE
             }
         }
     }
