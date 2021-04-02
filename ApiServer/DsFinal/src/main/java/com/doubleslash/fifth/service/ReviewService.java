@@ -91,6 +91,7 @@ public class ReviewService {
 			// 해당 리뷰 댓글 (최신순 3개)
 			Page<CommentDTO> commentDto = commentRepository.findByRid(rid, PageRequest.of(0, 3, Sort.Direction.DESC, "cid"));
 			reviewDto.getContent().get(i).setComments(commentDto.getContent());
+			reviewDto.getContent().get(i).setCommentTotalCnt(commentDto.getTotalElements());
 
 		}
 
@@ -132,7 +133,7 @@ public class ReviewService {
 		Date date = new Date();
 		String dateToStr = dateFormat.format(date);
 		
-		ReviewVO chk = reviewRepository.findById(id, dateToStr);
+		ReviewVO chk = reviewRepository.findById(id, aid, dateToStr);
 
 		if(chk != null) {
 			response.sendError(403, "Writing Restriction");
