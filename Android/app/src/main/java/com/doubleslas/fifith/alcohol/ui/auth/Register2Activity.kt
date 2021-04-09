@@ -21,7 +21,8 @@ class Register2Activity : AppCompatActivity(), SeekBar.OnSeekBarChangeListener {
         super.onCreate(savedInstanceState)
         activityRegister2Binding = ActivityRegister2Binding.inflate(layoutInflater)
         setContentView(activityRegister2Binding.root)
-        val intent = intent
+
+
         activityRegister2Binding.seekbarDrinkCapacity.seekBar.setOnSeekBarChangeListener(this)
         activityRegister2Binding.btnEndRegister2.isEnabled = false
 
@@ -68,10 +69,7 @@ class Register2Activity : AppCompatActivity(), SeekBar.OnSeekBarChangeListener {
                 activityRegister2Binding.layoutNumberPicker.visibility = View.GONE
                 activityRegister2Binding.btnEndRegister2.visibility = View.VISIBLE
                 activityRegister2Binding.btnEndRegister2.isEnabled = true
-
             }
-
-
         }
 
         activityRegister2Binding.btnEndRegister2.setOnClickListener {
