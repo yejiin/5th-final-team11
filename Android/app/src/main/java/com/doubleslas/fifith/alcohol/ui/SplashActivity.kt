@@ -8,6 +8,8 @@ import com.doubleslas.fifith.alcohol.App
 import com.doubleslas.fifith.alcohol.databinding.ActivitySplashBinding
 import com.doubleslas.fifith.alcohol.ui.auth.AgeCheckActivity
 import com.doubleslas.fifith.alcohol.ui.auth.LoginActivity
+import com.doubleslas.fifith.alcohol.ui.auth.Register2Activity
+import com.doubleslas.fifith.alcohol.ui.auth.RegisterActivity
 import com.doubleslas.fifith.alcohol.ui.auth.recommendinfo.RecommendInfoActivity
 import com.doubleslas.fifith.alcohol.ui.main.MainActivity
 
@@ -36,7 +38,7 @@ class SplashActivity : AppCompatActivity() {
 //                        App.prefs.submitRecommendInfo -> MainActivity::class.java
 //                        App.prefs.registerUserInfo -> RecommendInfoActivity::class.java
 //                        else -> AgeCheckActivity::class.java
-                        else -> MainActivity::class.java
+                        else -> Register2Activity::class.java
                     }
                 )
                 startActivity(intent)

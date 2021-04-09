@@ -13,6 +13,8 @@
     
     <dimen name="detail_margin_label_content_distance">8dp</dimen>
 
+    <dimen name="checkbox_margin">12dp</dimen>
+
     <dimen name="radius_alcohol_bg">10dp</dimen>
 
 </resources>
