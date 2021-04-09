@@ -1,7 +1,11 @@
 package com.doubleslas.fifith.alcohol.ui.auth
 
 import android.content.Intent
+import android.graphics.Typeface
 import android.os.Bundle
+import android.text.Spannable
+import android.text.SpannableStringBuilder
+import android.text.style.StyleSpan
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -37,7 +41,19 @@ class LoginActivity : AppCompatActivity() {
         activityLoginBinding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(activityLoginBinding.root)
 
-        activityLoginBinding.btnCustomFacebook.setOnClickListener {
+
+        val strSubTitle = getString(R.string.login_sub_title) + "\n"
+        val strMainTitle = getString(R.string.login_main_title)
+        val str: SpannableStringBuilder = SpannableStringBuilder(strSubTitle + strMainTitle)
+        str.setSpan(
+            StyleSpan(Typeface.BOLD),
+            strSubTitle.length,
+            str.length,
+            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+//        activityLoginBinding.tvTitle.text = str;
+
+        activityLoginBinding.btnFacebook.setOnClickListener {
             activityLoginBinding.btnLoginFacebook.performClick()
         }
         activityLoginBinding.btnBrowse.setOnClickListener {
@@ -59,14 +75,14 @@ class LoginActivity : AppCompatActivity() {
         val googleSignInClient = GoogleSignIn.getClient(this, googleSignInOption)
 
 
-        activityLoginBinding.btnCustomGoogle.setOnClickListener {
+        activityLoginBinding.btnGoogle.setOnClickListener {
             val signInIntent = googleSignInClient.signInIntent
             startActivityForResult(signInIntent, GOOGLE_SIGN_IN)
         }
 
 
 
-        activityLoginBinding.btnLoginKakao.setOnClickListener {
+        activityLoginBinding.btnKakao.setOnClickListener {
             if (LoginClient.instance.isKakaoTalkLoginAvailable(this)) {
                 LoginClient.instance.loginWithKakaoTalk(this) { token, error ->
                     if (token != null) {

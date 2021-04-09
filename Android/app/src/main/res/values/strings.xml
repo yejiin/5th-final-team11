@@ -2,7 +2,8 @@
     <string name="app_name">시시콜콜</string>
     <string name="facebook_app_id">110001590897403</string>
     <string name="fb_login_protocol_scheme">fb110001590897403</string>
-    <string name="main_title"><font fgcolor='#C3C3C3'>당신만을 위한</font>\n주류 큐레이팅 서비스</string>
+    <string name="login_sub_title">당신만을 위한</string>
+    <string name="login_main_title">주류 큐레이팅 서비스</string>
     <string name="sort_popular">인기순</string>
     <string name="sort_review">리뷰순</string>
     <string name="sort_favorite">찜한순</string>
