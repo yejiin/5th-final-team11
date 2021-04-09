@@ -34,6 +34,8 @@
                 style="@style/RecommendInfoStyle.SubTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:lineSpacingExtra="4sp"
+                android:layout_marginTop="10dp"
                 android:text="@string/first_input_detail_subtitle" />
 
             <TextView
@@ -73,7 +75,7 @@
                 app:layout_constraintStart_toEndOf="@+id/tv_abv_label"
                 app:layout_constraintTop_toTopOf="@+id/tv_abv_label" />
 
-            <com.google.android.material.chip.Chip
+            <TextView
                 android:id="@+id/chip_abv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -81,6 +83,7 @@
                 android:paddingHorizontal="20dp"
                 android:paddingVertical="4dp"
                 android:textColor="#cccccc"
+                android:background="#4e585a"
                 android:textSize="14sp"
                 app:chipBackgroundColor="@color/light_gray_3"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -93,7 +96,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="25dp"
-                android:layout_marginTop="30dp"
                 android:stepSize="1"
                 android:valueFrom="0"
                 android:valueTo="80"
@@ -184,7 +186,7 @@
                     android:gravity="center"
                     android:paddingHorizontal="10dp"
                     android:textColor="#cccccc"
-                    android:textSize="14sp"
+                    android:textSize="18sp"
                     tools:text="1000" />
             </LinearLayout>
 
@@ -219,7 +221,7 @@
                     android:gravity="center"
                     android:paddingHorizontal="10dp"
                     android:textColor="#cccccc"
-                    android:textSize="14sp"
+                    android:textSize="18sp"
                     tools:text="1000" />
             </LinearLayout>
             >
@@ -305,8 +307,8 @@
                         android:textSize="16sp"
                         app:checkedIconVisible="false"
                         app:chipBackgroundColor="@drawable/color_checkable_chip_bg"
-                        app:chipEndPadding="8dp"
-                        app:chipStartPadding="6dp" />
+                        app:chipEndPadding="12dp"
+                        app:chipStartPadding="12dp" />
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/chip_carbonated_no"
@@ -319,8 +321,8 @@
                         android:textSize="16sp"
                         app:checkedIconVisible="false"
                         app:chipBackgroundColor="@drawable/color_checkable_chip_bg"
-                        app:chipEndPadding="8dp"
-                        app:chipStartPadding="6dp" />
+                        app:chipEndPadding="12dp"
+                        app:chipStartPadding="12dp" />
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/chip_carbonated_nothing"
@@ -333,8 +335,8 @@
                         android:textSize="16sp"
                         app:checkedIconVisible="false"
                         app:chipBackgroundColor="@drawable/color_checkable_chip_bg"
-                        app:chipEndPadding="8dp"
-                        app:chipStartPadding="6dp" />
+                        app:chipEndPadding="12dp"
+                        app:chipStartPadding="12dp" />
                 </com.google.android.material.chip.ChipGroup>
             </LinearLayout>
 
@@ -662,7 +664,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/first_input_default_padding"
                     android:layout_marginTop="50dp"
-                    android:text="@string/all_place"
+                    android:text="@string/all_flavor"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/layout_beer_type_content" />
 

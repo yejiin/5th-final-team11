@@ -89,24 +89,26 @@ class RecommendInfoViewModel : ViewModel() {
     fun getBeerTypeList(): List<Pair<String, List<String>>> {
         return listOf(
             Pair(
+                "라거",
+                listOf(
+                    "일반라거",
+                    "페일라거",
+                    "필스너",
+                    "둔켈 / 다크라거",
+                    "그 외 라거"
+                )
+            ),
+            Pair(
                 "에일",
                 listOf(
                     "페일에일",
                     "IPA",
+                    "포터 / 스타우트",
+                    "위트비어 / 윗비어",
                     "바이젠",
-                    "포터",
-                    "스타우트"
+                    "그 외 에일"
                 )
-            ),
-            Pair(
-                "라거",
-                listOf(
-                    "필스너",
-                    "둔켈",
-                    "페일라거"
-                )
-            ),
-            Pair("람빅", listOf())
+            )
         )
     }
 

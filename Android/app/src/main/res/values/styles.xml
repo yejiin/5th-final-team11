@@ -59,6 +59,12 @@
         <item name="android:textColor">#ffffff</item>
     </style>
 
+
+    <style name="MyReviewText.Unit" parent="MyReviewText">
+        <item name="android:textColor">#a5a5a5</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
     <style name="BottomNavigationView" parent="@style/TextAppearance.AppCompat.Caption">
         <item name="android:textSize">10sp</item>
     </style>

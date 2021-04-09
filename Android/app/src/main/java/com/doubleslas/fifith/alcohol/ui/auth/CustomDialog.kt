@@ -9,7 +9,8 @@ import android.view.View
 import com.doubleslas.fifith.alcohol.R
 import kotlinx.android.synthetic.main.custom_dialog.*
 
-class CustomDialog(context: Context, customDialogInterface: CustomDialogInterface) : Dialog(context), View.OnClickListener {
+class CustomDialog(context: Context, customDialogInterface: CustomDialogInterface) :
+    Dialog(context), View.OnClickListener {
 
     var customDialogInterface: CustomDialogInterface? = null
 
@@ -27,7 +28,7 @@ class CustomDialog(context: Context, customDialogInterface: CustomDialogInterfac
     }
 
     override fun onClick(view: View?) {
-        when(view) {
+        when (view) {
             btn_nickname_confirm -> {
                 this.customDialogInterface?.onConfirmBtnClicked()
 

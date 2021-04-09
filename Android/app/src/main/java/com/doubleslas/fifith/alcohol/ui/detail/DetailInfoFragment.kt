@@ -74,7 +74,9 @@ class DetailInfoFragment : BaseFragment<FragmentDetailInfoBinding>() {
             }
 
             b.chipGroupKinds.removeAllViews()
-            createChip(b.chipGroupKinds, data.kind)
+            for (str in data.kind) {
+                createChip(b.chipGroupKinds, str)
+            }
 
 
             // 와인 파트

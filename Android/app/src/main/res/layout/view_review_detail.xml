@@ -8,6 +8,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layout_date"
         style="@style/MyReviewDetailLayout"
+        android:layout_marginTop="0dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -27,7 +28,7 @@
             style="@style/MyReviewText.Content"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="31dp"
             android:gravity="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -64,10 +65,10 @@
 
         <EditText
             android:id="@+id/et_place"
+            style="@style/MyReviewText.Content"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="31dp"
-            android:layout_marginTop="9dp"
             android:background="@null"
             android:backgroundTint="#707070"
             android:gravity="center"
@@ -114,13 +115,23 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:background="@null"
-            android:inputType="numberDecimal"
             android:gravity="center"
+            android:inputType="numberDecimal"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/tv_drink_unit"
             app:layout_constraintStart_toEndOf="@+id/tv_drink_label"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="3" />
+
+        <TextView
+            android:id="@+id/tv_drink_unit"
+            style="@style/MyReviewText.Unit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="잔"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <View
             android:layout_width="0dp"
@@ -138,6 +149,7 @@
         style="@style/MyReviewDetailLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="35dp"
         android:orientation="horizontal">
 
         <TextView
@@ -183,6 +195,7 @@
 
         <EditText
             android:id="@+id/et_price"
+            style="@style/MyReviewText.Label"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="31dp"
@@ -192,10 +205,20 @@
             android:maxLines="1"
             android:textColor="#FFFFFF"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/tv_price_unit"
             app:layout_constraintStart_toEndOf="@+id/tv_price_label"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="57000" />
+
+        <TextView
+            android:id="@+id/tv_price_unit"
+            style="@style/MyReviewText.Unit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="원"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
         <View

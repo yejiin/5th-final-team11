@@ -118,7 +118,7 @@ class RecommendAlcoholListAdapter : AlcoholListAdapter() {
             0 -> R.drawable.bg_1st
             1 -> R.drawable.bg_2nd
             2 -> R.drawable.bg_3rd
-            else -> null
+            else -> R.drawable.bg_item_alcohol
         } ?: return null
 
         return ResourcesCompat.getDrawable(resources, id, null)

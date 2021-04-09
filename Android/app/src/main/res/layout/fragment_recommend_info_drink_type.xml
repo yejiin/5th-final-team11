@@ -56,6 +56,7 @@
             android:id="@+id/tv_liquor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:text="양주"
             android:textColor="@drawable/color_selectable_blue" />
     </LinearLayout>
@@ -83,6 +84,7 @@
             android:id="@+id/tv_wine"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:text="와인"
             android:textColor="@drawable/color_selectable_yellow" />
     </LinearLayout>
@@ -111,6 +113,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="맥주"
+            android:layout_marginTop="10dp"
             android:textColor="@drawable/color_selectable_orange" />
     </LinearLayout>
 

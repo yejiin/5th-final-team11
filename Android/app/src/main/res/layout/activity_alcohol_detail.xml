@@ -26,6 +26,7 @@
                     android:id="@+id/iv_alcohol_detail"
                     android:layout_width="match_parent"
                     android:layout_height="253dp"
+                    android:background="@color/white"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -33,7 +34,7 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/layout_rating"
                     android:layout_width="match_parent"
-                    android:layout_height="90dp"
+                    android:layout_height="104dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/iv_alcohol_detail">
@@ -45,7 +46,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
-                        android:layout_marginTop="5dp"
+                        android:layout_marginTop="10dp"
                         android:isIndicator="true"
                         android:max="10"
                         android:stepSize="0.01"
@@ -74,6 +75,7 @@
                         android:text="kind sample"
                         android:textColor="#A5A5A5"
                         android:textSize="14sp"
+                        android:visibility="gone"
                         app:layout_constraintStart_toEndOf="@id/tv_drink_name"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -84,13 +86,13 @@
                         android:layout_marginRight="10dp"
                         android:background="@color/transparent"
                         android:checked="true"
+                        android:clickable="true"
+                        android:focusable="true"
                         android:gravity="center"
                         android:padding="10dp"
                         android:src="@drawable/ic_heart"
-                        android:clickable="true"
-                        android:focusable="true"
                         app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/tv_drink_name"/>
+                        app:layout_constraintTop_toTopOf="@+id/tv_drink_name" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

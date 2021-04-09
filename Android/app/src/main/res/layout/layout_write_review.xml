@@ -15,7 +15,7 @@
             android:id="@+id/tv_review_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="25dp"
             android:text="리뷰하기"
             android:textColor="#FFFFFF"
             android:textSize="18sp"
@@ -29,7 +29,7 @@
             android:id="@+id/rating_review"
             android:layout_width="wrap_content"
             android:layout_height="42dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="15dp"
             android:numStars="5"
             android:progress="3"
             android:progressDrawable="@drawable/ic_rating_star_rainbow"
@@ -46,7 +46,7 @@
             android:layout_marginTop="19.5dp"
             android:background="@drawable/background_review_edit_text"
             android:gravity="top"
-            android:hint="의견을 남겨주세요!"
+            android:hint="의견을 남겨주세요! (20자 이상)"
             android:minHeight="150dp"
             android:paddingHorizontal="16dp"
             android:paddingVertical="12dp"
@@ -61,6 +61,7 @@
             android:id="@+id/layout_detail_toggle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingVertical="3dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@id/et_comment"
             app:layout_constraintTop_toBottomOf="@+id/et_comment">
@@ -87,6 +88,7 @@
             android:id="@+id/checkbox_private"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginVertical="3dp"
             android:text="@string/review_private"
             android:textColor="@color/white"
             android:visibility="invisible"
@@ -100,14 +102,15 @@
         android:id="@+id/layout_detail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="16dp" />
+        android:paddingHorizontal="16dp"
+        android:paddingBottom="40dp" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_review_confirm"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
         android:background="#383f42"
+        android:paddingVertical="15dp"
         android:text="작성완료"
         android:textColor="@color/white"
         android:textSize="20sp" />
