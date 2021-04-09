@@ -1,5 +1,8 @@
 package com.doubleslas.fifith.alcohol.ui.common
 
+import android.graphics.Color
+import android.graphics.Paint
+import android.graphics.Typeface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,7 +16,7 @@ import com.doubleslas.fifith.alcohol.databinding.ItemMenuListBinding
 import com.doubleslas.fifith.alcohol.databinding.RecyclerviewBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-open class BottomSheetMenu() : BottomSheetDialogFragment() {
+open class BottomSheetMenu : BottomSheetDialogFragment() {
     private var binding: RecyclerviewBinding? = null
     private var list: List<String>? = null
     private var onItemClickListener: ((Int, String) -> Unit)? = null
@@ -68,10 +71,15 @@ open class BottomSheetMenu() : BottomSheetDialogFragment() {
 
         override fun onBindViewHolder(holder: Adapter.BottomSheetMenuViewHolder, position: Int) {
             holder.binding.tv.text = list!![position]
-            if (selectIndex == null || selectIndex != position)
+            if (selectIndex == null || selectIndex != position) {
                 holder.binding.ivCheck.visibility = View.INVISIBLE
-            else
+                holder.binding.tv.setTypeface(null, Typeface.NORMAL)
+                holder.binding.tv.setTextColor(Color.parseColor("#cccccc"))
+            } else {
                 holder.binding.ivCheck.visibility = View.VISIBLE
+                holder.binding.tv.setTypeface(null, Typeface.BOLD)
+                holder.binding.tv.setTextColor(Color.parseColor("#ffffff"))
+            }
         }
 
         inner class BottomSheetMenuViewHolder(val binding: ItemMenuListBinding) :

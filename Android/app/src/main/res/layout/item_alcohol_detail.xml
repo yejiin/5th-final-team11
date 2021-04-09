@@ -13,46 +13,60 @@
         android:paddingVertical="23dp">
 
         <ImageView
-            android:padding="2dp"
             android:id="@+id/iv_alcohol"
             android:layout_width="83dp"
             android:layout_height="83dp"
             android:background="@drawable/bg_item_alcohol"
+            android:padding="2dp"
             android:scaleType="fitCenter"
             android:src="@drawable/ic_star_gray"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <ImageView
+            android:id="@+id/iv_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:rotation="270"
+            android:src="@drawable/ic_open"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_name"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_name" />
 
-        <TextView
+        <com.doubleslas.fifith.alcohol.view.MyTextView
             android:id="@+id/tv_rank"
-            android:visibility="gone"
             android:layout_width="17.8dp"
             android:layout_height="21dp"
             android:layout_marginLeft="8.5dp"
-            android:gravity="center"
-            tools:text="1"
-            android:textSize="10dp"
-            android:textColor="@color/white"
-            android:paddingBottom="5dp"
             android:background="@drawable/ic_1st"
+            android:gravity="center_horizontal|top"
+            android:includeFontPadding="false"
+            android:textColor="@color/white"
+            android:textSize="12dp"
+            android:visibility="gone"
             app:layout_constraintLeft_toLeftOf="@id/iv_alcohol"
-            app:layout_constraintTop_toTopOf="@id/iv_alcohol" />
+            app:layout_constraintTop_toTopOf="@id/iv_alcohol"
+            tools:text="1" />
 
-        <TextView
+        <com.doubleslas.fifith.alcohol.view.MyTextView
             android:id="@+id/tv_name"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="6dp"
+            android:layout_marginEnd="10dp"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:textColor="#ffffff"
             android:textSize="18sp"
-            app:layout_constraintLeft_toRightOf="@id/iv_alcohol"
+            app:layout_constraintEnd_toStartOf="@id/iv_arrow"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toEndOf="@id/iv_alcohol"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="술수룻ㄹ" />
+            tools:text="술수룻ㄹ123234564567456754564562y2hrjgl;" />
 
-        <TextView
+        <com.doubleslas.fifith.alcohol.view.MyTextView
             android:id="@+id/tv_type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -76,7 +90,7 @@
             app:layout_constraintBottom_toBottomOf="@id/iv_alcohol"
             app:layout_constraintLeft_toLeftOf="@id/tv_name" />
 
-        <TextView
+        <com.doubleslas.fifith.alcohol.view.MyTextView
             android:id="@+id/tv_rating"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -88,7 +102,7 @@
             tools:text="4.5" />
 
 
-        <TextView
+        <com.doubleslas.fifith.alcohol.view.MyTextView
             android:id="@+id/tv_reviewCnt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

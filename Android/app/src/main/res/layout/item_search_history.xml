@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
+    <com.doubleslas.fifith.alcohol.view.MyTextView
         android:id="@+id/tv_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -22,12 +22,12 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="세계 맥주" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_delete"
-        android:layout_width="12dp"
-        android:layout_height="12dp"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
         android:layout_marginRight="20dp"
-        android:background="@drawable/ic_close_8_4"
+        android:background="@drawable/ic_close_11_74_gray"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
