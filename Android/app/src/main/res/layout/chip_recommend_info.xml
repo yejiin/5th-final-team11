@@ -10,7 +10,7 @@
     app:checkedIconVisible="false"
     app:chipStartPadding="6dp"
     app:chipEndPadding="8dp"
-    app:chipBackgroundColor="@color/chip_first_input"
+    app:chipSurfaceColor="@color/chip_first_input"
     app:chipStrokeColor="@color/chip_first_input_stroke"
     app:chipStrokeWidth="1dp"
     tools:text="000" />

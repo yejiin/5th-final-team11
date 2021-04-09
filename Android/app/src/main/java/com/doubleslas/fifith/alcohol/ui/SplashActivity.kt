@@ -38,7 +38,7 @@ class SplashActivity : AppCompatActivity() {
 //                        App.prefs.submitRecommendInfo -> MainActivity::class.java
 //                        App.prefs.registerUserInfo -> RecommendInfoActivity::class.java
 //                        else -> AgeCheckActivity::class.java
-                        else -> Register2Activity::class.java
+                        else -> RecommendInfoActivity::class.java
                     }
                 )
                 startActivity(intent)
