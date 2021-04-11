@@ -9,10 +9,12 @@ import android.text.style.StyleSpan
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.doubleslas.fifith.alcohol.App
 import com.doubleslas.fifith.alcohol.R
 import com.doubleslas.fifith.alcohol.databinding.ActivityLoginBinding
 import com.doubleslas.fifith.alcohol.model.base.ApiStatus
+import com.doubleslas.fifith.alcohol.ui.common.ProgressDialog
 import com.doubleslas.fifith.alcohol.ui.main.MainActivity
 import com.doubleslas.fifith.alcohol.utils.LogUtil
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -28,7 +30,12 @@ import com.kakao.sdk.common.KakaoSdk
 class LoginActivity : AppCompatActivity() {
     private lateinit var activityLoginBinding: ActivityLoginBinding
     private lateinit var firebaseAuth: FirebaseAuth
-    private val loginViewModel by lazy { LoginViewModel() }
+    private val loginViewModel by lazy { ViewModelProvider(this).get(LoginViewModel::class.java) }
+    private val progressDialog by lazy {
+        ProgressDialog().apply {
+            isCancelable = false
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -123,7 +130,11 @@ class LoginActivity : AppCompatActivity() {
     private fun observeAuthenticationState() {
         loginViewModel.signInLiveData.observe(this, Observer {
             when (it) {
+                is ApiStatus.Loading -> {
+                    if(!progressDialog.isVisible) progressDialog.show(supportFragmentManager, null)
+                }
                 is ApiStatus.Success -> {
+                    progressDialog.dismiss()
                     Toast.makeText(applicationContext, "로그인 완료", Toast.LENGTH_SHORT).show()
                     val intent = Intent(
                         applicationContext,
@@ -137,9 +148,10 @@ class LoginActivity : AppCompatActivity() {
                     finish()
                 }
                 is ApiStatus.Error -> {
+                    progressDialog.dismiss()
                     Toast.makeText(
                         applicationContext,
-                        "로그인 ERROR - ${it.message}",
+                        "로그인 도중 문제가 발생하였습니다. 다시 시도해주세요.",
                         Toast.LENGTH_SHORT
                     ).show()
                 }

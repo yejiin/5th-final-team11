@@ -35,7 +35,7 @@ class SplashActivity : AppCompatActivity() {
                     applicationContext,
                     when {
                         !App.isLogin() -> AgeCheckActivity::class.java
-                        App.prefs.submitRecommendInfo -> MainActivity::class.java
+                        App.prefs.submitRecommendInfo -> LoginActivity::class.java
                         App.prefs.registerUserInfo -> RecommendInfoActivity::class.java
                         else -> AgeCheckActivity::class.java
                     }

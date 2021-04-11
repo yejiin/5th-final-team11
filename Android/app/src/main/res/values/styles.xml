@@ -24,6 +24,17 @@
         <item name="android:layout_gravity">center</item>
     </style>
 
+    <style name="ProgressDialog" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+
+        <!-- 배경 dim 설정 -->
+        <item name="android:backgroundDimEnabled">true</item>
+        <!-- 0.0 (투명) ~ 1.0 (검정색) 값을 가집니다 -->
+        <item name="android:backgroundDimAmount">0.5</item>
+    </style>
+
     <style name="ChipTabLayout" parent="Widget.Design.TabLayout">
         <item name="tabIndicatorColor">@android:color/transparent</item>
         <item name="tabBackground">@drawable/bg_tab</item>

@@ -47,6 +47,7 @@ class LoginViewModel : ViewModel() {
     }
 
     fun firebaseAuthWithGoogle(idToken: String) {
+        mSignInLiveData.value = ApiStatus.Loading
         val credential = GoogleAuthProvider.getCredential(idToken, null)
         firebaseAuth.signInWithCredential(credential).apply {
             addOnSuccessListener {
@@ -61,6 +62,7 @@ class LoginViewModel : ViewModel() {
     }
 
     fun signInWithKaKao(token: OAuthToken, error: Throwable?) {
+//        mSignInLiveData.value = ApiStatus.Loading
         // 액세스 토큰과 리프레시 토큰값 단순 출력
         LogUtil.d("Auth", "$token $error")
 
