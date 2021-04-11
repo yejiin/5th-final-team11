@@ -12,7 +12,7 @@ data class DetailData(
     val ml: Int,
     val abv: Float,
     val description: String,
-    val kind: List<String>,
+    val kind: String,
     val starAvg: Float,
     val similar: List<SimilarAlcoholData>,
 
