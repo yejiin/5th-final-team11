@@ -8,7 +8,7 @@ import com.doubleslas.fifith.alcohol.model.base.ApiLiveData
 import com.doubleslas.fifith.alcohol.model.base.ApiStatus
 import com.doubleslas.fifith.alcohol.model.base.MediatorApiLiveData
 
-class ReviewViewModel() : ViewModel() {
+class ReviewViewModel : ViewModel() {
     private val repository by lazy { ReviewRepository() }
 
     fun sendReview(

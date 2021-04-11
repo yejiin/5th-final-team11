@@ -14,7 +14,7 @@
 
         <TextView
             style="@style/AppBarTitle"
-            android:text="@string/all_search"
+            android:text="@string/all_recommend"
             tools:text="Test" />
 
     </androidx.appcompat.widget.Toolbar>
