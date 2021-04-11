@@ -9,7 +9,7 @@ import com.doubleslas.fifith.alcohol.databinding.FragmentSearchBinding
 import com.doubleslas.fifith.alcohol.ui.common.base.BaseFragment
 
 class SearchFragment : BaseFragment<FragmentSearchBinding>() {
-    private val fragment : SearchMainFragment by lazy { SearchMainFragment() }
+    private val fragment: SearchMainFragment by lazy { SearchMainFragment() }
 
     override fun createViewBinding(
         inflater: LayoutInflater,
