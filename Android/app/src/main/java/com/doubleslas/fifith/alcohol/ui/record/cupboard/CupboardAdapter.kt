@@ -3,11 +3,13 @@ package com.doubleslas.fifith.alcohol.ui.record.cupboard
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.doubleslas.fifith.alcohol.databinding.ItemCupboardBinding
 import com.doubleslas.fifith.alcohol.dto.CupboardData
 import com.doubleslas.fifith.alcohol.ui.detail.AlcoholDetailActivity
+
 
 class CupboardAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var list: List<CupboardData>? = null
@@ -27,6 +29,7 @@ class CupboardAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         if (holder !is CupboardViewHolder) return
         val item = list!![position]
         holder.binding.let { b ->
+
             Glide.with(b.ivAlcohol)
                 .load(item.image)
                 .into(b.ivAlcohol)
@@ -54,6 +57,17 @@ class CupboardAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     inner class CupboardViewHolder(val binding: ItemCupboardBinding) :
         RecyclerView.ViewHolder(binding.root) {
         init {
+            binding.root.viewTreeObserver
+                .addOnGlobalLayoutListener(object : OnGlobalLayoutListener {
+                    override fun onGlobalLayout() {
+                        // Ensure you call it only once :
+                        binding.root.viewTreeObserver.removeOnGlobalLayoutListener(this)
+
+                        // Here you can get the size :)
+                        binding.root.layoutParams.height = binding.root.width
+                    }
+                })
+
             binding.ivAlcohol.setOnClickListener {
                 val item = list!![adapterPosition]
                 if (selectMode) {
