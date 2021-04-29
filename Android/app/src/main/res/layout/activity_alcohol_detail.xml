@@ -127,7 +127,9 @@
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:tabBackground="@drawable/tab_background"
+            app:tabGravity="fill"
             app:tabIndicator="@null"
+            app:tabMaxWidth="0dp"
             app:tabSelectedTextColor="#FFFFFF"
             app:tabTextColor="#707070" />
     </com.google.android.material.appbar.AppBarLayout>
