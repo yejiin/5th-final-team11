@@ -119,7 +119,7 @@ class RecommendInfoViewModel : ViewModel() {
             "고소한",
             "달달한",
             "텁텁한",
-            "스파이시함",
+            "스파이시한",
             "꽃향의",
             "신맛의",
             "과일향의"

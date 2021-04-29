@@ -14,7 +14,7 @@
 
         <TextView
             style="@style/AppBarTitle"
-            android:text="@string/all_cupboard" />
+            android:text="@string/all_record" />
 
     </androidx.appcompat.widget.Toolbar>
 

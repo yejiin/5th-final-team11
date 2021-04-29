@@ -15,6 +15,7 @@ data class DetailData(
     val kind: String,
     val starAvg: Float,
     val similar: List<SimilarAlcoholData>,
+    val loveClick: Boolean,
 
     // 주류 공통속성
     val userDrink: String?,

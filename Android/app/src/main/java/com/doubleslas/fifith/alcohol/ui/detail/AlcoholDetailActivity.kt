@@ -58,7 +58,7 @@ class AlcoholDetailActivity : AppCompatActivity() {
                     binding.detailRating.rating = it.data.starAvg
                     binding.tvAlcoholName.text = it.data.name
                     binding.tvDrinkName.text = it.data.name
-//                    binding.btnFavorite.isChecked = it.data
+                    binding.btnFavorite.isChecked = it.data.loveClick
                 }
                 is ApiStatus.Error -> {
                 }

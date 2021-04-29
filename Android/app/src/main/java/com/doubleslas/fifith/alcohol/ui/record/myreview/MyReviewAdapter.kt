@@ -51,7 +51,7 @@ class MyReviewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is SortViewHolder -> holder.binding.run {
-                tvSort.text = sortType?.text ?: SearchSortType.Popular.text
+                tvSort.text = sortType?.text ?: MyReviewSortType.Time.text
             }
             is ReviewViewHolder -> holder.bind()
         }
