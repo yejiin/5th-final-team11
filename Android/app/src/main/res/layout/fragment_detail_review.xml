@@ -45,6 +45,23 @@
 
         </LinearLayout>
 
+        <FrameLayout
+            android:id="@+id/layout_review_empty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintTop_toTopOf="@+id/rv_detail_review">
+
+            <com.doubleslas.fifith.alcohol.view.MyTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="30dp"
+                android:text="아직 작성된 리뷰가 없어요! 최초로 리뷰를 작성해보세요!"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+        </FrameLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_detail_review"

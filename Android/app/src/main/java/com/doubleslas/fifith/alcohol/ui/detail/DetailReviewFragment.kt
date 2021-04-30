@@ -1,9 +1,12 @@
 package com.doubleslas.fifith.alcohol.ui.detail
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
+import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,12 +15,16 @@ import com.doubleslas.fifith.alcohol.dto.ReviewData
 import com.doubleslas.fifith.alcohol.model.base.ApiStatus
 import com.doubleslas.fifith.alcohol.ui.common.LoadingRecyclerViewAdapter
 import com.doubleslas.fifith.alcohol.ui.common.base.BaseFragment
+import com.doubleslas.fifith.alcohol.ui.main.IOnBackPressed
 import com.doubleslas.fifith.alcohol.ui.reivew.ReviewBottomSheetDialog
+
 
 class DetailReviewFragment : BaseFragment<FragmentDetailReviewBinding>() {
     private val reviewViewModel by lazy { ViewModelProvider(activity!!).get(DetailViewModel::class.java) }
     private val adapter by lazy { DetailReviewAdapter() }
     private val loadingAdapter by lazy { LoadingRecyclerViewAdapter(adapter) }
+    private val writeDialog by lazy { ReviewBottomSheetDialog.create(reviewViewModel.aid) }
+
 
     override fun createViewBinding(
         inflater: LayoutInflater,
@@ -37,15 +44,12 @@ class DetailReviewFragment : BaseFragment<FragmentDetailReviewBinding>() {
             }
 
             b.btnWriteReview.setOnClickListener {
-                val bottomSheet =
-                    ReviewBottomSheetDialog.create(reviewViewModel.aid)
-
-                bottomSheet.onListener {
+                writeDialog.onListener {
                     reviewViewModel.resetReview()
                     reviewViewModel.loadReview()
                 }
 
-                bottomSheet.show(childFragmentManager, bottomSheet.tag)
+                writeDialog.show(childFragmentManager, writeDialog.tag)
             }
         }
 
@@ -92,6 +96,8 @@ class DetailReviewFragment : BaseFragment<FragmentDetailReviewBinding>() {
 
                 }
                 is ApiStatus.Success -> {
+                    binding?.layoutReviewEmpty?.isVisible = it.data.isEmpty()
+
                     adapter.setData(it.data)
                     loadingAdapter.notifyDataSetChanged()
 
@@ -110,6 +116,5 @@ class DetailReviewFragment : BaseFragment<FragmentDetailReviewBinding>() {
         super.onResume()
         adapter.notifyDataSetChanged()
     }
-
 }
 

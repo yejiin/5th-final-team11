@@ -1,9 +1,11 @@
 package com.doubleslas.fifith.alcohol.ui.reivew
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import com.doubleslas.fifith.alcohol.R
@@ -14,11 +16,12 @@ import com.doubleslas.fifith.alcohol.ui.auth.CustomDialog
 import com.doubleslas.fifith.alcohol.ui.auth.CustomDialogInterface
 import com.doubleslas.fifith.alcohol.ui.common.CalendarDialogFragment
 import com.doubleslas.fifith.alcohol.ui.common.base.BaseBottomSheetDialogFragment
+import com.doubleslas.fifith.alcohol.ui.main.IOnBackPressed
 import kotlinx.android.synthetic.main.custom_dialog.*
 
 
 class ReviewBottomSheetDialog private constructor() :
-    BaseBottomSheetDialogFragment<LayoutWriteReviewBinding>(), CustomDialogInterface {
+    BaseBottomSheetDialogFragment<LayoutWriteReviewBinding>(), CustomDialogInterface{
 
     private val alcoholId by lazy { arguments!!.getInt(ARGUMENT_ALCOHOL_ID) }
     private val customDialog: CustomDialog by lazy { CustomDialog(context!!, this) }
@@ -62,9 +65,7 @@ class ReviewBottomSheetDialog private constructor() :
 
 
             b.btnReviewConfirm.setOnClickListener {
-
                 confirmReview()
-
             }
 
             b.layoutDetailToggle.setOnClickListener {
@@ -79,7 +80,9 @@ class ReviewBottomSheetDialog private constructor() :
                 }
             }
         }
+
     }
+
 
     private fun confirmReview() {
         binding?.let { b ->

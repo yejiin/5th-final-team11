@@ -29,9 +29,7 @@
         <activity android:name=".ui.auth.recommendinfo.RecommendInfoActivity"/>
 
 
-        <activity android:name=".ui.detail.AlcoholDetailActivity" >
-
-        </activity>
+        <activity android:name=".ui.detail.AlcoholDetailActivity"/>
 
         <activity android:name=".ui.auth.Register2Activity" />
 

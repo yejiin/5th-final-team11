@@ -13,9 +13,11 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.bumptech.glide.Glide
 import com.doubleslas.fifith.alcohol.databinding.ActivityAlcoholDetailBinding
 import com.doubleslas.fifith.alcohol.model.base.ApiStatus
+import com.doubleslas.fifith.alcohol.ui.common.BaseActivity
+import com.doubleslas.fifith.alcohol.utils.LogUtil
 import com.google.android.material.tabs.TabLayoutMediator
 
-class AlcoholDetailActivity : AppCompatActivity() {
+class AlcoholDetailActivity : BaseActivity() {
     private lateinit var binding: ActivityAlcoholDetailBinding
     private val detailViewModel by lazy {
         ViewModelProvider(
@@ -70,6 +72,7 @@ class AlcoholDetailActivity : AppCompatActivity() {
         super.onResume()
         detailViewModel.getDetail()
     }
+
 
     class DetailViewPagerAdapter(fragment: FragmentActivity) : FragmentStateAdapter(fragment) {
 
