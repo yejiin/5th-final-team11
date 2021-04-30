@@ -32,7 +32,8 @@
                     style="@style/AlcoholDetailText.Label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="가격"
+                    android:text="가격 ⓘ"
+                    android:title="TEst"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -107,6 +108,21 @@
                     app:layout_constraintStart_toStartOf="@id/tv_race"
                     app:layout_constraintTop_toTopOf="@id/tv_nation_info"
                     tools:text="품종 Sample" />
+
+                <TextView
+                    android:id="@+id/tooltip_price"
+                    android:visibility="gone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="10dp"
+                    android:paddingTop="12.5dp"
+                    android:textColor="@color/white"
+                    android:paddingBottom="10dp"
+                    android:text="가격 정보는 시시콜콜에서 직접 여러 유통채널의 정보를 종합한 정보로 실제와 다를 수 있습니다."
+                    android:background="@drawable/bg_tooltip"
+                    app:layout_constraintTop_toBottomOf="@id/tv_price"
+                    app:layout_constraintLeft_toLeftOf="@id/tv_price"
+                    />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
