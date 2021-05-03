@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
@@ -16,6 +17,7 @@ import com.doubleslas.fifith.alcohol.model.base.ApiStatus
 import com.doubleslas.fifith.alcohol.ui.common.LoadingRecyclerViewAdapter
 import com.doubleslas.fifith.alcohol.ui.common.base.BaseFragment
 import com.doubleslas.fifith.alcohol.ui.main.IOnBackPressed
+import com.doubleslas.fifith.alcohol.ui.reivew.ReportBottomSheetDialog
 import com.doubleslas.fifith.alcohol.ui.reivew.ReviewBottomSheetDialog
 
 
@@ -82,6 +84,23 @@ class DetailReviewFragment : BaseFragment<FragmentDetailReviewBinding>() {
                         }
                     }
                 })
+            }
+
+            override fun report(position: Int, item: ReviewData) {
+                val dialog = ReportBottomSheetDialog()
+                dialog.setListener { comment ->
+                    reviewViewModel.report(item.rid, comment).observe(viewLifecycleOwner, Observer {
+                        when (it) {
+                            is ApiStatus.Success -> {
+                                loadingAdapter.notifyItemRemoved(position)
+                            }
+                            is ApiStatus.Error -> {
+                                Toast.makeText(context, "Network Error", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    })
+                }
+                dialog.show(childFragmentManager, null)
             }
 
         })

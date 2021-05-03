@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.doubleslas.fifith.alcohol.databinding.ItemDetailReviewBinding
 import com.doubleslas.fifith.alcohol.databinding.ItemReviewCommentBinding
 import com.doubleslas.fifith.alcohol.dto.ReviewData
-import com.doubleslas.fifith.alcohol.ui.reivew.ReportBottomSheetDialog
 
 class DetailReviewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var list: List<ReviewData>? = null
@@ -82,13 +81,6 @@ class DetailReviewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 layoutDetail.visibility = View.GONE
             }
 
-            btnReport.setOnClickListener {
-                // 신고하기 버튼 눌렀을때의 처리
-                val appCompatActivity = AppCompatActivity()
-                val fragmentManager = appCompatActivity.supportFragmentManager
-                val bottomSheet = ReportBottomSheetDialog()
-                bottomSheet.show(fragmentManager, bottomSheet.tag)
-            }
         }
 
         holder.refreshCommentList()
@@ -106,6 +98,7 @@ class DetailReviewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     interface ReviewItemListener {
         fun comment(position: Int, item: ReviewData, comment: String)
         fun like(position: Int, item: ReviewData, value: Boolean)
+        fun report(position: Int, item: ReviewData)
     }
 
     inner class ReviewViewHolder(var binding: ItemDetailReviewBinding) :
@@ -150,6 +143,12 @@ class DetailReviewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 val item = list!![adapterPosition]
                 item.visibleCommentList = !item.visibleCommentList
                 refreshCommentList()
+            }
+
+            binding.btnReport.setOnClickListener {
+                val item = list!![adapterPosition]
+
+                listener?.report(adapterPosition, item)
             }
         }
 

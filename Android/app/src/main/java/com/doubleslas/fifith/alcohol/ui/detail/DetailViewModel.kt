@@ -6,7 +6,10 @@ import com.doubleslas.fifith.alcohol.dto.DetailData
 import com.doubleslas.fifith.alcohol.dto.LikeResponse
 import com.doubleslas.fifith.alcohol.dto.ReviewCommentData
 import com.doubleslas.fifith.alcohol.dto.ReviewData
-import com.doubleslas.fifith.alcohol.model.base.*
+import com.doubleslas.fifith.alcohol.model.base.ApiLiveData
+import com.doubleslas.fifith.alcohol.model.base.ApiStatus
+import com.doubleslas.fifith.alcohol.model.base.MediatorApiCallback
+import com.doubleslas.fifith.alcohol.model.base.MediatorApiLiveData
 import com.doubleslas.fifith.alcohol.ui.reivew.ReviewRepository
 import com.doubleslas.fifith.alcohol.utils.PageLoader
 
@@ -98,6 +101,10 @@ class DetailViewModel(val aid: Int) : ViewModel() {
         )
 
         return mediator
+    }
+
+    fun report(rid: Int, comment: String): ApiLiveData<Any> {
+        return reviewRepository.reportReview(rid, comment)
     }
 
     class Factory(private val param: Int) : ViewModelProvider.Factory {

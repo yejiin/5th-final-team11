@@ -21,4 +21,8 @@ class ReviewRepository {
     fun likeReview(rid: Int, value: Boolean): ApiLiveData<LikeResponse> {
         return service.likeReview(rid, ReviewLikeBody(value))
     }
+
+    fun reportReview(rid: Int, comment: String): ApiLiveData<Any> {
+        return service.reportReview(rid, ReportReviewBody(comment))
+    }
 }
