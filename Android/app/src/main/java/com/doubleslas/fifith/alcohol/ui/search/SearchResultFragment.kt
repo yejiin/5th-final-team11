@@ -35,13 +35,19 @@ class SearchResultFragment private constructor() : BaseFragment<FragmentSearchRe
 
             b.recyclerview.layoutManager = LinearLayoutManager(context)
             b.recyclerview.adapter = adapter
+
+            adapter.setOnSortChangeListener {
+                b.btnSearch.text = it.text
+            }
         }
+
 
         searchViewModel.search(keyword)
         searchViewModel.listLiveData.observe(viewLifecycleOwner, Observer {
             when (it) {
                 is ApiStatus.Success -> {
                     adapter.setData(it.data)
+                    adapter.notifyDataSetChanged()
                 }
             }
         })

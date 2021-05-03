@@ -11,23 +11,24 @@
         android:src="@drawable/ic_logo" />
 
 
-    <com.doubleslas.fifith.alcohol.view.MyTextView
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+        android:fontFamily="@font/noto_sans_regular"
         android:includeFontPadding="false"
         android:text="@string/login_sub_title"
         android:textColor="#cccccc"
         android:textSize="22sp"
         android:textStyle="normal" />
 
-    <com.doubleslas.fifith.alcohol.view.MyTextView
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/noto_sans_bold"
         android:includeFontPadding="false"
         android:lineSpacingExtra="11sp"
         android:text="@string/login_main_title"
         android:textColor="#ffffff"
-        android:textSize="22sp"
-        android:textStyle="bold" />
+        android:textSize="22sp" />
 </LinearLayout>

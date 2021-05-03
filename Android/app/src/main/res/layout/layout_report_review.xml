@@ -4,7 +4,7 @@
     android:id="@+id/bottom_sheet_report"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#202425"
+    android:background="@drawable/bg_write_review"
     android:orientation="vertical">
 
 
@@ -19,6 +19,8 @@
             app:layout_constraintTop_toTopOf="parent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:fontFamily="@font/noto_sans_medium"
             android:layout_marginTop="15dp"
             android:text="신고하기"
             android:textColor="#FFFFFF"
@@ -26,50 +28,62 @@
             android:textStyle="bold" />
 
 
-        <CheckBox
+        <androidx.appcompat.widget.AppCompatRadioButton
             android:id="@+id/cb_report1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="부적절한 홍보 게시글"
             android:textColor="#CCCCCC"
             android:textSize="16sp"
+            android:includeFontPadding="false"
+            android:fontFamily="@font/noto_sans_regular"
+            android:minHeight="0dp"
             app:layout_constraintTop_toBottomOf="@id/tv_report_title"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginTop="43dp"
             android:layout_marginStart="36dp"/>
 
 
-        <CheckBox
+        <androidx.appcompat.widget.AppCompatRadioButton
             android:id="@+id/cb_report2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="음란성 / 부적절한 내용"
             android:textColor="#CCCCCC"
             android:textSize="16sp"
+            android:includeFontPadding="false"
+            android:fontFamily="@font/noto_sans_regular"
+            android:minHeight="0dp"
             app:layout_constraintTop_toBottomOf="@id/cb_report1"
             app:layout_constraintStart_toStartOf="@id/cb_report1"
             android:layout_marginTop="11dp"/>
 
 
-        <CheckBox
+        <androidx.appcompat.widget.AppCompatRadioButton
             android:id="@+id/cb_report3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="명예훼손 / 사생활 침해 및 저작권 침해"
             android:textColor="#CCCCCC"
             android:textSize="16sp"
+            android:includeFontPadding="false"
+            android:fontFamily="@font/noto_sans_regular"
+            android:minHeight="0dp"
             app:layout_constraintStart_toStartOf="@id/cb_report1"
             app:layout_constraintTop_toBottomOf="@id/cb_report2"
             android:layout_marginTop="11dp"/>
 
 
-        <CheckBox
+        <androidx.appcompat.widget.AppCompatRadioButton
             android:id="@+id/cb_report4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="기타"
             android:textColor="#CCCCCC"
             android:textSize="16sp"
+            android:includeFontPadding="false"
+            android:fontFamily="@font/noto_sans_regular"
+            android:minHeight="0dp"
             app:layout_constraintTop_toBottomOf="@id/cb_report3"
             app:layout_constraintStart_toStartOf="@id/cb_report1"
             android:layout_marginTop="11dp"/>
@@ -81,6 +95,8 @@
             android:hint="의견을 남겨주세요!"
             android:textSize="16sp"
             android:textColorHint="#A5A5A5"
+            android:includeFontPadding="false"
+            android:fontFamily="@font/noto_sans_regular"
             android:textColor="#FFFFFF"
             android:background="@drawable/background_review_edit_text"
             app:layout_constraintTop_toBottomOf="@id/cb_report4"
@@ -100,6 +116,8 @@
         android:background="#383f42"
         android:text="작성완료"
         android:textColor="@color/white"
+        android:includeFontPadding="false"
+        android:fontFamily="@font/noto_sans_medium"
         android:textSize="20sp" />
 
 </LinearLayout>

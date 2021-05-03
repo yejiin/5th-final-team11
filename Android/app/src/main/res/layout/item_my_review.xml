@@ -34,6 +34,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="6dp"
+                android:fontFamily="@font/noto_sans_medium"
+                android:includeFontPadding="false"
                 android:textColor="#ffffff"
                 android:textSize="18sp"
                 app:layout_constraintLeft_toRightOf="@id/iv_alcohol"
@@ -45,6 +47,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:fontFamily="@font/noto_sans_regular"
+                android:includeFontPadding="false"
                 android:textColor="#a5a5a5"
                 android:textSize="14sp"
                 app:layout_constraintLeft_toLeftOf="@id/tv_name"
@@ -70,6 +74,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
+                android:fontFamily="@font/noto_sans_medium"
+                android:includeFontPadding="false"
                 android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="@id/rating"
                 app:layout_constraintLeft_toRightOf="@+id/rating"
@@ -82,6 +88,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
+                android:fontFamily="@font/noto_sans_medium"
+                android:includeFontPadding="false"
                 android:textColor="#707070"
                 app:layout_constraintBottom_toBottomOf="@id/rating"
                 app:layout_constraintLeft_toRightOf="@+id/tv_rating"
@@ -106,6 +114,8 @@
                 android:id="@+id/tv_review"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/noto_sans_medium"
+                android:includeFontPadding="false"
                 android:textColor="#cccccc"
                 android:textSize="14sp"
                 app:layout_constraintTop_toTopOf="parent"
@@ -114,7 +124,7 @@
             <com.doubleslas.fifith.alcohol.view.ReviewDetailView
                 android:id="@+id/layout_detail"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
         </LinearLayout>
 
         <FrameLayout

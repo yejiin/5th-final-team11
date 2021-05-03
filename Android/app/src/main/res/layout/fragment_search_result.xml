@@ -16,12 +16,16 @@
             android:id="@+id/tv_title"
             style="@style/AppBarTitle"
             android:layout_gravity="start"
+            android:fontFamily="@font/noto_sans_regular"
+            android:includeFontPadding="false"
             tools:text="Test" />
 
         <TextView
             android:id="@+id/tv_subTitle"
             style="@style/AppBarTitle"
             android:layout_gravity="start"
+            android:fontFamily="@font/noto_sans_regular"
+            android:includeFontPadding="false"
             android:textColor="#202425"
             tools:text="7개" />
 

@@ -9,7 +9,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_tab"
+        android:fontFamily="@font/noto_sans_regular"
         android:gravity="center"
+        android:includeFontPadding="false"
         android:maxLines="1"
         android:paddingVertical="8dp"
         android:textColor="@drawable/tab_text_color" />

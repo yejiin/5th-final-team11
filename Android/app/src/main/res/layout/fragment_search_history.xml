@@ -30,6 +30,8 @@
                 android:id="@+id/et_search"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:fontFamily="@font/noto_sans_regular"
                 android:background="@null"
                 android:hint="@string/search_et_hint"
                 android:imeOptions="actionSearch"

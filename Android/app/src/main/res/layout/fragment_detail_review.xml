@@ -38,6 +38,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:fontFamily="@font/noto_sans_medium"
                 android:text="리뷰 작성하기"
                 android:textColor="#CCCCCC"
                 android:textSize="12sp" />
@@ -52,7 +54,7 @@
             android:visibility="gone"
             app:layout_constraintTop_toTopOf="@+id/rv_detail_review">
 
-            <com.doubleslas.fifith.alcohol.view.MyTextView
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20dp"

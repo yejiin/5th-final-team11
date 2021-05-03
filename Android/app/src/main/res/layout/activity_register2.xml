@@ -14,12 +14,14 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.doubleslas.fifith.alcohol.view.MyTextView
+    <TextView
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="36dp"
         android:layout_marginTop="102dp"
+        android:fontFamily="@font/noto_sans_medium"
+        android:includeFontPadding="false"
         android:text="회원가입"
         android:textColor="#FFFFFF"
         android:textFontWeight="500"
@@ -29,10 +31,12 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <com.doubleslas.fifith.alcohol.view.MyTextView
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="11dp"
+        android:fontFamily="@font/noto_sans_demi_light"
+        android:includeFontPadding="false"
         android:text="추가 정보"
         android:textColor="#969696"
         android:textFontWeight="200"
@@ -40,11 +44,13 @@
         app:layout_constraintBottom_toBottomOf="@+id/tv_title"
         app:layout_constraintStart_toEndOf="@+id/tv_title" />
 
-    <com.doubleslas.fifith.alcohol.view.MyTextView
+    <TextView
         android:id="@+id/tv_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="11dp"
+        android:fontFamily="@font/noto_sans_demi_light"
+        android:includeFontPadding="false"
         android:text="@string/register2"
         android:textColor="#B5B5B5"
         android:textFontWeight="200"
@@ -53,11 +59,13 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_title" />
 
 
-    <com.doubleslas.fifith.alcohol.view.MyTextView
+    <TextView
         android:id="@+id/tv_drink_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="76dp"
+        android:fontFamily="@font/noto_sans_medium"
+        android:includeFontPadding="false"
         android:text="주량"
         android:textColor="#FFFFFF"
         android:textFontWeight="500"
@@ -77,9 +85,11 @@
         app:layout_constraintStart_toStartOf="@id/tv_title"
         app:layout_constraintTop_toBottomOf="@+id/tv_drink_label">
 
-        <com.doubleslas.fifith.alcohol.view.MyTextView
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/noto_sans_demi_light"
+            android:includeFontPadding="false"
             android:lineSpacingExtra="8sp"
             android:text="소주"
             android:textColor="#a5a5a5"
@@ -94,7 +104,9 @@
             android:layout_weight="1"
             android:background="@null"
             android:focusable="false"
+            android:fontFamily="@font/noto_sans_medium"
             android:gravity="center"
+            android:includeFontPadding="false"
             android:inputType="none"
             android:text=""
             android:textColor="#FFFFFF"
@@ -103,15 +115,17 @@
             tools:text="1.5" />
 
 
-        <com.doubleslas.fifith.alcohol.view.MyTextView
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/noto_sans_demi_light"
+            android:includeFontPadding="false"
             android:lineSpacingExtra="8sp"
+            android:text="병"
             android:textColor="#a5a5a5"
             android:textFontWeight="200"
             android:textSize="16sp"
-            android:textStyle="normal"
-            android:text="병" />
+            android:textStyle="normal" />
     </LinearLayout>
 
     <View
@@ -124,11 +138,13 @@
         app:layout_constraintTop_toBottomOf="@+id/layout_drink" />
 
 
-    <com.doubleslas.fifith.alcohol.view.MyTextView
+    <TextView
         android:id="@+id/tv_hangover_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
+        android:fontFamily="@font/noto_sans_demi_light"
+        android:includeFontPadding="false"
         android:text="평균 숙취"
         android:textColor="#FFFFFF"
         android:textFontWeight="500"
@@ -153,6 +169,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/button_background_gradient"
+        android:fontFamily="@font/noto_sans_medium"
+        android:includeFontPadding="false"
         android:paddingVertical="17dp"
         android:text="작성 완료"
         android:textColor="#FFFFFF"
@@ -181,6 +199,8 @@
             android:layout_width="match_parent"
             android:layout_height="62dp"
             android:background="#4638CE"
+            android:fontFamily="@font/noto_sans_medium"
+            android:includeFontPadding="false"
             android:text="완료"
             android:textColor="#FFFFFF"
             android:textSize="20sp"

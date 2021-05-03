@@ -37,31 +37,39 @@
                 android:orientation="vertical"
                 android:paddingHorizontal="@dimen/first_input_default_padding">
 
-                <com.doubleslas.fifith.alcohol.view.MyTextView
+                <TextView
                     style="@style/RecommendInfoStyle.Page"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:fontFamily="@font/noto_sans_medium"
                     android:text="2/2" />
 
-                <com.doubleslas.fifith.alcohol.view.MyTextView
+                <TextView
                     style="@style/RecommendInfoStyle.Title"
                     android:layout_width="wrap_content"
+                    android:includeFontPadding="false"
+                    android:fontFamily="@font/noto_sans_medium"
                     android:layout_height="wrap_content"
                     android:text="@string/first_input_detail_title" />
 
-                <com.doubleslas.fifith.alcohol.view.MyTextView
+                <TextView
                     style="@style/RecommendInfoStyle.SubTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
+                    android:includeFontPadding="false"
+                    android:fontFamily="@font/noto_sans_regular"
                     android:lineSpacingExtra="4sp"
                     android:text="@string/first_input_detail_subtitle" />
 
-                <com.doubleslas.fifith.alcohol.view.MyTextView
+                <TextView
                     style="@style/RecommendInfoStyle.Label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="50dp"
+                    android:includeFontPadding="false"
+                    android:fontFamily="@font/noto_sans_medium"
                     android:text="@string/first_input_default_info" />
             </LinearLayout>
 
@@ -74,12 +82,14 @@
                 android:paddingVertical="36dp">
 
                 <!-- region ABV -->
-                <com.doubleslas.fifith.alcohol.view.MyTextView
+                <TextView
                     android:id="@+id/tv_abv_label"
                     style="@style/RecommendInfoStyle.Label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/first_input_default_padding"
+                    android:includeFontPadding="false"
+                    android:fontFamily="@font/noto_sans_medium"
                     android:text="@string/all_abv"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -94,7 +104,7 @@
                     app:layout_constraintStart_toEndOf="@+id/tv_abv_label"
                     app:layout_constraintTop_toTopOf="@+id/tv_abv_label" />
 
-                <com.doubleslas.fifith.alcohol.view.MyTextView
+                <TextView
                     android:id="@+id/chip_abv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -103,6 +113,8 @@
                     android:paddingHorizontal="20dp"
                     android:paddingVertical="4dp"
                     android:textColor="#cccccc"
+                    android:includeFontPadding="false"
+                    android:fontFamily="@font/noto_sans_regular"
                     android:textSize="14sp"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
@@ -127,7 +139,7 @@
                     app:trackColorInactive="@color/light_gray_3"
                     app:values="@array/range_abv_value" />
 
-                <com.doubleslas.fifith.alcohol.view.MyTextView
+                <TextView
                     android:id="@+id/tv_abv_label_0"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -139,7 +151,7 @@
                     app:layout_constraintTop_toBottomOf="@id/range_abv" />
 
 
-                <com.doubleslas.fifith.alcohol.view.MyTextView
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/first_input_default_padding"
@@ -152,7 +164,7 @@
                 <!-- endregion -->
 
                 <!-- region Price -->
-                <com.doubleslas.fifith.alcohol.view.MyTextView
+                <TextView
                     android:id="@+id/tv_price_label"
                     style="@style/RecommendInfoStyle.Label"
                     android:layout_width="wrap_content"
@@ -160,6 +172,8 @@
                     android:layout_marginStart="@dimen/first_input_default_padding"
                     android:layout_marginTop="50dp"
                     android:text="@string/all_price"
+                    android:includeFontPadding="false"
+                    android:fontFamily="@font/noto_sans_medium"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_abv_label_0" />
 
@@ -186,16 +200,18 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_price_label">
 
-                    <com.doubleslas.fifith.alcohol.view.MyTextView
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:includeFontPadding="false"
+                        android:fontFamily="@font/noto_sans_regular"
                         android:layout_weight="0"
                         android:paddingStart="20dp"
                         android:text="최소"
                         android:textColor="#cccccc"
                         android:textSize="14sp" />
 
-                    <com.doubleslas.fifith.alcohol.view.MyTextView
+                    <TextView
                         android:id="@+id/tv_price_low"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -204,6 +220,8 @@
                         android:gravity="center"
                         android:paddingHorizontal="10dp"
                         android:textColor="#cccccc"
+                        android:includeFontPadding="false"
+                        android:fontFamily="@font/noto_sans_regular"
                         android:textSize="18sp"
                         tools:text="1000" />
                 </LinearLayout>
@@ -221,19 +239,23 @@
                     app:layout_constraintStart_toEndOf="@+id/dash_price"
                     app:layout_constraintTop_toTopOf="@+id/layout_price_low">
 
-                    <com.doubleslas.fifith.alcohol.view.MyTextView
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="0"
                         android:paddingStart="20dp"
                         android:text="최대"
+                        android:includeFontPadding="false"
+                        android:fontFamily="@font/noto_sans_regular"
                         android:textColor="#cccccc"
                         android:textSize="14sp" />
 
-                    <com.doubleslas.fifith.alcohol.view.MyTextView
+                    <TextView
                         android:id="@+id/tv_price_high"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:includeFontPadding="false"
+                        android:fontFamily="@font/noto_sans_regular"
                         android:layout_weight="1"
                         android:background="@color/transparent"
                         android:gravity="center"
@@ -255,7 +277,7 @@
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="@id/layout_price_low" />
 
-                <com.doubleslas.fifith.alcohol.view.MyTextView
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/first_input_default_padding"
@@ -263,13 +285,17 @@
                     android:textColor="#cccccc"
                     android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="parent"
+                    android:includeFontPadding="false"
+                    android:fontFamily="@font/noto_sans_regular"
                     app:layout_constraintTop_toBottomOf="@id/range_abv" />
 
 
-                <com.doubleslas.fifith.alcohol.view.MyTextView
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/first_input_default_padding"
+                    android:includeFontPadding="false"
+                    android:fontFamily="@font/noto_sans_regular"
                     android:text="80도"
                     android:textColor="#cccccc"
                     android:textSize="16sp"
@@ -279,7 +305,7 @@
                 <!-- endregion -->
 
                 <!-- region carbonated -->
-                <com.doubleslas.fifith.alcohol.view.MyTextView
+                <TextView
                     android:id="@+id/tv_carbonated_label"
                     style="@style/RecommendInfoStyle.Label"
                     android:layout_width="wrap_content"
@@ -287,6 +313,8 @@
                     android:layout_marginStart="@dimen/first_input_default_padding"
                     android:layout_marginTop="50dp"
                     android:text="@string/all_carbonated"
+                    android:includeFontPadding="false"
+                    android:fontFamily="@font/noto_sans_medium"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/layout_price_low" />
 
@@ -323,6 +351,8 @@
                             android:text="유"
                             android:textColor="@drawable/color_checkable_chip_text"
                             android:textSize="16sp"
+                            android:includeFontPadding="false"
+                            android:fontFamily="@font/noto_sans_medium"
                             app:checkedIconVisible="false"
                             app:chipBackgroundColor="@drawable/color_checkable_chip_bg"
                             app:chipEndPadding="12dp"
@@ -336,6 +366,8 @@
                             android:checkable="true"
                             android:text="무"
                             android:textColor="@drawable/color_checkable_chip_text"
+                            android:includeFontPadding="false"
+                            android:fontFamily="@font/noto_sans_medium"
                             android:textSize="16sp"
                             app:checkedIconVisible="false"
                             app:chipBackgroundColor="@drawable/color_checkable_chip_bg"
@@ -350,6 +382,8 @@
                             android:checkable="true"
                             android:checked="true"
                             android:text="상관없음"
+                            android:includeFontPadding="false"
+                            android:fontFamily="@font/noto_sans_medium"
                             android:textColor="@drawable/color_checkable_chip_text"
                             android:textSize="16sp"
                             app:checkedIconVisible="false"
@@ -370,19 +404,23 @@
                 android:orientation="horizontal"
                 android:paddingVertical="30dp">
 
-                <com.doubleslas.fifith.alcohol.view.MyTextView
+                <TextView
                     style="@style/RecommendInfoStyle.Label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:fontFamily="@font/noto_sans_medium"
                     android:layout_marginStart="@dimen/first_input_default_padding"
                     android:text="@string/first_input_select_info" />
 
-                <com.doubleslas.fifith.alcohol.view.MyTextView
+                <TextView
                     style="@style/RecommendInfoStyle.Label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/first_input_default_padding"
                     android:text="@string/first_input_select_info_sub"
+                    android:includeFontPadding="false"
+                    android:fontFamily="@font/noto_sans_regular"
                     android:textColor="#cccccc"
                     android:textSize="14sp" />
 
@@ -404,11 +442,13 @@
                     android:paddingHorizontal="@dimen/first_input_default_padding"
                     android:paddingVertical="10dp">
 
-                    <com.doubleslas.fifith.alcohol.view.MyTextView
+                    <TextView
                         style="@style/RecommendInfoStyle.Label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/all_liquor"
+                        android:includeFontPadding="false"
+                        android:fontFamily="@font/noto_sans_medium"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -430,7 +470,7 @@
                     android:paddingBottom="40dp">
 
                     <!-- region liquor_type -->
-                    <com.doubleslas.fifith.alcohol.view.MyTextView
+                    <TextView
                         android:id="@+id/tv_liquor_type_label"
                         style="@style/RecommendInfoStyle.Label"
                         android:layout_width="wrap_content"
@@ -438,6 +478,8 @@
                         android:layout_marginStart="@dimen/first_input_default_padding"
                         android:layout_marginTop="30dp"
                         android:text="@string/all_type"
+                        android:includeFontPadding="false"
+                        android:fontFamily="@font/noto_sans_medium"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -461,7 +503,7 @@
                     <!-- endregion -->
 
                     <!-- region liquor_flavor -->
-                    <com.doubleslas.fifith.alcohol.view.MyTextView
+                    <TextView
                         android:id="@+id/tv_liquor_flavor_label"
                         style="@style/RecommendInfoStyle.Label"
                         android:layout_width="wrap_content"
@@ -469,6 +511,8 @@
                         android:layout_marginStart="@dimen/first_input_default_padding"
                         android:layout_marginTop="50dp"
                         android:text="@string/all_flavor"
+                        android:includeFontPadding="false"
+                        android:fontFamily="@font/noto_sans_medium"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/layout_liquor_type_content" />
 
@@ -509,11 +553,13 @@
                     android:paddingHorizontal="@dimen/first_input_default_padding"
                     android:paddingVertical="10dp">
 
-                    <com.doubleslas.fifith.alcohol.view.MyTextView
+                    <TextView
                         style="@style/RecommendInfoStyle.Label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/all_wine"
+                        android:includeFontPadding="false"
+                        android:fontFamily="@font/noto_sans_medium"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -534,12 +580,14 @@
                     android:paddingBottom="40dp">
 
                     <!-- region wine_type -->
-                    <com.doubleslas.fifith.alcohol.view.MyTextView
+                    <TextView
                         android:id="@+id/tv_wine_type_label"
                         style="@style/RecommendInfoStyle.Label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/first_input_default_padding"
+                        android:includeFontPadding="false"
+                        android:fontFamily="@font/noto_sans_medium"
                         android:layout_marginTop="30dp"
                         android:text="@string/all_type"
                         app:layout_constraintLeft_toLeftOf="parent"
@@ -565,12 +613,14 @@
                     <!-- endregion -->
 
                     <!-- region wine_flavor -->
-                    <com.doubleslas.fifith.alcohol.view.MyTextView
+                    <TextView
                         android:id="@+id/tv_wine_flavor_label"
                         style="@style/RecommendInfoStyle.Label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/first_input_default_padding"
+                        android:includeFontPadding="false"
+                        android:fontFamily="@font/noto_sans_medium"
                         android:layout_marginTop="50dp"
                         android:text="@string/all_flavor"
                         app:layout_constraintLeft_toLeftOf="parent"
@@ -597,7 +647,7 @@
                     <!-- endregion -->
 
                     <!-- region wine_body -->
-                    <com.doubleslas.fifith.alcohol.view.MyTextView
+                    <TextView
                         android:id="@+id/tv_wine_body_label"
                         style="@style/RecommendInfoStyle.Label"
                         android:layout_width="wrap_content"
@@ -605,6 +655,8 @@
                         android:layout_marginStart="@dimen/first_input_default_padding"
                         android:layout_marginTop="50dp"
                         android:text="@string/all_wine_body"
+                        android:includeFontPadding="false"
+                        android:fontFamily="@font/noto_sans_medium"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/seekBar_wine_flavor" />
 
@@ -647,9 +699,11 @@
                     android:paddingHorizontal="@dimen/first_input_default_padding"
                     android:paddingVertical="10dp">
 
-                    <com.doubleslas.fifith.alcohol.view.MyTextView
+                    <TextView
                         style="@style/RecommendInfoStyle.Label"
                         android:layout_width="wrap_content"
+                        android:includeFontPadding="false"
+                        android:fontFamily="@font/noto_sans_medium"
                         android:layout_height="wrap_content"
                         android:text="@string/all_beer"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -672,11 +726,13 @@
                     android:paddingBottom="40dp">
 
                     <!-- region beer_type -->
-                    <com.doubleslas.fifith.alcohol.view.MyTextView
+                    <TextView
                         android:id="@+id/tv_beer_type_label"
                         style="@style/RecommendInfoStyle.Label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:includeFontPadding="false"
+                        android:fontFamily="@font/noto_sans_medium"
                         android:layout_marginStart="@dimen/first_input_default_padding"
                         android:layout_marginTop="30dp"
                         android:text="@string/all_type"
@@ -703,11 +759,13 @@
                     <!-- endregion -->
 
                     <!-- region beer_flavor -->
-                    <com.doubleslas.fifith.alcohol.view.MyTextView
+                    <TextView
                         android:id="@+id/tv_beer_flavor_label"
                         style="@style/RecommendInfoStyle.Label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:includeFontPadding="false"
+                        android:fontFamily="@font/noto_sans_medium"
                         android:layout_marginStart="@dimen/first_input_default_padding"
                         android:layout_marginTop="50dp"
                         android:text="@string/all_flavor"
@@ -743,6 +801,8 @@
                 android:background="@drawable/bg_button_next"
                 android:paddingVertical="16.5dp"
                 android:text="@string/all_next"
+                android:includeFontPadding="false"
+                android:fontFamily="@font/noto_sans_medium"
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent" />

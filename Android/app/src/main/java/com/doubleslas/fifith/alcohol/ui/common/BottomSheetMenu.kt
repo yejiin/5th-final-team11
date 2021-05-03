@@ -1,13 +1,12 @@
 package com.doubleslas.fifith.alcohol.ui.common
 
 import android.graphics.Color
-import android.graphics.Paint
-import android.graphics.Typeface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -21,6 +20,13 @@ open class BottomSheetMenu : BottomSheetDialogFragment() {
     private var list: List<String>? = null
     private var onItemClickListener: ((Int, String) -> Unit)? = null
     private var selectIndex: Int? = null
+
+    private val typefaceMedium by lazy {
+        ResourcesCompat.getFont(context!!, R.font.noto_sans_medium)
+    }
+    private val typefaceRegular by lazy {
+        ResourcesCompat.getFont(context!!, R.font.noto_sans_regular)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -73,11 +79,11 @@ open class BottomSheetMenu : BottomSheetDialogFragment() {
             holder.binding.tv.text = list!![position]
             if (selectIndex == null || selectIndex != position) {
                 holder.binding.ivCheck.visibility = View.INVISIBLE
-                holder.binding.tv.setTypeface(null, Typeface.NORMAL)
+                holder.binding.tv.typeface = typefaceRegular
                 holder.binding.tv.setTextColor(Color.parseColor("#cccccc"))
             } else {
                 holder.binding.ivCheck.visibility = View.VISIBLE
-                holder.binding.tv.setTypeface(null, Typeface.BOLD)
+                holder.binding.tv.typeface = typefaceMedium
                 holder.binding.tv.setTextColor(Color.parseColor("#ffffff"))
             }
         }

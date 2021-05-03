@@ -29,25 +29,31 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <com.doubleslas.fifith.alcohol.view.MyTextView
+        <TextView
             style="@style/RecommendInfoStyle.Page"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/noto_sans_medium"
+            android:includeFontPadding="false"
             android:text="1/2"
             android:textFontWeight="500" />
 
 
-        <com.doubleslas.fifith.alcohol.view.MyTextView
+        <TextView
             style="@style/RecommendInfoStyle.Title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/noto_sans_medium"
+            android:includeFontPadding="false"
             android:text="@string/first_input_drink_type_title"
             android:textFontWeight="500" />
 
-        <com.doubleslas.fifith.alcohol.view.MyTextView
+        <TextView
             style="@style/RecommendInfoStyle.SubTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/noto_sans_regular"
+            android:includeFontPadding="false"
             android:text="@string/first_input_drink_type_subtitle" />
 
     </LinearLayout>
@@ -70,11 +76,13 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_liquor" />
 
-        <com.doubleslas.fifith.alcohol.view.MyTextView
+        <TextView
             android:id="@+id/tv_liquor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
+            android:fontFamily="@font/noto_sans_bold"
+            android:includeFontPadding="false"
             android:text="양주"
             android:textColor="@drawable/color_selectable_blue" />
     </LinearLayout>
@@ -98,11 +106,13 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_wine" />
 
-        <com.doubleslas.fifith.alcohol.view.MyTextView
+        <TextView
             android:id="@+id/tv_wine"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
+            android:fontFamily="@font/noto_sans_bold"
+            android:includeFontPadding="false"
             android:text="와인"
             android:textColor="@drawable/color_selectable_yellow" />
     </LinearLayout>
@@ -126,11 +136,13 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_beer" />
 
-        <com.doubleslas.fifith.alcohol.view.MyTextView
+        <TextView
             android:id="@+id/tv_beer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
+            android:fontFamily="@font/noto_sans_bold"
+            android:includeFontPadding="false"
             android:text="맥주"
             android:textColor="@drawable/color_selectable_orange" />
     </LinearLayout>
@@ -140,8 +152,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_button_next"
-        android:paddingVertical="16.5dp"
         android:enabled="false"
+        android:paddingVertical="16.5dp"
+        android:includeFontPadding="false"
+        android:fontFamily="@font/noto_sans_medium"
         android:text="@string/all_next"
         android:textColor="@color/white"
         android:textSize="20sp"

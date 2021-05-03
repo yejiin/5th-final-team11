@@ -6,6 +6,7 @@
     android:layout_height="match_parent">
 
     <!-- region design -->
+
     <ImageView
         android:layout_width="226dp"
         android:layout_height="244dp"
@@ -39,13 +40,15 @@
         app:layout_constraintTop_toTopOf="parent" />
     <!-- endregion -->
 
-    <com.doubleslas.fifith.alcohol.view.MyTextView
+    <TextView
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="36dp"
         android:layout_marginTop="102dp"
         android:layout_marginBottom="628dp"
+        android:fontFamily="@font/noto_sans_medium"
+        android:includeFontPadding="false"
         android:text="회원가입"
         android:textColor="#FFFFFF"
         android:textSize="24sp"
@@ -55,13 +58,15 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <com.doubleslas.fifith.alcohol.view.MyTextView
+    <TextView
         android:id="@+id/tv_sub_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="110dp"
         android:layout_marginBottom="631dp"
+        android:fontFamily="@font/noto_sans_regular"
+        android:includeFontPadding="false"
         android:text="필수 정보"
         android:textColor="#969696"
         android:textSize="16sp"
@@ -69,12 +74,14 @@
         app:layout_constraintStart_toEndOf="@+id/tv_title"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.doubleslas.fifith.alcohol.view.MyTextView
+    <TextView
         android:id="@+id/tv_nickname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="54dp"
         android:layout_marginBottom="10dp"
+        android:fontFamily="@font/noto_sans_regular"
+        android:includeFontPadding="false"
         android:text="닉네임"
         android:textColor="#FFFFFF"
         android:textSize="16sp"
@@ -88,7 +95,9 @@
         android:layout_height="wrap_content"
         android:layout_marginRight="36dp"
         android:backgroundTint="#707070"
+        android:fontFamily="@font/noto_sans_regular"
         android:hint="10자 이하"
+        android:includeFontPadding="false"
         android:maxLines="1"
         android:textColor="#FFFFFF"
         android:textColorHint="#969696"
@@ -97,10 +106,12 @@
         app:layout_constraintStart_toStartOf="@id/tv_title"
         app:layout_constraintTop_toBottomOf="@+id/tv_nickname" />
 
-    <com.doubleslas.fifith.alcohol.view.MyTextView
+    <TextView
         android:id="@+id/tv_nickname_waring"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/noto_sans_demi_light"
+        android:includeFontPadding="false"
         android:lineSpacingExtra="5sp"
         android:textColor="#ffa255"
         android:textSize="10sp"
@@ -110,11 +121,13 @@
         tools:text="2자 이상 입력해주세요." />
 
 
-    <com.doubleslas.fifith.alcohol.view.MyTextView
+    <TextView
         android:id="@+id/btn_validate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/button_validate"
+        android:fontFamily="@font/noto_sans_regular"
+        android:includeFontPadding="false"
         android:paddingHorizontal="11dp"
         android:paddingVertical="4dp"
         android:text="중복 확인"
@@ -123,13 +136,16 @@
         app:layout_constraintEnd_toEndOf="@+id/et_nickname"
         app:layout_constraintTop_toTopOf="@+id/et_nickname" />
 
-    <com.doubleslas.fifith.alcohol.view.MyCheckBox
+    <androidx.appcompat.widget.AppCompatCheckBox
         android:id="@+id/cb_all"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:button="@drawable/ic_agree_checkbox"
+        android:fontFamily="@font/noto_sans_demi_light"
         android:gravity="center_vertical"
+        android:includeFontPadding="false"
+        android:minHeight="0dp"
         android:paddingLeft="16dp"
         android:text="전체 약관 동의"
         android:textColor="#FFFFFF"
@@ -159,12 +175,15 @@
         app:layout_constraintTop_toBottomOf="@+id/line">
 
 
-        <com.doubleslas.fifith.alcohol.view.MyCheckBox
+        <androidx.appcompat.widget.AppCompatCheckBox
             android:id="@+id/cb_age"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:button="@drawable/ic_agree_checkbox"
+            android:fontFamily="@font/noto_sans_demi_light"
             android:gravity="center_vertical"
+            android:includeFontPadding="false"
+            android:minHeight="0dp"
             android:paddingLeft="16dp"
             android:text="필수        만 14세 이상 동의"
             android:textColor="#FFFFFF"
@@ -177,13 +196,16 @@
             android:layout_marginTop="@dimen/checkbox_margin"
             android:gravity="center_vertical">
 
-            <com.doubleslas.fifith.alcohol.view.MyCheckBox
+            <androidx.appcompat.widget.AppCompatCheckBox
                 android:id="@+id/cb_terms"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:button="@drawable/ic_agree_checkbox"
+                android:fontFamily="@font/noto_sans_demi_light"
                 android:gravity="center_vertical"
+                android:includeFontPadding="false"
+                android:minHeight="0dp"
                 android:paddingLeft="16dp"
                 android:text="필수        서비스 이용약관 동의"
                 android:textColor="#FFFFFF"
@@ -205,13 +227,16 @@
             android:layout_marginTop="@dimen/checkbox_margin"
             android:gravity="center_vertical">
 
-            <com.doubleslas.fifith.alcohol.view.MyCheckBox
+            <androidx.appcompat.widget.AppCompatCheckBox
                 android:id="@+id/cb_privacy"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:button="@drawable/ic_agree_checkbox"
+                android:fontFamily="@font/noto_sans_demi_light"
                 android:gravity="center_vertical"
+                android:includeFontPadding="false"
+                android:minHeight="0dp"
                 android:paddingLeft="16dp"
                 android:text="필수        개인정보 취급방식 동의"
                 android:textColor="#FFFFFF"
@@ -233,13 +258,16 @@
             android:layout_marginTop="@dimen/checkbox_margin"
             android:gravity="center_vertical">
 
-            <com.doubleslas.fifith.alcohol.view.MyCheckBox
+            <androidx.appcompat.widget.AppCompatCheckBox
                 android:id="@+id/cb_marketing"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:button="@drawable/ic_agree_checkbox"
+                android:fontFamily="@font/noto_sans_demi_light"
                 android:gravity="center_vertical"
+                android:includeFontPadding="false"
+                android:minHeight="0dp"
                 android:paddingLeft="16dp"
                 android:text="선택        마케팅 정보 수신 동의"
                 android:textColor="#FFFFFF"
@@ -263,6 +291,8 @@
         android:layout_width="match_parent"
         android:layout_height="62dp"
         android:background="#202425"
+        android:fontFamily="@font/noto_sans_medium"
+        android:includeFontPadding="false"
         android:text="다음"
         android:textColor="#575757"
         android:textSize="20sp"

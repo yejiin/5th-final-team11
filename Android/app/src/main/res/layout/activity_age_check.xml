@@ -30,14 +30,15 @@
         app:layout_constraintTop_toBottomOf="@id/layout_title"
         app:layout_constraintVertical_bias="1">
 
-        <com.doubleslas.fifith.alcohol.view.MyTextView
+        <TextView
             android:id="@+id/tv_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/noto_sans_demi_light"
+            android:includeFontPadding="false"
             android:text="19세 이상인가요?"
             android:textColor="#ffffff"
-            android:textSize="18sp"
-            app:fontWeight="200"/>
+            android:textSize="18sp" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_start"
@@ -45,6 +46,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="19dp"
             android:background="@drawable/button_round_background_gradient"
+            android:fontFamily="@font/noto_sans_demi_light"
+            android:includeFontPadding="false"
             android:text="네"
             android:textColor="#FFFFFF" />
 
@@ -54,6 +57,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="11dp"
             android:background="@drawable/bg_nagative_button"
+            android:fontFamily="@font/noto_sans_demi_light"
+            android:includeFontPadding="false"
             android:text="아니오"
             android:textColor="#FFFFFF" />
     </LinearLayout>

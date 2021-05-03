@@ -8,13 +8,15 @@
     android:paddingHorizontal="30dp"
     android:paddingVertical="20dp">
 
-    <com.doubleslas.fifith.alcohol.view.MyTextView
+    <TextView
         android:id="@+id/tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:textColor="@color/white"
         android:textSize="18sp"
+        android:includeFontPadding="false"
+        android:fontFamily="@font/noto_sans_regular"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
