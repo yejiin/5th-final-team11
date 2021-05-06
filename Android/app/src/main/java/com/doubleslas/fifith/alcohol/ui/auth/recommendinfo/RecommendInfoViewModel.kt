@@ -115,7 +115,7 @@ class RecommendInfoViewModel : ViewModel() {
     fun getBeerFlavorList(): List<String> {
         return listOf(
             "청량한",
-            "씁슬한",
+            "씁쓸한",
             "고소한",
             "달달한",
             "텁텁한",
@@ -179,8 +179,8 @@ class RecommendInfoViewModel : ViewModel() {
         val data = RecommendInfoData(
             binding.rangeAbv.values[0].toInt(),
             binding.rangeAbv.values[1].toInt(),
-            binding.tvPriceLow.text.toString().toInt(),
-            binding.tvPriceHigh.text.toString().toInt(),
+            binding.etPriceLow.text.toString().toInt(),
+            binding.etPriceHigh.text.toString().toInt(),
             when (binding.chipGroupCarbotanted.checkedChipId) {
                 R.id.chip_carbonated_yes -> "유"
                 R.id.chip_carbonated_no -> "무"

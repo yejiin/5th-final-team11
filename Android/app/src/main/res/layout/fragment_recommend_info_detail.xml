@@ -60,7 +60,6 @@
                     android:layout_marginTop="10dp"
                     android:includeFontPadding="false"
                     android:fontFamily="@font/noto_sans_regular"
-                    android:lineSpacingExtra="4sp"
                     android:text="@string/first_input_detail_subtitle" />
 
                 <TextView
@@ -109,7 +108,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:background="@drawable/bg_round_rect_light_gray"
+                    android:background="@drawable/bg_round_rect_light_gray_small"
                     android:paddingHorizontal="20dp"
                     android:paddingVertical="4dp"
                     android:textColor="#cccccc"
@@ -211,19 +210,21 @@
                         android:textColor="#cccccc"
                         android:textSize="14sp" />
 
-                    <TextView
-                        android:id="@+id/tv_price_low"
+                    <EditText
+                        android:id="@+id/et_price_low"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="@color/transparent"
                         android:gravity="center"
                         android:paddingHorizontal="10dp"
+                        android:inputType="numberDecimal"
                         android:textColor="#cccccc"
                         android:includeFontPadding="false"
+                        android:textColorHint="#7E8688"
                         android:fontFamily="@font/noto_sans_regular"
                         android:textSize="18sp"
-                        tools:text="1000" />
+                        android:hint="1000" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -250,8 +251,8 @@
                         android:textColor="#cccccc"
                         android:textSize="14sp" />
 
-                    <TextView
-                        android:id="@+id/tv_price_high"
+                    <EditText
+                        android:id="@+id/et_price_high"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:includeFontPadding="false"
@@ -262,7 +263,9 @@
                         android:paddingHorizontal="10dp"
                         android:textColor="#cccccc"
                         android:textSize="18sp"
-                        tools:text="1000" />
+                        android:inputType="numberDecimal"
+                        android:textColorHint="#7E8688"
+                        android:hint="6050000" />
                 </LinearLayout>
                 >
 
@@ -276,31 +279,6 @@
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="@id/layout_price_low" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/first_input_default_padding"
-                    android:text="0도"
-                    android:textColor="#cccccc"
-                    android:textSize="16sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:includeFontPadding="false"
-                    android:fontFamily="@font/noto_sans_regular"
-                    app:layout_constraintTop_toBottomOf="@id/range_abv" />
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/first_input_default_padding"
-                    android:includeFontPadding="false"
-                    android:fontFamily="@font/noto_sans_regular"
-                    android:text="80도"
-                    android:textColor="#cccccc"
-                    android:textSize="16sp"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/range_abv" />
 
                 <!-- endregion -->
 
@@ -354,6 +332,7 @@
                             android:includeFontPadding="false"
                             android:fontFamily="@font/noto_sans_medium"
                             app:checkedIconVisible="false"
+                            android:textAppearance="@style/ChipTabText"
                             app:chipBackgroundColor="@drawable/color_checkable_chip_bg"
                             app:chipEndPadding="12dp"
                             app:chipStartPadding="12dp" />
@@ -369,6 +348,7 @@
                             android:includeFontPadding="false"
                             android:fontFamily="@font/noto_sans_medium"
                             android:textSize="16sp"
+                            android:textAppearance="@style/ChipTabText"
                             app:checkedIconVisible="false"
                             app:chipBackgroundColor="@drawable/color_checkable_chip_bg"
                             app:chipEndPadding="12dp"
@@ -380,6 +360,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="15dp"
                             android:checkable="true"
+                            android:textAppearance="@style/ChipTabText"
                             android:checked="true"
                             android:text="상관없음"
                             android:includeFontPadding="false"

@@ -11,8 +11,9 @@
         android:background="@drawable/bg_tab"
         android:fontFamily="@font/noto_sans_regular"
         android:gravity="center"
+        android:textSize="14sp"
         android:includeFontPadding="false"
         android:maxLines="1"
-        android:paddingVertical="8dp"
+        android:paddingVertical="4dp"
         android:textColor="@drawable/tab_text_color" />
 </FrameLayout>

@@ -11,7 +11,7 @@
     <string name="sort_abv">도수높은순</string>
     <string name="sort_price_desc">가격높은순</string>
     <string name="sort_price_asc">가격낮은순</string>
-    <string name="sort_time">시간순</string>
+    <string name="sort_time">최신순</string>
     <string name="sort_recommend">추천순</string>
     <string name="sort_star">평점높은순</string>
 
@@ -40,7 +40,7 @@
     <string name="all_beer">맥주</string>
     <string name="all_type">종류</string>
     <string name="all_flavor">맛</string>
-    <string name="all_place">지역</string>
+    <string name="all_place">장소</string>
     <string name="all_wine_body">바디감</string>
 
 

@@ -24,6 +24,8 @@
                 android:id="@+id/iv_alcohol"
                 android:layout_width="83dp"
                 android:layout_height="83dp"
+                android:background="@drawable/bg_item_alcohol"
+                android:scaleType="fitCenter"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -46,7 +48,7 @@
                 android:id="@+id/tv_type"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="2dp"
                 android:fontFamily="@font/noto_sans_regular"
                 android:includeFontPadding="false"
                 android:textColor="#a5a5a5"
@@ -54,6 +56,7 @@
                 app:layout_constraintLeft_toLeftOf="@id/tv_name"
                 app:layout_constraintTop_toBottomOf="@id/tv_name"
                 app:layout_goneMarginTop="12dp"
+                android:text="양주"
                 tools:text="종류라고" />
 
             <androidx.appcompat.widget.AppCompatRatingBar
@@ -61,13 +64,15 @@
                 style="@style/RatingBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="10dp"
                 android:isIndicator="true"
                 android:max="10"
                 android:numStars="5"
                 android:stepSize="0.1"
                 app:layout_constraintLeft_toLeftOf="@id/tv_name"
-                app:layout_constraintTop_toBottomOf="@id/tv_type" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_type"
+                app:layout_constraintVertical_bias="1"
+                app:layout_constraintBottom_toBottomOf="@id/iv_alcohol"/>
 
             <TextView
                 android:id="@+id/tv_rating"
@@ -123,6 +128,7 @@
 
             <com.doubleslas.fifith.alcohol.view.ReviewDetailView
                 android:id="@+id/layout_detail"
+                android:layout_marginTop="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </LinearLayout>

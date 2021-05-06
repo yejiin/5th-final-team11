@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.widget.addTextChangedListener
@@ -43,6 +44,11 @@ class RegisterActivity : AppCompatActivity(), CustomDialogInterface, View.OnClic
 
         binding.btnValidate.setOnClickListener {
             val nickname = binding.etNickname.text.toString()
+            if (nickname.length < 2 || nickname.length > 10) {
+                Toast.makeText(this, "2자 이상, 10자 이하로 입력해주세요.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
             // 닉네임 중복 체크
             registerViewModel.nicknameCheck(nickname).observe(this, Observer {
                 when (it) {
@@ -73,10 +79,11 @@ class RegisterActivity : AppCompatActivity(), CustomDialogInterface, View.OnClic
         }
 
         binding.etNickname.addTextChangedListener {
-            if (it.toString().length <= 1) {
-                binding.tvNicknameWaring.setText("2자 이상 입력해주세요.")
+            val nickname = it.toString()
+            if (nickname.length < 2 || nickname.length > 10) {
+                binding.tvNicknameWaring.text = "2자 이상, 10자 이하로 입력해주세요."
             } else {
-                binding.tvNicknameWaring.setText("")
+                binding.tvNicknameWaring.text = ""
             }
         }
     }

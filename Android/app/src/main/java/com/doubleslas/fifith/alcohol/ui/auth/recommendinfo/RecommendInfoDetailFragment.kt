@@ -72,36 +72,6 @@ class RecommendInfoDetailFragment : BaseFragment<FragmentRecommendInfoDetailBind
                 }
             }
 
-            b.tvPriceLow.text = viewModel.getMinPrice().toString()
-            b.tvPriceHigh.text = viewModel.getMaxPrice().toString()
-
-            b.layoutPriceLow.setOnClickListener {
-                val min = viewModel.getMinPrice()
-                val maxString = b.tvPriceHigh.text.toString()
-                val max = if (maxString.isEmpty()) viewModel.getMaxPrice() else maxString.toInt()
-                val dialog = NumberInputBottomSheetDialog().apply {
-                    setRange(min, max, 1000)
-                    setValue(b.tvPriceLow.text.toString().toInt())
-                }
-                dialog.show(fragmentManager!!, null) {
-                    b.tvPriceLow.text = it.toString()
-                }
-            }
-
-            b.layoutPriceHigh.setOnClickListener {
-                val minString = b.tvPriceLow.text.toString()
-                val min = if (minString.isEmpty()) viewModel.getMinPrice() else minString.toInt()
-                val max = viewModel.getMaxPrice()
-                val dialog = NumberInputBottomSheetDialog().apply {
-                    setRange(min, max, 1000)
-                    setValue(b.tvPriceHigh.text.toString().toInt())
-                }
-
-                dialog.show(fragmentManager!!, null) {
-                    b.tvPriceHigh.text = it.toString()
-                }
-            }
-
             b.seekBarWineFlavor.tvLabel1.text = "Dry"
             b.seekBarWineFlavor.tvLabel2.text = "Sweet"
 

@@ -1,12 +1,13 @@
 package com.doubleslas.fifith.alcohol.ui.reivew
 
-import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AlertDialog
+import android.widget.Toast
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
+import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
 import com.doubleslas.fifith.alcohol.R
 import com.doubleslas.fifith.alcohol.databinding.LayoutWriteReviewBinding
@@ -16,16 +17,15 @@ import com.doubleslas.fifith.alcohol.ui.auth.CustomDialog
 import com.doubleslas.fifith.alcohol.ui.auth.CustomDialogInterface
 import com.doubleslas.fifith.alcohol.ui.common.CalendarDialogFragment
 import com.doubleslas.fifith.alcohol.ui.common.base.BaseBottomSheetDialogFragment
-import com.doubleslas.fifith.alcohol.ui.main.IOnBackPressed
 import kotlinx.android.synthetic.main.custom_dialog.*
+import java.util.*
 
 
 class ReviewBottomSheetDialog private constructor() :
-    BaseBottomSheetDialogFragment<LayoutWriteReviewBinding>(), CustomDialogInterface{
+    BaseBottomSheetDialogFragment<LayoutWriteReviewBinding>(), CustomDialogInterface {
 
     private val alcoholId by lazy { arguments!!.getInt(ARGUMENT_ALCOHOL_ID) }
     private val customDialog: CustomDialog by lazy { CustomDialog(context!!, this) }
-
 
     private val viewModel by lazy {
         ReviewViewModel()
@@ -34,10 +34,7 @@ class ReviewBottomSheetDialog private constructor() :
     private val calendarDialogFragment by lazy {
         CalendarDialogFragment().apply {
             setOnConfirmListener { year, month, day ->
-                val txt = "${year}.${month}.${day}"
-                binding?.let {
-                    it.layoutDetail.tvDate.text = txt
-                }
+                setDateText(year, month, day)
             }
         }
     }
@@ -54,8 +51,12 @@ class ReviewBottomSheetDialog private constructor() :
         super.onViewCreated(view, savedInstanceState)
 
         binding?.let { b ->
-            b.ivDetailRecord.setImageResource(R.drawable.ic_review_button_plus)
-            b.layoutDetail.visibility = View.GONE
+            b.ratingReview.progress = 5
+            b.ratingReview.setOnRatingBarChangeListener { ratingBar, rating, fromUser ->
+                if (rating < 1) {
+                    ratingBar.progress = 1
+                }
+            }
 
             b.layoutDetail.tvDate.setOnClickListener {
                 activity!!.supportFragmentManager.let { fm ->
@@ -63,11 +64,24 @@ class ReviewBottomSheetDialog private constructor() :
                 }
             }
 
+            b.etComment.addTextChangedListener {
+                b.btnReviewConfirm.setBackgroundColor(
+                    if (it?.length ?: 0 >= 20)
+                        ResourcesCompat.getColor(resources, R.color.purple, null)
+                    else
+                        ResourcesCompat.getColor(resources, R.color.darken_gray, null)
+                )
+            }
+
+
+
 
             b.btnReviewConfirm.setOnClickListener {
                 confirmReview()
             }
 
+            b.ivDetailRecord.setImageResource(R.drawable.ic_review_button_plus)
+            b.layoutDetail.visibility = View.GONE
             b.layoutDetailToggle.setOnClickListener {
                 if (b.layoutDetail.visibility == View.GONE) {
                     b.ivDetailRecord.setImageResource(R.drawable.ic_review_button_x)
@@ -79,6 +93,16 @@ class ReviewBottomSheetDialog private constructor() :
                     b.checkboxPrivate.visibility = View.INVISIBLE
                 }
             }
+
+
+            val now = Calendar.getInstance()
+            setDateText(
+                now.get(Calendar.YEAR),
+                now.get(Calendar.MONTH) + 1,
+                now.get(Calendar.DAY_OF_MONTH)
+            )
+
+            b.layoutDetail.setIndicator(false)
         }
 
     }
@@ -87,15 +111,14 @@ class ReviewBottomSheetDialog private constructor() :
     private fun confirmReview() {
         binding?.let { b ->
 
-
             val detail =
                 if (b.layoutDetail.isVisible)
                     ReviewDetailData(
                         b.layoutDetail.tvDate.text.toString(),
-                        b.layoutDetail.etDrink.text.toString().toInt(),
+                        b.layoutDetail.etDrink.text.toString(),
                         b.layoutDetail.seekBarHangover.seekBar.progress,
                         b.layoutDetail.etPlace.text.toString(),
-                        b.layoutDetail.etPrice.text.toString().toInt(),
+                        b.layoutDetail.etPrice.text.toString(),
                         b.checkboxPrivate.isChecked
                     )
                 else
@@ -130,23 +153,9 @@ class ReviewBottomSheetDialog private constructor() :
 
     private fun processValidate(v: ApiStatus.ValidateFail) {
         when (v) {
-            is ReviewViewModel.ReviewValidateFail.CommentEmpty -> {
+            is ReviewViewModel.ReviewValidateFail.CommentTooShort -> {
                 binding?.etComment?.requestFocus()
-            }
-            is ReviewViewModel.ReviewValidateFail.DetailDateEmpty -> {
-                binding?.layoutDetail?.tvDate?.requestFocus()
-            }
-            is ReviewViewModel.ReviewValidateFail.DetailPlaceEmpty -> {
-                binding?.layoutDetail?.etPlace?.requestFocus()
-            }
-            is ReviewViewModel.ReviewValidateFail.DetailDrinkEmpty -> {
-                binding?.layoutDetail?.etDrink?.requestFocus()
-            }
-            is ReviewViewModel.ReviewValidateFail.DetailHangoutEmpty -> {
-
-            }
-            is ReviewViewModel.ReviewValidateFail.DetailPriceEmpty -> {
-                binding?.layoutDetail?.etPrice?.requestFocus()
+                Toast.makeText(context, "리뷰는 20자 이상으로 작성해주세요", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -169,6 +178,10 @@ class ReviewBottomSheetDialog private constructor() :
 //                dismiss()
 //            }
 //        }
+    }
+
+    private fun setDateText(year: Int, month: Int, day: Int) {
+        binding?.layoutDetail?.tvDate?.text = String.format("%4d.%02d.%02d", year, month, day)
     }
 
     companion object {

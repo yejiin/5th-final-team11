@@ -34,6 +34,7 @@ open class BottomSheetMenu : BottomSheetDialogFragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = RecyclerviewBinding.inflate(inflater, container, false)
+        binding!!.root.setBackgroundResource(R.drawable.bg_write_review)
         return binding!!.root
     }
 

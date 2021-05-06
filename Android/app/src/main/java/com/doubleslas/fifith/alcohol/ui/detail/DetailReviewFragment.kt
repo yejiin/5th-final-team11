@@ -1,12 +1,10 @@
 package com.doubleslas.fifith.alcohol.ui.detail
 
-import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -14,11 +12,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.doubleslas.fifith.alcohol.databinding.FragmentDetailReviewBinding
 import com.doubleslas.fifith.alcohol.dto.ReviewData
 import com.doubleslas.fifith.alcohol.model.base.ApiStatus
+import com.doubleslas.fifith.alcohol.ui.auth.CustomDialog
+import com.doubleslas.fifith.alcohol.ui.auth.CustomDialogInterface
 import com.doubleslas.fifith.alcohol.ui.common.LoadingRecyclerViewAdapter
 import com.doubleslas.fifith.alcohol.ui.common.base.BaseFragment
-import com.doubleslas.fifith.alcohol.ui.main.IOnBackPressed
 import com.doubleslas.fifith.alcohol.ui.reivew.ReportBottomSheetDialog
 import com.doubleslas.fifith.alcohol.ui.reivew.ReviewBottomSheetDialog
+import kotlinx.android.synthetic.main.custom_dialog.*
 
 
 class DetailReviewFragment : BaseFragment<FragmentDetailReviewBinding>() {
@@ -92,7 +92,15 @@ class DetailReviewFragment : BaseFragment<FragmentDetailReviewBinding>() {
                     reviewViewModel.report(item.rid, comment).observe(viewLifecycleOwner, Observer {
                         when (it) {
                             is ApiStatus.Success -> {
-                                loadingAdapter.notifyItemRemoved(position)
+                                CustomDialog(context!!, object : CustomDialogInterface {
+                                    override fun onConfirmBtnClicked() {
+
+                                    }
+                                }).apply {
+                                    show()
+                                    tv_nicknameCheck?.text =
+                                        "신고가 완료되었습니다.\n더욱 도움이 되는 서비스를 제공하기 위해 노력하겠습니다."
+                                }
                             }
                             is ApiStatus.Error -> {
                                 Toast.makeText(context, "Network Error", Toast.LENGTH_SHORT).show()

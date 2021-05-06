@@ -25,12 +25,12 @@
                 android:layout_height="wrap_content"
                 android:background="#263238"
                 android:calendarViewShown="false"
-                android:includeFontPadding="false"
-                android:fontFamily="@font/noto_sans_medium"
                 android:datePickerMode="spinner"
+                android:fontFamily="@font/noto_sans_medium"
+                android:includeFontPadding="false"
                 android:theme="@style/MyDatePicker" />
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_calendar_confirm"
                 android:layout_width="match_parent"
                 android:layout_height="62dp"

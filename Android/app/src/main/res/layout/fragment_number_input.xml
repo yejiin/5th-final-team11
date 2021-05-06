@@ -13,7 +13,7 @@
         android:background="#263238"
         android:theme="@style/NumberPickerTextColor" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_confirm"
         android:layout_width="match_parent"
         android:layout_height="62dp"

@@ -31,7 +31,6 @@ class CustomDialog(context: Context, customDialogInterface: CustomDialogInterfac
         when (view) {
             btn_nickname_confirm -> {
                 this.customDialogInterface?.onConfirmBtnClicked()
-
             }
         }
     }

@@ -10,6 +10,7 @@ import com.doubleslas.fifith.alcohol.App
 import com.doubleslas.fifith.alcohol.R
 import com.doubleslas.fifith.alcohol.databinding.ViewReviewDetailBinding
 import com.doubleslas.fifith.alcohol.dto.ReviewDetailData
+import java.text.DecimalFormat
 
 class ReviewDetailView(context: Context, attrs: AttributeSet?, defStyle: Int) :
     FrameLayout(context, attrs, defStyle) {
@@ -35,7 +36,7 @@ class ReviewDetailView(context: Context, attrs: AttributeSet?, defStyle: Int) :
 
         setDetailText(tvDate, data.date)
         setDetailText(etPlace, data.place)
-        setDetailText(etDrink, data.drink?.toString())
+        setDetailText(etDrink, DecimalFormat("0.#").format(data.drink ?: 0))
         setDetailText(etPrice, data.price?.toString())
 
         if (data.hangover == null) {
@@ -56,7 +57,7 @@ class ReviewDetailView(context: Context, attrs: AttributeSet?, defStyle: Int) :
 
 
     private fun setDetailText(textView: TextView, text: String?) {
-        if (text == null) {
+        if (text == null || text == "0") {
             (textView.parent as View).visibility = View.GONE
         } else {
             (textView.parent as View).visibility = View.VISIBLE

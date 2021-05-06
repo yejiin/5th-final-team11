@@ -90,6 +90,9 @@ class DetailViewModel(val aid: Int) : ViewModel() {
                     isLoadingWriteComment = false
                     item.commentCount++
                     item.comments.add(0, data)
+                    item.visibleCommentList = true
+                    item.visibleComment = false
+                    item.cacheComment = ""
                     mediator.value = ApiStatus.Success(code, data)
                 }
 

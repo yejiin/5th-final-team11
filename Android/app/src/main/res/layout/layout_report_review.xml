@@ -13,7 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="25dp"
         android:fontFamily="@font/noto_sans_medium"
         android:includeFontPadding="false"
         android:text="신고하기"
@@ -24,6 +24,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+
+        />
 
     <RadioGroup
         android:layout_width="wrap_content"
@@ -85,16 +90,17 @@
 
     <EditText
         android:id="@+id/et_report_content"
-        android:layout_width="288dp"
+        android:layout_width="match_parent"
         android:layout_height="44dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginStart="10dp"
         android:layout_marginTop="14dp"
         android:background="@drawable/background_review_edit_text"
         android:fontFamily="@font/noto_sans_regular"
         android:hint="의견을 남겨주세요!"
         android:includeFontPadding="false"
-        android:paddingLeft="18dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginEnd="36dp"
+        android:paddingStart="18dp"
         android:textColor="#FFFFFF"
         android:textColorHint="#A5A5A5"
         android:textSize="16sp"
@@ -112,6 +118,7 @@
         android:fontFamily="@font/noto_sans_medium"
         android:includeFontPadding="false"
         android:text="작성완료"
+        android:paddingVertical="16dp"
         android:textColor="@color/white"
         android:textSize="20sp" />
 

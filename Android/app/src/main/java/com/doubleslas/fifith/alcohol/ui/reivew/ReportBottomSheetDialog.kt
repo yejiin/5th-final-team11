@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CompoundButton
+import android.widget.Toast
 import com.doubleslas.fifith.alcohol.databinding.LayoutReportReviewBinding
 import com.doubleslas.fifith.alcohol.ui.common.base.BaseBottomSheetDialogFragment
 
@@ -31,7 +32,14 @@ class ReportBottomSheetDialog : BaseBottomSheetDialogFragment<LayoutReportReview
                     } else if (b.cbReport3.isChecked) {
                         "명예 훼손 / 사행활 침해"
                     } else if (b.cbReport4.isChecked) {
-                        b.etReportContent.text.toString()
+                        val comment = b.etReportContent.text
+                        if (comment.length < 10) {
+                            Toast.makeText(context, "기타 의견은 10자 이상 작성해야합니다", Toast.LENGTH_SHORT)
+                                .show()
+                            return@setOnClickListener
+                        } else {
+                            b.etReportContent.text.toString()
+                        }
                     } else {
                         return@setOnClickListener
                     }
