@@ -18,6 +18,8 @@ public class RecommendVO {
 	
 	private int aid;
 	
+	private String processed;
+	
 	private double recScore;
 
 }

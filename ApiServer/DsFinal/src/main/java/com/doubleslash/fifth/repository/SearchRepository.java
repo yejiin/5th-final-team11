@@ -1,10 +1,7 @@
 package com.doubleslash.fifth.repository;
 
-import java.util.List;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -25,16 +22,16 @@ public interface SearchRepository extends JpaRepository<ViewSearchVO, Integer>{
 	//주류명으로 검색해서 조회
 	public Page<SearchMapping> findByNameContaining(String name, Pageable pageable);
 	
-	@Query(value = "select new com.doubleslash.fifth.dto.AlcoholSearchDTO(v.aid, v.name, v.category, v.thumbnail, v.star, v.reviewCnt) from ViewSearchVO as v, RecommendVO as r where v.aid = r.aid and r.id = ?1 order by recScore desc")
-	public List<AlcoholSearchDTO> getRecommendDefaultAll(int id); 
+	@Query(value = "select new com.doubleslash.fifth.dto.AlcoholSearchDTO(v.aid, v.name, v.category, v.thumbnail, v.star, v.reviewCnt) from ViewSearchVO as v, RecommendVO as r where v.aid = r.aid and r.id = ?1 and processed = 'Y' order by recScore desc")
+	public Page<AlcoholSearchDTO> getRecommendDefaultAll(int id, Pageable pageable); 
 	
-	@Query(value = "select new com.doubleslash.fifth.dto.AlcoholSearchDTO(v.aid, v.name, v.category, v.thumbnail, v.star, v.reviewCnt) from ViewSearchVO as v, RecommendVO as r where v.aid = r.aid and r.id = ?1 and category = ?2 order by recScore desc")
-	public List<AlcoholSearchDTO> getRecommendDefault(int id, String category); 
+	@Query(value = "select new com.doubleslash.fifth.dto.AlcoholSearchDTO(v.aid, v.name, v.category, v.thumbnail, v.star, v.reviewCnt) from ViewSearchVO as v, RecommendVO as r where v.aid = r.aid and r.id = ?1 and category = ?2 and processed = 'N' order by recScore desc")
+	public Page<AlcoholSearchDTO> getRecommendDefault(int id, String category, Pageable pageable); 
 	
-	@Query(value = "select new com.doubleslash.fifth.dto.AlcoholSearchDTO(v.aid, v.name, v.category, v.thumbnail, v.star, v.reviewCnt) from ViewSearchVO as v, RecommendVO as r where v.aid = r.aid and r.id = ?1")
-	public List<AlcoholSearchDTO> getRecommendSortingAll(int id, Sort sort); 
+	@Query(value = "select new com.doubleslash.fifth.dto.AlcoholSearchDTO(v.aid, v.name, v.category, v.thumbnail, v.star, v.reviewCnt) from ViewSearchVO as v, RecommendVO as r where v.aid = r.aid and r.id = ?1 and processed = 'Y'")
+	public Page<AlcoholSearchDTO> getRecommendSortingAll(int id, Pageable pageable); 
 	
-	@Query(value = "select new com.doubleslash.fifth.dto.AlcoholSearchDTO(v.aid, v.name, v.category, v.thumbnail, v.star, v.reviewCnt) from ViewSearchVO as v, RecommendVO as r where v.aid = r.aid and r.id = ?1 and category = ?2")
-	public List<AlcoholSearchDTO> getRecommendSorting(int id, String category, Sort sort); 
+	@Query(value = "select new com.doubleslash.fifth.dto.AlcoholSearchDTO(v.aid, v.name, v.category, v.thumbnail, v.star, v.reviewCnt) from ViewSearchVO as v, RecommendVO as r where v.aid = r.aid and r.id = ?1 and category = ?2 and processed = 'N'")
+	public Page<AlcoholSearchDTO> getRecommendSorting(int id, String category, Pageable pageable); 
 	
 }

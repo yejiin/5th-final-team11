@@ -241,7 +241,7 @@ public class GYJ_RecommendService {
 					temp.setRecScore(temp.getRecScore() - 10);
 				}
 			}
-			recommendRepository.insert(id, aid, recScore);
+			recommendRepository.insert(id, aid, "Y", recScore);
 		}
 
 	}

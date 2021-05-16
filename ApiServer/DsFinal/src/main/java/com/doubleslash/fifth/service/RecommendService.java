@@ -5,9 +5,13 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.Map.Entry;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.domain.Sort.Order;
@@ -15,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import com.doubleslash.fifth.dto.AlcoholSearchDTO;
 import com.doubleslash.fifth.dto.RecommendDTO;
+import com.doubleslash.fifth.mapping.SearchMapping;
 import com.doubleslash.fifth.repository.AlcoholRepository;
 import com.doubleslash.fifth.repository.RecommendRepository;
 import com.doubleslash.fifth.repository.SearchRepository;
@@ -24,6 +29,7 @@ import com.doubleslash.fifth.storage.WineStorage;
 import com.doubleslash.fifth.vo.AlcoholVO;
 import com.doubleslash.fifth.vo.RecommendVO;
 import com.doubleslash.fifth.vo.ViewSearchVO;
+import com.google.cloud.storage.Acl.Entity;
 
 import io.grpc.netty.shaded.io.netty.resolver.DefaultHostsFileEntriesResolver;
 
@@ -223,7 +229,52 @@ public class RecommendService {
 		
 		List<Entry<Integer, RecommendDTO.map>> entries = new ArrayList<Entry<Integer, RecommendDTO.map>>(score.entrySet());
 		
-		for(int i = 0; i < 10; i++) {
+		//일단 한 번 정렬
+		Collections.sort(entries, new Comparator<Entry<Integer, RecommendDTO.map>>() {
+			public int compare(Entry<Integer, RecommendDTO.map> obj1, Entry<Integer, RecommendDTO.map> obj2)
+			{
+				return Integer.compare(obj2.getValue().getRecScore(), obj1.getValue().getRecScore());
+			}
+		});	
+		
+		ArrayList<Integer[]> liquorRecommendData = new ArrayList<>();
+		ArrayList<Integer[]> wineRecommendData = new ArrayList<>();
+		ArrayList<Integer[]> beerRecommendData = new ArrayList<>();
+				
+		//정렬된 리스트에서 카테고리별로 30개씩만 뽑아옴
+		for(int i = 0; i < score.size(); i++) {
+			Entry<Integer, RecommendDTO.map> entry = entries.get(i);
+			int aid = entry.getKey();
+			String category = entry.getValue().getCategory();
+			int recScore = entry.getValue().getRecScore();
+			
+			Integer[] temp = new Integer[] {aid, recScore};
+			switch(category) {
+				case "양주":
+					if(liquorRecommendData.size() < 30) liquorRecommendData.add(temp);
+					break;
+				case "세계맥주":
+					if(beerRecommendData.size() < 30) beerRecommendData.add(temp);
+					break;
+				case "와인":
+					if(wineRecommendData.size() < 30) wineRecommendData.add(temp);
+					break;
+			}
+		}
+		
+		//양주, 맥주, 와인 추천 데이터 삽입
+		for(Integer[] lrd : liquorRecommendData) {
+			recommendRepository.insert(id, lrd[0], "N", lrd[1]);
+		}
+		for(Integer[] brd : beerRecommendData) {
+			recommendRepository.insert(id, brd[0], "N", brd[1]);
+		}
+		for(Integer[] wrd : wineRecommendData) {
+			recommendRepository.insert(id, wrd[0], "N", wrd[1]);
+		}
+		
+		//processed="Y"의 추천스코어 가공 과정을 거친 전체 데이터
+		for(int i = 0; i < 30; i++) {
 			Collections.sort(entries, new Comparator<Entry<Integer, RecommendDTO.map>>() {
 				public int compare(Entry<Integer, RecommendDTO.map> obj1, Entry<Integer, RecommendDTO.map> obj2)
 				{
@@ -242,24 +293,41 @@ public class RecommendService {
 					temp.setRecScore(temp.getRecScore() - 10);
 				}
 			}
-			recommendRepository.insert(id, aid, recScore);
+			recommendRepository.insert(id, aid, "Y", recScore);
 		}
 
 	}
 	
 	//추천 결과 가져오기
-	public List<AlcoholSearchDTO> getRecommend(int id, String category, String sort, String sortOption) {
+	public Map<String, Object> getRecommend(int id, String category, String sort, String sortOption, int page) {
 		if(sort == null) sort = "recScore";
 		if(sortOption == null) sortOption = "desc";
 		
-		List<AlcoholSearchDTO> res;
+		List<AlcoholSearchDTO> dto = new ArrayList<>();
+		Page<AlcoholSearchDTO> mapping;
 		if(sort.equals("recScore")) {
-			if(category.equals("전체")) res = searchRepository.getRecommendDefaultAll(id);
-			else res = searchRepository.getRecommendDefault(id, category);
+			if(category.equals("전체")) mapping = searchRepository.getRecommendDefaultAll(id, PageRequest.of(page, 10));
+			else mapping = searchRepository.getRecommendDefault(id, category, PageRequest.of(page, 10));
 		}else {
-			if(category.equals("전체")) res = searchRepository.getRecommendSortingAll(id, sortOption(dirOption(sortOption), sort));
-			else res = searchRepository.getRecommendSorting(id, category, sortOption(dirOption(sortOption), sort));
+			if(category.equals("전체")) mapping = searchRepository.getRecommendSortingAll(id, PageRequest.of(page, 10, sortOption(dirOption(sortOption), sort)));
+			else mapping = searchRepository.getRecommendSorting(id, category, PageRequest.of(page, 10, sortOption(dirOption(sortOption), sort)));
 		}
+		
+		for (AlcoholSearchDTO m : mapping) {
+			dto.add(AlcoholSearchDTO.builder()
+					.aid(m.getAid())
+					.name(m.getName())
+					.category(m.getCategory())
+					.thumbnail(m.getThumbnail())
+					.star(m.getStar())
+					.reviewCnt(m.getReviewCnt())
+					.build()
+					);
+		};
+		
+		Map<String, Object> res = new TreeMap<>();
+		res.put("recommendList", dto);
+		res.put("totalCnt", mapping.getTotalElements());
 		
 		return res;
 	}

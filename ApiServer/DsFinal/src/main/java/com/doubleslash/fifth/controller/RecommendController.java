@@ -1,5 +1,7 @@
 package com.doubleslash.fifth.controller;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -44,6 +46,9 @@ public class RecommendController {
         @ApiImplicitParam(name = "category", required = true, dataType = "string", paramType = "query",
         		example = "전체",
         		value = "전체 / 양주 / 와인 / 세계맥주"),
+        @ApiImplicitParam(name = "page", required = true, dataType = "string", paramType = "query",
+				example = "0",
+				value = "페이지 번호(페이지당 데이터 10개), 최대 2"),
         @ApiImplicitParam(name = "sort", required = true, dataType = "string", paramType = "query", 
         		example = "recScore",
         		value = "추천순 : recScore(default) / desc\n"
@@ -59,18 +64,19 @@ public class RecommendController {
 	})
 	@GetMapping(value = "/recommend")
 	@ResponseBody
-	public WrapperDTO getRecommend(HttpServletRequest request, HttpServletResponse response) throws Exception{
+	public Map<String, Object> getRecommend(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		String uid = authService.verifyToken(request);
 		int id = userService.getId(uid);
 		String category = request.getParameter("category");
 		String sort = request.getParameter("sort");
 		String sortOption = request.getParameter("sortOption");
+		int page = Integer.parseInt(request.getParameter("page"));
 
 		if(category == null) {
 			response.sendError(400, "Bad Request");
 			return null;
 		}
-		return new WrapperDTO(recommendService.getRecommend(id, category, sort, sortOption));
+		return recommendService.getRecommend(id, category, sort, sortOption, page);
 	}
 
 	@ApiOperation(value = "추천 데이터 생성")
