@@ -47,4 +47,12 @@ interface ReviewRetrofit {
         @Path("rid") rid: Int,
         @Body content: ReportReviewBody
     ): ApiLiveData<Any>
+
+
+    @PUT("/review/comment/{cid}/report")
+    fun reportComment(
+        @Path("cid") rid: Int,
+        @Body content: ReportReviewBody
+    ): ApiLiveData<Any>
+
 }

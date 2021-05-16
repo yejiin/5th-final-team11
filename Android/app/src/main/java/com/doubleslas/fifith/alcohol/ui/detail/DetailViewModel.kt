@@ -110,6 +110,10 @@ class DetailViewModel(val aid: Int) : ViewModel() {
         return reviewRepository.reportReview(rid, comment)
     }
 
+    fun reportComment(cid: Int, comment: String): ApiLiveData<Any> {
+        return reviewRepository.reportComment(cid, comment)
+    }
+
     class Factory(private val param: Int) : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             return if (modelClass.isAssignableFrom(DetailViewModel::class.java)) {

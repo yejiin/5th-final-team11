@@ -10,15 +10,14 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.doubleslas.fifith.alcohol.databinding.FragmentDetailReviewBinding
+import com.doubleslas.fifith.alcohol.dto.ReviewCommentData
 import com.doubleslas.fifith.alcohol.dto.ReviewData
 import com.doubleslas.fifith.alcohol.model.base.ApiStatus
 import com.doubleslas.fifith.alcohol.ui.auth.CustomDialog
-import com.doubleslas.fifith.alcohol.ui.auth.CustomDialogInterface
 import com.doubleslas.fifith.alcohol.ui.common.LoadingRecyclerViewAdapter
 import com.doubleslas.fifith.alcohol.ui.common.base.BaseFragment
 import com.doubleslas.fifith.alcohol.ui.reivew.ReportBottomSheetDialog
 import com.doubleslas.fifith.alcohol.ui.reivew.ReviewBottomSheetDialog
-import kotlinx.android.synthetic.main.custom_dialog.*
 
 
 class DetailReviewFragment : BaseFragment<FragmentDetailReviewBinding>() {
@@ -26,6 +25,9 @@ class DetailReviewFragment : BaseFragment<FragmentDetailReviewBinding>() {
     private val adapter by lazy { DetailReviewAdapter() }
     private val loadingAdapter by lazy { LoadingRecyclerViewAdapter(adapter) }
     private val writeDialog by lazy { ReviewBottomSheetDialog.create(reviewViewModel.aid) }
+    private val reportSuccessDialog by lazy {
+        CustomDialog(context!!, "신고가 완료되었습니다.\n더욱 도움이 되는 서비스를 제공하기 위해 노력하겠습니다.")
+    }
 
 
     override fun createViewBinding(
@@ -92,21 +94,32 @@ class DetailReviewFragment : BaseFragment<FragmentDetailReviewBinding>() {
                     reviewViewModel.report(item.rid, comment).observe(viewLifecycleOwner, Observer {
                         when (it) {
                             is ApiStatus.Success -> {
-                                CustomDialog(context!!, object : CustomDialogInterface {
-                                    override fun onConfirmBtnClicked() {
-
-                                    }
-                                }).apply {
-                                    show()
-                                    tv_nicknameCheck?.text =
-                                        "신고가 완료되었습니다.\n더욱 도움이 되는 서비스를 제공하기 위해 노력하겠습니다."
-                                }
+                                reportSuccessDialog.show()
                             }
                             is ApiStatus.Error -> {
                                 Toast.makeText(context, "Network Error", Toast.LENGTH_SHORT).show()
                             }
                         }
                     })
+                }
+                dialog.show(childFragmentManager, null)
+            }
+
+            override fun reportComment(position: Int, item: ReviewCommentData) {
+                val dialog = ReportBottomSheetDialog()
+                dialog.setListener { comment ->
+                    reviewViewModel.reportComment(item.cid, comment)
+                        .observe(viewLifecycleOwner, Observer {
+                            when (it) {
+                                is ApiStatus.Success -> {
+                                    reportSuccessDialog.show()
+                                }
+                                is ApiStatus.Error -> {
+                                    Toast.makeText(context, "Network Error", Toast.LENGTH_SHORT)
+                                        .show()
+                                }
+                            }
+                        })
                 }
                 dialog.show(childFragmentManager, null)
             }

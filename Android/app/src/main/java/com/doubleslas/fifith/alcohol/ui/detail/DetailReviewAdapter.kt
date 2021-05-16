@@ -9,6 +9,7 @@ import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.RecyclerView
 import com.doubleslas.fifith.alcohol.databinding.ItemDetailReviewBinding
 import com.doubleslas.fifith.alcohol.databinding.ItemReviewCommentBinding
+import com.doubleslas.fifith.alcohol.dto.ReviewCommentData
 import com.doubleslas.fifith.alcohol.dto.ReviewData
 
 class DetailReviewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -66,6 +67,9 @@ class DetailReviewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                     layout.tvNickname.text = c.nickname
                     layout.tvDate.text = c.commentDate
                     layout.tvContent.text = c.content
+                    layout.tvReport.setOnClickListener {
+                        listener?.reportComment(position, c)
+                    }
                 }
 
                 for (index in item.comments.size until holder.commentHolder.size) {
@@ -98,6 +102,7 @@ class DetailReviewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         fun comment(position: Int, item: ReviewData, comment: String)
         fun like(position: Int, item: ReviewData, value: Boolean)
         fun report(position: Int, item: ReviewData)
+        fun reportComment(position: Int, item: ReviewCommentData)
     }
 
     inner class ReviewViewHolder(var binding: ItemDetailReviewBinding) :

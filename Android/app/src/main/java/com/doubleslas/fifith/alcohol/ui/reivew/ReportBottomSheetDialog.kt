@@ -47,6 +47,10 @@ class ReportBottomSheetDialog : BaseBottomSheetDialogFragment<LayoutReportReview
                 dismiss()
             }
 
+            b.btnClose.setOnClickListener {
+                dismiss()
+            }
+
             b.cbReport1.setOnCheckedChangeListener(this)
             b.cbReport2.setOnCheckedChangeListener(this)
             b.cbReport3.setOnCheckedChangeListener(this)

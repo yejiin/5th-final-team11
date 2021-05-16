@@ -25,4 +25,9 @@ class ReviewRepository {
     fun reportReview(rid: Int, comment: String): ApiLiveData<Any> {
         return service.reportReview(rid, ReportReviewBody(comment))
     }
+
+
+    fun reportComment(cid: Int, comment: String): ApiLiveData<Any> {
+        return service.reportComment(cid, ReportReviewBody(comment))
+    }
 }

@@ -51,6 +51,10 @@ class ReviewBottomSheetDialog private constructor() :
         super.onViewCreated(view, savedInstanceState)
 
         binding?.let { b ->
+            b.btnClose.setOnClickListener {
+                dismiss()
+            }
+
             b.ratingReview.progress = 5
             b.ratingReview.setOnRatingBarChangeListener { ratingBar, rating, fromUser ->
                 if (rating < 1) {
