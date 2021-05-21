@@ -1,5 +1,6 @@
 package com.doubleslash.fifth.controller;
 
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -224,7 +225,7 @@ public class ReviewController {
 	})
 	@DeleteMapping(value = "/{rid}")
 	@ResponseBody
-	public String DeleteMyReviewList(@PathVariable int rid, HttpServletRequest request) throws Exception {		
+	public String DeleteMyReviewList(@PathVariable List<Integer> rid, HttpServletRequest request) throws Exception {		
 		reviewService.deleteMyReview(rid);
 		return "{}";
 	}

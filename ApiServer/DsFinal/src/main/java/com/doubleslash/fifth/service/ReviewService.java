@@ -325,8 +325,10 @@ public class ReviewService {
 	
 	
 	//내 기록 삭제
-	public void deleteMyReview(int rid) {
-		reviewRepository.deleteById(rid);
+	public void deleteMyReview(List<Integer> rid) {
+		for(int i : rid) {
+			reviewRepository.deleteById(i);
+		}
 	}
 	
 	//정렬 기준을 동적으로 설정
