@@ -13,6 +13,7 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
 import com.doubleslash.fifth.interceptor.AuthInterceptor;
+import com.google.common.base.Predicates;
 
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
@@ -30,6 +31,24 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 public class SwaggerConfig extends WebMvcConfigurationSupport{
 	
+	String includePaths[] = {
+            "/user/register",
+            "/user/savepoint",
+            "/review/*",
+            "/review/*/*",
+            "/review/*/*/*",
+            "/review",
+            "/alcohol/*/love",
+            "/alcohol/recommend",
+            "/alcohol/rating",
+            "/cabinet/**"
+    };
+	
+	String excludePaths[] = {
+			"/review/list",
+			"/review/comment"
+	};
+	
 	@Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2).consumes(getConsumeContentTypes())
@@ -37,7 +56,6 @@ public class SwaggerConfig extends WebMvcConfigurationSupport{
             .apiInfo(getApiInfo())
             .select()
             .apis(RequestHandlerSelectors.basePackage("com.doubleslash.fifth.controller")) //Controller Path
-            .paths(PathSelectors.ant("/**")) //URL Path
             .build()
             .securityContexts(securityContext())
             .securitySchemes(Arrays.asList(apiKey()));
@@ -57,9 +75,9 @@ public class SwaggerConfig extends WebMvcConfigurationSupport{
     }
  
     private ApiInfo getApiInfo() {
-        return new ApiInfoBuilder().title("DsFinal")
-            .description("API Docs")
-            .version("1.0")
+        return new ApiInfoBuilder().title("시시콜콜")
+            .description("시시콜콜 API Docs입니다.")
+            .version("v1")
             .build();
     }
  
@@ -73,26 +91,25 @@ public class SwaggerConfig extends WebMvcConfigurationSupport{
         registry.addResourceHandler("/webjars/**")
             .addResourceLocations("classpath:/META-INF/resources/webjars/");
     }
+    
+    //Header Key 설정
     private ApiKey apiKey() {
     	return new ApiKey("idToken", "Authorization", "header"); 
     }
     
+    //auth 설정
+	List<SecurityReference> defaultAuth() { 
+        AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything"); 
+        AuthorizationScope[] authorizationScopes = new AuthorizationScope[1]; 
+        authorizationScopes[0] = authorizationScope; 
+        return Arrays.asList(new SecurityReference("idToken", authorizationScopes)); 
+    }
+    
+	//security 설정
     private List<SecurityContext> securityContext() { 
     	List<SecurityContext> securityContexts = new ArrayList<>();
-    	String paths[] = {
-                "/user/register",
-                "/user/savepoint",
-                "/review/*",
-                "/review/*/*",
-                "/review/*/*/*",
-                "/review",
-                "/alcohol/*/love",
-                "/alcohol/recommend",
-                "/alcohol/rating",
-                "/cabinet/**"
-        };
     	
-        for (String path: paths) {
+        for (String path: includePaths) {
         	securityContexts.add(SecurityContext.builder()
         			.securityReferences(defaultAuth())
         			.forPaths(PathSelectors.ant(path))
@@ -102,14 +119,7 @@ public class SwaggerConfig extends WebMvcConfigurationSupport{
         return securityContexts;
     }
 
-
-	List<SecurityReference> defaultAuth() { 
-        AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything"); 
-        AuthorizationScope[] authorizationScopes = new AuthorizationScope[1]; 
-        authorizationScopes[0] = authorizationScope; 
-        return Arrays.asList(new SecurityReference("idToken", authorizationScopes)); 
-    }
-
+	//interceptor Bean 등록
 	@Bean
 	public AuthInterceptor authInterceptor() {
 		return new AuthInterceptor();
@@ -117,28 +127,10 @@ public class SwaggerConfig extends WebMvcConfigurationSupport{
 	
 	//interceptor 등록
 	@Override
-	protected void addInterceptors(InterceptorRegistry registry) {
-		String[] includePathList = {
-				"/user/register",
-                "/user/savepoint",
-                "/review/*",
-                "/review/*/*",
-                "/review/*/*/*",
-                "/review",
-                "/alcohol/*/love",
-                "/alcohol/recommend",
-                "/alcohol/rating",
-                "/cabinet/**"
-		};
-		
-		String[] excludePathList = {
-				"/review/list",
-				"/review/comment"
-		};
-		
+	protected void addInterceptors(InterceptorRegistry registry) {		
 		registry.addInterceptor(authInterceptor())
-			.addPathPatterns(includePathList)
-			.excludePathPatterns(excludePathList);
+			.addPathPatterns(includePaths)
+			.excludePathPatterns(excludePaths);
 	}
 	
 	
