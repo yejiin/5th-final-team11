@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import com.doubleslash.fifth.dto.BeerDTO;
 import com.doubleslash.fifth.dto.LiquorDTO;
+import com.doubleslash.fifth.dto.RecommendDTO.beer;
 import com.doubleslash.fifth.dto.SimilarAlcoholDTO;
 import com.doubleslash.fifth.dto.WineDTO;
 import com.doubleslash.fifth.repository.AlcoholLoveRepository;
@@ -77,6 +78,8 @@ public class AlcoholService {
 		}
 		liquorMap.put("similar", getSimilar(aid));
 		
+		liquorMap.put("source", "");
+		
 		return liquorMap;
 	}
 
@@ -106,6 +109,9 @@ public class AlcoholService {
 			beerMap.put("loveClick", false);
 		}
 		beerMap.put("similar", getSimilar(aid));
+		
+		beerMap.put("source", "와인 21");
+		
 		return beerMap;
 	}
 
@@ -128,6 +134,9 @@ public class AlcoholService {
 			wineMap.put("loveClick", false);
 		}
 		wineMap.put("similar", getSimilar(aid));
+		
+		wineMap.put("source", "와인 21");
+		
 		return wineMap;
 	}
 
