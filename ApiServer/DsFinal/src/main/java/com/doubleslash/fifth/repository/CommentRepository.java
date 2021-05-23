@@ -20,10 +20,4 @@ public interface CommentRepository extends JpaRepository<CommentVO, Integer> {
 	
 	@Query(value = "select new com.doubleslash.fifth.dto.CommentDTO(c.rid, u.nickname, c.content, c.create_time) from CommentVO as c, UserVO as u where c.id=u.id and c.cid = ?1")
 	public CommentDTO findByCid(int cid);
-
-	// 댓글 신고 수 증가
-	@Transactional
-	@Modifying
-	@Query(value = "update Comment set report=report+1 where cid=?1", nativeQuery = true)
-	public void updateReport(int cid);
 }

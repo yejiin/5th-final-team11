@@ -7,5 +7,5 @@ import lombok.Setter;
 @Setter
 public class LoveClickDTO {
 
-	private Boolean loveClick;
+	private boolean loveClick;
 }

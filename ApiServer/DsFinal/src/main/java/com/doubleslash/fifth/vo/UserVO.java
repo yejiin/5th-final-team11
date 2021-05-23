@@ -28,8 +28,8 @@ public class UserVO {
 	
 	private String nickname;
 	
-	private double drink;
+	private float drink;
 	
-	private Integer hangover;
+	private int hangover;
 	
 }

@@ -42,10 +42,4 @@ public class AlcoholVO {
 	private int cb;
 	
 	private int recognition;
-	
-	//일대일 조인
-	//@OneToOne(fetch = FetchType.LAZY, mappedBy = "alcohol", cascade = CascadeType.ALL)
-	//@JsonBackReference
-	//private LiquorVO liquor;
-
 }

@@ -47,4 +47,20 @@ public class ReviewVO {
 	@Column(name = "create_time")
 	private Date create_time;
 	
+	public void addLove() {
+		this.love += 1;
+	}
+	
+	public void cancelLove() {
+		
+		if (this.love < 0) {
+			throw new RuntimeException("Error cancel review love");
+		}
+		this.love -= 1;
+	}
+	
+	public void addReport() {
+		this.report += 1;
+	}
+	
 }

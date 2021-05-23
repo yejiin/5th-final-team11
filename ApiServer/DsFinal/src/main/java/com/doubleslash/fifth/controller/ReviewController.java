@@ -165,9 +165,9 @@ public class ReviewController {
 		
 		Map<String, Object> res = new TreeMap<>();
 		
-		if(loveClick.getLoveClick() == true) {
+		if(loveClick.isLoveClick()) {
 			res = reviewService.reviewLove(id, rid, response);
-		}else if(loveClick.getLoveClick() == false) {
+		}else if(!loveClick.isLoveClick()) {
 			res = reviewService.reviewLoveCancle(id, rid, response);
 		}
 

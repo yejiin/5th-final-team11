@@ -117,9 +117,9 @@ public class AlcoholController {
 
 		Map<String, Object> res = new TreeMap<>();
 		
-		if(loveClick.getLoveClick() == true) {
+		if(loveClick.isLoveClick()) {
 			res = alcoholService.alcoholLove(id, aid);
-		} else if(loveClick.getLoveClick() == false) {
+		} else if(!loveClick.isLoveClick()) {
 			res = alcoholService.alcoholLoveCancle(id, aid);
 		}
 		

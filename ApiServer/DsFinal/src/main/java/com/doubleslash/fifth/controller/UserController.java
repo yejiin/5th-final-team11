@@ -71,12 +71,13 @@ public class UserController {
 	@ResponseBody
 	public String registerUser(HttpServletRequest request, HttpServletResponse response, @RequestBody RegisterDTO requestBody) throws Exception {
 		String uid = authService.verifyToken(request);
+		int id = userService.getId(uid);
 		
 		String nickname = requestBody.getNickname();
 		Float drink = requestBody.getDrink();
 		int hangover = requestBody.getHangover();
 		
-		userService.registerUser(uid, nickname, drink, hangover);
+		userService.registerUser(id, nickname, drink, hangover);
 		return "{}";
 	}
 	

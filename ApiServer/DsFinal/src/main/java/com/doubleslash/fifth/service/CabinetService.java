@@ -12,6 +12,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.domain.Sort.Order;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.doubleslash.fifth.dto.CabinetDTO;
 import com.doubleslash.fifth.repository.AlcoholLoveRepository;
@@ -65,6 +66,7 @@ public class CabinetService {
 			
 	}
 	
+	@Transactional
 	public void deleteLoveAlcohol(int id, List<Integer> aid) {
 		
 		for(int i : aid) {

@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.doubleslash.fifth.repository.RecommendRepository;
 import com.doubleslash.fifth.repository.UserRepository;
@@ -35,17 +36,13 @@ public class UserService {
 	}
 	
 	// user 등록 
-	public void registerUser(String uid, String nickname, Float drink, int hangover) {
-		try {
-			UserVO user = userRepository.findByUid(uid);
-			user.setNickname(nickname);
-			user.setDrink(drink);
-			user.setHangover(hangover);
-			userRepository.save(user);
-		}catch(Exception e) {
-			System.out.println("user 등록 에러 : " + e);
-		}
-	}
+    @Transactional
+	public void registerUser(int id, String nickname, Float drink, int hangover) {
+		UserVO user = userRepository.findById(id).get();
+		user.setNickname(nickname);
+		user.setDrink(drink);
+		user.setHangover(hangover);
+    }
 	
 	public int getId(String uid) {
 		return userRepository.findByUid(uid).getId();

@@ -37,4 +37,8 @@ public class CommentVO {
 	@Column(name = "create_time")
 	private Date create_time;
 	
+	public void addReport() {
+		this.report += 1;
+	}
+	
 }

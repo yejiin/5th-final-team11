@@ -21,6 +21,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.domain.Sort.Order;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.doubleslash.fifth.dto.CommentDTO;
 import com.doubleslash.fifth.dto.ContentDTO;
@@ -116,6 +117,7 @@ public class ReviewService {
 	}
 
 	// 리뷰 작성
+	@Transactional
 	public WrapperDTO addReview(int aid, int id, ReviewWriteDTO reveiwWriteDto, HttpServletResponse response)
 			throws ParseException, IOException {
 		ReviewVO reviewVo = new ReviewVO();
@@ -165,6 +167,7 @@ public class ReviewService {
 	}
 
 	// 댓글 작성
+	@Transactional
 	public Map<String, Object> addComment(int id, int rid, ContentDTO content, HttpServletResponse response) throws IOException {
 		if (reviewChk(rid) == 0) {
 			response.sendError(404, "Review Id Error");
@@ -193,6 +196,7 @@ public class ReviewService {
 	}
 
 	// 리뷰 신고
+	@Transactional
 	public WrapperDTO reportReview(int id, int rid, ContentDTO content, HttpServletResponse response)
 			throws IOException {
 		if (reviewChk(rid) == 0) {
@@ -205,7 +209,9 @@ public class ReviewService {
 		reportVo.setId(id);
 		reportVo.setContent(content.getContent());
 		reportReviewRepository.save(reportVo);
-		reviewRepository.updateReport(rid);
+		
+		ReviewVO review = reviewRepository.findById(rid).get();
+		review.addReport();
 
 		WrapperDTO dto = new WrapperDTO("success");
 
@@ -213,6 +219,7 @@ public class ReviewService {
 	}
 
 	// 댓글 신고
+	@Transactional
 	public WrapperDTO reportComment(int id, int cid, ContentDTO content, HttpServletResponse response)
 			throws IOException {
 		Optional<CommentVO> commentChk = commentRepository.findById(cid);
@@ -227,7 +234,9 @@ public class ReviewService {
 		reportVo.setId(id);
 		reportVo.setContent(content.getContent());
 		reportCommentRepository.save(reportVo);
-		commentRepository.updateReport(cid);
+		
+		CommentVO comment = commentRepository.findById(cid).get();
+		comment.addReport();
 
 		WrapperDTO dto = new WrapperDTO("success");
 
@@ -235,10 +244,12 @@ public class ReviewService {
 	}
 
 	// 리뷰 좋아요
+	@Transactional
 	public Map<String, Object>  reviewLove(int id, int rid, HttpServletResponse response) throws SQLIntegrityConstraintViolationException, IOException{
 
 		if(reviewLoveRepository.insert(id, rid)==1) {
-			reviewRepository.updateLove(rid);
+			ReviewVO review = reviewRepository.findById(rid).get();
+			review.addLove();
 		}
 		
 		Map<String, Object> res = new TreeMap<>();
@@ -249,10 +260,12 @@ public class ReviewService {
 	}
 
 	// 리뷰 좋아요 취소
+	@Transactional
 	public Map<String, Object> reviewLoveCancle(int id, int rid, HttpServletResponse response) throws IOException {
 		
 		if(reviewLoveRepository.delete(id, rid)==1) {
-			reviewRepository.updateLoveCancle(rid);
+			ReviewVO review = reviewRepository.findById(rid).get();
+			review.cancelLove();
 		}
 
 		Map<String, Object> res = new TreeMap<>();
@@ -299,11 +312,13 @@ public class ReviewService {
 
 	
 	//내 기록 수정
+	@Transactional
 	public WrapperDTO updateMyReview(ReviewWriteDTO requestBody, int id, int rid) {
-		ReviewVO reviewVo = new ReviewVO();
 		DetailReviewVO detailVo = new DetailReviewVO();
-		
-		reviewRepository.updateReview(rid, requestBody.getStar(), requestBody.getContent());
+	
+		ReviewVO review = reviewRepository.findById(rid).get();
+		review.setStar(requestBody.getStar());
+		review.setContent(requestBody.getContent());
 		
 		if (requestBody.getDetail() == null) {
 			return new WrapperDTO("success");

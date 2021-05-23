@@ -26,11 +26,4 @@ public class LiquorVO {
 	private int aid;
 	
 	private String flavor;
-
-	//일대일 조인
-	//@OneToOne(fetch = FetchType.LAZY, optional = false)
-	//@JoinColumn(name = "aid")
-	//@JsonManagedReference
-	//private AlcoholVO alcohol;
-
 }

@@ -31,7 +31,7 @@ public class ReviewDTO {
 	@NonNull
 	private int love;
 	
-	private Boolean loveClick;
+	private boolean loveClick;
 	
 	@NonNull
 	private double star;

@@ -8,7 +8,7 @@ import lombok.Setter;
 public class RegisterDTO {
 	
 	private String nickname;
-	private Float drink;
-	private Integer hangover;
+	private float drink;
+	private int hangover;
 
 }
