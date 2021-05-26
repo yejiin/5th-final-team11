@@ -15,7 +15,6 @@ import com.google.android.material.tabs.TabLayoutMediator
 class RecordFragment : BaseFragment<FragmentRecordBinding>() {
     private lateinit var adapter: RecordViewPagerAdapter
 
-
     override fun createViewBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -28,7 +27,11 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>() {
         adapter = RecordViewPagerAdapter()
 
         binding?.let { b ->
-            setSupportActionBar(b.toolbar)
+            b.toolbar.inflateMenu(R.menu.toolbar_menu)
+            b.toolbar.setOnMenuItemClickListener {
+                getCurrentFragment()?.onOptionsItemSelected(it) ?: false
+            }
+
 
 
             b.viewPager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
@@ -45,17 +48,9 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>() {
 
         getSupportActionBar()?.apply {
             setDisplayShowTitleEnabled(false)
-            setHasOptionsMenu(true)
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.record_menu, menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return getCurrentFragment()?.onOptionsItemSelected(item) ?: false
-    }
 
     private fun getCurrentFragment(): Fragment? {
         val index = binding?.viewPager?.currentItem ?: -1

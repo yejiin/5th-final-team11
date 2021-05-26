@@ -14,8 +14,6 @@
 
         <TextView
             style="@style/AppBarTitle"
-            android:fontFamily="@font/noto_sans_medium"
-            android:includeFontPadding="false"
             android:text="@string/all_recommend"
             tools:text="Test" />
 

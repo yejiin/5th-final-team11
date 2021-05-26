@@ -9,11 +9,8 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.doubleslas.fifith.alcohol.R
 import com.doubleslas.fifith.alcohol.databinding.FragmentRecommendBinding
-import com.doubleslas.fifith.alcohol.databinding.FragmentSearchMainBinding
 import com.doubleslas.fifith.alcohol.databinding.TabCustomBinding
 import com.doubleslas.fifith.alcohol.ui.common.base.BaseFragment
-import com.doubleslas.fifith.alcohol.ui.search.SearchFragment
-import com.doubleslas.fifith.alcohol.ui.search.SearchListFragment
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -46,6 +43,16 @@ class RecommendFragment : BaseFragment<FragmentRecommendBinding>() {
         adapter = CategoryViewPagerAdapter()
 
         binding?.let { b ->
+            b.toolbar.inflateMenu(R.menu.toolbar_menu)
+            b.toolbar.setOnMenuItemClickListener {
+                when (it.itemId) {
+                    R.id.menu -> toolbarMenu.show(fragmentManager!!, null)
+                    else -> return@setOnMenuItemClickListener false
+                }
+
+                return@setOnMenuItemClickListener true
+            }
+
             b.viewPager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
             b.viewPager.adapter = adapter
 
@@ -58,6 +65,11 @@ class RecommendFragment : BaseFragment<FragmentRecommendBinding>() {
                 tab.customView = getTabView(i)
             }
         }
+
+
+        getSupportActionBar()?.apply {
+            setDisplayShowTitleEnabled(false)
+        }
     }
 
 
@@ -65,15 +77,6 @@ class RecommendFragment : BaseFragment<FragmentRecommendBinding>() {
         val b = TabCustomBinding.inflate(LayoutInflater.from(context))
         b.tvTab.text = categoryList[position].first
         return b.root
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-        binding?.let { b ->
-            setSupportActionBar(b.toolbar)
-            getSupportActionBar()?.setDisplayShowTitleEnabled(false)
-        }
     }
 
     inner class CategoryViewPagerAdapter : FragmentStateAdapter(this) {

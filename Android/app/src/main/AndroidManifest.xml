@@ -26,16 +26,18 @@
         <activity android:name=".ui.auth.LoginActivity" />
 
         <activity android:name=".ui.main.MainActivity" />
-        <activity android:name=".ui.auth.recommendinfo.RecommendInfoActivity"/>
+        <activity android:name=".ui.auth.recommendinfo.RecommendInfoActivity" />
 
 
-        <activity android:name=".ui.detail.AlcoholDetailActivity"/>
+        <activity android:name=".ui.detail.AlcoholDetailActivity" />
 
         <activity android:name=".ui.auth.Register2Activity" />
 
         <activity android:name=".ui.auth.RegisterActivity" />
 
         <activity android:name=".ui.auth.AgeCheckActivity" />
+
+        <activity android:name=".ui.licence.LicenceActivity" />
 
         <!-- region Auth -->
         <activity android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity">
@@ -72,7 +74,7 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-    <!-- endregion -->
+        <!-- endregion -->
     </application>
 
 </manifest>

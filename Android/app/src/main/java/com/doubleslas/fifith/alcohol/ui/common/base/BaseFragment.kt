@@ -1,5 +1,6 @@
 package com.doubleslas.fifith.alcohol.ui.common.base
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,10 +10,27 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
+import com.doubleslas.fifith.alcohol.R
+import com.doubleslas.fifith.alcohol.ui.common.ToolbarMenuBottomSheetDialog
+import com.doubleslas.fifith.alcohol.ui.licence.LicenceActivity
 
 abstract class BaseFragment<B : ViewBinding> : Fragment() {
     protected var binding: B? = null
         private set
+
+
+    protected val toolbarMenu by lazy{
+        ToolbarMenuBottomSheetDialog().apply {
+            setOnItemClickListener { _, value ->
+                when (value) {
+                    getString(R.string.all_licence) -> {
+                        val intent = Intent(context, LicenceActivity::class.java)
+                        startActivity(intent)
+                    }
+                }
+            }
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
