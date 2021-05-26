@@ -29,7 +29,6 @@ class RecommendAlcoholListAdapter : AlcoholListAdapter() {
             }
         }
     }
-    private var rankList: List<AlcoholSimpleData>? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -63,7 +62,7 @@ class RecommendAlcoholListAdapter : AlcoholListAdapter() {
             else -> {
                 super.onBindViewHolder(holder, position)
 
-                val rank = getRank(getItem(position))
+                val rank = getRank(position)
 
                 if (holder is AlcoholViewHolder) {
                     holder.binding.let { b ->
@@ -104,12 +103,9 @@ class RecommendAlcoholListAdapter : AlcoholListAdapter() {
         onSortChangeListener = listener
     }
 
-    fun setRankList(list: List<AlcoholSimpleData>) {
-        rankList = list
-    }
 
-    private fun getRank(item: AlcoholSimpleData): Int {
-        return rankList?.indexOf(item) ?: -1
+    private fun getRank(position: Int): Int {
+        return position - 1
     }
 
 

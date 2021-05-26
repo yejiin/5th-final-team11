@@ -119,6 +119,7 @@ class CupboardFragment : BaseFragment<FragmentCupboardBinding>(), IOnBackPressed
     override fun onResume() {
         super.onResume()
         viewModel.allReset()
+        viewModel.loadList()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

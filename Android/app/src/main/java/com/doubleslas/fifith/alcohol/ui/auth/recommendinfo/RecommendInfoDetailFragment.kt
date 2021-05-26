@@ -52,6 +52,8 @@ class RecommendInfoDetailFragment : BaseFragment<FragmentRecommendInfoDetailBind
                 toggleVisibility(b.layoutWineContent)
             }
 
+            b.etPriceLow.hint = viewModel.getMinPrice().toString()
+            b.etPriceHigh.hint = viewModel.getMaxPrice().toString()
 
 
             b.layoutLiquorTypeContent.let { layout ->

@@ -35,14 +35,8 @@ class RecommendViewModel(private val category: String) : ViewModel() {
         }
         if (!pageLoader.canLoadList()) return
 
-        val liveData = repository.getList(category, sort)
-        pageLoader.addObserve(liveData, object : MediatorApiCallback<RecommendList> {
-            override fun onSuccess(code: Int, data: RecommendList) {
-                if (rankList.isEmpty() && category == "전체" && sort == RecommendSortType.Recommend) {
-                    rankList.addAll(data.getList())
-                }
-            }
-        })
+        val liveData = repository.getList(category, pageLoader.page++, sort)
+        pageLoader.addObserve(liveData)
     }
 
     fun setSort(sortType: RecommendSortType) {
@@ -51,6 +45,10 @@ class RecommendViewModel(private val category: String) : ViewModel() {
         globalSortType = sortType
         pageLoader.reset()
         loadList()
+    }
+
+    fun isFinishLoading(): Boolean{
+        return pageLoader.isFinish()
     }
 
     class Factory(private val param: String) : ViewModelProvider.Factory {
@@ -64,7 +62,6 @@ class RecommendViewModel(private val category: String) : ViewModel() {
     }
 
     companion object {
-        val rankList = ArrayList<AlcoholSimpleData>()
         private var globalSortType: RecommendSortType = RecommendSortType.Recommend
     }
 }

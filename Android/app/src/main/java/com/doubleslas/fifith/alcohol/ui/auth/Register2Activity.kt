@@ -30,7 +30,7 @@ class Register2Activity : AppCompatActivity(), SeekBar.OnSeekBarChangeListener {
         activityRegister2Binding.seekbarDrinkCapacity.tvLabel2.text = "심함"
 
 
-        val nickname = intent.getStringExtra("nickname").toString()
+        val nickname = intent.getStringExtra("registerViewModel.nickname").toString()
         val drinkCapacity = arrayOf(
             "0",
             "0.5",

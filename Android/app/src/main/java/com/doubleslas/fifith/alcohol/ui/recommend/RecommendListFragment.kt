@@ -21,6 +21,13 @@ class RecommendListFragment private constructor() : BaseFragment<RecyclerviewBin
     private val adapter by lazy {
         RecommendAlcoholListAdapter()
     }
+    private val loadingAdapter by lazy{
+        LoadingRecyclerViewAdapter(adapter).apply {
+            setOnBindLoadingListener {
+                viewModel.loadList()
+            }
+        }
+    }
 
     override fun createViewBinding(
         inflater: LayoutInflater,
@@ -34,7 +41,7 @@ class RecommendListFragment private constructor() : BaseFragment<RecyclerviewBin
         super.onViewCreated(view, savedInstanceState)
         binding?.let {
             it.recyclerview.layoutManager = LinearLayoutManager(context)
-            it.recyclerview.adapter = adapter
+            it.recyclerview.adapter = loadingAdapter
         }
 
         adapter.setOnSortChangeListener {
@@ -45,8 +52,8 @@ class RecommendListFragment private constructor() : BaseFragment<RecyclerviewBin
             when (it) {
                 is ApiStatus.Success -> {
                     adapter.setData(it.data)
-                    adapter.setRankList(RecommendViewModel.rankList)
-                    adapter.notifyDataSetChanged()
+                    loadingAdapter.setVisibleLoading(!viewModel.isFinishLoading())
+                    loadingAdapter.notifyDataSetChanged()
                 }
                 is ApiStatus.Error -> {
 

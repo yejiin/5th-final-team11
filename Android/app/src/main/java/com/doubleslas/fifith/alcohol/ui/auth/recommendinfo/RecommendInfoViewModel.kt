@@ -131,7 +131,7 @@ class RecommendInfoViewModel : ViewModel() {
     }
 
     fun getMaxPrice(): Int {
-        return 300_000
+        return 6050000
     }
 
     fun submit(data: RecommendInfoData): ApiLiveData<Any> {
@@ -150,7 +150,7 @@ class RecommendInfoViewModel : ViewModel() {
                 null
 
         val wineData =
-            if (checkLiquor.value == true)
+            if (checkWine.value == true)
                 RecommendInfoWine(
                     convertChipToList(binding.layoutWineTypeContent),
                     binding.seekBarWineBody.seekBar.progress,
@@ -176,11 +176,16 @@ class RecommendInfoViewModel : ViewModel() {
                 null
             }
 
+        val minPrice = if(binding.etPriceLow.text.isEmpty())
+            getMinPrice() else binding.etPriceLow.text.toString().toInt()
+        val maxPrice = if(binding.etPriceHigh.text.isEmpty())
+            getMaxPrice() else binding.etPriceHigh.text.toString().toInt()
+
         val data = RecommendInfoData(
             binding.rangeAbv.values[0].toInt(),
             binding.rangeAbv.values[1].toInt(),
-            binding.etPriceLow.text.toString().toInt(),
-            binding.etPriceHigh.text.toString().toInt(),
+            minPrice,
+            maxPrice,
             when (binding.chipGroupCarbotanted.checkedChipId) {
                 R.id.chip_carbonated_yes -> "유"
                 R.id.chip_carbonated_no -> "무"

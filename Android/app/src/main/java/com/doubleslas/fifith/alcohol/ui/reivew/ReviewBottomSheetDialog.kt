@@ -1,6 +1,8 @@
 package com.doubleslas.fifith.alcohol.ui.reivew
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -142,6 +144,12 @@ class ReviewBottomSheetDialog private constructor() :
                     }
                     is ApiStatus.Success -> {
                         onDialogBtnClicked("리뷰를 작성해주셔서\n감사합니다.")
+                        Handler(Looper.myLooper()!!).postDelayed(
+                            Runnable {
+                                customDialog.dismiss()
+                            },
+                            2000
+                        )
                         listener?.invoke()
                         dismiss()
                     }

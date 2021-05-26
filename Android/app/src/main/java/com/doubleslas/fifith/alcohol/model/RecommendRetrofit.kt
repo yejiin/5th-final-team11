@@ -17,6 +17,7 @@ interface RecommendRetrofit {
     @GET("/alcohol/recommend")
     fun getRecommendList(
         @Query("category") category: String,
+        @Query("page") page: Int,
         @Query("sort") sort: String,
         @Query("sortOption") sortOption: String
     ): ApiLiveData<RecommendList>

@@ -28,13 +28,17 @@ open class BottomSheetMenu : BottomSheetDialogFragment() {
         ResourcesCompat.getFont(context!!, R.font.noto_sans_regular)
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setStyle(STYLE_NORMAL, R.style.CustomBottomSheetDialogTheme)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = RecyclerviewBinding.inflate(inflater, container, false)
-        binding!!.root.setBackgroundResource(R.drawable.bg_write_review)
         return binding!!.root
     }
 
@@ -77,6 +81,14 @@ open class BottomSheetMenu : BottomSheetDialogFragment() {
         }
 
         override fun onBindViewHolder(holder: Adapter.BottomSheetMenuViewHolder, position: Int) {
+            if (position == 0) {
+                holder.itemView.setBackgroundResource(R.drawable.bg_write_review)
+            } else {
+                holder.itemView.setBackgroundColor(
+                    ResourcesCompat.getColor(resources, R.color.gray, null)
+                )
+            }
+
             holder.binding.tv.text = list!![position]
             if (selectIndex == null || selectIndex != position) {
                 holder.binding.ivCheck.visibility = View.INVISIBLE

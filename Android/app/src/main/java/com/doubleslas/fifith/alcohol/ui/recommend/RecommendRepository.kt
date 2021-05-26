@@ -8,7 +8,7 @@ import com.doubleslas.fifith.alcohol.dto.RecommendList
 class RecommendRepository {
     private val service by lazy { RestClient.getRecommendService() }
 
-    fun getList(category: String, sort: RecommendSortType): ApiLiveData<RecommendList> {
-        return service.getRecommendList(category, sort.sort, sort.sortOption)
+    fun getList(category: String, page: Int, sort: RecommendSortType): ApiLiveData<RecommendList> {
+        return service.getRecommendList(category, page, sort.sort, sort.sortOption)
     }
 }
