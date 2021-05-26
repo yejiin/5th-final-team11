@@ -55,4 +55,8 @@ interface ReviewRetrofit {
         @Body content: ReportReviewBody
     ): ApiLiveData<Any>
 
+    @DELETE("/review/{rid}")
+    fun deleteList(
+        @Path("rid") aid: String
+    ): ApiLiveData<Any>
 }

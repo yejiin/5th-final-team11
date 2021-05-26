@@ -9,13 +9,14 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.doubleslas.fifith.alcohol.R
-import com.doubleslas.fifith.alcohol.databinding.RecyclerviewBinding
+import com.doubleslas.fifith.alcohol.databinding.FragmentMyReviewBinding
 import com.doubleslas.fifith.alcohol.model.base.ApiStatus
 import com.doubleslas.fifith.alcohol.ui.common.LoadingRecyclerViewAdapter
 import com.doubleslas.fifith.alcohol.ui.common.base.BaseFragment
+import com.doubleslas.fifith.alcohol.ui.main.IOnBackPressed
 import com.doubleslas.fifith.alcohol.ui.record.RecordMenuBottomSheetDialog
 
-class MyReviewFragment : BaseFragment<RecyclerviewBinding>() {
+class MyReviewFragment : BaseFragment<FragmentMyReviewBinding>(), IOnBackPressed {
     private val viewModel by lazy { ViewModelProvider(this).get(MyReviewViewModel::class.java) }
     private val adapter by lazy {
         MyReviewAdapter().apply {
@@ -26,12 +27,21 @@ class MyReviewFragment : BaseFragment<RecyclerviewBinding>() {
     }
     private val loadingAdapter by lazy { LoadingRecyclerViewAdapter(adapter) }
 
+    private val menuBottomSheetDialog by lazy {
+        RecordMenuBottomSheetDialog().apply {
+            setOnItemClickListener { _, value ->
+                when (value) {
+                    getString(R.string.record_delete) -> setDeleteMode(true)
+                }
+            }
+        }
+    }
 
     override fun createViewBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
-    ): RecyclerviewBinding {
-        return RecyclerviewBinding.inflate(inflater, container, false)
+    ): FragmentMyReviewBinding {
+        return FragmentMyReviewBinding.inflate(inflater, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -39,6 +49,9 @@ class MyReviewFragment : BaseFragment<RecyclerviewBinding>() {
         binding?.let {
             it.recyclerview.layoutManager = LinearLayoutManager(context)
             it.recyclerview.adapter = loadingAdapter
+            it.btnDelete.setOnClickListener {
+                viewModel.deleteList().observe(viewLifecycleOwner, Observer { })
+            }
         }
 
         viewModel.listLiveData.observe(viewLifecycleOwner, Observer {
@@ -61,21 +74,30 @@ class MyReviewFragment : BaseFragment<RecyclerviewBinding>() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.menu -> {
-                RecordMenuBottomSheetDialog().apply {
-                    setOnItemClickListener { _, value ->
-                        when (value) {
-                            getString(R.string.record_delete) -> setDeleteMode()
-                        }
-                    }
-                    show(fragmentManager!!, null)
-                }
+                menuBottomSheetDialog.show(fragmentManager!!, null)
             }
         }
         return super.onOptionsItemSelected(item)
     }
 
+    override fun onBackPressed(): Boolean {
+        if (!viewModel.deleteMode) return false
+        setDeleteMode(false)
+        return true
+    }
 
-    private fun setDeleteMode() {
-
+    private fun setDeleteMode(value: Boolean) {
+        viewModel.deleteMode = value
+        binding?.let { b ->
+            if (viewModel.deleteMode) {
+                b.btnDelete.visibility = View.VISIBLE
+                adapter.setSelectMode(true)
+                loadingAdapter.notifyDataSetChanged()
+            } else {
+                b.btnDelete.visibility = View.GONE
+                adapter.setSelectMode(false)
+                loadingAdapter.notifyDataSetChanged()
+            }
+        }
     }
 }

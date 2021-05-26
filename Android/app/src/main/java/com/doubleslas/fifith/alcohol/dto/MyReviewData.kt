@@ -11,4 +11,6 @@ data class MyReviewData(
     val content: String,
     val detail: ReviewDetailData?,
     var visibleReview: Boolean = false
-)
+){
+    var isSelect = false
+}

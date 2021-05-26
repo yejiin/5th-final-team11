@@ -1,21 +1,13 @@
 package com.doubleslas.fifith.alcohol.ui.detail
 
-import android.content.Context
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.PopupWindow
-import android.widget.Toast
-import androidx.appcompat.widget.TooltipCompat
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
-import androidx.core.widget.PopupWindowCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.doubleslas.fifith.alcohol.R
 import com.doubleslas.fifith.alcohol.databinding.ChipRecommendInfoBinding
 import com.doubleslas.fifith.alcohol.databinding.FragmentDetailInfoBinding
 import com.doubleslas.fifith.alcohol.dto.DetailData
@@ -84,6 +76,8 @@ class DetailInfoFragment : BaseFragment<FragmentDetailInfoBinding>() {
             b.tvVolumeInfo.text =
                 data.ml.toString() + " ml" + " / " + data.abv.toString() + " %"
             b.tvDescription.text = data.description
+
+            b.tvReference.text = data.source
 
             if (data.country != null) { // 나라
                 b.tvNation.visibility = View.VISIBLE

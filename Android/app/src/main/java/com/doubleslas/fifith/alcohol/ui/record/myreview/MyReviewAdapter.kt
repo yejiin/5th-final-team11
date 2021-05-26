@@ -7,16 +7,18 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.doubleslas.fifith.alcohol.R
 import com.doubleslas.fifith.alcohol.databinding.ItemMyReviewBinding
 import com.doubleslas.fifith.alcohol.databinding.ItemSortBinding
 import com.doubleslas.fifith.alcohol.dto.MyReviewData
 import com.doubleslas.fifith.alcohol.sort.SortBottomSheetDialog
 import com.doubleslas.fifith.alcohol.sort.enum.MyReviewSortType
-import com.doubleslas.fifith.alcohol.sort.enum.SearchSortType
+import com.doubleslas.fifith.alcohol.ui.detail.AlcoholDetailActivity
 
 class MyReviewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var list: List<MyReviewData>? = null
     private var sortType: MyReviewSortType? = null
+    private var isSelectMode = false
 
     private var onSortChangeListener: ((MyReviewSortType) -> Unit)? = null
     private val sortDialog by lazy {
@@ -45,6 +47,7 @@ class MyReviewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun getItemCount(): Int {
         if (list == null) return 0
+        if (isSelectMode) return list!!.size
         return list!!.size + 1
     }
 
@@ -58,7 +61,7 @@ class MyReviewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     override fun getItemViewType(position: Int): Int {
-        if (position == 0) {
+        if (!isSelectMode && position == 0) {
             return ITEM_TYPE_SORT
         }
 
@@ -66,6 +69,9 @@ class MyReviewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     private fun getItem(position: Int): MyReviewData {
+        if (isSelectMode) {
+            return list!![position]
+        }
         return list!![position - 1]
     }
 
@@ -77,14 +83,42 @@ class MyReviewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         this.onSortChangeListener = listener
     }
 
+    fun setSelectMode(value: Boolean) {
+        isSelectMode = value
+
+        if (list != null) {
+            for (item in list!!) {
+                item.isSelect = false
+            }
+        }
+    }
+
     inner class ReviewViewHolder(private val binding: ItemMyReviewBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         init {
+            binding.root.setOnClickListener {
+                if (!isSelectMode) {
+                    val intent = AlcoholDetailActivity.getStartIntent(
+                        it.context,
+                        getItem(adapterPosition).aid
+                    )
+                    it.context.startActivity(intent)
+                } else {
+                    binding.checkbox.isChecked = !binding.checkbox.isChecked
+
+                }
+            }
             binding.layoutBottom.setOnClickListener {
                 val item = getItem(adapterPosition)
                 item.visibleReview = !item.visibleReview
                 setVisibleDetail(item.visibleReview)
+            }
+            binding.checkbox.setOnCheckedChangeListener { view, b ->
+                binding.root.setBackgroundResource(
+                    if (b) R.drawable.bg_item_my_review_select else R.drawable.bg_item_my_review
+                )
+                getItem(adapterPosition).isSelect = b
             }
             binding.layoutDetail.setIndicator(true)
         }
@@ -99,6 +133,14 @@ class MyReviewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             binding.rating.rating = item.star
             binding.tvRating.text = item.star.toString()
             binding.tvReview.text = item.content
+
+            if (isSelectMode) {
+                binding.checkbox.isChecked = item.isSelect
+                binding.checkbox.isVisible = true
+            } else {
+                binding.checkbox.isChecked = false
+                binding.checkbox.isVisible = false
+            }
 
 
             val detail = item.detail
