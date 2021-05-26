@@ -1,5 +1,6 @@
 package com.doubleslas.fifith.alcohol.ui.recommend
 
+import android.content.Context
 import android.content.Intent
 import android.content.res.Resources
 import android.graphics.Color
@@ -11,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.doubleslas.fifith.alcohol.R
+import com.doubleslas.fifith.alcohol.databinding.ItemRecommendEmptyBinding
 import com.doubleslas.fifith.alcohol.databinding.ItemSortRecommendBinding
 import com.doubleslas.fifith.alcohol.dto.AlcoholSimpleData
 import com.doubleslas.fifith.alcohol.sort.SortBottomSheetDialog
@@ -38,20 +40,27 @@ class RecommendAlcoholListAdapter : AlcoholListAdapter() {
                 val binding = ItemSortRecommendBinding.inflate(inflater, parent, false)
                 return SortViewHolder(binding)
             }
+            ITEM_TYPE_INFO -> {
+                val binding = ItemRecommendEmptyBinding.inflate(inflater, parent, false)
+                return EmptyViewHolder(binding)
+            }
         }
 
         return super.onCreateViewHolder(parent, viewType)
     }
 
     override fun getItemViewType(position: Int): Int {
+        if(list!!.isEmpty()){
+            return ITEM_TYPE_INFO
+        }
         if (position == 0) return ITEM_TYPE_SORT
         return super.getItemViewType(position)
     }
 
     override fun getItemCount(): Int {
-        val cnt = super.getItemCount()
-        if (cnt == 0) return 0
-        return cnt + 1
+        if(list == null) return 0
+        if(list!!.isEmpty()) return 1
+        return list!!.size + 1
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -120,6 +129,11 @@ class RecommendAlcoholListAdapter : AlcoholListAdapter() {
         return ResourcesCompat.getDrawable(resources, id, null)
     }
 
+    private fun openRecommendInfoInputActivity(context: Context){
+        val intent = Intent(context, RecommendInfoActivity::class.java)
+        context.startActivity(intent)
+    }
+
     inner class SortViewHolder(val binding: ItemSortRecommendBinding) :
         RecyclerView.ViewHolder(binding.root) {
         init {
@@ -132,13 +146,22 @@ class RecommendAlcoholListAdapter : AlcoholListAdapter() {
             }
 
             binding.layoutRecommend.setOnClickListener {
-                val intent = Intent(it.context, RecommendInfoActivity::class.java)
-                it.context.startActivity(intent)
+                openRecommendInfoInputActivity(it.context)
+            }
+        }
+    }
+
+    inner class EmptyViewHolder(val binding: ItemRecommendEmptyBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        init {
+            binding.btnRecommend.setOnClickListener {
+                openRecommendInfoInputActivity(it.context)
             }
         }
     }
 
     companion object {
         private const val ITEM_TYPE_SORT = 1
+        private const val ITEM_TYPE_INFO = 2
     }
 }
