@@ -23,4 +23,14 @@ public class HealthController {
 		return "privacy";
 	}
 	
+	@RequestMapping(value = "/service")
+	public String service() {
+		return "service";
+	}
+	
+	@RequestMapping(value = "/adult")
+	public String adult() {
+		return "adult";
+	}
+	
 }
