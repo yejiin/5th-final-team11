@@ -1,7 +1,9 @@
 package com.doubleslas.fifith.alcohol.ui
 
 import android.animation.Animator
+import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -39,7 +41,21 @@ class SplashActivity : AppCompatActivity() {
             CustomDialog(this, "버전 업데이트가 필요합니다.").apply {
                 customDialogInterface = object : CustomDialogInterface {
                     override fun onConfirmBtnClicked() {
-                        // TODO : Play Store Open
+                        try {
+                            startActivity(
+                                Intent(
+                                    Intent.ACTION_VIEW,
+                                    Uri.parse("market://details?id=$packageName")
+                                )
+                            )
+                        } catch (anfe: ActivityNotFoundException) {
+                            startActivity(
+                                Intent(
+                                    Intent.ACTION_VIEW,
+                                    Uri.parse("https://play.google.com/store/apps/details?id=$packageName")
+                                )
+                            )
+                        }
                         dismiss()
                         finish()
                     }
