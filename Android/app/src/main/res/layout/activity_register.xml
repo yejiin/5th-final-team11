@@ -176,20 +176,35 @@
         app:layout_constraintTop_toBottomOf="@+id/line">
 
 
-        <androidx.appcompat.widget.AppCompatCheckBox
-            android:id="@+id/cb_age"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:button="@drawable/ic_agree_checkbox"
-            android:fontFamily="@font/noto_sans_demi_light"
+            android:layout_marginTop="@dimen/checkbox_margin"
             android:gravity="center_vertical"
-            android:includeFontPadding="false"
-            android:minHeight="0dp"
-            android:paddingLeft="16dp"
-            android:text="필수        만 14세 이상 동의"
-            android:textColor="#FFFFFF"
-            android:textSize="12sp" />
+            android:orientation="horizontal">
 
+            <androidx.appcompat.widget.AppCompatCheckBox
+                android:id="@+id/cb_age"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:button="@drawable/ic_agree_checkbox"
+                android:fontFamily="@font/noto_sans_demi_light"
+                android:gravity="center_vertical"
+                android:includeFontPadding="false"
+                android:minHeight="0dp"
+                android:paddingLeft="16dp"
+                android:text="필수        만 14세 이상 동의"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp" />
+
+            <ImageView
+                android:id="@+id/btn_age"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:rotation="270"
+                android:src="@drawable/ic_open__1" />
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -254,6 +269,7 @@
 
 
         <LinearLayout
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/checkbox_margin"
@@ -275,12 +291,6 @@
                 android:textSize="12sp" />
 
 
-            <ImageView
-                android:id="@+id/btn_marketing"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:rotation="270"
-                android:src="@drawable/ic_open__1" />
         </LinearLayout>
 
 

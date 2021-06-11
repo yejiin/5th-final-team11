@@ -12,6 +12,7 @@ import androidx.lifecycle.Observer
 import com.doubleslas.fifith.alcohol.R
 import com.doubleslas.fifith.alcohol.databinding.ActivityRegisterBinding
 import com.doubleslas.fifith.alcohol.model.base.ApiStatus
+import com.doubleslas.fifith.alcohol.ui.web.WebActivity
 import kotlinx.android.synthetic.main.custom_dialog.*
 
 class RegisterActivity : AppCompatActivity(), CustomDialogInterface, View.OnClickListener {
@@ -86,6 +87,30 @@ class RegisterActivity : AppCompatActivity(), CustomDialogInterface, View.OnClic
                 binding.tvNicknameWaring.text = ""
             }
         }
+
+        binding.btnTerms.setOnClickListener {
+            val intent = WebActivity.getStartIntent(
+                this@RegisterActivity,
+                "http://double-slash.shop/service"
+            )
+            startActivity(intent)
+        }
+
+        binding.btnPrivacy.setOnClickListener {
+            val intent = WebActivity.getStartIntent(
+                this@RegisterActivity,
+                "http://double-slash.shop/privacy"
+            )
+            startActivity(intent)
+        }
+
+        binding.btnAge.setOnClickListener {
+            val intent = WebActivity.getStartIntent(
+                this@RegisterActivity,
+                "http://double-slash.shop/adult"
+            )
+            startActivity(intent)
+        }
     }
 
 
@@ -94,7 +119,7 @@ class RegisterActivity : AppCompatActivity(), CustomDialogInterface, View.OnClic
             binding.cbAge.isChecked = true
             binding.cbTerms.isChecked = true
             binding.cbPrivacy.isChecked = true
-            binding.cbMarketing.isChecked = true
+            binding.cbMarketing.isChecked = false
         } else {
             binding.cbAge.isChecked = false
             binding.cbTerms.isChecked = false
@@ -110,7 +135,8 @@ class RegisterActivity : AppCompatActivity(), CustomDialogInterface, View.OnClic
             binding.cbAll.isChecked = false
         }
 
-        if (essentialCheck && binding.cbMarketing.isChecked) {
+//        if (essentialCheck && binding.cbMarketing.isChecked) {
+        if (essentialCheck) {
             binding.cbAll.isChecked = true
         } else if (essentialCheck && registerViewModel.nickname != "") {
             binding.btnEndRegister1.isEnabled = true
