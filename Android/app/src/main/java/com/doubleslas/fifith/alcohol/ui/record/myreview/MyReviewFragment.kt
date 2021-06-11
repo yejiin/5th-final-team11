@@ -1,5 +1,6 @@
 package com.doubleslas.fifith.alcohol.ui.record.myreview
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -13,6 +14,7 @@ import com.doubleslas.fifith.alcohol.databinding.FragmentMyReviewBinding
 import com.doubleslas.fifith.alcohol.model.base.ApiStatus
 import com.doubleslas.fifith.alcohol.ui.common.LoadingRecyclerViewAdapter
 import com.doubleslas.fifith.alcohol.ui.common.base.BaseFragment
+import com.doubleslas.fifith.alcohol.ui.licence.LicenceActivity
 import com.doubleslas.fifith.alcohol.ui.main.IOnBackPressed
 import com.doubleslas.fifith.alcohol.ui.record.RecordMenuBottomSheetDialog
 
@@ -32,6 +34,10 @@ class MyReviewFragment : BaseFragment<FragmentMyReviewBinding>(), IOnBackPressed
             setOnItemClickListener { _, value ->
                 when (value) {
                     getString(R.string.record_delete) -> setDeleteMode(true)
+                    getString(R.string.all_licence) -> {
+                        val intent = Intent(context, LicenceActivity::class.java)
+                        startActivity(intent)
+                    }
                 }
             }
         }
