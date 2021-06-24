@@ -14,10 +14,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.doubleslash.fifth.dto.RegisterDTO;
 import com.doubleslash.fifth.dto.SavePointDTO;
 import com.doubleslash.fifth.service.AuthService;
+import com.doubleslash.fifth.service.ReviewService;
 import com.doubleslash.fifth.service.UserService;
 import com.doubleslash.fifth.vo.UserVO;
 
@@ -25,17 +27,16 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import lombok.RequiredArgsConstructor;
 
 @Api(value = "User", description = "회원 API")
-@Controller
+@RestController
 @RequestMapping(value = "/user")
+@RequiredArgsConstructor
 public class UserController {
 
-	@Autowired
-	AuthService authService;
-	
-	@Autowired
-	UserService userService;
+	private final AuthService authService;
+	private final UserService userService;
 	
 	@SuppressWarnings("unchecked")
 	@ApiOperation(value = "Nickname Check")
@@ -44,7 +45,6 @@ public class UserController {
 		@ApiResponse(code = 409, message = "Duplicate Nickname")	
 	})
 	@GetMapping(value = "/nickcheck/{nickname}")
-	@ResponseBody
 	public String nicknameCheck(HttpServletResponse response, @PathVariable("nickname") String nickname) throws IOException {
 		UserVO nicknameChk = userService.nicknameCheck(nickname);
 		JSONObject jsonObj = new JSONObject();
@@ -68,7 +68,6 @@ public class UserController {
 		@ApiResponse(code = 401, message = "Unauthorized")
 	})
 	@PostMapping(value = "/register")
-	@ResponseBody
 	public String registerUser(HttpServletRequest request, HttpServletResponse response, @RequestBody RegisterDTO requestBody) throws Exception {
 		String uid = authService.verifyToken(request);
 		int id = userService.getId(uid);
@@ -83,7 +82,6 @@ public class UserController {
 	
 	@ApiOperation(value = "SavePoint Check", notes = "true : pass\nfalse : non-pass")
 	@GetMapping(value = "/savepoint")
-	@ResponseBody
 	public SavePointDTO checkSavePoint(HttpServletRequest request) throws Exception{
 		String uid = authService.verifyToken(request);
 		int id = userService.getId(uid);

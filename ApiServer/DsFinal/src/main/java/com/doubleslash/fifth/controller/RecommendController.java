@@ -5,18 +5,14 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.doubleslash.fifth.dto.RecommendDTO;
-import com.doubleslash.fifth.dto.WrapperDTO;
 import com.doubleslash.fifth.service.AuthService;
-import com.doubleslash.fifth.service.RatingService;
 import com.doubleslash.fifth.service.RecommendService;
 import com.doubleslash.fifth.service.UserService;
 
@@ -26,20 +22,17 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import lombok.RequiredArgsConstructor;
 
-@Controller
-@RequestMapping(value = "/alcohol")
 @Api(value = "Recommend", description = "주류 추천 API")
+@RestController
+@RequestMapping(value = "/alcohol")
+@RequiredArgsConstructor
 public class RecommendController {
-	
-	@Autowired
-	AuthService authService;
-	
-	@Autowired
-	UserService userService;
-	
-	@Autowired
-	RecommendService recommendService;
+
+	private final AuthService authService;
+	private final UserService userService;
+	private final RecommendService recommendService;
 	
 	@ApiOperation(value = "주류 추천")
 	@ApiImplicitParams({
@@ -63,7 +56,6 @@ public class RecommendController {
 		@ApiResponse(code = 400, message = "Bad Request")
 	})
 	@GetMapping(value = "/recommend")
-	@ResponseBody
 	public Map<String, Object> getRecommend(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		String uid = authService.verifyToken(request);
 		int id = userService.getId(uid);
@@ -94,7 +86,6 @@ public class RecommendController {
 		@ApiResponse(code = 401, message = "Unauthorized")
 	})
 	@PostMapping(value = "/recommend")
-	@ResponseBody
 	public String createRecommend(@RequestBody RecommendDTO requestBody, HttpServletRequest request, HttpServletResponse response) throws Exception{
 		String uid = authService.verifyToken(request);
 		int id = userService.getId(uid);

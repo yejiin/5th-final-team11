@@ -14,7 +14,6 @@ import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -45,29 +44,19 @@ import com.doubleslash.fifth.vo.ReportReviewVO;
 import com.doubleslash.fifth.vo.ReviewLoveVO;
 import com.doubleslash.fifth.vo.ReviewVO;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class ReviewService {
 
-	@Autowired
-	ReviewRepository reviewRepository;
-
-	@Autowired
-	DetailReviewRepository detailReviewRepository;
-
-	@Autowired
-	ReviewLoveRepository reviewLoveRepository;
-
-	@Autowired
-	CommentRepository commentRepository;
-
-	@Autowired
-	ReportReviewRepository reportReviewRepository;
-
-	@Autowired
-	ReportCommentRepository reportCommentRepository;
-
-	@Autowired
-	AlcoholRepository alcoholRepository;
+	private final ReviewRepository reviewRepository;
+	private final DetailReviewRepository detailReviewRepository;
+	private final ReviewLoveRepository reviewLoveRepository;
+	private final CommentRepository commentRepository;
+	private final ReportReviewRepository reportReviewRepository;
+	private final ReportCommentRepository reportCommentRepository;
+	private final AlcoholRepository alcoholRepository;
 
 	// 리뷰 조회
 	public Map<String, Object> getReviewList(int aid, int page, int id, HttpServletResponse response) throws IOException {

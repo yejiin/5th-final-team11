@@ -8,36 +8,28 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.TreeMap;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.doubleslash.fifth.dto.BeerDTO;
 import com.doubleslash.fifth.dto.LiquorDTO;
-import com.doubleslash.fifth.dto.RecommendDTO.beer;
 import com.doubleslash.fifth.dto.SimilarAlcoholDTO;
 import com.doubleslash.fifth.dto.WineDTO;
 import com.doubleslash.fifth.repository.AlcoholLoveRepository;
 import com.doubleslash.fifth.repository.AlcoholRepository;
-import com.doubleslash.fifth.repository.ReviewRepository;
 import com.doubleslash.fifth.repository.UserRepository;
 import com.doubleslash.fifth.vo.AlcoholVO;
 import com.doubleslash.fifth.vo.UserVO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class AlcoholService {
 
-	@Autowired
-	AlcoholRepository alcoholRepository;
-
-	@Autowired
-	ReviewRepository reviewRepository;
-
-	@Autowired
-	UserRepository userRepository;
-	
-	@Autowired
-	AlcoholLoveRepository alcoholLoveRepository;
+	private final AlcoholRepository alcoholRepository;
+	private final UserRepository userRepository;
+	private final AlcoholLoveRepository alcoholLoveRepository;
 
 	// category 조회
 	public String getCategory(int aid) {

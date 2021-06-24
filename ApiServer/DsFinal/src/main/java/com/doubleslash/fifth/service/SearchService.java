@@ -1,12 +1,10 @@
 package com.doubleslash.fifth.service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -18,11 +16,13 @@ import com.doubleslash.fifth.dto.AlcoholSearchDTO;
 import com.doubleslash.fifth.mapping.SearchMapping;
 import com.doubleslash.fifth.repository.SearchRepository;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class SearchService {
-	
-	@Autowired
-	SearchRepository searchRepository;
+
+	private final SearchRepository searchRepository;
 	
 	public Map<String, Object> basicSearch(String category, String sort, String sortOption, int page){
 		if(sort == null) sort = "popularScore";

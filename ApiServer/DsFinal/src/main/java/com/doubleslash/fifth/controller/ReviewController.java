@@ -7,8 +7,6 @@ import java.util.TreeMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,7 +15,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.doubleslash.fifth.dto.ContentDTO;
 import com.doubleslash.fifth.dto.LoveClickDTO;
@@ -33,21 +31,18 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import lombok.RequiredArgsConstructor;
 
 
 @Api(value = "Review", description = "리뷰, 댓글 작성 API")
-@Controller
+@RestController
 @RequestMapping(value = "/review")
+@RequiredArgsConstructor
 public class ReviewController {
-	
-	@Autowired
-	AuthService authService;
-	
-	@Autowired
-	UserService userService;
-	
-	@Autowired
-	ReviewService reviewService;
+
+	private final AuthService authService;
+	private final UserService userService;
+	private final ReviewService reviewService;
 	
 	@ApiOperation(value = "리뷰 조회", notes="리뷰 당 최신 댓글 데이터 3개 제공\n"
 			+ "로그인 안했을 시 loveClick 전부 false")
@@ -61,7 +56,6 @@ public class ReviewController {
 	})
 	@ApiImplicitParam(name = "Authorization", value = "idToken", required = false, paramType = "header")
 	@GetMapping(value = "/list")
-	@ResponseBody
 	public Map<String, Object> reviewList(@RequestParam("aid") int aid, @RequestParam(value="page") int page, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String uid = authService.verifyToken(request);
 		int id;
@@ -81,7 +75,6 @@ public class ReviewController {
 		@ApiImplicitParam(name = "page", required = true, dataType = "int", paramType = "query", example = "0", value = "페이지 번호(페이지당 데이터 20개)"),
 	})
 	@GetMapping(value ="/comment")
-	@ResponseBody
 	public Map<String, Object> commentList(@RequestParam("rid") int rid, @RequestParam("page") int page) {
 		
 		return reviewService.getComment(rid, page);
@@ -95,7 +88,6 @@ public class ReviewController {
 		@ApiResponse(code = 404, message = "Alcohol Id Error")
 	})
 	@PostMapping(value ="")
-	@ResponseBody
 	public WrapperDTO reviewWrite(@RequestParam("aid") int aid, @RequestBody ReviewWriteDTO requestBody, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String uid = authService.verifyToken(request);
 		int id = userService.getId(uid);
@@ -111,7 +103,6 @@ public class ReviewController {
 		@ApiResponse(code = 404, message = "Review Id Error")
 	})
 	@PostMapping(value = "/{rid}/comment")
-	@ResponseBody
 	public Map<String, Object> commentWrite(@PathVariable("rid") int rid, @RequestBody ContentDTO content, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String uid = authService.verifyToken(request);
 		int id = userService.getId(uid);
@@ -126,7 +117,6 @@ public class ReviewController {
 		@ApiResponse(code = 404, message = "Review Id Error")
 	})
 	@PutMapping(value = "/{rid}/report")
-	@ResponseBody
 	public WrapperDTO reviewReport(@PathVariable("rid") int rid, @RequestBody ContentDTO content, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String uid = authService.verifyToken(request);
 		int id = userService.getId(uid);
@@ -142,7 +132,6 @@ public class ReviewController {
 		@ApiResponse(code = 404, message = "Comment Id Error")
 	})
 	@PutMapping(value = "/comment/{cid}/report")
-	@ResponseBody
 	public WrapperDTO commentReport(@PathVariable("cid") int cid, @RequestBody ContentDTO content, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String uid = authService.verifyToken(request);
 		int id = userService.getId(uid);
@@ -158,7 +147,6 @@ public class ReviewController {
 		@ApiResponse(code = 404, message = "Review Id Error")
 	})
 	@PutMapping(value = "/{rid}/love")
-	@ResponseBody
 	public Map<String, Object> reviewLove(@PathVariable int rid, @RequestBody LoveClickDTO loveClick, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String uid = authService.verifyToken(request);
 		int id = userService.getId(uid);
@@ -192,7 +180,6 @@ public class ReviewController {
 		@ApiResponse(code = 400, message = "Bad Request")
 	})
 	@GetMapping(value = "")
-	@ResponseBody
 	public Map<String, Object> getMyReviewList(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String uid = authService.verifyToken(request);
 		int id = userService.getId(uid);
@@ -210,7 +197,6 @@ public class ReviewController {
 		@ApiResponse(code = 400, message = "Bad Request")
 	})
 	@PutMapping(value = "/{rid}")
-	@ResponseBody
 	public String updateMyReviewList(HttpServletRequest request, HttpServletResponse response, @RequestBody ReviewWriteDTO requestBody, @PathVariable int rid) throws Exception {
 		String uid = authService.verifyToken(request);
 		int id = userService.getId(uid);
@@ -224,7 +210,6 @@ public class ReviewController {
 		@ApiResponse(code = 200, message = "Success"),
 	})
 	@DeleteMapping(value = "/{rid}")
-	@ResponseBody
 	public String DeleteMyReviewList(@PathVariable List<Integer> rid, HttpServletRequest request) throws Exception {		
 		reviewService.deleteMyReview(rid);
 		return "{}";

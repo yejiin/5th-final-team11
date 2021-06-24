@@ -2,7 +2,6 @@ package com.doubleslash.fifth.service;
 
 import java.io.IOException;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -10,14 +9,14 @@ import com.doubleslash.fifth.repository.RecommendRepository;
 import com.doubleslash.fifth.repository.UserRepository;
 import com.doubleslash.fifth.vo.UserVO;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class UserService {
 
-	@Autowired
-	UserRepository userRepository;
-	
-	@Autowired
-	RecommendRepository recommendRepository;
+	private final UserRepository userRepository;
+	private final RecommendRepository recommendRepository;
 
 	// User 중복 체크 & User 추가
 	public void insertUser(String uid){

@@ -8,14 +8,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.json.simple.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.doubleslash.fifth.dto.LoveClickDTO;
 import com.doubleslash.fifth.service.AlcoholService;
@@ -27,20 +25,17 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import lombok.RequiredArgsConstructor;
 
 @Api(value = "Alcohol", description = "주류 상세 조회 API" )
-@Controller
+@RestController
 @RequestMapping(value = "/alcohol")
+@RequiredArgsConstructor
 public class AlcoholController {
-	
-	@Autowired
-	AuthService authService;
-	
-	@Autowired
-	AlcoholService alcoholService;
 
-	@Autowired
-	UserService userService;
+	private final AuthService authService;
+	private final AlcoholService alcoholService;
+	private final UserService userService;
 	
 	@ApiOperation(value = "주류 세부 사항 조회", notes="{\r\n"
 			+ "aid : int\r\n"
@@ -69,7 +64,6 @@ public class AlcoholController {
 	})
 	@ApiImplicitParam(name = "Authorization", value = "idToken", required = false, paramType = "header")
 	@GetMapping(value = "/{aid}", produces = "application/json; charset=utf8")
-	@ResponseBody
 	public String detail(@PathVariable("aid") int aid, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String uid = authService.verifyToken(request);
 		int id;
@@ -110,7 +104,6 @@ public class AlcoholController {
 		@ApiResponse(code = 404, message = "Alcohol Id Error")
 	})
 	@PutMapping(value = "/{aid}/love")
-	@ResponseBody
 	public Map<String, Object> alcoholLove(@PathVariable int aid, @RequestBody LoveClickDTO loveClick, HttpServletRequest request) throws Exception {
 		String uid = authService.verifyToken(request);
 		int id = userService.getId(uid);

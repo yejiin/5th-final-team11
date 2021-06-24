@@ -6,14 +6,12 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.doubleslash.fifth.service.AuthService;
 import com.doubleslash.fifth.service.CabinetService;
@@ -25,20 +23,17 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import lombok.RequiredArgsConstructor;
 
 @Api(value = "Cabinet", description = "장식장 API")
-@Controller
+@RestController
 @RequestMapping(value = "/cabinet")
+@RequiredArgsConstructor
 public class CabinetController {
 	
-	@Autowired
-	AuthService authService;
-	
-	@Autowired
-	UserService userService;
-	
-	@Autowired
-	CabinetService cabinetService;
+	private final AuthService authService;
+	private final UserService userService;
+	private final CabinetService cabinetService;
 	
 	@ApiOperation(value = "마신 술 조회")
 	@ApiImplicitParams({
@@ -54,7 +49,6 @@ public class CabinetController {
 		@ApiResponse(code = 422, message = "Wrong Sort input / Wrong SortOption input")
 	})
 	@GetMapping(value = "")
-	@ResponseBody
 	public Map<String, Object> drinkAlcohol(@RequestParam("page") int page, @RequestParam("sort") String sort, @RequestParam("sortOption") String sortOption, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String uid = authService.verifyToken(request);
 		int id = userService.getId(uid);
@@ -86,7 +80,6 @@ public class CabinetController {
 		@ApiResponse(code = 422, message = "Wrong Sort input / Wrong SortOption input")
 	})
 	@GetMapping(value = "/love")
-	@ResponseBody
 	public Map<String, Object> loveAlcohol(@RequestParam("page") int page, @RequestParam("sort") String sort, @RequestParam("sortOption") String sortOption, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String uid = authService.verifyToken(request);
 		int id = userService.getId(uid);
@@ -110,7 +103,6 @@ public class CabinetController {
 		@ApiResponse(code = 200, message = "Success"),
 	})
 	@DeleteMapping(value = "/love/{aid}")
-	@ResponseBody
 	public String deleteLoveAlcohol(@PathVariable List<Integer> aid, HttpServletRequest request) throws Exception {
 		String uid = authService.verifyToken(request);
 		int id = userService.getId(uid);

@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -18,15 +17,14 @@ import com.doubleslash.fifth.dto.CabinetDTO;
 import com.doubleslash.fifth.repository.AlcoholLoveRepository;
 import com.doubleslash.fifth.repository.ReviewRepository;
 
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class CabinetService {
 
-	@Autowired
-	ReviewRepository reviewRepository;
-	
-	@Autowired
-	AlcoholLoveRepository alcoholLoveRepository;
+	private final ReviewRepository reviewRepository;
+	private final AlcoholLoveRepository alcoholLoveRepository;
 	
 	public Map<String, Object> getDrinkAlcohol(int id, int page, String sort, String sortOption) {
 		if(!sort.equals("abv")) sort = "create_time";

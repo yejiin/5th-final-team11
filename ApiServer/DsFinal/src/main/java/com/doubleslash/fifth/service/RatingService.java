@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.doubleslash.fifth.dto.RatingDTO;
@@ -13,14 +12,14 @@ import com.doubleslash.fifth.repository.AlcoholRepository;
 import com.doubleslash.fifth.repository.RatingRepository;
 import com.doubleslash.fifth.vo.AlcoholVO;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class RatingService {
-	
-	@Autowired
-	AlcoholRepository alcoholRepository;
-	
-	@Autowired
-	RatingRepository ratingRepository;
+
+	private final AlcoholRepository alcoholRepository;
+	private final RatingRepository ratingRepository;
 
 	private final Integer[] RATING_TARGET_AID_LIST = new Integer[]
 			{36,36,47,51,55,62,65,68,69,71,72,77,80,81,84,85,90,91,94,95,100,

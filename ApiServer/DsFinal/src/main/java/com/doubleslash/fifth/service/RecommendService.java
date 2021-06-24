@@ -9,7 +9,6 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.Map.Entry;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -19,31 +18,22 @@ import org.springframework.stereotype.Service;
 
 import com.doubleslash.fifth.dto.AlcoholSearchDTO;
 import com.doubleslash.fifth.dto.RecommendDTO;
-import com.doubleslash.fifth.mapping.SearchMapping;
 import com.doubleslash.fifth.repository.AlcoholRepository;
 import com.doubleslash.fifth.repository.RecommendRepository;
 import com.doubleslash.fifth.repository.SearchRepository;
 import com.doubleslash.fifth.storage.BeerStorage;
 import com.doubleslash.fifth.storage.LiquorStorage;
 import com.doubleslash.fifth.storage.WineStorage;
-import com.doubleslash.fifth.vo.AlcoholVO;
-import com.doubleslash.fifth.vo.RecommendVO;
-import com.doubleslash.fifth.vo.ViewSearchVO;
-import com.google.cloud.storage.Acl.Entity;
 
-import io.grpc.netty.shaded.io.netty.resolver.DefaultHostsFileEntriesResolver;
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class RecommendService {
 
-	@Autowired
-	RecommendRepository recommendRepository;
-	
-	@Autowired
-	SearchRepository searchRepository;
-	
-	@Autowired
-	AlcoholRepository alcoholRepository;
+	private final RecommendRepository recommendRepository;
+	private final SearchRepository searchRepository;
+	private final AlcoholRepository alcoholRepository;
 	
 	//가중치
 	private final int FLAVOR_WEIGHT = 66;

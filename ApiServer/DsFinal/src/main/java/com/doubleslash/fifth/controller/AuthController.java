@@ -3,12 +3,11 @@ package com.doubleslash.fifth.controller;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.doubleslash.fifth.dto.AccessTokenDTO;
 import com.doubleslash.fifth.dto.CustomTokenDTO;
@@ -18,14 +17,15 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import lombok.RequiredArgsConstructor;
 
 @Api(value = "Auth", description = "인증 API")
+@RestController
 @RequestMapping(value = "/auth")
-@Controller
+@RequiredArgsConstructor
 public class AuthController {
 	
-	@Autowired
-	AuthService authService;
+	private final AuthService authService;
 
 	@ApiOperation(value = "Kakao Access Token Verification & Get Firebase Custom Token")
 	@ApiResponses({

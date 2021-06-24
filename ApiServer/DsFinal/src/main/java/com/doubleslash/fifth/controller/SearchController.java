@@ -10,9 +10,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.doubleslash.fifth.dto.WrapperDTO;
+import com.doubleslash.fifth.service.AuthService;
+import com.doubleslash.fifth.service.ReviewService;
 import com.doubleslash.fifth.service.SearchService;
+import com.doubleslash.fifth.service.UserService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -22,14 +26,15 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.annotations.Example;
 import io.swagger.annotations.ExampleProperty;
+import lombok.RequiredArgsConstructor;
 
-@Controller
-@RequestMapping(value = "/alcohol")
 @Api(value = "Alcohol", description = "검색 API")
+@RestController
+@RequestMapping(value = "/alcohol")
+@RequiredArgsConstructor
 public class SearchController {
-	
-	@Autowired
-	SearchService searchService;
+
+	private final SearchService searchService;
 	
 	@ApiOperation(value = "주류 조회 & 정렬")
 	@ApiImplicitParams({
