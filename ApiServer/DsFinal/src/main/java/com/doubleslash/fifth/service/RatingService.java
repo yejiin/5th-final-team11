@@ -8,9 +8,9 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.doubleslash.fifth.dto.RatingDTO;
+import com.doubleslash.fifth.entity.Alcohol;
 import com.doubleslash.fifth.repository.AlcoholRepository;
 import com.doubleslash.fifth.repository.RatingRepository;
-import com.doubleslash.fifth.vo.AlcoholVO;
 
 import lombok.RequiredArgsConstructor;
 
@@ -32,7 +32,7 @@ public class RatingService {
 		aidList = aidList.subList(0, 10);
 
 		List<RatingDTO.Response> res = new ArrayList<RatingDTO.Response>();
-		AlcoholVO temp;
+		Alcohol temp;
 		
 		for(int aid : aidList) {
 			temp = alcoholRepository.findByAid(aid);

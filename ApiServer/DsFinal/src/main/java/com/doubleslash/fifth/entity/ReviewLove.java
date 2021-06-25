@@ -1,4 +1,4 @@
-package com.doubleslash.fifth.vo;
+package com.doubleslash.fifth.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -9,7 +9,7 @@ import lombok.Data;
 @Entity
 @Table(name = "ReviewLove")
 @Data
-public class ReviewLoveVO {
+public class ReviewLove extends BaseEntity {
 
 	@Id
 	private int id;

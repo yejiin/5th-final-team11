@@ -18,10 +18,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.doubleslash.fifth.dto.RegisterDTO;
 import com.doubleslash.fifth.dto.SavePointDTO;
+import com.doubleslash.fifth.entity.User;
 import com.doubleslash.fifth.service.AuthService;
 import com.doubleslash.fifth.service.ReviewService;
 import com.doubleslash.fifth.service.UserService;
-import com.doubleslash.fifth.vo.UserVO;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -46,7 +46,7 @@ public class UserController {
 	})
 	@GetMapping(value = "/nickcheck/{nickname}")
 	public String nicknameCheck(HttpServletResponse response, @PathVariable("nickname") String nickname) throws IOException {
-		UserVO nicknameChk = userService.nicknameCheck(nickname);
+		User nicknameChk = userService.nicknameCheck(nickname);
 		JSONObject jsonObj = new JSONObject();
 		
 		if(nicknameChk == null) {

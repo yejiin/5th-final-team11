@@ -1,8 +1,4 @@
-package com.doubleslash.fifth.vo;
-
-import java.util.Date;
-
-import javax.persistence.Column;
+package com.doubleslash.fifth.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,21 +6,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
-import org.hibernate.annotations.CreationTimestamp;
-
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import lombok.Data;
+import lombok.Setter;
 
 @Entity
 @Table(name = "Review")
-@Data
+@Getter @Setter
 @NoArgsConstructor
-public class ReviewVO {
+public class Review extends BaseEntity {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,11 +31,6 @@ public class ReviewVO {
 	private int love;
 	
 	private int report;
-	
-	@CreationTimestamp
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "create_time")
-	private Date create_time;
 	
 	public void addLove() {
 		this.love += 1;

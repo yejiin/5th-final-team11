@@ -7,10 +7,10 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import com.doubleslash.fifth.vo.RatingVO;
+import com.doubleslash.fifth.entity.Rating;
 
 @Repository
-public interface RatingRepository extends JpaRepository<RatingVO, Integer>{
+public interface RatingRepository extends JpaRepository<Rating, Integer>{
 
 	@Modifying
 	@Transactional

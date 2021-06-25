@@ -29,6 +29,13 @@ import com.doubleslash.fifth.dto.MyReviewDTO;
 import com.doubleslash.fifth.dto.ReviewDTO;
 import com.doubleslash.fifth.dto.ReviewWriteDTO;
 import com.doubleslash.fifth.dto.WrapperDTO;
+import com.doubleslash.fifth.entity.Alcohol;
+import com.doubleslash.fifth.entity.Comment;
+import com.doubleslash.fifth.entity.DetailReview;
+import com.doubleslash.fifth.entity.ReportComment;
+import com.doubleslash.fifth.entity.ReportReview;
+import com.doubleslash.fifth.entity.ReviewLove;
+import com.doubleslash.fifth.entity.Review;
 import com.doubleslash.fifth.repository.AlcoholRepository;
 import com.doubleslash.fifth.repository.CommentRepository;
 import com.doubleslash.fifth.repository.DetailReviewRepository;
@@ -36,13 +43,6 @@ import com.doubleslash.fifth.repository.ReportReviewRepository;
 import com.doubleslash.fifth.repository.ReportCommentRepository;
 import com.doubleslash.fifth.repository.ReviewLoveRepository;
 import com.doubleslash.fifth.repository.ReviewRepository;
-import com.doubleslash.fifth.vo.AlcoholVO;
-import com.doubleslash.fifth.vo.CommentVO;
-import com.doubleslash.fifth.vo.DetailReviewVO;
-import com.doubleslash.fifth.vo.ReportCommentVO;
-import com.doubleslash.fifth.vo.ReportReviewVO;
-import com.doubleslash.fifth.vo.ReviewLoveVO;
-import com.doubleslash.fifth.vo.ReviewVO;
 
 import lombok.RequiredArgsConstructor;
 
@@ -67,7 +67,7 @@ public class ReviewService {
 			int rid = reviewDto.getContent().get(i).getRid();
 
 			// 해당 리뷰 하트 클릭 여부 확인
-			ReviewLoveVO loveClick = reviewLoveRepository.findByIdRid(id, rid);
+			ReviewLove loveClick = reviewLoveRepository.findByIdRid(id, rid);
 			if (loveClick != null) {
 				reviewDto.getContent().get(i).setLoveClick(true);
 			} else {
@@ -109,10 +109,10 @@ public class ReviewService {
 	@Transactional
 	public WrapperDTO addReview(int aid, int id, ReviewWriteDTO reveiwWriteDto, HttpServletResponse response)
 			throws ParseException, IOException {
-		ReviewVO reviewVo = new ReviewVO();
-		DetailReviewVO detailVo = new DetailReviewVO();
+		Review reviewVo = new Review();
+		DetailReview detailVo = new DetailReview();
 
-		AlcoholVO alcoholChk = alcoholRepository.findByAid(aid);
+		Alcohol alcoholChk = alcoholRepository.findByAid(aid);
 
 		if (alcoholChk == null) {
 			response.sendError(404, "Alcohol Id Error");
@@ -124,7 +124,7 @@ public class ReviewService {
 		Date date = new Date();
 		String dateToStr = dateFormat.format(date);
 		
-		ReviewVO chk = reviewRepository.findById(id, aid, dateToStr);
+		Review chk = reviewRepository.findById(id, aid, dateToStr);
 
 		if(chk != null) {
 			response.sendError(403, "Writing Restriction");
@@ -163,7 +163,7 @@ public class ReviewService {
 			return null;
 		}
 
-		CommentVO commentVo = new CommentVO();
+		Comment commentVo = new Comment();
 		commentVo.setId(id);
 		commentVo.setRid(rid);
 		commentVo.setContent(content.getContent());
@@ -193,13 +193,13 @@ public class ReviewService {
 			return null;
 		}
 
-		ReportReviewVO reportVo = new ReportReviewVO();
+		ReportReview reportVo = new ReportReview();
 		reportVo.setRid(rid);
 		reportVo.setId(id);
 		reportVo.setContent(content.getContent());
 		reportReviewRepository.save(reportVo);
 		
-		ReviewVO review = reviewRepository.findById(rid).get();
+		Review review = reviewRepository.findById(rid).get();
 		review.addReport();
 
 		WrapperDTO dto = new WrapperDTO("success");
@@ -211,20 +211,20 @@ public class ReviewService {
 	@Transactional
 	public WrapperDTO reportComment(int id, int cid, ContentDTO content, HttpServletResponse response)
 			throws IOException {
-		Optional<CommentVO> commentChk = commentRepository.findById(cid);
+		Optional<Comment> commentChk = commentRepository.findById(cid);
 
 		if (commentChk.isPresent() == false) {
 			response.sendError(404, "Comment Id Error");
 			return null;
 		}
 
-		ReportCommentVO reportVo = new ReportCommentVO();
+		ReportComment reportVo = new ReportComment();
 		reportVo.setCid(cid);
 		reportVo.setId(id);
 		reportVo.setContent(content.getContent());
 		reportCommentRepository.save(reportVo);
 		
-		CommentVO comment = commentRepository.findById(cid).get();
+		Comment comment = commentRepository.findById(cid).get();
 		comment.addReport();
 
 		WrapperDTO dto = new WrapperDTO("success");
@@ -237,7 +237,7 @@ public class ReviewService {
 	public Map<String, Object>  reviewLove(int id, int rid, HttpServletResponse response) throws SQLIntegrityConstraintViolationException, IOException{
 
 		if(reviewLoveRepository.insert(id, rid)==1) {
-			ReviewVO review = reviewRepository.findById(rid).get();
+			Review review = reviewRepository.findById(rid).get();
 			review.addLove();
 		}
 		
@@ -253,7 +253,7 @@ public class ReviewService {
 	public Map<String, Object> reviewLoveCancle(int id, int rid, HttpServletResponse response) throws IOException {
 		
 		if(reviewLoveRepository.delete(id, rid)==1) {
-			ReviewVO review = reviewRepository.findById(rid).get();
+			Review review = reviewRepository.findById(rid).get();
 			review.cancelLove();
 		}
 
@@ -303,9 +303,9 @@ public class ReviewService {
 	//내 기록 수정
 	@Transactional
 	public WrapperDTO updateMyReview(ReviewWriteDTO requestBody, int id, int rid) {
-		DetailReviewVO detailVo = new DetailReviewVO();
+		DetailReview detailVo = new DetailReview();
 	
-		ReviewVO review = reviewRepository.findById(rid).get();
+		Review review = reviewRepository.findById(rid).get();
 		review.setStar(requestBody.getStar());
 		review.setContent(requestBody.getContent());
 		

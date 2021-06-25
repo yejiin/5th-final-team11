@@ -1,5 +1,7 @@
 package com.doubleslash.fifth.dto;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -16,35 +18,38 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@RequiredArgsConstructor
 public class ReviewDTO {
 
-	@NonNull
 	private int rid;
-	
-	@NonNull
+
 	private String nickname;
 	
-	@NonNull
 	private String content;
 	
-	@NonNull
 	private int love;
 	
 	private boolean loveClick;
 	
-	@NonNull
 	private double star;
 
-	
-	@NonNull
 	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy.MM.dd")
-	private Date reviewDate;
+	private LocalDateTime reviewDate;
 
 	private DetailReviewDTO detail;
 	
 	private List<CommentDTO> comments;
 	
 	private long commentTotalCnt;
+
+	public ReviewDTO(int rid, String nickname, String content, int love, double star, LocalDateTime reviewDate) {
+		this.rid = rid;
+		this.nickname = nickname;
+		this.content = content;
+		this.love = love;
+		this.star = star;
+		this.reviewDate = reviewDate;
+	}
+	
+	
 	
 }

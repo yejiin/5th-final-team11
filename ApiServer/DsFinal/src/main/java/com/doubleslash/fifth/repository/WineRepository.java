@@ -3,9 +3,9 @@ package com.doubleslash.fifth.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.doubleslash.fifth.vo.WineVO;
+import com.doubleslash.fifth.entity.Wine;
 
 @Repository
-public interface WineRepository extends JpaRepository<WineVO, Integer>{
+public interface WineRepository extends JpaRepository<Wine, Integer>{
 	
 }

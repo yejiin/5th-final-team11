@@ -1,4 +1,4 @@
-package com.doubleslash.fifth.vo;
+package com.doubleslash.fifth.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,16 +9,16 @@ import javax.persistence.Table;
 import lombok.Data;
 
 @Entity
-@Table(name = "ReportComment")
+@Table(name = "ReportReview")
 @Data
-public class ReportCommentVO {
+public class ReportReview extends BaseEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int rno;
 	
-	private int cid;
-	
+	private int rid;
+
 	private int id;
 	
 	private String content;

@@ -9,10 +9,10 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import com.doubleslash.fifth.vo.RecommendVO;
+import com.doubleslash.fifth.entity.Recommend;
 
 @Repository
-public interface RecommendRepository extends JpaRepository<RecommendVO, Integer>{
+public interface RecommendRepository extends JpaRepository<Recommend, Integer>{
 	
 	@Modifying
 	@Transactional
@@ -25,6 +25,6 @@ public interface RecommendRepository extends JpaRepository<RecommendVO, Integer>
 	public void delete(int id);
 	
 	@Query(value = "select * from Recommend where id = ?1 limit 1", nativeQuery = true)
-	public Optional<RecommendVO> findById(int id);
+	public Optional<Recommend> findById(int id);
 	
 }

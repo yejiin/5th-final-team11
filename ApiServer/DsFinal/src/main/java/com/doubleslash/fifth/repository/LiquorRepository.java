@@ -5,9 +5,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.doubleslash.fifth.dto.LiquorDTO;
-import com.doubleslash.fifth.vo.LiquorVO;
+import com.doubleslash.fifth.entity.Liquor;
 
 @Repository
-public interface LiquorRepository extends JpaRepository<LiquorVO, Integer> {
+public interface LiquorRepository extends JpaRepository<Liquor, Integer> {
 
 }

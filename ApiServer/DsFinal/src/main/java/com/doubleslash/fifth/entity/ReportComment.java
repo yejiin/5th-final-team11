@@ -1,24 +1,23 @@
-package com.doubleslash.fifth.vo;
+package com.doubleslash.fifth.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
-@Table(name = "ReportReview")
-@Data
-public class ReportReviewVO {
+@Getter @Setter
+public class ReportComment extends BaseEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int rno;
 	
-	private int rid;
-
+	private int cid;
+	
 	private int id;
 	
 	private String content;

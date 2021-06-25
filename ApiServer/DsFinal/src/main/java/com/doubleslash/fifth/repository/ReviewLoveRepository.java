@@ -7,14 +7,14 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import com.doubleslash.fifth.vo.ReviewLoveVO;
+import com.doubleslash.fifth.entity.ReviewLove;
 
 @Repository
-public interface ReviewLoveRepository extends JpaRepository<ReviewLoveVO, Integer>{
+public interface ReviewLoveRepository extends JpaRepository<ReviewLove, Integer>{
 
 	// 찜한 리뷰 확인
 	@Query(value = "select id, rid from ReviewLove where id = ?1 and rid = ?2", nativeQuery = true)
-	public ReviewLoveVO findByIdRid(int id, int rid);
+	public ReviewLove findByIdRid(int id, int rid);
 	
 	@Modifying
 	@Transactional

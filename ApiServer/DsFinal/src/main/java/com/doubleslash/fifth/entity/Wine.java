@@ -1,15 +1,15 @@
-package com.doubleslash.fifth.vo;
+package com.doubleslash.fifth.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import lombok.Data;
+import lombok.Getter;
 
 @Entity
 @Table(name = "Wine")
-@Data
-public class WineVO {
+@Getter 
+public class Wine extends BaseEntity {
 
 	@Id
 	private int aid;

@@ -10,10 +10,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.doubleslash.fifth.dto.CabinetDTO;
-import com.doubleslash.fifth.vo.AlcoholLoveVO;
+import com.doubleslash.fifth.entity.AlcoholLove;
 
 @Repository
-public interface AlcoholLoveRepository extends JpaRepository<AlcoholLoveVO, Integer>{
+public interface AlcoholLoveRepository extends JpaRepository<AlcoholLove, Integer>{
 
 	@Modifying
 	@Transactional
@@ -26,17 +26,17 @@ public interface AlcoholLoveRepository extends JpaRepository<AlcoholLoveVO, Inte
 	public int delete(int id, int aid);
 	
 	// 마시고 싶은 술 조회 (시간순)
-	@Query(value = "select new com.doubleslash.fifth.dto.CabinetDTO(al.aid, a.image) from AlcoholLoveVO as al, AlcoholVO as a where al.aid = a.aid and al.id = ?1")
+	@Query(value = "select new com.doubleslash.fifth.dto.CabinetDTO(al.aid, a.image) from AlcoholLove as al, Alcohol as a where al.aid = a.aid and al.id = ?1")
 	public Page<CabinetDTO> findLoveAlcoholOrderTime(int id, Pageable pageable);
 	
 	// 마시고 싶은 술 조회 (도수순)
-	@Query(value = "select new com.doubleslash.fifth.dto.CabinetDTO(al.aid, a.image) from AlcoholVO as a, AlcoholLoveVO as al where al.aid = a.aid and al.id = ?1")
+	@Query(value = "select new com.doubleslash.fifth.dto.CabinetDTO(al.aid, a.image) from Alcohol as a, AlcoholLove as al where al.aid = a.aid and al.id = ?1")
 	public Page<CabinetDTO> findLoveAlcoholOrderAbv(int id, Pageable pageable);
 	
-	@Query(value = "select count(aid) from AlcoholLoveVO where aid = ?1")
+	@Query(value = "select count(aid) from AlcoholLove where aid = ?1")
 	public int findAidCount(int aid);
 	
-	@Query(value = "select count(aid) from AlcoholLoveVO where id = ?1 and aid = ?2")
+	@Query(value = "select count(aid) from AlcoholLove where id = ?1 and aid = ?2")
 	public int findCount(int id, int aid);
 
 }

@@ -1,4 +1,4 @@
-package com.doubleslash.fifth.vo;
+package com.doubleslash.fifth.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -11,7 +11,7 @@ import lombok.Setter;
 @Table(name = "ViewSearch")
 @Getter
 @Setter
-public class ViewSearchVO {
+public class ViewSearch {
 	
 	@Id
 	private int aid;

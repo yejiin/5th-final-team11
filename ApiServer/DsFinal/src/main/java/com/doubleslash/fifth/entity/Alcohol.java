@@ -1,21 +1,17 @@
-package com.doubleslash.fifth.vo;
+package com.doubleslash.fifth.entity;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
 
-import lombok.Data;
+import lombok.Getter;
 
 @Entity
-@Table(name = "Alcohol")
-@Data
-public class AlcoholVO {
+@Getter
+public class Alcohol extends BaseEntity {
 	
 	@Id
-	@Column(name = "aid")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int aid;
 	

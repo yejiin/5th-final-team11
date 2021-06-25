@@ -1,6 +1,7 @@
 package com.doubleslash.fifth.dto;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -22,6 +23,6 @@ public class CommentDTO {
 	private String content;
 	
 	@JsonFormat(pattern="yyyy.MM.dd", timezone = "Asia/Seoul")
-	private Date commentDate;
+	private LocalDateTime commentDate;
 	
 }

@@ -14,11 +14,11 @@ import com.doubleslash.fifth.dto.BeerDTO;
 import com.doubleslash.fifth.dto.LiquorDTO;
 import com.doubleslash.fifth.dto.SimilarAlcoholDTO;
 import com.doubleslash.fifth.dto.WineDTO;
+import com.doubleslash.fifth.entity.Alcohol;
+import com.doubleslash.fifth.entity.User;
 import com.doubleslash.fifth.repository.AlcoholLoveRepository;
 import com.doubleslash.fifth.repository.AlcoholRepository;
 import com.doubleslash.fifth.repository.UserRepository;
-import com.doubleslash.fifth.vo.AlcoholVO;
-import com.doubleslash.fifth.vo.UserVO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.RequiredArgsConstructor;
@@ -33,7 +33,7 @@ public class AlcoholService {
 
 	// category 조회
 	public String getCategory(int aid) {
-		Optional<AlcoholVO> vo = alcoholRepository.findById(aid);
+		Optional<Alcohol> vo = alcoholRepository.findById(aid);
 		String category = "";
 		if (vo.isPresent()) {
 			category = vo.get().getCategory();
@@ -134,7 +134,7 @@ public class AlcoholService {
 
 	// 주종별 사용자 주량
 	public String getUserDrinkStr(int id, int aid) {
-		Optional<UserVO> userVo = userRepository.findById(id);
+		Optional<User> userVo = userRepository.findById(id);
 
 		// 소주 기준
 		double sojuDrink = userVo.get().getDrink();
@@ -143,7 +143,7 @@ public class AlcoholService {
 		// 알콜량 = 소주병수*도수*용량/100
 		double sojuAmount = (sojuDrink * sojuAbv * 360 / 100);
 
-		AlcoholVO alcoholVo = alcoholRepository.findByAid(aid);
+		Alcohol alcoholVo = alcoholRepository.findByAid(aid);
 		double alcoholAbv = alcoholVo.getAbv();
 		int alcoholMl = alcoholVo.getMl();
 		double alcoholAmount = (alcoholAbv * alcoholMl / 100);

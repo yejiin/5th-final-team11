@@ -1,4 +1,4 @@
-package com.doubleslash.fifth.vo;
+package com.doubleslash.fifth.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -9,11 +9,10 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "Rating")
 @Getter
 @Setter
 @AllArgsConstructor
-public class RatingVO {
+public class Rating extends BaseEntity {
 
 	@Id
 	private int id;
