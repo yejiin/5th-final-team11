@@ -64,12 +64,12 @@ public class AlcoholController {
 	})
 	@ApiImplicitParam(name = "Authorization", value = "idToken", required = false, paramType = "header")
 	@GetMapping(value = "/{aid}", produces = "application/json; charset=utf8")
-	public String detail(@PathVariable("aid") int aid, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public String detail(@PathVariable("aid") Long aid, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String uid = authService.verifyToken(request);
-		int id;
+		Long id;
 		
 		if(uid == null) {
-			id = -1;
+			id = -1L;
 		}else {
 			id = userService.getId(uid);
 		}
@@ -104,9 +104,9 @@ public class AlcoholController {
 		@ApiResponse(code = 404, message = "Alcohol Id Error")
 	})
 	@PutMapping(value = "/{aid}/love")
-	public Map<String, Object> alcoholLove(@PathVariable int aid, @RequestBody LoveClickDTO loveClick, HttpServletRequest request) throws Exception {
+	public Map<String, Object> alcoholLove(@PathVariable Long aid, @RequestBody LoveClickDTO loveClick, HttpServletRequest request) throws Exception {
 		String uid = authService.verifyToken(request);
-		int id = userService.getId(uid);
+		Long id = userService.getId(uid);
 
 		Map<String, Object> res = new TreeMap<>();
 		

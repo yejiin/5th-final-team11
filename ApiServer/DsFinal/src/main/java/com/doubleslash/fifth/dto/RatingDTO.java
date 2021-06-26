@@ -27,7 +27,7 @@ public class RatingDTO {
 	@AllArgsConstructor
 	public static class Response {
 		
-		private int aid;
+		private Long aid;
 		
 		private String thumbnail;
 		

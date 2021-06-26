@@ -20,7 +20,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class ReviewDTO {
 
-	private int rid;
+	private Long rid;
 
 	private String nickname;
 	
@@ -41,7 +41,7 @@ public class ReviewDTO {
 	
 	private long commentTotalCnt;
 
-	public ReviewDTO(int rid, String nickname, String content, int love, double star, LocalDateTime reviewDate) {
+	public ReviewDTO(Long rid, String nickname, String content, int love, double star, LocalDateTime reviewDate) {
 		this.rid = rid;
 		this.nickname = nickname;
 		this.content = content;

@@ -26,7 +26,7 @@ public class CabinetService {
 	private final ReviewRepository reviewRepository;
 	private final AlcoholLoveRepository alcoholLoveRepository;
 	
-	public Map<String, Object> getDrinkAlcohol(int id, int page, String sort, String sortOption) {
+	public Map<String, Object> getDrinkAlcohol(Long id, int page, String sort, String sortOption) {
 		if(!sort.equals("abv")) sort = "create_time";
 		
 		Page<CabinetDTO> cabinetDto;
@@ -45,7 +45,7 @@ public class CabinetService {
 	
 	}
 	
-	public Map<String, Object> getLoveAlcohol(int id, int page, String sort, String sortOption) {
+	public Map<String, Object> getLoveAlcohol(Long id, int page, String sort, String sortOption) {
 		if(!sort.equals("abv")) sort = "create_time";
 		
 		Page<CabinetDTO> cabinetDto;
@@ -65,9 +65,9 @@ public class CabinetService {
 	}
 	
 	@Transactional
-	public void deleteLoveAlcohol(int id, List<Integer> aid) {
+	public void deleteLoveAlcohol(Long id, List<Long> aid) {
 		
-		for(int i : aid) {
+		for(Long i : aid) {
 			alcoholLoveRepository.delete(id, i);
 		}
 		

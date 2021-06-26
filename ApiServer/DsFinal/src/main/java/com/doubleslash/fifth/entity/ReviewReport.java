@@ -8,33 +8,28 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
+@Table(name = "ReportReview")
 @Getter @Setter
-public class Comment extends BaseEntity {
+public class ReviewReport extends BaseEntity {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "comment_id")
+	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "reviewReport_id")
 	private Long id;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id")
 	private User user;
-
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "review_id")
 	private Review review;
-	
-	private String content;
-	
-	private int report;
 
-	public void addReport() {
-		this.report += 1;
-	}
+	private String content;
 	
 }

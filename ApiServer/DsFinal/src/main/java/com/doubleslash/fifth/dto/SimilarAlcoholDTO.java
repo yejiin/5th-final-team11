@@ -9,7 +9,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class SimilarAlcoholDTO {
 	
-	private int aid;
+	private Long aid;
 	
 	private String image;
 	

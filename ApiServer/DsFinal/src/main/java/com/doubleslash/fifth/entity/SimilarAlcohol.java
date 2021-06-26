@@ -1,16 +1,26 @@
 package com.doubleslash.fifth.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+import lombok.Getter;
 
 @Entity
-@Table(name = "SimilarAlcohol")
+@Getter
 public class SimilarAlcohol extends BaseEntity {
 	
-	@Id
-	private int aid;
+	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "similarAlcohol_id")
+	private Long id;
 	
-	private int said;
-
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "alcohol_id")
+	private Alcohol alcohol;
+	
 }

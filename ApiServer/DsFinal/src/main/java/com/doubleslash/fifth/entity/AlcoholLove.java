@@ -1,7 +1,13 @@
 package com.doubleslash.fifth.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import lombok.Getter;
 
@@ -9,9 +15,16 @@ import lombok.Getter;
 @Getter
 public class AlcoholLove extends BaseEntity {
 
-	@Id
-	private int id;
+	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "alcoholLove_id")
+	private Long id;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "user_id")
+	private User user;
 	
-	private int aid;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "alcohol_id")
+	private Alcohol alcohol;
 	
 }

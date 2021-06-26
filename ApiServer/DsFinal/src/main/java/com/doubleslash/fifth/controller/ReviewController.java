@@ -56,12 +56,12 @@ public class ReviewController {
 	})
 	@ApiImplicitParam(name = "Authorization", value = "idToken", required = false, paramType = "header")
 	@GetMapping(value = "/list")
-	public Map<String, Object> reviewList(@RequestParam("aid") int aid, @RequestParam(value="page") int page, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public Map<String, Object> reviewList(@RequestParam("aid") Long aid, @RequestParam(value="page") int page, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String uid = authService.verifyToken(request);
-		int id;
+		Long id;
 		
 		if(uid == null) {
-			id = -1;
+			id = -1L;
 		}else {
 			id = userService.getId(uid);
 		}
@@ -75,7 +75,7 @@ public class ReviewController {
 		@ApiImplicitParam(name = "page", required = true, dataType = "int", paramType = "query", example = "0", value = "페이지 번호(페이지당 데이터 20개)"),
 	})
 	@GetMapping(value ="/comment")
-	public Map<String, Object> commentList(@RequestParam("rid") int rid, @RequestParam("page") int page) {
+	public Map<String, Object> commentList(@RequestParam("rid") Long rid, @RequestParam("page") int page) {
 		
 		return reviewService.getComment(rid, page);
 	}
@@ -88,9 +88,9 @@ public class ReviewController {
 		@ApiResponse(code = 404, message = "Alcohol Id Error")
 	})
 	@PostMapping(value ="")
-	public WrapperDTO reviewWrite(@RequestParam("aid") int aid, @RequestBody ReviewWriteDTO requestBody, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public WrapperDTO reviewWrite(@RequestParam("aid") Long aid, @RequestBody ReviewWriteDTO requestBody, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String uid = authService.verifyToken(request);
-		int id = userService.getId(uid);
+		Long id = userService.getId(uid);
 
 		WrapperDTO dto = reviewService.addReview(aid, id, requestBody, response);
 		return dto;
@@ -103,9 +103,9 @@ public class ReviewController {
 		@ApiResponse(code = 404, message = "Review Id Error")
 	})
 	@PostMapping(value = "/{rid}/comment")
-	public Map<String, Object> commentWrite(@PathVariable("rid") int rid, @RequestBody ContentDTO content, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public Map<String, Object> commentWrite(@PathVariable("rid") Long rid, @RequestBody ContentDTO content, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String uid = authService.verifyToken(request);
-		int id = userService.getId(uid);
+		Long id = userService.getId(uid);
 		
 		return reviewService.addComment(id, rid, content, response);
 	}
@@ -117,9 +117,9 @@ public class ReviewController {
 		@ApiResponse(code = 404, message = "Review Id Error")
 	})
 	@PutMapping(value = "/{rid}/report")
-	public WrapperDTO reviewReport(@PathVariable("rid") int rid, @RequestBody ContentDTO content, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public WrapperDTO reviewReport(@PathVariable("rid") Long rid, @RequestBody ContentDTO content, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String uid = authService.verifyToken(request);
-		int id = userService.getId(uid);
+		Long id = userService.getId(uid);
 
 		WrapperDTO dto = reviewService.reportReview(id, rid, content, response);
 		return dto;
@@ -132,9 +132,9 @@ public class ReviewController {
 		@ApiResponse(code = 404, message = "Comment Id Error")
 	})
 	@PutMapping(value = "/comment/{cid}/report")
-	public WrapperDTO commentReport(@PathVariable("cid") int cid, @RequestBody ContentDTO content, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public WrapperDTO commentReport(@PathVariable("cid") Long cid, @RequestBody ContentDTO content, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String uid = authService.verifyToken(request);
-		int id = userService.getId(uid);
+		Long id = userService.getId(uid);
 
 		WrapperDTO dto = reviewService.reportComment(id, cid, content, response);
 		return dto;
@@ -147,9 +147,9 @@ public class ReviewController {
 		@ApiResponse(code = 404, message = "Review Id Error")
 	})
 	@PutMapping(value = "/{rid}/love")
-	public Map<String, Object> reviewLove(@PathVariable int rid, @RequestBody LoveClickDTO loveClick, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public Map<String, Object> reviewLove(@PathVariable Long rid, @RequestBody LoveClickDTO loveClick, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String uid = authService.verifyToken(request);
-		int id = userService.getId(uid);
+		Long id = userService.getId(uid);
 		
 		Map<String, Object> res = new TreeMap<>();
 		
@@ -182,7 +182,7 @@ public class ReviewController {
 	@GetMapping(value = "")
 	public Map<String, Object> getMyReviewList(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String uid = authService.verifyToken(request);
-		int id = userService.getId(uid);
+		Long id = userService.getId(uid);
 		
 		String sort = request.getParameter("sort");
 		String sortOption = request.getParameter("sortOption");
@@ -197,9 +197,9 @@ public class ReviewController {
 		@ApiResponse(code = 400, message = "Bad Request")
 	})
 	@PutMapping(value = "/{rid}")
-	public String updateMyReviewList(HttpServletRequest request, HttpServletResponse response, @RequestBody ReviewWriteDTO requestBody, @PathVariable int rid) throws Exception {
+	public String updateMyReviewList(HttpServletRequest request, HttpServletResponse response, @RequestBody ReviewWriteDTO requestBody, @PathVariable Long rid) throws Exception {
 		String uid = authService.verifyToken(request);
-		int id = userService.getId(uid);
+		Long id = userService.getId(uid);
 		
 		reviewService.updateMyReview(requestBody, id, rid);
 		return "{}";
@@ -210,7 +210,7 @@ public class ReviewController {
 		@ApiResponse(code = 200, message = "Success"),
 	})
 	@DeleteMapping(value = "/{rid}")
-	public String DeleteMyReviewList(@PathVariable List<Integer> rid, HttpServletRequest request) throws Exception {		
+	public String DeleteMyReviewList(@PathVariable List<Long> rid, HttpServletRequest request) throws Exception {		
 		reviewService.deleteMyReview(rid);
 		return "{}";
 	}

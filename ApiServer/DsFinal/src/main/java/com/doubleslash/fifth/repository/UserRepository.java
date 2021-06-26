@@ -9,7 +9,7 @@ import com.doubleslash.fifth.entity.User;
 //JAP메소드 규칙을 이용하여 SQL문 작성
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Integer>{
+public interface UserRepository extends JpaRepository<User, Long>{
 
 	public User findByUid(String uid);
 	

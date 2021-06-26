@@ -32,7 +32,7 @@ public class AlcoholService {
 	private final AlcoholLoveRepository alcoholLoveRepository;
 
 	// category 조회
-	public String getCategory(int aid) {
+	public String getCategory(Long aid) {
 		Optional<Alcohol> vo = alcoholRepository.findById(aid);
 		String category = "";
 		if (vo.isPresent()) {
@@ -45,7 +45,7 @@ public class AlcoholService {
 	}
 
 	// 양주 주종 세부 조회
-	public Map<String, Object> getLiquor(int id, int aid) {
+	public Map<String, Object> getLiquor(Long id, Long aid) {
 		ObjectMapper objectMapper = new ObjectMapper();
 		LiquorDTO liquorDto = alcoholRepository.findByAidLiquor(aid);
 
@@ -76,7 +76,7 @@ public class AlcoholService {
 	}
 
 	// 세계 맥주 주종 세부 조회
-	public Map<String, Object> getBeer(int id, int aid) {
+	public Map<String, Object> getBeer(Long id, Long aid) {
 		ObjectMapper objectMapper = new ObjectMapper();
 		BeerDTO beerDto = alcoholRepository.findByAidBeer(aid);
 
@@ -108,7 +108,7 @@ public class AlcoholService {
 	}
 
 	// 와인 주종 세부 조회
-	public Map<String, Object> getWine(int id, int aid) {
+	public Map<String, Object> getWine(Long id, Long aid) {
 		ObjectMapper objectMapper = new ObjectMapper();
 		WineDTO wineDto = alcoholRepository.findByAidWine(aid);
 
@@ -133,7 +133,7 @@ public class AlcoholService {
 	}
 
 	// 주종별 사용자 주량
-	public String getUserDrinkStr(int id, int aid) {
+	public String getUserDrinkStr(Long id, Long aid) {
 		Optional<User> userVo = userRepository.findById(id);
 
 		// 소주 기준
@@ -143,7 +143,7 @@ public class AlcoholService {
 		// 알콜량 = 소주병수*도수*용량/100
 		double sojuAmount = (sojuDrink * sojuAbv * 360 / 100);
 
-		Alcohol alcoholVo = alcoholRepository.findByAid(aid);
+		Alcohol alcoholVo = alcoholRepository.findById(aid).get();
 		double alcoholAbv = alcoholVo.getAbv();
 		int alcoholMl = alcoholVo.getMl();
 		double alcoholAmount = (alcoholAbv * alcoholMl / 100);
@@ -156,7 +156,7 @@ public class AlcoholService {
 	}
 	
 	// 유사 주류 데이터
-	public List<Map<String, Object>> getSimilar(int aid){
+	public List<Map<String, Object>> getSimilar(Long aid){
 		List<SimilarAlcoholDTO> similarDto =  alcoholRepository.findSimilar(aid);
 		
 		List<Map<String, Object>> listResult = new ArrayList<Map<String,Object>>();
@@ -170,7 +170,7 @@ public class AlcoholService {
 		return listResult;
 	}
 	
-	public Map<String, Object> alcoholLove(int id, int aid) throws IOException {
+	public Map<String, Object> alcoholLove(Long id, Long aid) throws IOException {
 		
 		alcoholLoveRepository.insert(id, aid);
 		
@@ -181,7 +181,7 @@ public class AlcoholService {
 		return res;
 	}
 	
-	public Map<String, Object> alcoholLoveCancle(int id, int aid) {
+	public Map<String, Object> alcoholLoveCancle(Long id, Long aid) {
 		
 		alcoholLoveRepository.delete(id, aid);
 

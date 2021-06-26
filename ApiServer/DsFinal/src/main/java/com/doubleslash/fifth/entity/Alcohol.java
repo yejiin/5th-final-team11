@@ -1,5 +1,6 @@
 package com.doubleslash.fifth.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,7 +14,8 @@ public class Alcohol extends BaseEntity {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int aid;
+	@Column(name = "alcohol_id")
+	private Long id;
 	
 	private String name;
 	

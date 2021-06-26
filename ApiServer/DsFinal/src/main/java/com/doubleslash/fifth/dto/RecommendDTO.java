@@ -64,7 +64,7 @@ public class RecommendDTO {
 	@AllArgsConstructor
 	public static class map{
 		String category;
-		int recScore;
+		Long recScore;
 	}
 	
 }

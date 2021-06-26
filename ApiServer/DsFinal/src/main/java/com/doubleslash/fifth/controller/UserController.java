@@ -70,7 +70,7 @@ public class UserController {
 	@PostMapping(value = "/register")
 	public String registerUser(HttpServletRequest request, HttpServletResponse response, @RequestBody RegisterDTO requestBody) throws Exception {
 		String uid = authService.verifyToken(request);
-		int id = userService.getId(uid);
+		Long id = userService.getId(uid);
 		
 		String nickname = requestBody.getNickname();
 		Float drink = requestBody.getDrink();
@@ -84,7 +84,7 @@ public class UserController {
 	@GetMapping(value = "/savepoint")
 	public SavePointDTO checkSavePoint(HttpServletRequest request) throws Exception{
 		String uid = authService.verifyToken(request);
-		int id = userService.getId(uid);
+		Long id = userService.getId(uid);
 		
 		return new SavePointDTO(userService.isSignUpCheck(uid), userService.isRecommendCheck(id));
 	}

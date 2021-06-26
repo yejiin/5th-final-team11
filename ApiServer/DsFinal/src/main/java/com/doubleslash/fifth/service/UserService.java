@@ -36,14 +36,14 @@ public class UserService {
 	
 	// user 등록 
     @Transactional
-	public void registerUser(int id, String nickname, Float drink, int hangover) {
+	public void registerUser(Long id, String nickname, Float drink, int hangover) {
 		User user = userRepository.findById(id).get();
 		user.setNickname(nickname);
 		user.setDrink(drink);
 		user.setHangover(hangover);
     }
 	
-	public int getId(String uid) {
+	public Long getId(String uid) {
 		return userRepository.findByUid(uid).getId();
 	}
 
@@ -52,7 +52,7 @@ public class UserService {
 		return true;
 	}
 	
-	public boolean isRecommendCheck(int id) {
+	public boolean isRecommendCheck(Long id) {
 		if(!recommendRepository.findById(id).isPresent()) return false;
 		return true;
 	}

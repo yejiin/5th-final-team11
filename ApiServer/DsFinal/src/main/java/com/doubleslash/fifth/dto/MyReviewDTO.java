@@ -12,19 +12,28 @@ import lombok.Setter;
 @RequiredArgsConstructor
 public class MyReviewDTO {
 	
-	@NonNull
-	private int rid;
-	@NonNull
-	private int aid;
-	@NonNull
+	private Long rid;
+	
+	private Long aid;
+	
 	private String name;
-	@NonNull
+
 	private double star;
-	@NonNull
+
 	private String thumbnail;
-	@NonNull
+
 	private String content;
 	
 	private DetailReviewDTO detail;
+
+	public MyReviewDTO(Long rid, Long aid, String name, double star, String thumbnail, String content) {
+		super();
+		this.rid = rid;
+		this.aid = aid;
+		this.name = name;
+		this.star = star;
+		this.thumbnail = thumbnail;
+		this.content = content;
+	}
 	
 }

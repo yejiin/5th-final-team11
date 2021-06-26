@@ -17,14 +17,14 @@ public interface RecommendRepository extends JpaRepository<Recommend, Integer>{
 	@Modifying
 	@Transactional
 	@Query(value = "insert into Recommend(id, aid, processed, recScore) values(?1, ?2, ?3, ?4)", nativeQuery = true)
-	public void insert(int id, int aid, String processed, int recScore);
+	public void insert(Long id, Long aid, String processed, Long recScore);
 	
 	@Modifying
 	@Transactional
 	@Query(value = "delete from Recommend where id = ?1", nativeQuery = true)
-	public void delete(int id);
+	public void delete(Long id);
 	
 	@Query(value = "select * from Recommend where id = ?1 limit 1", nativeQuery = true)
-	public Optional<Recommend> findById(int id);
+	public Optional<Recommend> findById(Long id);
 	
 }

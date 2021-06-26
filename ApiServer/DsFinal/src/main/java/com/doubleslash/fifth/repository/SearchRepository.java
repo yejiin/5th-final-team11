@@ -23,15 +23,15 @@ public interface SearchRepository extends JpaRepository<ViewSearch, Integer>{
 	public Page<SearchMapping> findByNameContaining(String name, Pageable pageable);
 	
 	@Query(value = "select new com.doubleslash.fifth.dto.AlcoholSearchDTO(v.aid, v.name, v.category, v.thumbnail, v.star, v.reviewCnt) from ViewSearch as v, Recommend as r where v.aid = r.aid and r.id = ?1 and processed = 'Y' order by recScore desc")
-	public Page<AlcoholSearchDTO> getRecommendDefaultAll(int id, Pageable pageable); 
+	public Page<AlcoholSearchDTO> getRecommendDefaultAll(Long id, Pageable pageable); 
 	
 	@Query(value = "select new com.doubleslash.fifth.dto.AlcoholSearchDTO(v.aid, v.name, v.category, v.thumbnail, v.star, v.reviewCnt) from ViewSearch as v, Recommend as r where v.aid = r.aid and r.id = ?1 and category = ?2 and processed = 'N' order by recScore desc")
-	public Page<AlcoholSearchDTO> getRecommendDefault(int id, String category, Pageable pageable); 
+	public Page<AlcoholSearchDTO> getRecommendDefault(Long id, String category, Pageable pageable); 
 	
 	@Query(value = "select new com.doubleslash.fifth.dto.AlcoholSearchDTO(v.aid, v.name, v.category, v.thumbnail, v.star, v.reviewCnt) from ViewSearch as v, Recommend as r where v.aid = r.aid and r.id = ?1 and processed = 'Y'")
-	public Page<AlcoholSearchDTO> getRecommendSortingAll(int id, Pageable pageable); 
+	public Page<AlcoholSearchDTO> getRecommendSortingAll(Long id, Pageable pageable); 
 	
 	@Query(value = "select new com.doubleslash.fifth.dto.AlcoholSearchDTO(v.aid, v.name, v.category, v.thumbnail, v.star, v.reviewCnt) from ViewSearch as v, Recommend as r where v.aid = r.aid and r.id = ?1 and category = ?2 and processed = 'N'")
-	public Page<AlcoholSearchDTO> getRecommendSorting(int id, String category, Pageable pageable); 
+	public Page<AlcoholSearchDTO> getRecommendSorting(Long id, String category, Pageable pageable); 
 	
 }

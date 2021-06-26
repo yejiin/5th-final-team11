@@ -11,7 +11,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class WineDTO {
 	
-	private int aid;
+	private Long aid;
 	
 	private String name;
 	

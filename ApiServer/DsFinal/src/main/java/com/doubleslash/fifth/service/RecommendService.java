@@ -42,7 +42,7 @@ public class RecommendService {
 	private final int CB_WEIGHT = 10;
 	
 	//추천 로직
-	public void createRecommend(RecommendDTO rec, int id){
+	public void createRecommend(RecommendDTO rec, Long id){
 		double minAbv = rec.getMinAbv();
 		double maxAbv = calcAbv(rec.getMaxAbv());
 		int abvWeight = calcAbvWeight(rec.getMaxAbv() - rec.getMinAbv());
@@ -59,7 +59,7 @@ public class RecommendService {
 		//int celeb; 인지도
 		
 		//스코어링 Map
-		HashMap<Integer, RecommendDTO.map> score = new HashMap<>();
+		HashMap<Long, RecommendDTO.map> score = new HashMap<>();
 		
 		RecommendDTO.liquor liquor = rec.getAlcohol().getLiquor();
 		if(liquor != null) {
@@ -71,8 +71,8 @@ public class RecommendService {
 			
 			for(int i = 0; i < liquorCompTarget.size(); i++) {
 				target = liquorCompTarget.get(i); //타겟 설정
-				int aid = target.getAid();
-				score.put(aid, new RecommendDTO.map("양주", 0)); //스코어링 데이터 삽입
+				Long aid = target.getAid();
+				score.put(aid, new RecommendDTO.map("양주", 0L)); //스코어링 데이터 삽입
 				
 				//맛 스코어링
 				String kind = target.getKind();
@@ -123,8 +123,8 @@ public class RecommendService {
 			
 			for(int i = 0; i < wineCompTarget.size(); i++) {
 				target = wineCompTarget.get(i); //타겟 설정
-				int aid = target.getAid();
-				score.put(aid, new RecommendDTO.map("와인", 0)); //스코어링 데이터 삽입
+				Long aid = target.getAid();
+				score.put(aid, new RecommendDTO.map("와인", 0L)); //스코어링 데이터 삽입
 				
 				//맛 스코어링
 				String kind = target.getKind();
@@ -171,8 +171,8 @@ public class RecommendService {
 			
 			for(int i = 0; i < beerCompTarget.size(); i++) {
 				target = beerCompTarget.get(i); //타겟 설정
-				int aid = target.getAid();
-				score.put(aid, new RecommendDTO.map("세계맥주", 0)); //스코어링 데이터 삽입
+				Long aid = target.getAid();
+				score.put(aid, new RecommendDTO.map("세계맥주", 0L)); //스코어링 데이터 삽입
 				
 				//맛 스코어링
 				String kind = target.getKind();
@@ -217,28 +217,28 @@ public class RecommendService {
 
 		}
 		
-		List<Entry<Integer, RecommendDTO.map>> entries = new ArrayList<Entry<Integer, RecommendDTO.map>>(score.entrySet());
+		List<Entry<Long, RecommendDTO.map>> entries = new ArrayList<Entry<Long, RecommendDTO.map>>(score.entrySet());
 		
 		//일단 한 번 정렬
-		Collections.sort(entries, new Comparator<Entry<Integer, RecommendDTO.map>>() {
-			public int compare(Entry<Integer, RecommendDTO.map> obj1, Entry<Integer, RecommendDTO.map> obj2)
+		Collections.sort(entries, new Comparator<Entry<Long, RecommendDTO.map>>() {
+			public int compare(Entry<Long, RecommendDTO.map> obj1, Entry<Long, RecommendDTO.map> obj2)
 			{
-				return Integer.compare(obj2.getValue().getRecScore(), obj1.getValue().getRecScore());
+				return Long.compare(obj2.getValue().getRecScore(), obj1.getValue().getRecScore());
 			}
 		});	
 		
-		ArrayList<Integer[]> liquorRecommendData = new ArrayList<>();
-		ArrayList<Integer[]> wineRecommendData = new ArrayList<>();
-		ArrayList<Integer[]> beerRecommendData = new ArrayList<>();
+		ArrayList<Long[]> liquorRecommendData = new ArrayList<>();
+		ArrayList<Long[]> wineRecommendData = new ArrayList<>();
+		ArrayList<Long[]> beerRecommendData = new ArrayList<>();
 				
 		//정렬된 리스트에서 카테고리별로 30개씩만 뽑아옴
 		for(int i = 0; i < score.size(); i++) {
-			Entry<Integer, RecommendDTO.map> entry = entries.get(i);
-			int aid = entry.getKey();
+			Entry<Long, RecommendDTO.map> entry = entries.get(i);
+			Long aid = entry.getKey();
 			String category = entry.getValue().getCategory();
-			int recScore = entry.getValue().getRecScore();
+			Long recScore = entry.getValue().getRecScore();
 			
-			Integer[] temp = new Integer[] {aid, recScore};
+			Long[] temp = new Long[] {aid, recScore};
 			switch(category) {
 				case "양주":
 					if(liquorRecommendData.size() < 30) liquorRecommendData.add(temp);
@@ -253,29 +253,29 @@ public class RecommendService {
 		}
 		
 		//양주, 맥주, 와인 추천 데이터 삽입
-		for(Integer[] lrd : liquorRecommendData) {
+		for(Long[] lrd : liquorRecommendData) {
 			recommendRepository.insert(id, lrd[0], "N", lrd[1]);
 		}
-		for(Integer[] brd : beerRecommendData) {
+		for(Long[] brd : beerRecommendData) {
 			recommendRepository.insert(id, brd[0], "N", brd[1]);
 		}
-		for(Integer[] wrd : wineRecommendData) {
+		for(Long[] wrd : wineRecommendData) {
 			recommendRepository.insert(id, wrd[0], "N", wrd[1]);
 		}
 		
 		//processed="Y"의 추천스코어 가공 과정을 거친 전체 데이터
 		for(int i = 0; i < 30; i++) {
-			Collections.sort(entries, new Comparator<Entry<Integer, RecommendDTO.map>>() {
-				public int compare(Entry<Integer, RecommendDTO.map> obj1, Entry<Integer, RecommendDTO.map> obj2)
+			Collections.sort(entries, new Comparator<Entry<Long, RecommendDTO.map>>() {
+				public int compare(Entry<Long, RecommendDTO.map> obj1, Entry<Long, RecommendDTO.map> obj2)
 				{
-					return Integer.compare(obj2.getValue().getRecScore(), obj1.getValue().getRecScore());
+					return Long.compare(obj2.getValue().getRecScore(), obj1.getValue().getRecScore());
 				}
 			});	
 			
-			Entry<Integer, RecommendDTO.map> entry = entries.get(i);
-			int aid = entry.getKey();
+			Entry<Long, RecommendDTO.map> entry = entries.get(i);
+			Long aid = entry.getKey();
 			String category = entry.getValue().getCategory();
-			int recScore = entry.getValue().getRecScore();
+			Long recScore = entry.getValue().getRecScore();
 			
 			for(int j = i+1; j < entries.size(); j++) {
 				RecommendDTO.map temp = entries.get(j).getValue();
@@ -289,7 +289,7 @@ public class RecommendService {
 	}
 	
 	//추천 결과 가져오기
-	public Map<String, Object> getRecommend(int id, String category, String sort, String sortOption, int page) {
+	public Map<String, Object> getRecommend(Long id, String category, String sort, String sortOption, int page) {
 		if(sort == null) sort = "recScore";
 		if(sortOption == null) sortOption = "desc";
 		

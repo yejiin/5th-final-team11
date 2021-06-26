@@ -58,7 +58,7 @@ public class RecommendController {
 	@GetMapping(value = "/recommend")
 	public Map<String, Object> getRecommend(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		String uid = authService.verifyToken(request);
-		int id = userService.getId(uid);
+		Long id = userService.getId(uid);
 		String category = request.getParameter("category");
 		String sort = request.getParameter("sort");
 		String sortOption = request.getParameter("sortOption");
@@ -88,7 +88,7 @@ public class RecommendController {
 	@PostMapping(value = "/recommend")
 	public String createRecommend(@RequestBody RecommendDTO requestBody, HttpServletRequest request, HttpServletResponse response) throws Exception{
 		String uid = authService.verifyToken(request);
-		int id = userService.getId(uid);
+		Long id = userService.getId(uid);
 
 		recommendService.createRecommend(requestBody, id);		
 		return "{}";

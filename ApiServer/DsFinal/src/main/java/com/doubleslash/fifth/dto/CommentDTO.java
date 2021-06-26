@@ -1,6 +1,5 @@
 package com.doubleslash.fifth.dto;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -16,7 +15,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class CommentDTO {
 	
-	private int id;
+	private Long id;
 	
 	private String nickname;
 	

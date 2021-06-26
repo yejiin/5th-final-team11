@@ -32,8 +32,8 @@ import com.doubleslash.fifth.dto.WrapperDTO;
 import com.doubleslash.fifth.entity.Alcohol;
 import com.doubleslash.fifth.entity.Comment;
 import com.doubleslash.fifth.entity.DetailReview;
-import com.doubleslash.fifth.entity.ReportComment;
-import com.doubleslash.fifth.entity.ReportReview;
+import com.doubleslash.fifth.entity.CommentReport;
+import com.doubleslash.fifth.entity.ReviewReport;
 import com.doubleslash.fifth.entity.ReviewLove;
 import com.doubleslash.fifth.entity.Review;
 import com.doubleslash.fifth.repository.AlcoholRepository;
@@ -43,6 +43,7 @@ import com.doubleslash.fifth.repository.ReportReviewRepository;
 import com.doubleslash.fifth.repository.ReportCommentRepository;
 import com.doubleslash.fifth.repository.ReviewLoveRepository;
 import com.doubleslash.fifth.repository.ReviewRepository;
+import com.doubleslash.fifth.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -50,6 +51,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ReviewService {
 
+	private final UserRepository userRepositroy;
 	private final ReviewRepository reviewRepository;
 	private final DetailReviewRepository detailReviewRepository;
 	private final ReviewLoveRepository reviewLoveRepository;
@@ -59,12 +61,12 @@ public class ReviewService {
 	private final AlcoholRepository alcoholRepository;
 
 	// 리뷰 조회
-	public Map<String, Object> getReviewList(int aid, int page, int id, HttpServletResponse response) throws IOException {
+	public Map<String, Object> getReviewList(Long aid, int page, Long id, HttpServletResponse response) throws IOException {
 
 		Page<ReviewDTO> reviewDto = reviewRepository.findByAid(aid, id, PageRequest.of(page, 20, Sort.Direction.ASC, "rid"));
 
 		for (int i = 0; i < reviewDto.getContent().size(); i++) {
-			int rid = reviewDto.getContent().get(i).getRid();
+			Long rid = reviewDto.getContent().get(i).getRid();
 
 			// 해당 리뷰 하트 클릭 여부 확인
 			ReviewLove loveClick = reviewLoveRepository.findByIdRid(id, rid);
@@ -93,7 +95,7 @@ public class ReviewService {
 	}
 	
 	// 댓글 조회
-	public Map<String, Object> getComment(int rid, int page) {
+	public Map<String, Object> getComment(Long rid, int page) {
 		
 		// 오름차순
 		Page<CommentDTO> commentDto = commentRepository.findByRid(rid, PageRequest.of(page, 20,  Sort.Direction.ASC, "cid"));
@@ -107,12 +109,12 @@ public class ReviewService {
 
 	// 리뷰 작성
 	@Transactional
-	public WrapperDTO addReview(int aid, int id, ReviewWriteDTO reveiwWriteDto, HttpServletResponse response)
+	public WrapperDTO addReview(Long aid, Long id, ReviewWriteDTO reveiwWriteDto, HttpServletResponse response)
 			throws ParseException, IOException {
 		Review reviewVo = new Review();
 		DetailReview detailVo = new DetailReview();
 
-		Alcohol alcoholChk = alcoholRepository.findByAid(aid);
+		Alcohol alcoholChk = alcoholRepository.findById(aid).get();
 
 		if (alcoholChk == null) {
 			response.sendError(404, "Alcohol Id Error");
@@ -131,11 +133,11 @@ public class ReviewService {
 			return null;
 		}
 		
-		reviewVo.setId(id);
-		reviewVo.setAid(aid);
+		reviewVo.setUser(userRepositroy.findById(id).get());
+		reviewVo.setAlcohol(alcoholRepository.findById(aid).get());
 		reviewVo.setStar(reveiwWriteDto.getStar());
 		reviewVo.setContent(reveiwWriteDto.getContent());
-		int rid = reviewRepository.save(reviewVo).getRid();
+		Long rid = reviewRepository.save(reviewVo).getId();
 		
 		if (reveiwWriteDto.getDetail() == null) {
 			return new WrapperDTO("success");
@@ -157,7 +159,7 @@ public class ReviewService {
 
 	// 댓글 작성
 	@Transactional
-	public Map<String, Object> addComment(int id, int rid, ContentDTO content, HttpServletResponse response) throws IOException {
+	public Map<String, Object> addComment(Long id, Long rid, ContentDTO content, HttpServletResponse response) throws IOException {
 		if (reviewChk(rid) == 0) {
 			response.sendError(404, "Review Id Error");
 			return null;
@@ -165,11 +167,11 @@ public class ReviewService {
 
 		Comment commentVo = new Comment();
 		commentVo.setId(id);
-		commentVo.setRid(rid);
+		commentVo.setReview(reviewRepository.findById(rid).get());
 		commentVo.setContent(content.getContent());
 		commentRepository.save(commentVo);
 
-		CommentDTO commentDto = commentRepository.findByCid(commentVo.getCid());
+		CommentDTO commentDto = commentRepository.findByCid(commentVo.getId());
 		
 		DateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd");
 		String date = dateFormat.format(commentDto.getCommentDate());
@@ -186,16 +188,16 @@ public class ReviewService {
 
 	// 리뷰 신고
 	@Transactional
-	public WrapperDTO reportReview(int id, int rid, ContentDTO content, HttpServletResponse response)
+	public WrapperDTO reportReview(Long id, Long rid, ContentDTO content, HttpServletResponse response)
 			throws IOException {
 		if (reviewChk(rid) == 0) {
 			response.sendError(404, "Review Id Error");
 			return null;
 		}
 
-		ReportReview reportVo = new ReportReview();
-		reportVo.setRid(rid);
-		reportVo.setId(id);
+		ReviewReport reportVo = new ReviewReport();
+		reportVo.setReview(reviewRepository.findById(rid).get());
+		reportVo.setUser(userRepositroy.findById(id).get());
 		reportVo.setContent(content.getContent());
 		reportReviewRepository.save(reportVo);
 		
@@ -209,7 +211,7 @@ public class ReviewService {
 
 	// 댓글 신고
 	@Transactional
-	public WrapperDTO reportComment(int id, int cid, ContentDTO content, HttpServletResponse response)
+	public WrapperDTO reportComment(Long id, Long cid, ContentDTO content, HttpServletResponse response)
 			throws IOException {
 		Optional<Comment> commentChk = commentRepository.findById(cid);
 
@@ -218,9 +220,9 @@ public class ReviewService {
 			return null;
 		}
 
-		ReportComment reportVo = new ReportComment();
-		reportVo.setCid(cid);
-		reportVo.setId(id);
+		CommentReport reportVo = new CommentReport();
+		reportVo.setComment(commentRepository.findById(cid).get());
+		reportVo.setUser(userRepositroy.findById(id).get());
 		reportVo.setContent(content.getContent());
 		reportCommentRepository.save(reportVo);
 		
@@ -234,7 +236,7 @@ public class ReviewService {
 
 	// 리뷰 좋아요
 	@Transactional
-	public Map<String, Object>  reviewLove(int id, int rid, HttpServletResponse response) throws SQLIntegrityConstraintViolationException, IOException{
+	public Map<String, Object>  reviewLove(Long id, Long rid, HttpServletResponse response) throws SQLIntegrityConstraintViolationException, IOException{
 
 		if(reviewLoveRepository.insert(id, rid)==1) {
 			Review review = reviewRepository.findById(rid).get();
@@ -250,7 +252,7 @@ public class ReviewService {
 
 	// 리뷰 좋아요 취소
 	@Transactional
-	public Map<String, Object> reviewLoveCancle(int id, int rid, HttpServletResponse response) throws IOException {
+	public Map<String, Object> reviewLoveCancle(Long id, Long rid, HttpServletResponse response) throws IOException {
 		
 		if(reviewLoveRepository.delete(id, rid)==1) {
 			Review review = reviewRepository.findById(rid).get();
@@ -265,7 +267,7 @@ public class ReviewService {
 	}
 
 	// 리뷰 id 확인
-	public int reviewChk(int rid) {
+	public int reviewChk(Long rid) {
 		int result = 0;
 
 		if(reviewRepository.findById(rid).isPresent() == true) {
@@ -276,7 +278,7 @@ public class ReviewService {
 	}
 
 	//내 기록 조회
-	public Map<String, Object> getMyReviewList(int id, String sort, String sortOption, int page) {
+	public Map<String, Object> getMyReviewList(Long id, String sort, String sortOption, int page) {
 		if(!sort.equals("abv")) sort = "create_time";
 		Page<MyReviewDTO> myReviewTemp;
 		if(sort.equals("create_time")) {
@@ -302,7 +304,7 @@ public class ReviewService {
 	
 	//내 기록 수정
 	@Transactional
-	public WrapperDTO updateMyReview(ReviewWriteDTO requestBody, int id, int rid) {
+	public WrapperDTO updateMyReview(ReviewWriteDTO requestBody, Long id, Long rid) {
 		DetailReview detailVo = new DetailReview();
 	
 		Review review = reviewRepository.findById(rid).get();
@@ -329,8 +331,8 @@ public class ReviewService {
 	
 	
 	//내 기록 삭제
-	public void deleteMyReview(List<Integer> rid) {
-		for(int i : rid) {
+	public void deleteMyReview(List<Long> rid) {
+		for(Long i : rid) {
 			reviewRepository.deleteById(i);
 		}
 	}

@@ -51,7 +51,7 @@ public class CabinetController {
 	@GetMapping(value = "")
 	public Map<String, Object> drinkAlcohol(@RequestParam("page") int page, @RequestParam("sort") String sort, @RequestParam("sortOption") String sortOption, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String uid = authService.verifyToken(request);
-		int id = userService.getId(uid);
+		Long id = userService.getId(uid);
 
 		if(!sort.equals("latest") && !sort.equals("abv")) {
 			response.sendError(422, "Wrong Sort input");
@@ -82,7 +82,7 @@ public class CabinetController {
 	@GetMapping(value = "/love")
 	public Map<String, Object> loveAlcohol(@RequestParam("page") int page, @RequestParam("sort") String sort, @RequestParam("sortOption") String sortOption, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String uid = authService.verifyToken(request);
-		int id = userService.getId(uid);
+		Long id = userService.getId(uid);
 		
 		if(!sort.equals("latest") && !sort.equals("abv")) {
 			response.sendError(422, "Wrong Sort input");
@@ -103,9 +103,9 @@ public class CabinetController {
 		@ApiResponse(code = 200, message = "Success"),
 	})
 	@DeleteMapping(value = "/love/{aid}")
-	public String deleteLoveAlcohol(@PathVariable List<Integer> aid, HttpServletRequest request) throws Exception {
+	public String deleteLoveAlcohol(@PathVariable List<Long> aid, HttpServletRequest request) throws Exception {
 		String uid = authService.verifyToken(request);
-		int id = userService.getId(uid);
+		Long id = userService.getId(uid);
 		
 		cabinetService.deleteLoveAlcohol(id, aid);
 		return "{}";

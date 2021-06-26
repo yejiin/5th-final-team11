@@ -21,22 +21,22 @@ public class RatingService {
 	private final AlcoholRepository alcoholRepository;
 	private final RatingRepository ratingRepository;
 
-	private final Integer[] RATING_TARGET_AID_LIST = new Integer[]
-			{36,36,47,51,55,62,65,68,69,71,72,77,80,81,84,85,90,91,94,95,100,
-			1,2,6,7,11,12,16,17,21,22,26,27};
+	private final Long[] RATING_TARGET_AID_LIST = new Long[]
+			{36L,36L,47L,51L,55L,62L,65L,68L,69L,71L,72L,77L,80L,81L,84L,85L,90L,91L,94L,95L,100L,
+			1L,2L,6L,7L,11L,12L,16L,17L,21L,22L,26L,27L};
 	
 	public List<RatingDTO.Response> getRatingTargetList(){
 
-		List<Integer> aidList = Arrays.asList(RATING_TARGET_AID_LIST);
+		List<Long> aidList = Arrays.asList(RATING_TARGET_AID_LIST);
 		Collections.shuffle(aidList);
 		aidList = aidList.subList(0, 10);
 
 		List<RatingDTO.Response> res = new ArrayList<RatingDTO.Response>();
 		Alcohol temp;
 		
-		for(int aid : aidList) {
-			temp = alcoholRepository.findByAid(aid);
-			res.add(new RatingDTO.Response(temp.getAid(), temp.getThumbnail(), temp.getName(), temp.getCategory(), 0.0));
+		for(Long aid : aidList) {
+			temp = alcoholRepository.findById(aid).get();
+			res.add(new RatingDTO.Response(temp.getId(), temp.getThumbnail(), temp.getName(), temp.getCategory(), 0.0));
 		}
 
 		return res;

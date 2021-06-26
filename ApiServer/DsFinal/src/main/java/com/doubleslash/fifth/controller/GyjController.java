@@ -36,7 +36,7 @@ public class GyjController {
 	public WrapperDTO getRecommend(@RequestBody RecommendDTO requestBody,HttpServletRequest request) throws Exception{
 		String category = request.getParameter("category");
 
-		gyj_recommendService.createRecommend(requestBody, 1234);	
+		gyj_recommendService.createRecommend(requestBody, 1234L);	
 		return new WrapperDTO(gyj_recommendService.getRecommend(1234, category, null, null));
 	}
 

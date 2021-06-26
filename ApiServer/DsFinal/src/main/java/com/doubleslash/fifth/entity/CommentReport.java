@@ -14,27 +14,20 @@ import lombok.Setter;
 
 @Entity
 @Getter @Setter
-public class Comment extends BaseEntity {
+public class CommentReport extends BaseEntity {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "comment_id")
+	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "commentReport_id")
 	private Long id;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id")
 	private User user;
-
+	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "review_id")
-	private Review review;
+	@JoinColumn(name = "comment_id")
+	private Comment comment;
 	
 	private String content;
-	
-	private int report;
-
-	public void addReport() {
-		this.report += 1;
-	}
 	
 }

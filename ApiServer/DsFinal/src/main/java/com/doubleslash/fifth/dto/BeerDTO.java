@@ -12,7 +12,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class BeerDTO {
 	
-	private int aid;
+	private Long aid;
 	
 	private String name;
 	

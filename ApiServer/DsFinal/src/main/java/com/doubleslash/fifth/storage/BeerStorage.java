@@ -11,7 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class BeerStorage {
 
-	int aid;
+	Long aid;
 	
 	int lowestPrice;
 	

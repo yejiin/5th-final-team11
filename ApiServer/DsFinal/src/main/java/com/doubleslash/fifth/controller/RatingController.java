@@ -46,7 +46,7 @@ public class RatingController {
 	@PostMapping(value = "/rating")
 	public String createRating(@RequestBody RatingDTO requestBody, HttpServletRequest request) throws Exception{
 		String uid = authService.verifyToken(request);
-		int id = userService.getId(uid);
+		Long id = userService.getId(uid);
 
 		ratingService.createRatingData(29, requestBody);
 		return "{}";
