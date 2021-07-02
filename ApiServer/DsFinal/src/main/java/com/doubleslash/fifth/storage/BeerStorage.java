@@ -17,7 +17,7 @@ public class BeerStorage {
 	
 	int highestPrice;
 	
-	double abv;
+	float abv;
 	
 	String kind;
 	

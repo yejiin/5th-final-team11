@@ -1,18 +1,14 @@
 package com.doubleslash.fifth.entity;
 
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 
 import lombok.Getter;
-import lombok.ToString;
 
 @Entity
-@ToString(exclude = "alcohol")
 @Getter
-public class Liquor extends BaseEntity {
-	
-	@Id
-	private int aid;
+@DiscriminatorValue("양주")
+public class Liquor extends Alcohol {
 	
 	private String flavor;
 }

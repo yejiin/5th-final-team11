@@ -1,13 +1,9 @@
 package com.doubleslash.fifth.controller;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TreeMap;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.json.simple.JSONObject;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -15,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.doubleslash.fifth.dto.LoveAlcoholResponse;
 import com.doubleslash.fifth.dto.LoveClickDTO;
 import com.doubleslash.fifth.service.AlcoholService;
 import com.doubleslash.fifth.service.AuthService;
@@ -45,14 +42,14 @@ public class AlcoholController {
 			+ "lowestPrice : int\r\n"
 			+ "highestPrice : int\r\n"
 			+ "ml : int\r\n"
-			+ "abv : double\r\n"
+			+ "abv : float\r\n"
 			+ "description : String\r\n"
-			+ "kind : String"
-			+ "starAvg : double  \r\n"
+			+ "kind : String\r\\n"
+			+ "starAvg : float\r\n"
 			+ "startCnt : int\r\n"
 			+ "loveClick : boolean\r\n"
-			+ "userDrink : String  (로그인 상태에서만 보임)\r\n"
-			+ "similar : List({ aId : int, aImage : String, aName: String })\r\n"
+			+ "userDrink : String  (로그인 안했으면 null)\r\n"
+//			+ "similar : List({ aId : int, aImage : String, aName: String })\r\n"
 			+ "}\r\n"
 			+ "\r\n"
 			+ "양주 + flavors : List<String>\r\n"
@@ -64,38 +61,17 @@ public class AlcoholController {
 	})
 	@ApiImplicitParam(name = "Authorization", value = "idToken", required = false, paramType = "header")
 	@GetMapping(value = "/{aid}", produces = "application/json; charset=utf8")
-	public String detail(@PathVariable("aid") Long aid, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ResponseEntity detail(@PathVariable("aid") Long aid, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String uid = authService.verifyToken(request);
 		Long id;
 		
 		if(uid == null) {
 			id = -1L;
+			return ResponseEntity.ok(alcoholService.findAlcoholForGuest(aid).getData());
 		}else {
 			id = userService.getId(uid);
+			return ResponseEntity.ok(alcoholService.findAlcohol(id, aid).getData());
 		}
-
-		Map<String, Object> map = new HashMap<String, Object>();
-	
-		String category = alcoholService.getCategory(aid);
-		
-		String result ="";
-
-		if(category == null) {
-			response.sendError(400, "Alcohol Id Error");
-		}else {
-			response.setStatus(200);
-			if(category.equals("양주")) {
-				map = alcoholService.getLiquor(id, aid);
-			}else if(category.equals("세계맥주")) {
-				map = alcoholService.getBeer(id, aid);
-			}else if(category.equals("와인")) {
-				map = alcoholService.getWine(id, aid);
-			}
-			JSONObject jsonObject = new JSONObject(map);
-			result = jsonObject.toJSONString();
-		}
-		
-		return result;
 	}
 	
 	@ApiOperation(value = "주류 찜하기", notes = "true : 찜하기, false : 찜하기 취소")
@@ -104,19 +80,16 @@ public class AlcoholController {
 		@ApiResponse(code = 404, message = "Alcohol Id Error")
 	})
 	@PutMapping(value = "/{aid}/love")
-	public Map<String, Object> alcoholLove(@PathVariable Long aid, @RequestBody LoveClickDTO loveClick, HttpServletRequest request) throws Exception {
+	public ResponseEntity<LoveAlcoholResponse> alcoholLove(@PathVariable Long aid, @RequestBody LoveClickDTO loveClick, HttpServletRequest request) throws Exception {
 		String uid = authService.verifyToken(request);
 		Long id = userService.getId(uid);
-
-		Map<String, Object> res = new TreeMap<>();
 		
 		if(loveClick.isLoveClick()) {
-			res = alcoholService.alcoholLove(id, aid);
+			return ResponseEntity.ok(alcoholService.addLove(id, aid));
 		} else if(!loveClick.isLoveClick()) {
-			res = alcoholService.alcoholLoveCancle(id, aid);
+			return ResponseEntity.ok(alcoholService.cancelLove(id, aid));
 		}
-		
-		return res;
 
+		return ResponseEntity.badRequest().build();
 	}
 }

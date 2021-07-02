@@ -1,18 +1,14 @@
 package com.doubleslash.fifth.entity;
 
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
 
 import lombok.Getter;
 
 @Entity
-@Table(name = "Wine")
 @Getter 
-public class Wine extends BaseEntity {
-
-	@Id
-	private int aid;
+@DiscriminatorValue("와인")
+public class Wine extends Alcohol {
 	
 	private String country;
 	

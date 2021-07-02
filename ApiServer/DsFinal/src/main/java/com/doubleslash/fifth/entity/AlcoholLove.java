@@ -27,4 +27,10 @@ public class AlcoholLove extends BaseEntity {
 	@JoinColumn(name = "alcohol_id")
 	private Alcohol alcohol;
 	
+    public void addLoveAlcohol(User user, Alcohol alcohol) {
+        this.user = user;
+        this.alcohol = alcohol;
+        alcohol.getAlcoholLoves().add(this);
+//        user.getAlcoholLoves().add(this);
+    }
 }

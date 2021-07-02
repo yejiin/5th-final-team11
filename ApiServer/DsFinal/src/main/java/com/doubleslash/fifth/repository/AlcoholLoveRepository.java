@@ -1,5 +1,8 @@
 package com.doubleslash.fifth.repository;
 
+import java.util.List;
+import java.util.Optional;
+
 import javax.transaction.Transactional;
 
 import org.springframework.data.domain.Page;
@@ -10,20 +13,14 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.doubleslash.fifth.dto.CabinetDTO;
+import com.doubleslash.fifth.entity.Alcohol;
 import com.doubleslash.fifth.entity.AlcoholLove;
+import com.doubleslash.fifth.entity.User;
 
 @Repository
 public interface AlcoholLoveRepository extends JpaRepository<AlcoholLove, Integer>{
 
-	@Modifying
-	@Transactional
-	@Query(value = "insert ignore into AlcoholLove(id, aid) values(?1, ?2)", nativeQuery = true)
-	public int insert(Long id, Long aid);
-	
-	@Modifying
-	@Transactional
-	@Query(value = "delete from AlcoholLove where id=?1 and aid=?2", nativeQuery = true)
-	public int delete(Long id, Long aid);
+	public Optional<AlcoholLove> findByUserAndAlcohol(User user, Alcohol alcohol);
 	
 	// 마시고 싶은 술 조회 (시간순)
 	@Query(value = "select new com.doubleslash.fifth.dto.CabinetDTO(al.alcohol.id, a.image) from AlcoholLove as al, Alcohol as a where al.alcohol = a.id and al.alcohol = ?1")

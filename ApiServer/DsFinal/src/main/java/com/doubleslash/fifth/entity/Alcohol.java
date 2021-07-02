@@ -1,15 +1,26 @@
 package com.doubleslash.fifth.entity;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.OneToMany;
 
 import lombok.Getter;
 
 @Entity
 @Getter
+@Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorColumn(name = "category")
 public class Alcohol extends BaseEntity {
 	
 	@Id
@@ -31,7 +42,7 @@ public class Alcohol extends BaseEntity {
 	
 	private int ml;
 	
-	private double abv;
+	private float abv;
 	
 	private String description;
 	
@@ -40,4 +51,11 @@ public class Alcohol extends BaseEntity {
 	private int cb;
 	
 	private int recognition;
+	
+    @OneToMany(mappedBy = "alcohol")
+    private List<Review> reviews = new ArrayList<>();
+
+    @OneToMany(mappedBy = "alcohol")  
+    private Set<AlcoholLove> alcoholLoves = new HashSet<>();
+
 }

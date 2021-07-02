@@ -1,42 +1,70 @@
 package com.doubleslash.fifth.dto;
 
+import static com.doubleslash.fifth.service.AlcoholService.getUserDrinkStr;
+import static com.doubleslash.fifth.service.AlcoholService.starAvgByReview;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-public class BeerDTO {
+import com.doubleslash.fifth.entity.AlcoholLove;
+import com.doubleslash.fifth.entity.Beer;
+import com.doubleslash.fifth.entity.User;
+
+public class BeerDTO extends AlcoholDTO {
 	
-	private Long aid;
-	
-	private String name;
-	
-	private String category;
-	
-	private String image;
-	
-	private int lowestPrice;
-	
-	private int highestPrice;
-	
-	private int ml;
-	
-	private double abv;
-	
-	private String description;
-	
-	private String kind;
-	
-	private String subKind;
-	
-	private String flavors;
-		
-	private double starAvg;
-	
-	private int starCnt;
+    private String subKind;
+    
+    private List<String> flavors;
+
+    public BeerDTO(Beer beer, User user) {
+        this.aid = beer.getId();
+        this.name = beer.getName();
+        this.category = beer.getCategory();
+        this.image = beer.getImage();
+        this.lowestPrice = beer.getLowestPrice();
+        this.highestPrice = beer.getHighestPrice();
+        this.ml = beer.getMl();
+        this.abv = beer.getAbv();
+        this.description = beer.getDescription();
+        this.kind = beer.getKind();
+        this.starAvg = starAvgByReview(beer.getReviews());
+        this.starCnt = beer.getReviews().size();
+        this.userDrink = getUserDrinkStr(user.getNickname(), user.getDrink(), beer.getAbv(), beer.getMl());
+        this.subKind = beer.getSubKind();
+
+        Set<AlcoholLove> alcoholLoves = beer.getAlcoholLoves();
+        this.loveClick = alcoholLoves.stream()
+                .filter(al -> al.getUser() == user)
+                .findAny()
+                .isPresent();
+
+        flavors = new ArrayList<>();
+        String flavortemp[] = beer.getFlavor().split("#");
+        for (String temp : flavortemp) {
+            flavors.add(temp);
+        }
+    }
+
+    public BeerDTO(Beer beer) {
+        this.aid = beer.getId();
+        this.name = beer.getName();
+        this.category = beer.getCategory();
+        this.image = beer.getImage();
+        this.lowestPrice = beer.getLowestPrice();
+        this.highestPrice = beer.getHighestPrice();
+        this.ml = beer.getMl();
+        this.abv = beer.getAbv();
+        this.description = beer.getDescription();
+        this.kind = beer.getKind();
+        this.starAvg = starAvgByReview(beer.getReviews());
+        this.starCnt = beer.getReviews().size();
+        this.subKind = beer.getSubKind();
+
+        flavors = new ArrayList<>();
+        String flavortemp[] = beer.getFlavor().split("#");
+        for (String temp : flavortemp) {
+            flavors.add(temp);
+        }
+    }
 }

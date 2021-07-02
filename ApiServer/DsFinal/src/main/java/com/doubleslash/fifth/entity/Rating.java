@@ -2,7 +2,6 @@ package com.doubleslash.fifth.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

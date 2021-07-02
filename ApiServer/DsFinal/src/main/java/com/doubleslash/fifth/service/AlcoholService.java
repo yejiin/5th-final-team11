@@ -6,24 +6,31 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.TreeMap;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.doubleslash.fifth.dto.BeerDTO;
 import com.doubleslash.fifth.dto.LiquorDTO;
+import com.doubleslash.fifth.dto.LoveAlcoholResponse;
+import com.doubleslash.fifth.dto.ResultAlcohol;
 import com.doubleslash.fifth.dto.SimilarAlcoholDTO;
 import com.doubleslash.fifth.dto.WineDTO;
 import com.doubleslash.fifth.entity.Alcohol;
+import com.doubleslash.fifth.entity.AlcoholLove;
+import com.doubleslash.fifth.entity.Beer;
+import com.doubleslash.fifth.entity.Liquor;
+import com.doubleslash.fifth.entity.Review;
 import com.doubleslash.fifth.entity.User;
+import com.doubleslash.fifth.entity.Wine;
 import com.doubleslash.fifth.repository.AlcoholLoveRepository;
 import com.doubleslash.fifth.repository.AlcoholRepository;
 import com.doubleslash.fifth.repository.UserRepository;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.RequiredArgsConstructor;
 
 @Service
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class AlcoholService {
 
@@ -31,130 +38,103 @@ public class AlcoholService {
 	private final UserRepository userRepository;
 	private final AlcoholLoveRepository alcoholLoveRepository;
 
-	// category 조회
-	public String getCategory(Long aid) {
-		Optional<Alcohol> vo = alcoholRepository.findById(aid);
-		String category = "";
-		if (vo.isPresent()) {
-			category = vo.get().getCategory();
-		} else {
-			category = null;
-		}
-		return category;
+	public ResultAlcohol findAlcohol(Long userId, Long alcoholId) {
 
+        User user = userRepository.findById(userId).get();
+        Alcohol alcohol = alcoholRepository.findById(alcoholId).get();
+        String category = alcohol.getCategory();
+
+        if (category.equals("양주")) {
+            Liquor liquor = (Liquor) alcohol;
+            return new ResultAlcohol(new LiquorDTO(liquor, user));
+        } else if (category.equals("세계맥주")) {
+            Beer beer = (Beer) alcohol;
+            return new ResultAlcohol(new BeerDTO(beer, user));
+        } else if (category.equals("와인")) {
+            Wine wine = (Wine) alcohol;
+            return new ResultAlcohol(new WineDTO(wine, user));
+        }
+        return new ResultAlcohol();
+    }
+
+    public ResultAlcohol findAlcoholForGuest(Long alcoholId) {
+
+        Alcohol alcohol = alcoholRepository.findById(alcoholId).get();
+        String category = alcohol.getCategory();
+
+        if (category.equals("양주")) {
+            Liquor liquor = (Liquor) alcohol;
+            return new ResultAlcohol(new LiquorDTO(liquor));
+        } else if (category.equals("세계맥주")) {
+            Beer beer = (Beer) alcohol;
+            return new ResultAlcohol(new BeerDTO(beer));
+        } else if (category.equals("와인")) {
+            Wine wine = (Wine) alcohol;
+            return new ResultAlcohol(new WineDTO(wine));
+        }
+
+        return new ResultAlcohol();
+    }
+
+	@Transactional
+	public LoveAlcoholResponse addLove(Long id, Long aid) throws IOException {
+		
+		User user = userRepository.findById(id).get();
+		Alcohol alcohol = alcoholRepository.findById(aid).get();
+		
+		if (notAlreadyLove(user, alcohol) == null) {
+			AlcoholLove alcoholLove = new AlcoholLove();
+            alcoholLove.addLoveAlcohol(user, alcohol);
+			alcoholLoveRepository.save(alcoholLove);
+		}
+		
+		return new LoveAlcoholResponse(true, alcohol.getAlcoholLoves().size());
 	}
+	
+	@Transactional
+	public LoveAlcoholResponse cancelLove(Long id, Long aid) {
+		
+		User user = userRepository.findById(id).get();
+		Alcohol alcohol = alcoholRepository.findById(aid).get();
+		
+		AlcoholLove alcoholLove = notAlreadyLove(user, alcohol);
 
-	// 양주 주종 세부 조회
-	public Map<String, Object> getLiquor(Long id, Long aid) {
-		ObjectMapper objectMapper = new ObjectMapper();
-		LiquorDTO liquorDto = alcoholRepository.findByAidLiquor(aid);
-
-		Map<String, Object> liquorMap = objectMapper.convertValue(liquorDto, Map.class);
-		
-		// 맛 데이터 가공
-		List<String> flavors = new ArrayList<String>();
-		String ftemp[] = liquorDto.getFlavors().split("#");
-		for (int i = 0; i < ftemp.length; i++) {
-			flavors.add(ftemp[i]);
-		}
-		liquorMap.put("flavors", flavors);
-		if (id != -1) {
-			if(alcoholLoveRepository.findCount(id, aid) == 1) {
-				liquorMap.put("loveClick", true);
-			}else {
-				liquorMap.put("loveClick", false);
-			}
-			liquorMap.put("userDrink", getUserDrinkStr(id, aid));
-		}else {
-			liquorMap.put("loveClick", false);
-		}
-		liquorMap.put("similar", getSimilar(aid));
-		
-		liquorMap.put("source", "");
-		
-		return liquorMap;
+        if (alcoholLove != null){
+        	alcohol.getAlcoholLoves().remove(alcoholLove);
+            alcoholLoveRepository.delete(alcoholLove);
+        }
+        return new LoveAlcoholResponse(false, alcohol.getAlcoholLoves().size());
 	}
-
-	// 세계 맥주 주종 세부 조회
-	public Map<String, Object> getBeer(Long id, Long aid) {
-		ObjectMapper objectMapper = new ObjectMapper();
-		BeerDTO beerDto = alcoholRepository.findByAidBeer(aid);
-
-		Map<String, Object> beerMap = objectMapper.convertValue(beerDto, Map.class);
-
-		// 맛 데이터 가공
-		List<String> flavors = new ArrayList<String>();
-		String atemp[] = beerDto.getFlavors().split("#");
-		for (int i = 0; i < atemp.length; i++) {
-			flavors.add(atemp[i]);
-		}
-		beerMap.put("flavors", flavors);
-
-		if (id != -1) {
-			if(alcoholLoveRepository.findCount(id, aid) == 1) {
-				beerMap.put("loveClick", true);
-			}else {
-				beerMap.put("loveClick", false);
-			}
-			beerMap.put("userDrink", getUserDrinkStr(id, aid));
-		}else {
-			beerMap.put("loveClick", false);
-		}
-		beerMap.put("similar", getSimilar(aid));
-		
-		beerMap.put("source", "와인 21");
-		
-		return beerMap;
-	}
-
-	// 와인 주종 세부 조회
-	public Map<String, Object> getWine(Long id, Long aid) {
-		ObjectMapper objectMapper = new ObjectMapper();
-		WineDTO wineDto = alcoholRepository.findByAidWine(aid);
-
-		Map<String, Object> wineMap = objectMapper.convertValue(wineDto, Map.class);
-
-
-		if (id != -1) {
-			if(alcoholLoveRepository.findCount(id, aid) == 1) {
-				wineMap.put("loveClick", true);
-			}else {
-				wineMap.put("loveClick", false);
-			}
-			wineMap.put("userDrink", getUserDrinkStr(id, aid));
-		}else {
-			wineMap.put("loveClick", false);
-		}
-		wineMap.put("similar", getSimilar(aid));
-		
-		wineMap.put("source", "와인 21");
-		
-		return wineMap;
-	}
-
+	
+    private AlcoholLove notAlreadyLove(User user, Alcohol alcohol) {
+        Optional<AlcoholLove> alcoholLove = alcoholLoveRepository.findByUserAndAlcohol(user, alcohol);
+        if (alcoholLove.isPresent()) {
+        	return alcoholLove.get();
+        } else {
+        	return null;
+        }
+    } 
+	
+	// 별점 평균
+    public static float starAvgByReview(List<Review> reviews) {
+        float sum = 0;
+        for (Review review : reviews) {
+            sum += review.getStar();
+        }
+        return (float) (Math.round(sum / reviews.size() * 10) / 10.0);
+    }
+    
 	// 주종별 사용자 주량
-	public String getUserDrinkStr(Long id, Long aid) {
-		Optional<User> userVo = userRepository.findById(id);
+    public static String getUserDrinkStr(String nickname, float userDrink, float alcoholAbv, int alcoholMl) {
 
-		// 소주 기준
-		double sojuDrink = userVo.get().getDrink();
-		double sojuAbv = 20.0;
+        float sojuAbv = 20.0f;
+        float sojuAmount = (sojuAbv * userDrink * 360 / 100);
+        float alcoholAmount = (alcoholAbv * alcoholMl / 100);
+        float alcoholDrink = (float) (Math.round((sojuAmount / alcoholAmount) * 10) / 10.0);
 
-		// 알콜량 = 소주병수*도수*용량/100
-		double sojuAmount = (sojuDrink * sojuAbv * 360 / 100);
+        return "이 술에 맞는 " + nickname + " 님의 주량은 " + alcoholDrink + " 병입니다.";
+    }
 
-		Alcohol alcoholVo = alcoholRepository.findById(aid).get();
-		double alcoholAbv = alcoholVo.getAbv();
-		int alcoholMl = alcoholVo.getMl();
-		double alcoholAmount = (alcoholAbv * alcoholMl / 100);
-
-		double userDrink = Math.round(sojuAmount / alcoholAmount * 10) / 10.0;
-		
-		String res = "이 술에 맞는 " + userVo.get().getNickname() + " 님의 주량은 " + String.valueOf(userDrink) + " 병 입니다";
-	
-		return res;
-	}
-	
 	// 유사 주류 데이터
 	public List<Map<String, Object>> getSimilar(Long aid){
 		List<SimilarAlcoholDTO> similarDto =  alcoholRepository.findSimilar(aid);
@@ -168,28 +148,6 @@ public class AlcoholService {
 			listResult.add(map);
 		}
 		return listResult;
-	}
-	
-	public Map<String, Object> alcoholLove(Long id, Long aid) throws IOException {
-		
-		alcoholLoveRepository.insert(id, aid);
-		
-		Map<String, Object> res = new TreeMap<>();
-		res.put("love", true);
-		res.put("loveTotalCnt", alcoholLoveRepository.findAidCount(aid));
-	
-		return res;
-	}
-	
-	public Map<String, Object> alcoholLoveCancle(Long id, Long aid) {
-		
-		alcoholLoveRepository.delete(id, aid);
-
-		Map<String, Object> res = new TreeMap<>();
-		res.put("love", false);
-		res.put("loveTotalCnt", alcoholLoveRepository.findAidCount(aid));
-	
-		return res;
 	}
 	
 }
