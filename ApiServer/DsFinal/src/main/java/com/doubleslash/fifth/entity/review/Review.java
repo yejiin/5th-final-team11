@@ -18,7 +18,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.doubleslash.fifth.entity.BaseEntity;
-import com.doubleslash.fifth.entity.Comment;
 import com.doubleslash.fifth.entity.User;
 import com.doubleslash.fifth.entity.alcohol.Alcohol;
 

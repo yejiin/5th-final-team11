@@ -36,13 +36,13 @@ public class RatingService {
 		
 		for(Long aid : aidList) {
 			temp = alcoholRepository.findById(aid).get();
-			res.add(new RatingDTO.Response(temp.getId(), temp.getThumbnail(), temp.getName(), temp.getCategory(), 0.0));
+			res.add(new RatingDTO.Response(temp.getId(), temp.getThumbnail(), temp.getName(), temp.getCategory(), 0.0f));
 		}
 
 		return res;
 	}
 
-	public void createRatingData(int id, RatingDTO requestBody) {
+	public void createRatingData(Long id, RatingDTO requestBody) {
 		List<RatingDTO.Request> request = requestBody.getRatingData();
 		
 		for(RatingDTO.Request data : request) {

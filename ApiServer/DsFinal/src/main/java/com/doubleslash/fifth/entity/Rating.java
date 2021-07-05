@@ -14,10 +14,10 @@ import lombok.Setter;
 public class Rating extends BaseEntity {
 
 	@Id
-	private int id;
+	private Long id;
 	
-	private int aid;
+	private Long aid;
 	
-	private double star;
+	private float star;
 	
 }

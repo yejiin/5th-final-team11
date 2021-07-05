@@ -1,4 +1,4 @@
-package com.doubleslash.fifth.dto.comment;
+package com.doubleslash.fifth.dto.response;
 
 import java.util.List;
 

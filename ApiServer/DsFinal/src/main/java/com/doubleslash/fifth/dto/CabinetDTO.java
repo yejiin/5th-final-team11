@@ -1,8 +1,9 @@
 package com.doubleslash.fifth.dto;
 
+import com.doubleslash.fifth.entity.review.Review;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 @Getter
 @AllArgsConstructor
@@ -12,4 +13,8 @@ public class CabinetDTO {
 	
 	private String image;
 
+	public CabinetDTO(Review r) {
+		this.aid = r.getAlcohol().getId();
+		this.image = r.getAlcohol().getImage();
+	}
 }

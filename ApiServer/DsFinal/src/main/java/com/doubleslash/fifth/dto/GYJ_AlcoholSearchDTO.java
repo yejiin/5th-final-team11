@@ -17,6 +17,6 @@ public class GYJ_AlcoholSearchDTO {
 	
 	private String category;
 	
-	private double recScore;
+	private float recScore;
 	
 }

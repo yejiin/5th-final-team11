@@ -1,10 +1,10 @@
 package com.doubleslash.fifth.dto;
 
+import com.doubleslash.fifth.entity.review.ReviewDetail;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 @Getter
@@ -19,7 +19,7 @@ public class MyReviewDTO {
 	
 	private String name;
 
-	private double star;
+	private float star;
 
 	private String thumbnail;
 
@@ -27,14 +27,16 @@ public class MyReviewDTO {
 	
 	private ReviewDetailDTO detail;
 
-	public MyReviewDTO(Long rid, Long aid, String name, double star, String thumbnail, String content) {
-		super();
-		this.rid = rid;
-		this.aid = aid;
-		this.name = name;
-		this.star = star;
-		this.thumbnail = thumbnail;
-		this.content = content;
+	public MyReviewDTO(ReviewDetail review) {
+		this.rid = review.getId();
+		this.aid = review.getAlcohol().getId();
+		this.name = review.getAlcohol().getName();
+		this.star = review.getStar();
+		this.thumbnail = review.getAlcohol().getThumbnail();
+		this.content = review.getContent();
+		
+        if (review.getDate() != null)
+            this.detail = new ReviewDetailDTO(review);
 	}
 	
 }

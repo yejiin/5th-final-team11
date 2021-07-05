@@ -12,10 +12,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.doubleslash.fifth.dto.BeerDTO;
 import com.doubleslash.fifth.dto.LiquorDTO;
-import com.doubleslash.fifth.dto.LoveResponse;
-import com.doubleslash.fifth.dto.ResultAlcohol;
 import com.doubleslash.fifth.dto.SimilarAlcoholDTO;
 import com.doubleslash.fifth.dto.WineDTO;
+import com.doubleslash.fifth.dto.response.AlcoholResponse;
+import com.doubleslash.fifth.dto.response.LoveResponse;
 import com.doubleslash.fifth.entity.User;
 import com.doubleslash.fifth.entity.alcohol.Alcohol;
 import com.doubleslash.fifth.entity.alcohol.AlcoholLove;
@@ -38,7 +38,7 @@ public class AlcoholService {
 	private final UserRepository userRepository;
 	private final AlcoholLoveRepository alcoholLoveRepository;
 
-	public ResultAlcohol findAlcohol(Long userId, Long alcoholId) {
+	public AlcoholResponse<?> findAlcohol(Long userId, Long alcoholId) {
 
         User user = userRepository.findById(userId).get();
         Alcohol alcohol = alcoholRepository.findById(alcoholId).get();
@@ -46,34 +46,34 @@ public class AlcoholService {
 
         if (category.equals("양주")) {
             Liquor liquor = (Liquor) alcohol;
-            return new ResultAlcohol(new LiquorDTO(liquor, user));
+            return new AlcoholResponse<LiquorDTO>(new LiquorDTO(liquor, user));
         } else if (category.equals("세계맥주")) {
             Beer beer = (Beer) alcohol;
-            return new ResultAlcohol(new BeerDTO(beer, user));
+            return new AlcoholResponse<BeerDTO>(new BeerDTO(beer, user));
         } else if (category.equals("와인")) {
             Wine wine = (Wine) alcohol;
-            return new ResultAlcohol(new WineDTO(wine, user));
+            return new AlcoholResponse<WineDTO>(new WineDTO(wine, user));
         }
-        return new ResultAlcohol();
+        return null;
     }
 
-    public ResultAlcohol findAlcoholForGuest(Long alcoholId) {
+    public AlcoholResponse<?> findAlcoholForGuest(Long alcoholId) {
 
         Alcohol alcohol = alcoholRepository.findById(alcoholId).get();
         String category = alcohol.getCategory();
 
         if (category.equals("양주")) {
             Liquor liquor = (Liquor) alcohol;
-            return new ResultAlcohol(new LiquorDTO(liquor));
+            return new AlcoholResponse<LiquorDTO>(new LiquorDTO(liquor));
         } else if (category.equals("세계맥주")) {
             Beer beer = (Beer) alcohol;
-            return new ResultAlcohol(new BeerDTO(beer));
+            return new AlcoholResponse<BeerDTO>(new BeerDTO(beer));
         } else if (category.equals("와인")) {
             Wine wine = (Wine) alcohol;
-            return new ResultAlcohol(new WineDTO(wine));
+            return new AlcoholResponse<WineDTO>(new WineDTO(wine));
         }
 
-        return new ResultAlcohol();
+        return null;
     }
 
 	@Transactional

@@ -2,7 +2,7 @@ package com.doubleslash.fifth.dto;
 
 import java.time.LocalDateTime;
 
-import com.doubleslash.fifth.entity.Comment;
+import com.doubleslash.fifth.entity.review.Comment;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.AllArgsConstructor;

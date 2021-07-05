@@ -11,7 +11,7 @@ import com.doubleslash.fifth.entity.ViewSearch;
 import com.doubleslash.fifth.mapping.SearchMapping;
 
 @Repository
-public interface SearchRepository extends JpaRepository<ViewSearch, Integer>{
+public interface SearchRepository extends JpaRepository<ViewSearch, Long>{
 	
 	//전체 주류 조회
 	public Page<SearchMapping> findByAidIsNotNull(Pageable pageable);

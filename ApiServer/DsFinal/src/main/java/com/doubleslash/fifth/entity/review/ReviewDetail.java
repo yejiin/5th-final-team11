@@ -4,9 +4,6 @@ import java.time.LocalDate;
 
 import javax.persistence.Entity;
 
-import com.doubleslash.fifth.entity.User;
-import com.doubleslash.fifth.entity.alcohol.Alcohol;
-
 import lombok.Getter;
 import lombok.Setter;
 

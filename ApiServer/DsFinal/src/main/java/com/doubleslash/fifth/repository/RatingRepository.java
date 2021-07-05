@@ -15,6 +15,6 @@ public interface RatingRepository extends JpaRepository<Rating, Integer>{
 	@Modifying
 	@Transactional
 	@Query(value = "insert into Rating(id, aid, star) values(?1, ?2, ?3)", nativeQuery = true)
-	public void insert(int id, int aid, double star);
+	public void insert(Long id, Long aid, float star);
 	
 }

@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.doubleslash.fifth.dto.LoveResponse;
 import com.doubleslash.fifth.dto.LoveClickDTO;
+import com.doubleslash.fifth.dto.response.LoveResponse;
 import com.doubleslash.fifth.service.AlcoholService;
 import com.doubleslash.fifth.service.AuthService;
 import com.doubleslash.fifth.service.UserService;
@@ -61,7 +61,7 @@ public class AlcoholController {
 	})
 	@ApiImplicitParam(name = "Authorization", value = "idToken", required = false, paramType = "header")
 	@GetMapping(value = "/{aid}", produces = "application/json; charset=utf8")
-	public ResponseEntity detail(@PathVariable("aid") Long aid, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ResponseEntity<?> detail(@PathVariable("aid") Long aid, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String uid = authService.verifyToken(request);
 		Long id;
 		
@@ -83,7 +83,7 @@ public class AlcoholController {
 	public ResponseEntity<LoveResponse> alcoholLove(@PathVariable Long aid, @RequestBody LoveClickDTO loveClick, HttpServletRequest request) throws Exception {
 		String uid = authService.verifyToken(request);
 		Long id = userService.getId(uid);
-		
+
 		if(loveClick.isLoveClick()) {
 			return ResponseEntity.ok(alcoholService.addLove(id, aid));
 		} else if(!loveClick.isLoveClick()) {

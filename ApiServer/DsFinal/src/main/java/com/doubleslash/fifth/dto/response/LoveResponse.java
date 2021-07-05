@@ -1,4 +1,4 @@
-package com.doubleslash.fifth.dto;
+package com.doubleslash.fifth.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

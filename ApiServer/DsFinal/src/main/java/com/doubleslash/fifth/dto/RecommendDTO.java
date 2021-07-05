@@ -10,9 +10,9 @@ import lombok.Setter;
 @Setter
 public class RecommendDTO {
 
-	double minAbv;
+	float minAbv;
 	
-	double maxAbv;
+	float maxAbv;
 	
 	int minPrice;
 	

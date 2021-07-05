@@ -16,9 +16,9 @@ public class RatingDTO {
 	@Setter
 	public static class Request {
 		
-		private int aid;
+		private Long aid;
 		
-		private double star;
+		private float star;
 		
 	}
 	
@@ -35,7 +35,7 @@ public class RatingDTO {
 		
 		private String category;
 		
-		private double star;
+		private float star;
 		
 	}
 	

@@ -1,4 +1,4 @@
-package com.doubleslash.fifth.entity;
+package com.doubleslash.fifth.entity.review;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +13,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import com.doubleslash.fifth.entity.review.Review;
+import com.doubleslash.fifth.entity.BaseEntity;
+import com.doubleslash.fifth.entity.User;
 
 import lombok.Getter;
 import lombok.Setter;

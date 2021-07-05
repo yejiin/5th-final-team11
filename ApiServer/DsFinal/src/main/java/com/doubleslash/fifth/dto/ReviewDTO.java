@@ -6,8 +6,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import com.doubleslash.fifth.entity.Comment;
-import com.doubleslash.fifth.entity.review.Review;
+import com.doubleslash.fifth.entity.review.Comment;
 import com.doubleslash.fifth.entity.review.ReviewDetail;
 import com.doubleslash.fifth.entity.review.ReviewLove;
 import com.fasterxml.jackson.annotation.JsonFormat;

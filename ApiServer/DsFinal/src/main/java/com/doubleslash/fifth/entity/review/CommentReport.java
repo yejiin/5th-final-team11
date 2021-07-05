@@ -1,4 +1,4 @@
-package com.doubleslash.fifth.entity;
+package com.doubleslash.fifth.entity.review;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,6 +8,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+
+import com.doubleslash.fifth.entity.BaseEntity;
+import com.doubleslash.fifth.entity.User;
 
 import lombok.Getter;
 import lombok.Setter;

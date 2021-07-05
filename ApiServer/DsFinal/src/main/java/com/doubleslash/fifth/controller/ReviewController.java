@@ -1,7 +1,6 @@
 package com.doubleslash.fifth.controller;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -10,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -21,13 +21,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.doubleslash.fifth.dto.CommentDTO;
 import com.doubleslash.fifth.dto.ContentDTO;
 import com.doubleslash.fifth.dto.LoveClickDTO;
-import com.doubleslash.fifth.dto.LoveResponse;
+import com.doubleslash.fifth.dto.MyReviewDTO;
 import com.doubleslash.fifth.dto.ReviewDTO;
 import com.doubleslash.fifth.dto.ReviewWriteDTO;
 import com.doubleslash.fifth.dto.WrapperDTO;
-import com.doubleslash.fifth.dto.comment.CommentResponse;
-import com.doubleslash.fifth.dto.review.ReviewResponse;
-import com.doubleslash.fifth.entity.review.ReviewDetail;
+import com.doubleslash.fifth.dto.response.CommentResponse;
+import com.doubleslash.fifth.dto.response.LoveResponse;
+import com.doubleslash.fifth.dto.response.ReviewResponse;
 import com.doubleslash.fifth.service.AuthService;
 import com.doubleslash.fifth.service.ReviewService;
 import com.doubleslash.fifth.service.UserService;
@@ -63,7 +63,7 @@ public class ReviewController {
 	})
 	@ApiImplicitParam(name = "Authorization", value = "idToken", required = false, paramType = "header")
 	@GetMapping(value = "/list")
-	public ResponseEntity<ReviewResponse> reviewList(@RequestParam("aid") Long aid, @RequestParam(value="page") int page, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ResponseEntity<ReviewResponse<ReviewDTO>> reviewList(@RequestParam("aid") Long aid, @RequestParam(value="page") int page, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String uid = authService.verifyToken(request);
 		Long id;
 		
@@ -183,7 +183,7 @@ public class ReviewController {
 		@ApiResponse(code = 400, message = "Bad Request")
 	})
 	@GetMapping(value = "")
-	public Map<String, Object> getMyReviewList(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ResponseEntity<ReviewResponse<MyReviewDTO>> getMyReviewList(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String uid = authService.verifyToken(request);
 		Long id = userService.getId(uid);
 		
@@ -191,21 +191,7 @@ public class ReviewController {
 		String sortOption = request.getParameter("sortOption");
 		int page = Integer.parseInt(request.getParameter("page"));
 		
-		return reviewService.getMyReviewList(id, sort, sortOption, page);
-	}
-	
-	@ApiOperation(value = "내 기록 수정")
-	@ApiResponses({
-		@ApiResponse(code = 200, message = "Success"),
-		@ApiResponse(code = 400, message = "Bad Request")
-	})
-	@PutMapping(value = "/{rid}")
-	public String updateMyReviewList(HttpServletRequest request, HttpServletResponse response, @RequestBody ReviewWriteDTO requestBody, @PathVariable Long rid) throws Exception {
-		String uid = authService.verifyToken(request);
-		Long id = userService.getId(uid);
-		
-		reviewService.updateMyReview(requestBody, id, rid);
-		return "{}";
+		return ResponseEntity.ok(reviewService.getMyReviewList(id, sort, sortOption, page));
 	}
 	
 	@ApiOperation(value = "내 기록 삭제")
@@ -213,9 +199,23 @@ public class ReviewController {
 		@ApiResponse(code = 200, message = "Success"),
 	})
 	@DeleteMapping(value = "/{rid}")
-	public String DeleteMyReviewList(@PathVariable List<Long> rid, HttpServletRequest request) throws Exception {		
+	public ResponseEntity<?> DeleteMyReviewList(@PathVariable List<Long> rid, HttpServletRequest request) throws Exception {		
 		reviewService.deleteMyReview(rid);
-		return "{}";
+		
+		return ResponseEntity.ok().build();
 	}
 	
+	@ApiOperation(value = "내 기록 수정")
+	@ApiResponses({
+		@ApiResponse(code = 200, message = "Success"),
+		@ApiResponse(code = 400, message = "Bad Request")
+	})
+	@PatchMapping(value = "/{rid}")
+	public ResponseEntity<?> updateMyReview(HttpServletRequest request, HttpServletResponse response, @RequestBody ReviewWriteDTO reviewWriteDTO, @PathVariable Long rid) throws Exception {
+		String uid = authService.verifyToken(request);
+		Long id = userService.getId(uid);
+
+		reviewService.updateMyReview(reviewWriteDTO, id, rid);
+		return ResponseEntity.ok().build();
+	}	
 }

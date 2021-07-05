@@ -2,7 +2,7 @@ package com.doubleslash.fifth.mapping;
 
 public interface SearchMapping {
 
-	int getAid();
+	Long getAid();
 	
 	String getName();
 	
@@ -10,7 +10,7 @@ public interface SearchMapping {
 	
 	String getThumbnail();
 	
-	double getStar();
+	float getStar();
 	
 	int getReviewCnt();
 	

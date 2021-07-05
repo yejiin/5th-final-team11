@@ -27,7 +27,7 @@ public interface AlcoholRepository extends JpaRepository<Alcohol, Long>{
 	//맥주 공통 + 세부 속성 조회
 	@Query(value = "select new com.doubleslash.fifth.storage.BeerStorage(b.id, b.lowestPrice, b.highestPrice, b.abv, b.kind, b.subKind, b.flavor, b.cb, b.recognition) from Beer as b")
 	public List<BeerStorage> AlcoholJoinBeer();
-
+//
 	// 유사 주류 조회
 	@Query(value = "select new com.doubleslash.fifth.dto.SimilarAlcoholDTO(a.id, a.thumbnail, a.name) from Alcohol as a, SimilarAlcohol as s where a.id=s.alcohol and s.alcohol=?1")
 	public List<SimilarAlcoholDTO> findSimilar(Long aid);

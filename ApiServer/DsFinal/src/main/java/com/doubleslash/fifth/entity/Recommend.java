@@ -12,12 +12,12 @@ import lombok.NoArgsConstructor;
 public class Recommend extends BaseEntity {
 	
 	@Id
-	private int id;
+	private Long id;
 	
-	private int aid;
+	private Long aid;
 	
 	private String processed;
 	
-	private double recScore;
+	private float recScore;
 
 }

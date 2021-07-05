@@ -1,11 +1,12 @@
 package com.doubleslash.fifth.controller;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,6 +24,8 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 @Api(value = "Cabinet", description = "장식장 API")
@@ -49,21 +52,21 @@ public class CabinetController {
 		@ApiResponse(code = 422, message = "Wrong Sort input / Wrong SortOption input")
 	})
 	@GetMapping(value = "")
-	public Map<String, Object> drinkAlcohol(@RequestParam("page") int page, @RequestParam("sort") String sort, @RequestParam("sortOption") String sortOption, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ResponseEntity<?> drinkAlcohol(@RequestParam("page") int page, @RequestParam("sort") String sort, @RequestParam("sortOption") String sortOption, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String uid = authService.verifyToken(request);
 		Long id = userService.getId(uid);
 
 		if(!sort.equals("latest") && !sort.equals("abv")) {
-			response.sendError(422, "Wrong Sort input");
-			return null;
+			ErrorMessage error = new ErrorMessage("Wrong Sort input");
+			return new ResponseEntity<ErrorMessage>(error, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 		
 		if(!sortOption.equals("asc") && !sortOption.equals("desc")) {
-			response.sendError(422, "Wrong SortOption input");
-			return null;
+			ErrorMessage error = new ErrorMessage("Wrong SortOption input");
+			return new ResponseEntity<ErrorMessage>(error, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 		
-		return cabinetService.getDrinkAlcohol(id, page, sort, sortOption);
+		return ResponseEntity.ok(cabinetService.getDrinkAlcohol(id, page, sort, sortOption));
 	}
 	
 	@ApiOperation(value = "마시고 싶은 술 조회")
@@ -80,21 +83,21 @@ public class CabinetController {
 		@ApiResponse(code = 422, message = "Wrong Sort input / Wrong SortOption input")
 	})
 	@GetMapping(value = "/love")
-	public Map<String, Object> loveAlcohol(@RequestParam("page") int page, @RequestParam("sort") String sort, @RequestParam("sortOption") String sortOption, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ResponseEntity<?> loveAlcohol(@RequestParam("page") int page, @RequestParam("sort") String sort, @RequestParam("sortOption") String sortOption, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String uid = authService.verifyToken(request);
 		Long id = userService.getId(uid);
-		
+
 		if(!sort.equals("latest") && !sort.equals("abv")) {
-			response.sendError(422, "Wrong Sort input");
-			return null;
+			ErrorMessage error = new ErrorMessage("Wrong Sort input");
+			return new ResponseEntity<ErrorMessage>(error, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 		
 		if(!sortOption.equals("asc") && !sortOption.equals("desc")) {
-			response.sendError(422, "Wrong SortOption input");
-			return null;
+			ErrorMessage error = new ErrorMessage("Wrong SortOption input");
+			return new ResponseEntity<ErrorMessage>(error, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 		
-		return cabinetService.getLoveAlcohol(id, page, sort, sortOption);
+		return ResponseEntity.ok(cabinetService.getLoveAlcohol(id, page, sort, sortOption));
 	}
 	
 	@ApiOperation(value = "마시고 싶은 술 삭제")
@@ -103,13 +106,18 @@ public class CabinetController {
 		@ApiResponse(code = 200, message = "Success"),
 	})
 	@DeleteMapping(value = "/love/{aid}")
-	public String deleteLoveAlcohol(@PathVariable List<Long> aid, HttpServletRequest request) throws Exception {
+	public ResponseEntity<?> deleteLoveAlcohol(@PathVariable List<Long> aid, HttpServletRequest request) throws Exception {
 		String uid = authService.verifyToken(request);
 		Long id = userService.getId(uid);
-		
+
 		cabinetService.deleteLoveAlcohol(id, aid);
-		return "{}";
+		return ResponseEntity.ok().build();
 	}
 	
+	@Data
+	@AllArgsConstructor
+	private static class ErrorMessage {
+		private String message;
+	}
  
 }

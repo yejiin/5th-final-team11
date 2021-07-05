@@ -14,7 +14,7 @@ import lombok.Setter;
 public class ViewSearch {
 	
 	@Id
-	private int aid;
+	private Long aid;
 	
 	private String name;
 	
@@ -24,14 +24,14 @@ public class ViewSearch {
 	
 	private int price;
 	
-	private double abv;
+	private float abv;
 	
-	private double star;
+	private float star;
 	
 	private int loveCnt;
 	
 	private int reviewCnt;
 	
-	private double popularScore;
+	private float popularScore;
 	
 }

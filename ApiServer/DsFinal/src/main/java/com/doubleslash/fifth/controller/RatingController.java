@@ -48,7 +48,7 @@ public class RatingController {
 		String uid = authService.verifyToken(request);
 		Long id = userService.getId(uid);
 
-		ratingService.createRatingData(29, requestBody);
+		ratingService.createRatingData(id, requestBody);
 		return "{}";
 	}
 	

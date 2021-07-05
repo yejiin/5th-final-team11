@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ReviewWriteDTO {
 	
-	private float star;
+	private Float star;
 
 	private String content;
  

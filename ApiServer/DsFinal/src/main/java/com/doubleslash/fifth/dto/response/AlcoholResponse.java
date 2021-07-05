@@ -1,4 +1,4 @@
-package com.doubleslash.fifth.dto;
+package com.doubleslash.fifth.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,6 +7,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ResultAlcohol<T> {
+public class AlcoholResponse<T> {
     private T data;
 }

@@ -13,7 +13,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class AlcoholSearchDTO {
 	
-	private int aid;
+	private Long aid;
 	
 	private String name;
 	
@@ -21,7 +21,7 @@ public class AlcoholSearchDTO {
 	
 	private String thumbnail;
 	
-	private double star;
+	private float star;
 	
 	private int reviewCnt;
 	
