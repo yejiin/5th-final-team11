@@ -8,7 +8,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.doubleslash.fifth.dto.RatingDTO;
-import com.doubleslash.fifth.entity.Alcohol;
+import com.doubleslash.fifth.entity.alcohol.Alcohol;
 import com.doubleslash.fifth.repository.AlcoholRepository;
 import com.doubleslash.fifth.repository.RatingRepository;
 

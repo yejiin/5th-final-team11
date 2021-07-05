@@ -12,17 +12,17 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.doubleslash.fifth.dto.BeerDTO;
 import com.doubleslash.fifth.dto.LiquorDTO;
-import com.doubleslash.fifth.dto.LoveAlcoholResponse;
+import com.doubleslash.fifth.dto.LoveResponse;
 import com.doubleslash.fifth.dto.ResultAlcohol;
 import com.doubleslash.fifth.dto.SimilarAlcoholDTO;
 import com.doubleslash.fifth.dto.WineDTO;
-import com.doubleslash.fifth.entity.Alcohol;
-import com.doubleslash.fifth.entity.AlcoholLove;
-import com.doubleslash.fifth.entity.Beer;
-import com.doubleslash.fifth.entity.Liquor;
-import com.doubleslash.fifth.entity.Review;
 import com.doubleslash.fifth.entity.User;
-import com.doubleslash.fifth.entity.Wine;
+import com.doubleslash.fifth.entity.alcohol.Alcohol;
+import com.doubleslash.fifth.entity.alcohol.AlcoholLove;
+import com.doubleslash.fifth.entity.alcohol.Beer;
+import com.doubleslash.fifth.entity.alcohol.Liquor;
+import com.doubleslash.fifth.entity.alcohol.Wine;
+import com.doubleslash.fifth.entity.review.Review;
 import com.doubleslash.fifth.repository.AlcoholLoveRepository;
 import com.doubleslash.fifth.repository.AlcoholRepository;
 import com.doubleslash.fifth.repository.UserRepository;
@@ -77,7 +77,7 @@ public class AlcoholService {
     }
 
 	@Transactional
-	public LoveAlcoholResponse addLove(Long id, Long aid) throws IOException {
+	public LoveResponse addLove(Long id, Long aid) throws IOException {
 		
 		User user = userRepository.findById(id).get();
 		Alcohol alcohol = alcoholRepository.findById(aid).get();
@@ -88,11 +88,11 @@ public class AlcoholService {
 			alcoholLoveRepository.save(alcoholLove);
 		}
 		
-		return new LoveAlcoholResponse(true, alcohol.getAlcoholLoves().size());
+		return new LoveResponse(true, alcohol.getAlcoholLoves().size());
 	}
 	
 	@Transactional
-	public LoveAlcoholResponse cancelLove(Long id, Long aid) {
+	public LoveResponse cancelLove(Long id, Long aid) {
 		
 		User user = userRepository.findById(id).get();
 		Alcohol alcohol = alcoholRepository.findById(aid).get();
@@ -103,7 +103,7 @@ public class AlcoholService {
         	alcohol.getAlcoholLoves().remove(alcoholLove);
             alcoholLoveRepository.delete(alcoholLove);
         }
-        return new LoveAlcoholResponse(false, alcohol.getAlcoholLoves().size());
+        return new LoveResponse(false, alcohol.getAlcoholLoves().size());
 	}
 	
     private AlcoholLove notAlreadyLove(User user, Alcohol alcohol) {

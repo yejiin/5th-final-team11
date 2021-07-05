@@ -1,4 +1,4 @@
-package com.doubleslash.fifth.entity;
+package com.doubleslash.fifth.entity.alcohol;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -14,6 +14,9 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.OneToMany;
+
+import com.doubleslash.fifth.entity.BaseEntity;
+import com.doubleslash.fifth.entity.review.Review;
 
 import lombok.Getter;
 

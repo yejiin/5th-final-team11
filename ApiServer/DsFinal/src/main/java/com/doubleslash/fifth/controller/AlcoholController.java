@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.doubleslash.fifth.dto.LoveAlcoholResponse;
+import com.doubleslash.fifth.dto.LoveResponse;
 import com.doubleslash.fifth.dto.LoveClickDTO;
 import com.doubleslash.fifth.service.AlcoholService;
 import com.doubleslash.fifth.service.AuthService;
@@ -80,7 +80,7 @@ public class AlcoholController {
 		@ApiResponse(code = 404, message = "Alcohol Id Error")
 	})
 	@PutMapping(value = "/{aid}/love")
-	public ResponseEntity<LoveAlcoholResponse> alcoholLove(@PathVariable Long aid, @RequestBody LoveClickDTO loveClick, HttpServletRequest request) throws Exception {
+	public ResponseEntity<LoveResponse> alcoholLove(@PathVariable Long aid, @RequestBody LoveClickDTO loveClick, HttpServletRequest request) throws Exception {
 		String uid = authService.verifyToken(request);
 		Long id = userService.getId(uid);
 		

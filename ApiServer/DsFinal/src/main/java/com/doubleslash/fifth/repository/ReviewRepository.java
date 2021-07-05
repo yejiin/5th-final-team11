@@ -1,5 +1,8 @@
 package com.doubleslash.fifth.repository;
 
+import java.time.LocalDateTime;
+import java.util.Optional;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -8,21 +11,18 @@ import org.springframework.stereotype.Repository;
 
 import com.doubleslash.fifth.dto.CabinetDTO;
 import com.doubleslash.fifth.dto.MyReviewDTO;
-import com.doubleslash.fifth.dto.ReviewDTO;
-import com.doubleslash.fifth.entity.Review;
+import com.doubleslash.fifth.entity.User;
+import com.doubleslash.fifth.entity.alcohol.Alcohol;
+import com.doubleslash.fifth.entity.review.Review;
 
 @Repository
 public interface ReviewRepository extends JpaRepository<Review, Long> {
-
-	// 리뷰 리스트 조회
-	@Query(value = "select new com.doubleslash.fifth.dto.ReviewDTO(r.id, u.nickname, r.content, r.love, r.star, r.createdDate) from Review as r, User as u where r.user = u.id and r.alcohol=?1 order by field(u.id, ?2) desc")
-	public Page<ReviewDTO> findByAid(Long aid, Long id, Pageable pageable);
 	
-	@Query(value = "select rid, aid, id, star, content, love, report, create_time from Review where id=?1 and aid=?2 and date(create_time)=?3", nativeQuery = true)
-	public Review findById(Long id, Long aid, String createTime);
+	@Query(value = "select count(r) from Review r where r.alcohol.id=?1")
+	public int findCountByAid(Long aid);
 	
-	@Query(value = "select rid from Review where aid = ?1 order by rid desc limit 1", nativeQuery = true)
-	public String findByAid(Long aid);
+	@Query(value = "select r from Review r where r.user=?1 and r.alcohol=?2 and r.createdDate between ?3 and ?4")
+	public Optional<Review> findByUserAndAlcoholAndCreatedDate(User user, Alcohol alcohol, LocalDateTime start, LocalDateTime end);
 
 	// 내 기록 조회(최신순)
 	@Query(value = "select new com.doubleslash.fifth.dto.MyReviewDTO(r.id, a.id, a.name, r.star, a.thumbnail, r.content) from Review r, Alcohol a where r.alcohol = a.id and r.user = ?1")

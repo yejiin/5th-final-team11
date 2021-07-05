@@ -1,23 +1,22 @@
 package com.doubleslash.fifth.dto;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
+import com.doubleslash.fifth.entity.Comment;
+import com.doubleslash.fifth.entity.review.Review;
+import com.doubleslash.fifth.entity.review.ReviewDetail;
+import com.doubleslash.fifth.entity.review.ReviewLove;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
-@AllArgsConstructor
 public class ReviewDTO {
 
 	private Long rid;
@@ -30,26 +29,38 @@ public class ReviewDTO {
 	
 	private boolean loveClick;
 	
-	private double star;
+	private float star;
 
 	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy.MM.dd")
 	private LocalDateTime reviewDate;
 
-	private DetailReviewDTO detail;
+	private ReviewDetailDTO detail;
 	
 	private List<CommentDTO> comments;
 	
-	private long commentTotalCnt;
+	private int commentTotalCnt;
 
-	public ReviewDTO(Long rid, String nickname, String content, int love, double star, LocalDateTime reviewDate) {
-		this.rid = rid;
-		this.nickname = nickname;
-		this.content = content;
-		this.love = love;
-		this.star = star;
-		this.reviewDate = reviewDate;
-	}
-	
-	
-	
+	public ReviewDTO(ReviewDetail review, Long userId) {
+        this.rid = review.getId();
+        this.nickname = review.getUser().getNickname();
+        this.content = review.getContent();
+        this.star = review.getStar();
+        this.reviewDate = review.getCreatedDate();
+        this.commentTotalCnt = review.getComments().size();
+
+        Set<ReviewLove> reviewLoves = review.getReviewLoves();
+        this.love = reviewLoves.size();
+        reviewLoves.stream().forEach(rl -> {
+            if (rl.getUser().getId() == userId)
+                this.loveClick = true;
+        });
+
+        if (review.getDate() != null)
+            this.detail = new ReviewDetailDTO(review);
+
+        this.comments = review.getComments().stream().sorted(Comparator.comparing(Comment::getId).reversed())
+                .map(c -> new CommentDTO(c))
+                .limit(3)
+                .collect(Collectors.toList());
+    }
 }

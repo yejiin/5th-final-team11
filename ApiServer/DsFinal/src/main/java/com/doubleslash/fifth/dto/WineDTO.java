@@ -5,9 +5,9 @@ import static com.doubleslash.fifth.service.AlcoholService.starAvgByReview;
 
 import java.util.Set;
 
-import com.doubleslash.fifth.entity.AlcoholLove;
 import com.doubleslash.fifth.entity.User;
-import com.doubleslash.fifth.entity.Wine;
+import com.doubleslash.fifth.entity.alcohol.AlcoholLove;
+import com.doubleslash.fifth.entity.alcohol.Wine;
 
 public class WineDTO extends AlcoholDTO {
 

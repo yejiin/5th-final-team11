@@ -1,4 +1,4 @@
-package com.doubleslash.fifth.entity;
+package com.doubleslash.fifth.entity.review;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,16 +10,18 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.doubleslash.fifth.entity.BaseEntity;
+import com.doubleslash.fifth.entity.User;
+
+import lombok.Data;
 import lombok.Getter;
-import lombok.Setter;
 
 @Entity
-@Table(name = "ReportReview")
-@Getter @Setter
-public class ReviewReport extends BaseEntity {
+@Getter
+public class ReviewLove extends BaseEntity {
 
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "reviewReport_id")
+	@Column(name = "reviewLove_id")
 	private Long id;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -29,7 +31,11 @@ public class ReviewReport extends BaseEntity {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "review_id")
 	private Review review;
-
-	private String content;
+	
+	public void addLoveReview(User user, Review review) {
+		this.user = user;
+		this.review = review;
+		review.getReviewLoves().add(this);
+	}
 	
 }

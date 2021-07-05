@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.data.jpa.repository.Query;
 
 import com.doubleslash.fifth.dto.SimilarAlcoholDTO;
-import com.doubleslash.fifth.entity.Alcohol;
+import com.doubleslash.fifth.entity.alcohol.Alcohol;
 import com.doubleslash.fifth.storage.BeerStorage;
 import com.doubleslash.fifth.storage.LiquorStorage;
 import com.doubleslash.fifth.storage.WineStorage;

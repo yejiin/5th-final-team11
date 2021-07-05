@@ -20,7 +20,7 @@ public class DetailReviewWriteDTO {
 	
 	private String place;
 	
-	private double drink;
+	private float drink;
 	
 	private int hangover;
 	

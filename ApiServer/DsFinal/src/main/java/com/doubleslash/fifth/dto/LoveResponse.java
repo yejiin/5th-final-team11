@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class LoveAlcoholResponse {
+public class LoveResponse {
 
     private boolean love;
     private int loveTotalCnt;

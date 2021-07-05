@@ -2,6 +2,7 @@ package com.doubleslash.fifth.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -9,7 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-@RequiredArgsConstructor
+@NoArgsConstructor
 public class MyReviewDTO {
 	
 	private Long rid;
@@ -24,7 +25,7 @@ public class MyReviewDTO {
 
 	private String content;
 	
-	private DetailReviewDTO detail;
+	private ReviewDetailDTO detail;
 
 	public MyReviewDTO(Long rid, Long aid, String name, double star, String thumbnail, String content) {
 		super();

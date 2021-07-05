@@ -1,5 +1,7 @@
 package com.doubleslash.fifth.repository;
 
+import java.util.Optional;
+
 import javax.transaction.Transactional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -7,22 +9,13 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import com.doubleslash.fifth.entity.ReviewLove;
+import com.doubleslash.fifth.entity.User;
+import com.doubleslash.fifth.entity.review.Review;
+import com.doubleslash.fifth.entity.review.ReviewLove;
 
 @Repository
 public interface ReviewLoveRepository extends JpaRepository<ReviewLove, Integer>{
 
-	// 찜한 리뷰 확인
-	@Query(value = "select id, rid from ReviewLove where id = ?1 and rid = ?2", nativeQuery = true)
-	public ReviewLove findByIdRid(Long id, Long rid);
+	public Optional<ReviewLove> findByUserAndReview(User user, Review review);
 	
-	@Modifying
-	@Transactional
-	@Query(value = "insert ignore into ReviewLove(id, rid) values(?1, ?2)", nativeQuery = true)
-	public int insert(Long id, Long rid);
-	
-	@Modifying
-	@Transactional
-	@Query(value = "delete from ReviewLove where id=?1 and rid=?2", nativeQuery = true)
-	public int delete(Long id, Long rid);
 }

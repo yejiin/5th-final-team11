@@ -1,30 +1,28 @@
-package com.doubleslash.fifth.entity;
+package com.doubleslash.fifth.entity.review;
 
 import java.time.LocalDate;
 
 import javax.persistence.Entity;
-import javax.persistence.Id;
+
+import com.doubleslash.fifth.entity.User;
+import com.doubleslash.fifth.entity.alcohol.Alcohol;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
 @Getter @Setter
-public class DetailReview extends BaseEntity {
-
-	@Id
-	private Long rid;
+public class ReviewDetail extends Review {
 
 	private LocalDate date;
 	
 	private String place;
 	
-	private double drink;
+	private float drink;
 	
 	private int hangover;
 	
 	private int price;
 	
 	private boolean privacy;
-	
 }

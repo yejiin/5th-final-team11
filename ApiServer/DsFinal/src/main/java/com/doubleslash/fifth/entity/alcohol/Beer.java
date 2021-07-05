@@ -1,4 +1,4 @@
-package com.doubleslash.fifth.entity;
+package com.doubleslash.fifth.entity.alcohol;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;

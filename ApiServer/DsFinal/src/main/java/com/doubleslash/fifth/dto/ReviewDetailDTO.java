@@ -2,6 +2,7 @@ package com.doubleslash.fifth.dto;
 
 import java.time.LocalDate;
 
+import com.doubleslash.fifth.entity.review.ReviewDetail;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.AllArgsConstructor;
@@ -13,17 +14,24 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class DetailReviewDTO {
+public class ReviewDetailDTO {
 	
 	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy.MM.dd")
 	private LocalDate date;
 	
 	private String place;
 	
-	private double drink;
+	private float drink;
 	
 	private int hangover;
 	
 	private int price;
 	
+    public ReviewDetailDTO(ReviewDetail detail) {
+        this.place = detail.getPlace();
+        this.drink = detail.getDrink();
+        this.hangover = detail.getHangover();
+        this.price = detail.getPrice();
+        this.date = detail.getDate();
+    }
 }

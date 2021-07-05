@@ -7,9 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import com.doubleslash.fifth.entity.AlcoholLove;
-import com.doubleslash.fifth.entity.Beer;
 import com.doubleslash.fifth.entity.User;
+import com.doubleslash.fifth.entity.alcohol.AlcoholLove;
+import com.doubleslash.fifth.entity.alcohol.Beer;
 
 public class BeerDTO extends AlcoholDTO {
 	
