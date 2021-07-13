@@ -8,15 +8,12 @@ import com.doubleslash.fifth.entity.User;
 import com.doubleslash.fifth.entity.alcohol.AlcoholLove;
 import com.doubleslash.fifth.entity.alcohol.Liquor;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import lombok.Data;
 
 import static com.doubleslash.fifth.service.AlcoholService.getUserDrinkStr;
 import static com.doubleslash.fifth.service.AlcoholService.starAvgByReview;
 
-
-@NoArgsConstructor
-@AllArgsConstructor
+@Data
 public class LiquorDTO extends AlcoholDTO {
 	
 	private List<String> flavors;
@@ -41,11 +38,11 @@ public class LiquorDTO extends AlcoholDTO {
                 .filter(al -> al.getUser() == user)
                 .findAny()
                 .isPresent();
-
-        flavors = new ArrayList<>();
+        
+        this.flavors = new ArrayList<>();
         String flavortemp[] = liquor.getFlavor().split("#");
         for (String temp : flavortemp) {
-            flavors.add(temp);
+            this.flavors.add(temp);
         }
     }
 
@@ -62,12 +59,13 @@ public class LiquorDTO extends AlcoholDTO {
         this.kind = liquor.getKind();
         this.starCnt = liquor.getReviews().size();
         this.starAvg = starAvgByReview(liquor.getReviews());
-
-        flavors = new ArrayList<>();
+        
+        this.flavors = new ArrayList<>();
         String flavortemp[] = liquor.getFlavor().split("#");
         for (String temp : flavortemp) {
-            flavors.add(temp);
+            this.flavors.add(temp);
         }
+       
     }
 
 }

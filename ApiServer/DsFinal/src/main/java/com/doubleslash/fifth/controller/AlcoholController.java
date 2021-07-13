@@ -46,7 +46,7 @@ public class AlcoholController {
 			+ "description : String\r\n"
 			+ "kind : String\r\\n"
 			+ "starAvg : float\r\n"
-			+ "startCnt : int\r\n"
+			+ "starCnt : int\r\n"
 			+ "loveClick : boolean\r\n"
 			+ "userDrink : String  (로그인 안했으면 null)\r\n"
 //			+ "similar : List({ aId : int, aImage : String, aName: String })\r\n"

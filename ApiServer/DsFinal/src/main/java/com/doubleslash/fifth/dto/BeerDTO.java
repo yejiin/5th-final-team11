@@ -11,6 +11,9 @@ import com.doubleslash.fifth.entity.User;
 import com.doubleslash.fifth.entity.alcohol.AlcoholLove;
 import com.doubleslash.fifth.entity.alcohol.Beer;
 
+import lombok.Data;
+
+@Data
 public class BeerDTO extends AlcoholDTO {
 	
     private String subKind;
@@ -39,10 +42,10 @@ public class BeerDTO extends AlcoholDTO {
                 .findAny()
                 .isPresent();
 
-        flavors = new ArrayList<>();
+        this.flavors = new ArrayList<>();
         String flavortemp[] = beer.getFlavor().split("#");
         for (String temp : flavortemp) {
-            flavors.add(temp);
+            this.flavors.add(temp);
         }
     }
 
@@ -61,10 +64,10 @@ public class BeerDTO extends AlcoholDTO {
         this.starCnt = beer.getReviews().size();
         this.subKind = beer.getSubKind();
 
-        flavors = new ArrayList<>();
+        this.flavors = new ArrayList<>();
         String flavortemp[] = beer.getFlavor().split("#");
         for (String temp : flavortemp) {
-            flavors.add(temp);
+            this.flavors.add(temp);
         }
     }
 }

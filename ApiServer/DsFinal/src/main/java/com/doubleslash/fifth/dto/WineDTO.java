@@ -9,6 +9,9 @@ import com.doubleslash.fifth.entity.User;
 import com.doubleslash.fifth.entity.alcohol.AlcoholLove;
 import com.doubleslash.fifth.entity.alcohol.Wine;
 
+import lombok.Data;
+
+@Data
 public class WineDTO extends AlcoholDTO {
 
     private String country;
