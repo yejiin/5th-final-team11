@@ -43,6 +43,8 @@
     <string name="all_place">장소</string>
     <string name="all_wine_body">바디감</string>
     <string name="all_licence">라이선스</string>
+    <string name="all_logout">로그아웃</string>
+    <string name="all_witdraw">회원탈퇴</string>
 
 
     <string name="hangover_none">없음</string>

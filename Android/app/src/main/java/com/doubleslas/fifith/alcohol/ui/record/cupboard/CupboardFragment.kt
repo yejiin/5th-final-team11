@@ -1,6 +1,5 @@
 package com.doubleslas.fifith.alcohol.ui.record.cupboard
 
-import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -20,7 +19,6 @@ import com.doubleslas.fifith.alcohol.ui.auth.CustomDialog
 import com.doubleslas.fifith.alcohol.ui.common.LoadingRecyclerViewAdapter
 import com.doubleslas.fifith.alcohol.ui.common.LoadingRecyclerViewAdapter.Companion.VIEW_TYPE_LOADING
 import com.doubleslas.fifith.alcohol.ui.common.base.BaseFragment
-import com.doubleslas.fifith.alcohol.ui.licence.LicenceActivity
 import com.doubleslas.fifith.alcohol.ui.main.IOnBackPressed
 import com.doubleslas.fifith.alcohol.ui.record.RecordMenuBottomSheetDialog
 import kotlinx.android.synthetic.main.fragment_cupboard.*
@@ -38,13 +36,9 @@ class CupboardFragment : BaseFragment<FragmentCupboardBinding>(), IOnBackPressed
 
     private val menuBottomSheetDialog by lazy {
         RecordMenuBottomSheetDialog().apply {
-            setOnItemClickListener { _, value ->
+            addOnItemClickListener { value ->
                 when (value) {
                     getString(R.string.record_delete) -> setDeleteMode(true)
-                    getString(R.string.all_licence) -> {
-                        val intent = Intent(context, LicenceActivity::class.java)
-                        startActivity(intent)
-                    }
                 }
             }
         }
@@ -145,7 +139,7 @@ class CupboardFragment : BaseFragment<FragmentCupboardBinding>(), IOnBackPressed
     }
 
     private fun setDeleteMode(value: Boolean) {
-        if (value && !viewModel.isLoveMode){
+        if (value && !viewModel.isLoveMode) {
             CustomDialog(context!!, "마신 술은 내 기록에서만 삭제하실 수 있습니다.").show()
 
 

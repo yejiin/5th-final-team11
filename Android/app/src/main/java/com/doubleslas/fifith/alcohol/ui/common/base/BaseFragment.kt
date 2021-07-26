@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
+import com.doubleslas.fifith.alcohol.App
 import com.doubleslas.fifith.alcohol.R
 import com.doubleslas.fifith.alcohol.ui.common.ToolbarMenuBottomSheetDialog
 import com.doubleslas.fifith.alcohol.ui.licence.LicenceActivity
@@ -19,18 +20,7 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
         private set
 
 
-    protected val toolbarMenu by lazy{
-        ToolbarMenuBottomSheetDialog().apply {
-            setOnItemClickListener { _, value ->
-                when (value) {
-                    getString(R.string.all_licence) -> {
-                        val intent = Intent(context, LicenceActivity::class.java)
-                        startActivity(intent)
-                    }
-                }
-            }
-        }
-    }
+    protected val toolbarMenu by lazy{ ToolbarMenuBottomSheetDialog() }
 
     override fun onCreateView(
         inflater: LayoutInflater,

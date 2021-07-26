@@ -67,8 +67,8 @@ class DetailInfoFragment : BaseFragment<FragmentDetailInfoBinding>() {
     }
 
     private fun notifyDataChanged(data: DetailData) {
-        adapter.setData(data.similar)
-        adapter.notifyDataSetChanged()
+//        adapter.setData(data.similar)
+//        adapter.notifyDataSetChanged()
 
         binding?.let { b ->
             b.tvPriceInfo.text =

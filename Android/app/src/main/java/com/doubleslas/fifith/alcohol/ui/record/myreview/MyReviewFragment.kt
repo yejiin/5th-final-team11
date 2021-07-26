@@ -34,10 +34,6 @@ class MyReviewFragment : BaseFragment<FragmentMyReviewBinding>(), IOnBackPressed
             setOnItemClickListener { _, value ->
                 when (value) {
                     getString(R.string.record_delete) -> setDeleteMode(true)
-                    getString(R.string.all_licence) -> {
-                        val intent = Intent(context, LicenceActivity::class.java)
-                        startActivity(intent)
-                    }
                 }
             }
         }

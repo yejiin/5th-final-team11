@@ -1,13 +1,12 @@
 package com.doubleslas.fifith.alcohol.ui.record
 
 import android.os.Bundle
-import android.view.View
 import com.doubleslas.fifith.alcohol.R
-import com.doubleslas.fifith.alcohol.ui.common.BottomSheetMenu
+import com.doubleslas.fifith.alcohol.ui.common.ToolbarMenuBottomSheetDialog
 
-class RecordMenuBottomSheetDialog : BottomSheetMenu() {
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        setList(listOf(getString(R.string.record_delete), getString(R.string.all_licence)))
+class RecordMenuBottomSheetDialog : ToolbarMenuBottomSheetDialog() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        addList(0, getString(R.string.record_delete))
     }
 }
