@@ -1,6 +1,10 @@
 package com.doubleslash.fifth.repository;
 
+import javax.transaction.Transactional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.doubleslash.fifth.entity.User;
@@ -14,5 +18,10 @@ public interface UserRepository extends JpaRepository<User, Long>{
 	public User findByUid(String uid);
 	
 	public User findByNickname(String nickname);
+	
+	@Modifying
+	@Transactional
+	@Query(value = "update Users set uid = null, nickname = null, delete_time = now() where user_id = ?1", nativeQuery = true)
+	public void resign(Long id);
 	
 }

@@ -1,6 +1,8 @@
 package com.doubleslash.fifth.service;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -55,6 +57,10 @@ public class UserService {
 	public boolean isRecommendCheck(Long id) {
 		if(!recommendRepository.findById(id).isPresent()) return false;
 		return true;
+	}
+	
+	public void resignUser(Long id) {
+		userRepository.resign(id);
 	}
 	
 }
