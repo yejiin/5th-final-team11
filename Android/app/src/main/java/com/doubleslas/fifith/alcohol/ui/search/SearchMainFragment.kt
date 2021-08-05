@@ -46,7 +46,7 @@ class SearchMainFragment : BaseFragment<FragmentSearchMainBinding>() {
             b.toolbar.inflateMenu(R.menu.toolbar_menu)
             b.toolbar.setOnMenuItemClickListener {
                 when (it.itemId) {
-                    R.id.menu -> toolbarMenu.show(fragmentManager!!, null)
+                    R.id.menu -> toolbarMenu.show(childFragmentManager!!, null)
                     else -> return@setOnMenuItemClickListener false
                 }
 

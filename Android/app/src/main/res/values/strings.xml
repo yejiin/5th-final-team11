@@ -51,7 +51,6 @@
     <string name="hangover_heavy">심함</string>
 
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="review_private">비공개</string>
     <string name="register2">주량과 숙취 정보를 입력하면 추천과\n통계 부분에 적용됩니다!</string>

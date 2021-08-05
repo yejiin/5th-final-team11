@@ -38,6 +38,8 @@ class App : Application() {
         lateinit var prefs: SharedPreferenceUtil
             private set
 
+        fun getApp() = app
+
         fun getString(@StringRes id: Int): String {
             return app.getString(id)
         }

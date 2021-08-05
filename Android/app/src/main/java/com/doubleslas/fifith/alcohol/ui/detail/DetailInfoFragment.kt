@@ -79,14 +79,19 @@ class DetailInfoFragment : BaseFragment<FragmentDetailInfoBinding>() {
 
             b.tvReference.text = data.source
 
+            b.tvNation.visibility = View.GONE
+            b.tvNationInfo.visibility = View.GONE
+            b.layoutFlavor.visibility = View.GONE
+            b.layoutBody.visibility = View.GONE
+            b.tvRace.visibility = View.GONE
+            b.tvRaceInfo.visibility = View.GONE
+            b.tvAbvInfo.visibility = View.GONE
+
             if (data.country != null) { // 나라
                 b.tvNation.visibility = View.VISIBLE
                 b.tvNationInfo.visibility = View.VISIBLE
 
                 b.tvNationInfo.text = data.country
-            } else {
-                b.tvNation.visibility = View.GONE
-                b.tvNationInfo.visibility = View.GONE
             }
 
             b.chipGroupKinds.removeAllViews()
@@ -101,9 +106,6 @@ class DetailInfoFragment : BaseFragment<FragmentDetailInfoBinding>() {
                 b.tvRace.visibility = View.VISIBLE
                 b.tvRaceInfo.visibility = View.VISIBLE
                 b.tvRace.text = data.subKind
-            } else {
-                b.tvRace.visibility = View.GONE
-                b.tvRaceInfo.visibility = View.GONE
             }
 
             if (data.flavor != null) { // 맛
@@ -115,8 +117,6 @@ class DetailInfoFragment : BaseFragment<FragmentDetailInfoBinding>() {
                 b.seekBarFlavor.seekBar.isEnabled = false
                 b.seekBarFlavor.tvLabel1.text = "Dry"
                 b.seekBarFlavor.tvLabel2.text = "Sweet"
-            } else {
-                b.layoutFlavor.visibility = View.GONE
             }
 
             if (data.body != null) { // 바디감
@@ -126,8 +126,6 @@ class DetailInfoFragment : BaseFragment<FragmentDetailInfoBinding>() {
                 b.seekBarBody.seekBar.isEnabled = false
                 b.seekBarBody.tvLabel1.text = "Light"
                 b.seekBarBody.tvLabel2.text = "Heavy"
-            } else {
-                b.layoutBody.visibility = View.GONE
             }
 
             // 양주 파트
@@ -140,15 +138,11 @@ class DetailInfoFragment : BaseFragment<FragmentDetailInfoBinding>() {
                 for (str in data.flavors) {
                     createChip(b.chipGroupFlavor, str)
                 }
-            } else {
-                b.layoutFlavor.visibility = View.GONE
             }
 
             if (data.userDrink != null) {
                 b.tvAbvInfo.visibility = View.VISIBLE
                 b.tvAbvInfo.text = data.userDrink
-            } else {
-                b.tvAbvInfo.visibility = View.GONE
             }
         }
     }

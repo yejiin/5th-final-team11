@@ -20,7 +20,6 @@ import com.doubleslas.fifith.alcohol.utils.LogUtil
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
-import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -95,6 +94,12 @@ class LoginActivity : AppCompatActivity() {
                 LoginClient.instance.loginWithKakaoTalk(this) { token, error ->
                     if (token != null) {
                         loginViewModel.signInWithKaKao(token, error)
+                    } else if (error != null) {
+                        LoginClient.instance.loginWithKakaoAccount(this) { token, error ->
+                            if (token != null) {
+                                loginViewModel.signInWithKaKao(token, error)
+                            }
+                        }
                     }
                 }
             } else {
@@ -107,7 +112,6 @@ class LoginActivity : AppCompatActivity() {
         }
 
         activityLoginBinding.btnLoginFacebook.setPermissions("public_profile", "email")
-
 
         observeAuthenticationState()
     }
@@ -132,7 +136,7 @@ class LoginActivity : AppCompatActivity() {
         loginViewModel.signInLiveData.observe(this, Observer {
             when (it) {
                 is ApiStatus.Loading -> {
-                    if(!progressDialog.isVisible) progressDialog.show(supportFragmentManager, null)
+                    if (!progressDialog.isVisible) progressDialog.show(supportFragmentManager, null)
                 }
                 is ApiStatus.Success -> {
                     progressDialog.dismiss()
