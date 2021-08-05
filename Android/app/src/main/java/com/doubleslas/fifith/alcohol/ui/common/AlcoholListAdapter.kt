@@ -10,7 +10,8 @@ import com.doubleslas.fifith.alcohol.dto.AlcoholSimpleData
 import com.doubleslas.fifith.alcohol.ui.detail.AlcoholDetailActivity
 
 open class AlcoholListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    private var list: List<AlcoholSimpleData>? = null
+    protected var list: List<AlcoholSimpleData>? = null
+        private set
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -45,7 +46,6 @@ open class AlcoholListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() 
 
     fun setData(list: List<AlcoholSimpleData>) {
         this.list = list
-        notifyDataSetChanged()
     }
 
     protected open fun getItem(position: Int): AlcoholSimpleData {

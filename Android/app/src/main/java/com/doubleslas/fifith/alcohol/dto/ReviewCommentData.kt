@@ -1,8 +1,10 @@
 package com.doubleslas.fifith.alcohol.dto
 
+import com.google.gson.annotations.SerializedName
+
 data class ReviewCommentData(
-    val cid: Int,
+    @SerializedName("id") val cid: Int,
     val nickname: String,
     val content: String,
-    val commentData: String
+    val commentDate: String
 )

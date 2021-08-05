@@ -1,10 +1,12 @@
 package com.doubleslas.fifith.alcohol.ui.common
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -13,11 +15,23 @@ import com.doubleslas.fifith.alcohol.databinding.ItemMenuListBinding
 import com.doubleslas.fifith.alcohol.databinding.RecyclerviewBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-open class BottomSheetMenu() : BottomSheetDialogFragment() {
+open class BottomSheetMenu : BottomSheetDialogFragment() {
     private var binding: RecyclerviewBinding? = null
     private var list: List<String>? = null
-    private var onItemClickListener: ((String) -> Unit)? = null
+    private var onItemClickListener: ((Int, String) -> Unit)? = null
     private var selectIndex: Int? = null
+
+    private val typefaceMedium by lazy {
+        ResourcesCompat.getFont(context!!, R.font.noto_sans_medium)
+    }
+    private val typefaceRegular by lazy {
+        ResourcesCompat.getFont(context!!, R.font.noto_sans_regular)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setStyle(STYLE_NORMAL, R.style.CustomBottomSheetDialogTheme)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,7 +58,7 @@ open class BottomSheetMenu() : BottomSheetDialogFragment() {
         this.list = list
     }
 
-    fun setOnItemClickListener(listener: ((String) -> Unit)?) {
+    fun setOnItemClickListener(listener: ((Int, String) -> Unit)?) {
         onItemClickListener = listener
     }
 
@@ -67,11 +81,24 @@ open class BottomSheetMenu() : BottomSheetDialogFragment() {
         }
 
         override fun onBindViewHolder(holder: Adapter.BottomSheetMenuViewHolder, position: Int) {
+            if (position == 0) {
+                holder.itemView.setBackgroundResource(R.drawable.bg_write_review)
+            } else {
+                holder.itemView.setBackgroundColor(
+                    ResourcesCompat.getColor(resources, R.color.gray, null)
+                )
+            }
+
             holder.binding.tv.text = list!![position]
-            if (selectIndex == null || selectIndex != position)
+            if (selectIndex == null || selectIndex != position) {
                 holder.binding.ivCheck.visibility = View.INVISIBLE
-            else
+                holder.binding.tv.typeface = typefaceRegular
+                holder.binding.tv.setTextColor(Color.parseColor("#cccccc"))
+            } else {
                 holder.binding.ivCheck.visibility = View.VISIBLE
+                holder.binding.tv.typeface = typefaceMedium
+                holder.binding.tv.setTextColor(Color.parseColor("#ffffff"))
+            }
         }
 
         inner class BottomSheetMenuViewHolder(val binding: ItemMenuListBinding) :
@@ -79,7 +106,7 @@ open class BottomSheetMenu() : BottomSheetDialogFragment() {
 
             init {
                 binding.root.setOnClickListener {
-                    onItemClickListener?.invoke(list!![adapterPosition])
+                    onItemClickListener?.invoke(adapterPosition, list!![adapterPosition])
                     dismiss()
                 }
             }

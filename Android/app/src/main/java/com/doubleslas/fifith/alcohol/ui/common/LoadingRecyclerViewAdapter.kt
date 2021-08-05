@@ -16,9 +16,7 @@ class LoadingRecyclerViewAdapter<A : RecyclerView.Adapter<RecyclerView.ViewHolde
             VIEW_TYPE_LOADING -> {
                 val inflater = LayoutInflater.from(parent.context)
                 val binding = ItemLoadingBinding.inflate(inflater, parent, false)
-                LoadingViewHolder(
-                    binding
-                )
+                LoadingViewHolder(binding)
             }
             else -> adapter.onCreateViewHolder(parent, viewType)
         }
@@ -54,6 +52,6 @@ class LoadingRecyclerViewAdapter<A : RecyclerView.Adapter<RecyclerView.ViewHolde
         RecyclerView.ViewHolder(binding.root)
 
     companion object {
-        private const val VIEW_TYPE_LOADING = -1000
+        const val VIEW_TYPE_LOADING = -1000
     }
 }

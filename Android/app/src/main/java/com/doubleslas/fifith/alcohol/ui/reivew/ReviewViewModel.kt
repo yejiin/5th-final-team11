@@ -2,13 +2,12 @@ package com.doubleslas.fifith.alcohol.ui.reivew
 
 import androidx.lifecycle.ViewModel
 import com.doubleslas.fifith.alcohol.dto.ReviewDetailData
-import com.doubleslas.fifith.alcohol.dto.ReviewList
 import com.doubleslas.fifith.alcohol.dto.WriteReviewData
 import com.doubleslas.fifith.alcohol.model.base.ApiLiveData
 import com.doubleslas.fifith.alcohol.model.base.ApiStatus
 import com.doubleslas.fifith.alcohol.model.base.MediatorApiLiveData
 
-class ReviewViewModel() : ViewModel() {
+class ReviewViewModel : ViewModel() {
     private val repository by lazy { ReviewRepository() }
 
     fun sendReview(
@@ -32,45 +31,16 @@ class ReviewViewModel() : ViewModel() {
         return result
     }
 
-    fun readReview(aid: Int, reviewPage: Int): ApiLiveData<ReviewList> {
-        return repository.readReview(aid, reviewPage)
-    }
-
-
-    fun writeComment(rid: Int, content: String): ApiLiveData<Any> {
-        return repository.writeComment(rid, content)
-    }
 
     fun checkValidate(comment: String, detail: ReviewDetailData? = null): ReviewValidateFail? {
-        if (comment.isEmpty()) {
-            return ReviewValidateFail.CommentEmpty
-        } else if (detail != null) {
-            when {
-                detail.date!!.isEmpty() -> {
-                    return ReviewValidateFail.DetailDateEmpty
-                }
-                detail.place!!.isEmpty() -> {
-                    return ReviewValidateFail.DetailPlaceEmpty
-                }
-                detail.drink == 0 -> {
-                    return ReviewValidateFail.DetailDrinkEmpty
-                }
-                detail.price == 0 -> {
-                    return ReviewValidateFail.DetailPriceEmpty
-                }
-            }
+        if (comment.length < 20) {
+            return ReviewValidateFail.CommentTooShort
         }
-
         return null
     }
 
 
     sealed class ReviewValidateFail : ApiStatus.ValidateFail() {
-        object CommentEmpty : ReviewValidateFail()
-        object DetailDateEmpty : ReviewValidateFail()
-        object DetailPlaceEmpty : ReviewValidateFail()
-        object DetailDrinkEmpty : ReviewValidateFail()
-        object DetailHangoutEmpty : ReviewValidateFail()
-        object DetailPriceEmpty : ReviewValidateFail()
+        object CommentTooShort : ReviewValidateFail()
     }
 }

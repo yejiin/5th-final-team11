@@ -23,6 +23,10 @@ class SharedPreferenceUtil(private val context: Context) {
         get() = prefs.getBoolean(PREFS_SUBMIT_RECOMMEND_INFO, false)
         set(value) = prefs.edit().putBoolean(PREFS_SUBMIT_RECOMMEND_INFO, value).apply()
 
+    fun clear() {
+        prefs.edit().clear().apply()
+    }
+
     companion object {
         private const val PREFS_NAME = "DoubleSlash05_team11_final_alcohol"
 

@@ -4,36 +4,21 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
+import android.widget.CheckBox
+import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.RecyclerView
-import com.doubleslas.fifith.alcohol.R
 import com.doubleslas.fifith.alcohol.databinding.ItemDetailReviewBinding
+import com.doubleslas.fifith.alcohol.databinding.ItemReviewCommentBinding
+import com.doubleslas.fifith.alcohol.dto.ReviewCommentData
 import com.doubleslas.fifith.alcohol.dto.ReviewData
-import com.doubleslas.fifith.alcohol.ui.reivew.ReportBottomSheetDialog
 
-class DetailReviewAdapter :
-    RecyclerView.Adapter<DetailReviewAdapter.ReviewViewHolder>() {
-
+class DetailReviewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var list: List<ReviewData>? = null
-
-    inner class ReviewViewHolder(var binding: ItemDetailReviewBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-        var nickname = binding.tvDetailNickname
-        var content = binding.tvDetailReview
-        var rating = binding.reviewRating
-        var love = binding.tvLikeCount
-        var loveClcik = false
-        var hangover = binding.layoutDetailReview.seekBarHangover.seekBar
-        var place = binding.layoutDetailReview.etPlace
-        var price = binding.layoutDetailReview.etPrice
-        var date = binding.layoutDetailReview.etCalendar
-        var drink = binding.layoutDetailReview.etDrink
-    }
+    private var listener: ReviewItemListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReviewViewHolder {
-        val binding = ItemDetailReviewBinding.inflate(
-            LayoutInflater.from(parent.context), parent, false
-        )
+        val binding =
+            ItemDetailReviewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ReviewViewHolder(binding)
     }
 
@@ -42,75 +27,159 @@ class DetailReviewAdapter :
         notifyDataSetChanged()
     }
 
-    override fun onBindViewHolder(holder: ReviewViewHolder, position: Int) {
-        list!![position].let { item ->
-            with(holder) {
-                nickname.text = item.nickname
-                content.text = item.content
-                rating.rating = item.star
-                love.text = item.love.toString()
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        if (holder !is ReviewViewHolder) return
+        val item = list!![position]
 
-                if (item.detail != null) {
-                    hangover.progress = item.detail.hangover!!
-                    place.setText(item.detail.place)
-                    price.setText(item.detail.price.toString())
-                    date.setText(item.detail.date)
-                    drink.setText(item.detail.drink.toString())
-                } else {
-                    binding.layoutDetailReview.layoutDetailReview.visibility = View.GONE
-                }
+        with(holder.binding) {
+            tvNickname.text = item.nickname
+            tvDate.text = item.reviewDate
+            tvReview.text = item.content
+            reviewRating.rating = item.star
+            if (item.isLove == null) {
+                checkboxLike.visibility = View.GONE
+            } else {
+                checkboxLike.visibility = View.VISIBLE
+                checkboxLike.isChecked = item.isLove!!
+            }
+            checkboxLike.text = item.loveCount.toString()
+            etReviewComment.setText(item.cacheComment)
 
+            if (item.comments.isEmpty()) {
+                btnCommentList.visibility = View.GONE
+            } else {
+                btnCommentList.text = item.commentCount.toString()
+                btnCommentList.visibility = View.VISIBLE
 
-                binding.layoutDetailReview.etCalendar.isEnabled = false
-                binding.layoutDetailReview.etDrink.isEnabled = false
-                binding.layoutDetailReview.etPlace.isEnabled = false
-                binding.layoutDetailReview.etPrice.isEnabled = false
-                binding.layoutDetailReview.seekBarHangover.seekBar.isEnabled = false
-                binding.layoutDetailReview.seekBarHangover.tvLabel1.text = "없음"
-                binding.layoutDetailReview.seekBarHangover.tvLabel2.text = "심함"
+                val inflater = LayoutInflater.from(root.context)
+                for (index in item.comments.indices) {
+                    if (holder.commentHolder.size <= index) {
+                        val b =
+                            ItemReviewCommentBinding.inflate(inflater, layoutCommentList, false)
+                        holder.commentHolder.add(b)
+                        layoutCommentList.addView(b.root)
+                    }
 
-                binding.btnComment.setOnClickListener {
-                    // 댓글 달기 버튼
-                    binding.layoutReviewComment.visibility = View.VISIBLE
-                    binding.btnComment.setTextColor(Color.parseColor("#FFFFFF"))
-                }
+                    val c = item.comments[index]
+                    val layout = holder.commentHolder[index]
 
-                binding.btnCommentConfirm.setOnClickListener {
-                    // 리뷰 댓글 등록
-                }
-
-                binding.btnCommentCancel.setOnClickListener {
-                    // 리뷰 댓글 등록 취소
-                    binding.layoutReviewComment.visibility = View.GONE
-                    binding.btnComment.setTextColor(Color.parseColor("#A5A5A5"))
-                }
-
-                var likeClicked = false
-                binding.btnLike.setOnClickListener {
-                    // 리뷰 좋아요 버튼 눌렀을 때의 처리
-                    likeClicked = !likeClicked
-                    if (!likeClicked) {
-                        binding.ivReviewLike.setImageResource(R.drawable.ic_heart_gray)
-                    } else {
-                        binding.ivReviewLike.setImageResource(R.drawable.ic_heart_orange)
+                    layout.root.visibility = View.VISIBLE
+                    layout.tvNickname.text = c.nickname
+                    layout.tvDate.text = c.commentDate
+                    layout.tvContent.text = c.content
+                    layout.tvReport.setOnClickListener {
+                        listener?.reportComment(position, c)
                     }
                 }
 
-                binding.btnReport.setOnClickListener {
-                    // 신고하기 버튼 눌렀을때의 처리
-                    val appCompatActivity = AppCompatActivity()
-                    val fragmentManager = appCompatActivity.supportFragmentManager
-                    val bottomSheet = ReportBottomSheetDialog()
-                    bottomSheet.show(fragmentManager, bottomSheet.tag)
-
+                for (index in item.comments.size until holder.commentHolder.size) {
+                    holder.commentHolder[index].root.visibility = View.GONE
                 }
+            }
 
+            if (item.detail != null) {
+                layoutDetail.visibility = View.VISIBLE
+                layoutDetail.bind(item.detail)
+            } else {
+                layoutDetail.visibility = View.GONE
             }
 
         }
+
+        holder.refreshCommentList()
+        holder.refreshCommentWrite()
     }
 
     override fun getItemCount(): Int {
         return list?.size ?: 0
+    }
+
+    fun setListener(listener: ReviewItemListener) {
+        this.listener = listener
+    }
+
+    interface ReviewItemListener {
+        fun comment(position: Int, item: ReviewData, comment: String)
+        fun like(position: Int, item: ReviewData, value: Boolean)
+        fun report(position: Int, item: ReviewData)
+        fun reportComment(position: Int, item: ReviewCommentData)
+    }
+
+    inner class ReviewViewHolder(var binding: ItemDetailReviewBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+
+        val commentHolder = ArrayList<ItemReviewCommentBinding>()
+
+        init {
+            binding.layoutDetail.setIndicator(true)
+
+            // Comment
+            binding.btnComment.setOnClickListener {
+                val item = list!![adapterPosition]
+                item.visibleComment = !item.visibleComment
+                refreshCommentWrite()
+            }
+
+            binding.btnCommentCancel.setOnClickListener {
+                val item = list!![adapterPosition]
+                item.visibleComment = false
+                item.cacheComment = ""
+                binding.etReviewComment.setText("")
+                refreshCommentWrite()
+            }
+
+            binding.btnCommentConfirm.setOnClickListener {
+                val item = list!![adapterPosition]
+                listener?.comment(adapterPosition, item, binding.etReviewComment.text.toString())
+            }
+
+            binding.checkboxLike.setOnClickListener {
+                val item = list!![adapterPosition]
+                listener?.like(adapterPosition, item, (it as CheckBox).isChecked)
+            }
+
+            binding.etReviewComment.addTextChangedListener {
+                val item = list!![adapterPosition]
+                item.cacheComment = it.toString()
+            }
+
+            binding.btnCommentList.setOnClickListener {
+                val item = list!![adapterPosition]
+                item.visibleCommentList = !item.visibleCommentList
+                refreshCommentList()
+            }
+
+            binding.btnReport.setOnClickListener {
+                val item = list!![adapterPosition]
+
+                listener?.report(adapterPosition, item)
+            }
+        }
+
+        fun refreshCommentList() {
+            val item = list!![adapterPosition]
+            if (item.visibleCommentList) {
+                item.visibleComment = false
+                binding.layoutCommentList.visibility = View.VISIBLE
+
+                refreshCommentWrite()
+            } else {
+                binding.layoutCommentList.visibility = View.GONE
+            }
+        }
+
+        fun refreshCommentWrite() {
+            val item = list!![adapterPosition]
+            if (item.visibleComment) {
+                item.visibleCommentList = false
+                binding.layoutReviewComment.visibility = View.VISIBLE
+                binding.btnComment.setTextColor(Color.WHITE)
+
+                refreshCommentList()
+            } else {
+                binding.layoutReviewComment.visibility = View.GONE
+                binding.btnComment.setTextColor(Color.parseColor("#A5A5A5"))
+            }
+        }
     }
 }

@@ -7,9 +7,10 @@ import android.view.ViewGroup
 import com.doubleslas.fifith.alcohol.R
 import com.doubleslas.fifith.alcohol.databinding.FragmentSearchBinding
 import com.doubleslas.fifith.alcohol.ui.common.base.BaseFragment
+import com.doubleslas.fifith.alcohol.ui.main.IOnBackPressed
 
-class SearchFragment : BaseFragment<FragmentSearchBinding>() {
-    private val fragment : SearchMainFragment by lazy { SearchMainFragment() }
+class SearchFragment : BaseFragment<FragmentSearchBinding>(), IOnBackPressed {
+    private val fragment: SearchMainFragment by lazy { SearchMainFragment() }
 
     override fun createViewBinding(
         inflater: LayoutInflater,
@@ -30,6 +31,14 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
     override fun onHiddenChanged(hidden: Boolean) {
         super.onHiddenChanged(hidden)
         childFragmentManager.fragments.last().onHiddenChanged(hidden)
+    }
+
+    override fun onBackPressed(): Boolean {
+        if (childFragmentManager.backStackEntryCount >= 1) {
+            childFragmentManager.popBackStackImmediate()
+            return true
+        }
+        return false
     }
 
     fun openSearchHistoryFragment() {

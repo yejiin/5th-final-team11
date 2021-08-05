@@ -11,7 +11,6 @@ import com.doubleslas.fifith.alcohol.R
 import com.doubleslas.fifith.alcohol.databinding.FragmentSearchMainBinding
 import com.doubleslas.fifith.alcohol.databinding.TabCustomBinding
 import com.doubleslas.fifith.alcohol.ui.common.base.BaseFragment
-import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
 
@@ -44,17 +43,23 @@ class SearchMainFragment : BaseFragment<FragmentSearchMainBinding>() {
         adapter = CategoryViewPagerAdapter()
 
         binding?.let { b ->
+            b.toolbar.inflateMenu(R.menu.toolbar_menu)
+            b.toolbar.setOnMenuItemClickListener {
+                when (it.itemId) {
+                    R.id.menu -> toolbarMenu.show(childFragmentManager!!, null)
+                    else -> return@setOnMenuItemClickListener false
+                }
+
+                return@setOnMenuItemClickListener true
+            }
+
             b.viewPager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
             b.viewPager.adapter = adapter
 
             TabLayoutMediator(b.tabLayout, b.viewPager) { tab, position ->
                 tab.text = categoryList[position].first
+                tab.customView = getTabView(position)
             }.attach()
-
-            for (i in 0 until b.tabLayout.tabCount) {
-                val tab: TabLayout.Tab = b.tabLayout.getTabAt(i)!!
-                tab.customView = getTabView(i)
-            }
 
             b.layoutSearch.setOnClickListener {
                 (parentFragment as? SearchFragment)?.openSearchHistoryFragment()
@@ -67,15 +72,6 @@ class SearchMainFragment : BaseFragment<FragmentSearchMainBinding>() {
         val b = TabCustomBinding.inflate(LayoutInflater.from(context))
         b.tvTab.text = categoryList[position].first
         return b.root
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-        binding?.let { b ->
-            setSupportActionBar(b.toolbar)
-            getSupportActionBar()?.setDisplayShowTitleEnabled(false)
-        }
     }
 
     inner class CategoryViewPagerAdapter : FragmentStateAdapter(this) {

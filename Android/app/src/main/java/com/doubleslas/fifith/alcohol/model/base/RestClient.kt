@@ -2,8 +2,8 @@ package com.doubleslas.fifith.alcohol.model.base
 
 import com.doubleslas.fifith.alcohol.App
 import com.doubleslas.fifith.alcohol.BuildConfig
+import com.doubleslas.fifith.alcohol.model.DetailRetrofit
 import com.doubleslas.fifith.alcohol.model.*
-import com.doubleslas.fifith.alcohol.dto.DetailRetrofit
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -13,18 +13,14 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object RestClient {
-    fun getDetailService(): DetailRetrofit = retrofit.create(DetailRetrofit::class.java)
-    fun getAuthService(): AuthRetrofit = retrofit.create(
-        AuthRetrofit::class.java)
-    fun getUserService(): UserRetrofit = retrofit.create(
-        UserRetrofit::class.java)
-    fun getSearchService(): SearchRetrofit = retrofit.create(
-        SearchRetrofit::class.java)
-    fun getReviewService(): ReviewRetrofit = retrofit.create(
-        ReviewRetrofit::class.java)
-    fun getRecommendService(): RecommendRetrofit = retrofit.create(
-        RecommendRetrofit::class.java)
-
+    fun getDetailService(): DetailRetrofit = retrofit.create(
+        DetailRetrofit::class.java)
+    fun getAuthService(): AuthRetrofit = retrofit.create(AuthRetrofit::class.java)
+    fun getUserService(): UserRetrofit = retrofit.create(UserRetrofit::class.java)
+    fun getSearchService(): SearchRetrofit = retrofit.create(SearchRetrofit::class.java)
+    fun getReviewService(): ReviewRetrofit = retrofit.create(ReviewRetrofit::class.java)
+    fun getRecommendService(): RecommendRetrofit = retrofit.create(RecommendRetrofit::class.java)
+    fun getCupboardService(): CupboardRetrofit = retrofit.create(CupboardRetrofit::class.java)
 
     private val retrofit =
         Retrofit.Builder().run {

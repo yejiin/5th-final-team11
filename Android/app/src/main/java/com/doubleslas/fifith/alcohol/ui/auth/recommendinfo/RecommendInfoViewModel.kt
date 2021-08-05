@@ -8,8 +8,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.doubleslas.fifith.alcohol.R
 import com.doubleslas.fifith.alcohol.databinding.FragmentRecommendInfoDetailBinding
-import com.doubleslas.fifith.alcohol.model.base.ApiLiveData
 import com.doubleslas.fifith.alcohol.dto.recommend.*
+import com.doubleslas.fifith.alcohol.model.base.ApiLiveData
 import com.doubleslas.fifith.alcohol.model.base.ApiStatus
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
@@ -89,43 +89,49 @@ class RecommendInfoViewModel : ViewModel() {
     fun getBeerTypeList(): List<Pair<String, List<String>>> {
         return listOf(
             Pair(
+                "라거",
+                listOf(
+                    "일반라거",
+                    "페일라거",
+                    "필스너",
+                    "둔켈 / 다크라거",
+                    "그 외 라거"
+                )
+            ),
+            Pair(
                 "에일",
                 listOf(
                     "페일에일",
                     "IPA",
+                    "포터 / 스타우트",
+                    "위트비어 / 윗비어",
                     "바이젠",
-                    "포터",
-                    "스타우트"
+                    "그 외 에일"
                 )
-            ),
-            Pair(
-                "라거",
-                listOf(
-                    "필스너",
-                    "둔켈",
-                    "페일라거"
-                )
-            ),
-            Pair("람빅", listOf())
+            )
         )
     }
 
-    fun getBeerPlaceList(): List<String> {
+    fun getBeerFlavorList(): List<String> {
         return listOf(
-            "한국",
-            "미국",
-            "유럽",
-            "일본",
-            "그 외"
+            "청량한",
+            "씁쓸한",
+            "고소한",
+            "달달한",
+            "텁텁한",
+            "스파이시한",
+            "꽃향의",
+            "신맛의",
+            "과일향의"
         )
     }
 
-    fun getMinPrice() : Int{
+    fun getMinPrice(): Int {
         return 1000
     }
 
-    fun getMaxPrice(): Int{
-        return 300_000
+    fun getMaxPrice(): Int {
+        return 6050000
     }
 
     fun submit(data: RecommendInfoData): ApiLiveData<Any> {
@@ -144,7 +150,7 @@ class RecommendInfoViewModel : ViewModel() {
                 null
 
         val wineData =
-            if (checkLiquor.value == true)
+            if (checkWine.value == true)
                 RecommendInfoWine(
                     convertChipToList(binding.layoutWineTypeContent),
                     binding.seekBarWineBody.seekBar.progress,
@@ -164,17 +170,22 @@ class RecommendInfoViewModel : ViewModel() {
 
                 RecommendInfoBeer(
                     RecommendInfoBeerType(mainType, subType),
-                    convertChipToList(binding.layoutBeerPlaceContent)
+                    convertChipToList(binding.layoutBeerFlavorContent)
                 )
             } else {
                 null
             }
 
+        val minPrice = if(binding.etPriceLow.text.isEmpty())
+            getMinPrice() else binding.etPriceLow.text.toString().toInt()
+        val maxPrice = if(binding.etPriceHigh.text.isEmpty())
+            getMaxPrice() else binding.etPriceHigh.text.toString().toInt()
+
         val data = RecommendInfoData(
             binding.rangeAbv.values[0].toInt(),
             binding.rangeAbv.values[1].toInt(),
-            binding.tvPriceLow.text.toString().toInt(),
-            binding.tvPriceHigh.text.toString().toInt(),
+            minPrice,
+            maxPrice,
             when (binding.chipGroupCarbotanted.checkedChipId) {
                 R.id.chip_carbonated_yes -> "유"
                 R.id.chip_carbonated_no -> "무"

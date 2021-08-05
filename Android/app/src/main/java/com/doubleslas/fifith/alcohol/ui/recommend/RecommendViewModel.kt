@@ -2,9 +2,11 @@ package com.doubleslas.fifith.alcohol.ui.recommend
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.doubleslas.fifith.alcohol.enum.RecommendSortType
-import com.doubleslas.fifith.alcohol.model.base.ApiLiveData
 import com.doubleslas.fifith.alcohol.dto.AlcoholSimpleData
+import com.doubleslas.fifith.alcohol.dto.RecommendList
+import com.doubleslas.fifith.alcohol.sort.enum.RecommendSortType
+import com.doubleslas.fifith.alcohol.model.base.ApiLiveData
+import com.doubleslas.fifith.alcohol.model.base.MediatorApiCallback
 import com.doubleslas.fifith.alcohol.utils.PageLoader
 
 class RecommendViewModel(private val category: String) : ViewModel() {
@@ -33,7 +35,7 @@ class RecommendViewModel(private val category: String) : ViewModel() {
         }
         if (!pageLoader.canLoadList()) return
 
-        val liveData = repository.getList(category, sort)
+        val liveData = repository.getList(category, pageLoader.page++, sort)
         pageLoader.addObserve(liveData)
     }
 
@@ -45,12 +47,14 @@ class RecommendViewModel(private val category: String) : ViewModel() {
         loadList()
     }
 
+    fun isFinishLoading(): Boolean{
+        return pageLoader.isFinish()
+    }
+
     class Factory(private val param: String) : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             return if (modelClass.isAssignableFrom(RecommendViewModel::class.java)) {
-                RecommendViewModel(
-                    param
-                ) as T
+                RecommendViewModel(param) as T
             } else {
                 throw IllegalArgumentException()
             }

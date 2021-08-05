@@ -2,16 +2,15 @@ package com.doubleslas.fifith.alcohol.ui.search
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.doubleslas.fifith.alcohol.enum.SearchSortType
-import com.doubleslas.fifith.alcohol.model.base.ApiLiveData
 import com.doubleslas.fifith.alcohol.dto.AlcoholSimpleData
+import com.doubleslas.fifith.alcohol.sort.enum.SearchSortType
+import com.doubleslas.fifith.alcohol.model.base.ApiLiveData
+import com.doubleslas.fifith.alcohol.utils.IPageLoaderViewModel
 import com.doubleslas.fifith.alcohol.utils.PageLoader
 
-class SearchListViewModel(private val category: String) : ViewModel() {
-    private val repository =
-        SearchRepository()
-    private val pageLoader =
-        PageLoader<AlcoholSimpleData>()
+class SearchListViewModel(private val category: String) : ViewModel(), IPageLoaderViewModel {
+    private val repository = SearchRepository()
+    val pageLoader = PageLoader<AlcoholSimpleData>()
     val listLiveData: ApiLiveData<List<AlcoholSimpleData>> = pageLoader.liveData
 
     var sort =
@@ -26,7 +25,7 @@ class SearchListViewModel(private val category: String) : ViewModel() {
         return false
     }
 
-    fun loadList() {
+    override fun loadList() {
         if (sort != globalSortType) {
             setSort(globalSortType)
             return
@@ -43,6 +42,10 @@ class SearchListViewModel(private val category: String) : ViewModel() {
         globalSortType = sortType
         pageLoader.reset()
         loadList()
+    }
+
+    override fun isFinishList(): Boolean {
+        return pageLoader.isFinish()
     }
 
     class Factory(private val param: String) : ViewModelProvider.Factory {

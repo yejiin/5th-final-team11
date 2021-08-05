@@ -6,6 +6,7 @@
         <item name="colorPrimaryDark">@color/appbar_background</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowBackground">@color/black</item>
+        <item name="android:fontFamily">@font/noto_sans_medium</item>
     </style>
 
     <style name="MyDatePicker">
@@ -22,6 +23,19 @@
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">18sp</item>
         <item name="android:layout_gravity">center</item>
+        <item name="android:fontFamily">@font/noto_sans_medium</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="ProgressDialog" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+
+        <!-- 배경 dim 설정 -->
+        <item name="android:backgroundDimEnabled">true</item>
+        <!-- 0.0 (투명) ~ 1.0 (검정색) 값을 가집니다 -->
+        <item name="android:backgroundDimAmount">0.5</item>
     </style>
 
     <style name="ChipTabLayout" parent="Widget.Design.TabLayout">
@@ -39,12 +53,35 @@
     <style name="ChipTabText" type="TextAppearance.Design.Tab">
         <item name="android:padding">0dp</item>
         <item name="android:textSize">14sp</item>
+        <item name="fontFamily">@font/noto_sans_medium</item>
     </style>
 
     <style name="RatingBar" parent="@android:style/Widget.RatingBar">
         <item name="android:progressDrawable">@drawable/ic_rating_star</item>
         <item name="android:minHeight">20dp</item>
         <item name="android:maxHeight">20dp</item>
+    </style>
+
+    <style name="MyReviewText">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="MyReviewText.Label" parent="MyReviewText">
+        <item name="android:textColor">#a5a5a5</item>
+        <item name="android:fontFamily">@font/noto_sans_medium</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="MyReviewText.Content" parent="MyReviewText">
+        <item name="android:textColor">#ffffff</item>
+        <item name="android:fontFamily">@font/noto_sans_medium</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+
+    <style name="MyReviewText.Unit" parent="MyReviewText">
+        <item name="android:textColor">#a5a5a5</item>
+        <item name="android:textSize">14sp</item>
     </style>
 
     <style name="BottomNavigationView" parent="@style/TextAppearance.AppCompat.Caption">
@@ -54,6 +91,14 @@
     <style name="NumberPickerTextColor">
         <item name="android:textColorPrimary">#FFFFFF</item>
 
+    </style>
+
+    <style name="CustomBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/CustomBottomSheetStyle</item>
+    </style>
+
+    <style name="CustomBottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@android:color/transparent</item>
     </style>
 
     <style name="FacebookLoginButton">
@@ -81,4 +126,23 @@
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">20sp</item>
     </style>
+
+    <style name="MyReviewDetailLayout">
+        <item name="android:layout_marginTop">20dp</item>
+    </style>
+
+    <style name="AlcoholDetailText" />
+
+
+    <style name="AlcoholDetailText.Label" parent="AlcoholDetailText">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#BEBEBE</item>
+    </style>
+
+    <style name="AlcoholDetailText.Info" parent="AlcoholDetailText">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
 </resources>

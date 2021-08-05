@@ -2,10 +2,12 @@ package com.doubleslas.fifith.alcohol
 
 import android.app.Application
 import android.content.Context
+import android.content.res.Resources
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.annotation.StringRes
+import com.doubleslas.fifith.alcohol.utils.LogUtil
 import com.doubleslas.fifith.alcohol.utils.SharedPreferenceUtil
 import com.facebook.FacebookSdk
 import com.facebook.appevents.AppEventsLogger
@@ -21,7 +23,9 @@ class App : Application() {
 
         Firebase.auth.addIdTokenListener(IdTokenListener {
             prefs.idToken = it.token ?: ""
+            LogUtil.d("Auth-Token", prefs.idToken ?: "-")
         })
+        LogUtil.d("Auth-Token", prefs.idToken ?: "-")
 
 
         // Firebase SDK init
@@ -33,6 +37,8 @@ class App : Application() {
         private lateinit var app: App
         lateinit var prefs: SharedPreferenceUtil
             private set
+
+        fun getApp() = app
 
         fun getString(@StringRes id: Int): String {
             return app.getString(id)
@@ -52,6 +58,10 @@ class App : Application() {
 
         fun isLogin(): Boolean {
             return prefs.idToken.isNotEmpty()
+        }
+
+        fun getResources(): Resources {
+            return app.resources
         }
 
     }

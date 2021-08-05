@@ -11,39 +11,74 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingVertical="23dp">
-        
+
         <ImageView
             android:id="@+id/iv_alcohol"
             android:layout_width="83dp"
             android:layout_height="83dp"
+            android:background="@drawable/bg_item_alcohol"
+            android:padding="2dp"
             android:scaleType="fitCenter"
             android:src="@drawable/ic_star_gray"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/tv_name"
+        <ImageView
+            android:id="@+id/iv_arrow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:rotation="270"
+            android:src="@drawable/ic_open"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_name"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_name" />
+
+        <TextView
+            android:id="@+id/tv_rank"
+            android:layout_width="17.8dp"
+            android:layout_height="21dp"
+            android:layout_marginLeft="8.5dp"
+            android:background="@drawable/ic_1st"
+            android:fontFamily="@font/noto_sans_medium"
+            android:gravity="center_horizontal|top"
+            android:includeFontPadding="false"
+            android:textColor="@color/white"
+            android:textSize="12dp"
+            android:visibility="gone"
+            app:layout_constraintLeft_toLeftOf="@id/iv_alcohol"
+            app:layout_constraintTop_toTopOf="@id/iv_alcohol"
+            tools:text="1" />
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="6dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="10dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/noto_sans_medium"
+            android:includeFontPadding="false"
+            android:maxLines="1"
             android:textColor="#ffffff"
             android:textSize="18sp"
-            app:layout_constraintLeft_toRightOf="@id/iv_alcohol"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="술수룻ㄹ" />
+            app:layout_constraintEnd_toStartOf="@id/iv_arrow"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toEndOf="@id/iv_alcohol"
+            app:layout_constraintTop_toTopOf="@id/iv_alcohol"
+            tools:text="술수룻ㄹ123234564567456754564562y2hrjgl;" />
 
         <TextView
             android:id="@+id/tv_type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:fontFamily="@font/noto_sans_regular"
+            android:includeFontPadding="false"
             android:textColor="#a5a5a5"
             android:textSize="14sp"
             app:layout_constraintLeft_toLeftOf="@id/tv_name"
             app:layout_constraintTop_toBottomOf="@id/tv_name"
-            app:layout_goneMarginTop="12dp"
             tools:text="종류라고" />
 
         <androidx.appcompat.widget.AppCompatRatingBar
@@ -55,14 +90,16 @@
             android:max="10"
             android:numStars="5"
             android:stepSize="0.1"
-            app:layout_constraintLeft_toLeftOf="@id/tv_name"
-            app:layout_constraintBottom_toBottomOf="@id/iv_alcohol" />
+            app:layout_constraintBottom_toBottomOf="@id/iv_alcohol"
+            app:layout_constraintLeft_toLeftOf="@id/tv_name" />
 
         <TextView
             android:id="@+id/tv_rating"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
+            android:fontFamily="@font/noto_sans_medium"
+            android:includeFontPadding="false"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="@id/rating"
             app:layout_constraintLeft_toRightOf="@+id/rating"
@@ -75,6 +112,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
+            android:fontFamily="@font/noto_sans_medium"
+            android:includeFontPadding="false"
             android:textColor="#707070"
             app:layout_constraintBottom_toBottomOf="@id/rating"
             app:layout_constraintLeft_toRightOf="@+id/tv_rating"

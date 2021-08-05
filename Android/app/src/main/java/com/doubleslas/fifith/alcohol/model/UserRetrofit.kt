@@ -1,12 +1,11 @@
 package com.doubleslas.fifith.alcohol.model
 
+import com.doubleslas.fifith.alcohol.dto.AccessTokenBody
+import com.doubleslas.fifith.alcohol.dto.CustomTokenData
 import com.doubleslas.fifith.alcohol.model.base.ApiLiveData
 import com.doubleslas.fifith.alcohol.dto.RegisterRequestData
 import com.doubleslas.fifith.alcohol.dto.SavePoint
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Path
+import retrofit2.http.*
 
 interface UserRetrofit {
     @POST("/user/register")
@@ -24,4 +23,9 @@ interface UserRetrofit {
 
     @GET("/user/savepoint")
     fun getSavePoint(): ApiLiveData<SavePoint>
+
+
+    @PATCH("/user/resign")
+    fun withdraw(): ApiLiveData<Any>
+
 }

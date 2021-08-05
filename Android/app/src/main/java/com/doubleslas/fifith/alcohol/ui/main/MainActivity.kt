@@ -3,15 +3,17 @@ package com.doubleslas.fifith.alcohol.ui.main
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentManager
 import com.doubleslas.fifith.alcohol.R
 import com.doubleslas.fifith.alcohol.databinding.ActivityMainBinding
+import com.doubleslas.fifith.alcohol.ui.common.BaseActivity
 import com.doubleslas.fifith.alcohol.ui.recommend.RecommendFragment
 import com.doubleslas.fifith.alcohol.ui.record.RecordFragment
 import com.doubleslas.fifith.alcohol.ui.search.SearchFragment
 import com.doubleslas.fifith.alcohol.ui.stats.StatsFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
-class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
+class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
     private lateinit var binding: ActivityMainBinding
     private val recommendFragment by lazy { RecommendFragment() }
     private val searchFragment by lazy { SearchFragment() }
@@ -60,15 +62,6 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
         return true
     }
-
-    override fun onBackPressed() {
-        if (searchFragment.childFragmentManager.backStackEntryCount >= 1) {
-            searchFragment.childFragmentManager.popBackStackImmediate()
-        } else {
-            super.onBackPressed()
-        }
-    }
-
 
     private fun gotoRecommend() {
         binding.bottomNavigation.selectedItemId = R.id.menu_recommend

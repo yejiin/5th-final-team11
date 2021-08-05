@@ -1,14 +1,20 @@
 package com.doubleslas.fifith.alcohol.ui.auth
 
 import android.content.Intent
+import android.graphics.Typeface
 import android.os.Bundle
+import android.text.Spannable
+import android.text.SpannableStringBuilder
+import android.text.style.StyleSpan
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.doubleslas.fifith.alcohol.App
 import com.doubleslas.fifith.alcohol.R
 import com.doubleslas.fifith.alcohol.databinding.ActivityLoginBinding
 import com.doubleslas.fifith.alcohol.model.base.ApiStatus
+import com.doubleslas.fifith.alcohol.ui.common.ProgressDialog
 import com.doubleslas.fifith.alcohol.ui.main.MainActivity
 import com.doubleslas.fifith.alcohol.utils.LogUtil
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -24,7 +30,12 @@ import com.kakao.sdk.common.KakaoSdk
 class LoginActivity : AppCompatActivity() {
     private lateinit var activityLoginBinding: ActivityLoginBinding
     private lateinit var firebaseAuth: FirebaseAuth
-    private val loginViewModel by lazy { LoginViewModel() }
+    private val loginViewModel by lazy { ViewModelProvider(this).get(LoginViewModel::class.java) }
+    private val progressDialog by lazy {
+        ProgressDialog().apply {
+            isCancelable = false
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,7 +48,19 @@ class LoginActivity : AppCompatActivity() {
         activityLoginBinding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(activityLoginBinding.root)
 
-        activityLoginBinding.btnCustomFacebook.setOnClickListener {
+
+        val strSubTitle = getString(R.string.login_sub_title) + "\n"
+        val strMainTitle = getString(R.string.login_main_title)
+        val str: SpannableStringBuilder = SpannableStringBuilder(strSubTitle + strMainTitle)
+        str.setSpan(
+            StyleSpan(Typeface.BOLD),
+            strSubTitle.length,
+            str.length,
+            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+//        activityLoginBinding.tvTitle.text = str;
+
+        activityLoginBinding.btnFacebook.setOnClickListener {
             activityLoginBinding.btnLoginFacebook.performClick()
         }
         activityLoginBinding.btnBrowse.setOnClickListener {
@@ -59,18 +82,24 @@ class LoginActivity : AppCompatActivity() {
         val googleSignInClient = GoogleSignIn.getClient(this, googleSignInOption)
 
 
-        activityLoginBinding.btnCustomGoogle.setOnClickListener {
+        activityLoginBinding.btnGoogle.setOnClickListener {
             val signInIntent = googleSignInClient.signInIntent
             startActivityForResult(signInIntent, GOOGLE_SIGN_IN)
         }
 
 
 
-        activityLoginBinding.btnLoginKakao.setOnClickListener {
+        activityLoginBinding.btnKakao.setOnClickListener {
             if (LoginClient.instance.isKakaoTalkLoginAvailable(this)) {
                 LoginClient.instance.loginWithKakaoTalk(this) { token, error ->
                     if (token != null) {
                         loginViewModel.signInWithKaKao(token, error)
+                    } else if (error != null) {
+                        LoginClient.instance.loginWithKakaoAccount(this) { token, error ->
+                            if (token != null) {
+                                loginViewModel.signInWithKaKao(token, error)
+                            }
+                        }
                     }
                 }
             } else {
@@ -83,7 +112,6 @@ class LoginActivity : AppCompatActivity() {
         }
 
         activityLoginBinding.btnLoginFacebook.setPermissions("public_profile", "email")
-
 
         observeAuthenticationState()
     }
@@ -107,7 +135,11 @@ class LoginActivity : AppCompatActivity() {
     private fun observeAuthenticationState() {
         loginViewModel.signInLiveData.observe(this, Observer {
             when (it) {
+                is ApiStatus.Loading -> {
+                    if (!progressDialog.isVisible) progressDialog.show(supportFragmentManager, null)
+                }
                 is ApiStatus.Success -> {
+                    progressDialog.dismiss()
                     Toast.makeText(applicationContext, "로그인 완료", Toast.LENGTH_SHORT).show()
                     val intent = Intent(
                         applicationContext,
@@ -121,9 +153,10 @@ class LoginActivity : AppCompatActivity() {
                     finish()
                 }
                 is ApiStatus.Error -> {
+                    progressDialog.dismiss()
                     Toast.makeText(
                         applicationContext,
-                        "로그인 ERROR - ${it.message}",
+                        "로그인 도중 문제가 발생하였습니다. 다시 시도해주세요.",
                         Toast.LENGTH_SHORT
                     ).show()
                 }

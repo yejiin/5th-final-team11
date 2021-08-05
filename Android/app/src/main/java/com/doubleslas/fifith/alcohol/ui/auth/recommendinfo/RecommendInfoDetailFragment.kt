@@ -52,6 +52,8 @@ class RecommendInfoDetailFragment : BaseFragment<FragmentRecommendInfoDetailBind
                 toggleVisibility(b.layoutWineContent)
             }
 
+            b.etPriceLow.hint = viewModel.getMinPrice().toString()
+            b.etPriceHigh.hint = viewModel.getMaxPrice().toString()
 
 
             b.layoutLiquorTypeContent.let { layout ->
@@ -69,36 +71,6 @@ class RecommendInfoDetailFragment : BaseFragment<FragmentRecommendInfoDetailBind
             b.layoutWineTypeContent.let { layout ->
                 for (str in viewModel.getWineTypeList()) {
                     createChip(layout, str)
-                }
-            }
-
-            b.tvPriceLow.text = viewModel.getMinPrice().toString()
-            b.tvPriceHigh.text = viewModel.getMaxPrice().toString()
-
-            b.layoutPriceLow.setOnClickListener {
-                val min = viewModel.getMinPrice()
-                val maxString = b.tvPriceHigh.text.toString()
-                val max = if (maxString.isEmpty()) viewModel.getMaxPrice() else maxString.toInt()
-                val dialog = NumberInputBottomSheetDialog().apply {
-                    setRange(min, max, 1000)
-                    setValue(b.tvPriceLow.text.toString().toInt())
-                }
-                dialog.show(fragmentManager!!, null) {
-                    b.tvPriceLow.text = it.toString()
-                }
-            }
-
-            b.layoutPriceHigh.setOnClickListener {
-                val minString = b.tvPriceLow.text.toString()
-                val min = if (minString.isEmpty()) viewModel.getMinPrice() else minString.toInt()
-                val max = viewModel.getMaxPrice()
-                val dialog = NumberInputBottomSheetDialog().apply {
-                    setRange(min, max, 1000)
-                    setValue(b.tvPriceHigh.text.toString().toInt())
-                }
-
-                dialog.show(fragmentManager!!, null) {
-                    b.tvPriceHigh.text = it.toString()
                 }
             }
 
@@ -176,8 +148,8 @@ class RecommendInfoDetailFragment : BaseFragment<FragmentRecommendInfoDetailBind
                 }
             }
 
-            b.layoutBeerPlaceContent.let { layout ->
-                for (str in viewModel.getBeerPlaceList()) {
+            b.layoutBeerFlavorContent.let { layout ->
+                for (str in viewModel.getBeerFlavorList()) {
                     createChip(layout, str)
                 }
             }

@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.doubleslas.fifith.alcohol.databinding.RecyclerviewBinding
 import com.doubleslas.fifith.alcohol.model.base.ApiStatus
+import com.doubleslas.fifith.alcohol.ui.common.LoadingRecyclerViewAdapter
 import com.doubleslas.fifith.alcohol.ui.common.base.BaseFragment
 
 class RecommendListFragment private constructor() : BaseFragment<RecyclerviewBinding>() {
@@ -17,7 +18,16 @@ class RecommendListFragment private constructor() : BaseFragment<RecyclerviewBin
         ViewModelProvider(this, RecommendViewModel.Factory(category))
             .get(RecommendViewModel::class.java)
     }
-    private val adapter by lazy { RecommendAlcoholListAdapter() }
+    private val adapter by lazy {
+        RecommendAlcoholListAdapter()
+    }
+    private val loadingAdapter by lazy{
+        LoadingRecyclerViewAdapter(adapter).apply {
+            setOnBindLoadingListener {
+                viewModel.loadList()
+            }
+        }
+    }
 
     override fun createViewBinding(
         inflater: LayoutInflater,
@@ -31,7 +41,7 @@ class RecommendListFragment private constructor() : BaseFragment<RecyclerviewBin
         super.onViewCreated(view, savedInstanceState)
         binding?.let {
             it.recyclerview.layoutManager = LinearLayoutManager(context)
-            it.recyclerview.adapter = adapter
+            it.recyclerview.adapter = loadingAdapter
         }
 
         adapter.setOnSortChangeListener {
@@ -42,6 +52,8 @@ class RecommendListFragment private constructor() : BaseFragment<RecyclerviewBin
             when (it) {
                 is ApiStatus.Success -> {
                     adapter.setData(it.data)
+                    loadingAdapter.setVisibleLoading(!viewModel.isFinishLoading())
+                    loadingAdapter.notifyDataSetChanged()
                 }
                 is ApiStatus.Error -> {
 

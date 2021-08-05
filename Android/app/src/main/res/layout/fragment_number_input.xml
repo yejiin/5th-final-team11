@@ -13,11 +13,13 @@
         android:background="#263238"
         android:theme="@style/NumberPickerTextColor" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_confirm"
         android:layout_width="match_parent"
         android:layout_height="62dp"
         android:background="#4638CE"
+        android:fontFamily="@font/noto_sans_medium"
+        android:includeFontPadding="false"
         android:text="완료"
         android:textColor="#FFFFFF"
         android:textSize="20sp"

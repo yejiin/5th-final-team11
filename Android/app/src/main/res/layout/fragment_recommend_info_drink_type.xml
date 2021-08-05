@@ -4,6 +4,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ImageView
+        android:layout_width="93dp"
+        android:layout_height="85dp"
+        android:src="@drawable/bg_register_top"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:layout_width="196dp"
+        android:layout_height="226dp"
+        android:src="@drawable/ic_bg_register_top_big"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
     <LinearLayout
         android:id="@+id/layout_title"
         android:layout_width="wrap_content"
@@ -18,18 +33,28 @@
             style="@style/RecommendInfoStyle.Page"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="1/2" />
+            android:fontFamily="@font/noto_sans_medium"
+            android:includeFontPadding="false"
+            android:text="1/2"
+            android:textFontWeight="500" />
+
 
         <TextView
             style="@style/RecommendInfoStyle.Title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/first_input_drink_type_title" />
+            android:fontFamily="@font/noto_sans_medium"
+            android:includeFontPadding="false"
+            android:text="@string/first_input_drink_type_title"
+            android:textFontWeight="500" />
 
         <TextView
             style="@style/RecommendInfoStyle.SubTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/noto_sans_regular"
+            android:includeFontPadding="false"
             android:text="@string/first_input_drink_type_subtitle" />
 
     </LinearLayout>
@@ -56,6 +81,9 @@
             android:id="@+id/tv_liquor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/noto_sans_bold"
+            android:includeFontPadding="false"
             android:text="양주"
             android:textColor="@drawable/color_selectable_blue" />
     </LinearLayout>
@@ -83,6 +111,9 @@
             android:id="@+id/tv_wine"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/noto_sans_bold"
+            android:includeFontPadding="false"
             android:text="와인"
             android:textColor="@drawable/color_selectable_yellow" />
     </LinearLayout>
@@ -110,16 +141,22 @@
             android:id="@+id/tv_beer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/noto_sans_bold"
+            android:includeFontPadding="false"
             android:text="맥주"
             android:textColor="@drawable/color_selectable_orange" />
     </LinearLayout>
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_next"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_button_next"
+        android:enabled="false"
         android:paddingVertical="16.5dp"
+        android:includeFontPadding="false"
+        android:fontFamily="@font/noto_sans_medium"
         android:text="@string/all_next"
         android:textColor="@color/white"
         android:textSize="20sp"

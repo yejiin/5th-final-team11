@@ -3,155 +3,168 @@ package com.doubleslas.fifith.alcohol.ui.auth
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
+import com.doubleslas.fifith.alcohol.R
 import com.doubleslas.fifith.alcohol.databinding.ActivityRegisterBinding
 import com.doubleslas.fifith.alcohol.model.base.ApiStatus
+import com.doubleslas.fifith.alcohol.ui.web.WebActivity
 import kotlinx.android.synthetic.main.custom_dialog.*
 
-class RegisterActivity : AppCompatActivity(), CustomDialogInterface {
-
+class RegisterActivity : AppCompatActivity(), CustomDialogInterface, View.OnClickListener {
+    private val activeButtonDrawable by lazy {
+        AppCompatResources.getDrawable(
+            this,
+            R.drawable.button_background_gradient
+        )
+    }
     private val customDialog: CustomDialog by lazy { CustomDialog(this, this) }
-    private lateinit var activityRegisterBinding: ActivityRegisterBinding
+    private lateinit var binding: ActivityRegisterBinding
     private val registerViewModel by lazy { RegisterViewModel() }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activityRegisterBinding = ActivityRegisterBinding.inflate(layoutInflater)
-        setContentView(activityRegisterBinding.root)
+        binding = ActivityRegisterBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-
-
-        activityRegisterBinding.btnEndRegister1.isEnabled = false
-
-
-        activityRegisterBinding.cbAdmitAll.setOnClickListener {
+        binding.btnEndRegister1.isEnabled = false
+        binding.cbAll.setOnClickListener {
             checkAll()
             isChecked()
-
-
-        }
-        activityRegisterBinding.cbEssential1.setOnClickListener {
-            isChecked()
         }
 
-        activityRegisterBinding.cbEssential2.setOnClickListener {
-            isChecked()
-        }
+        binding.cbAge.setOnClickListener(this)
+        binding.cbTerms.setOnClickListener(this)
+        binding.cbPrivacy.setOnClickListener(this)
+        binding.cbMarketing.setOnClickListener(this)
 
-        activityRegisterBinding.cbEssential3.setOnClickListener {
-            isChecked()
-        }
+        binding.btnValidate.setOnClickListener {
+            val nickname = binding.etNickname.text.toString()
+            if (nickname.length < 2 || nickname.length > 10) {
+                Toast.makeText(this, "2자 이상, 10자 이하로 입력해주세요.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
 
-        activityRegisterBinding.cbChoice1.setOnClickListener {
-            isChecked()
-        }
-
-
-
-
-        activityRegisterBinding.btnValidate.setOnClickListener {
-            nickname = activityRegisterBinding.etNickname.text.toString()
             // 닉네임 중복 체크
             registerViewModel.nicknameCheck(nickname).observe(this, Observer {
                 when (it) {
-                    is ApiStatus.Loading -> {
-                    }
                     is ApiStatus.Success -> {
                         it.data
                         onDialogBtnClicked("해당 닉네임은\n 사용 가능합니다.")
-                        nickname = activityRegisterBinding.etNickname.text.toString()
-                        if (activityRegisterBinding.cbEssential1.isChecked && activityRegisterBinding.cbEssential2.isChecked && activityRegisterBinding.cbEssential3.isChecked) {
-                            activityRegisterBinding.btnEndRegister1.isEnabled = true
-                            activityRegisterBinding.btnEndRegister1.setBackgroundColor(
-                                Color.parseColor(
-                                    "#4638CE"
-                                )
-                            )
-                            activityRegisterBinding.btnEndRegister1.setTextColor(Color.parseColor("#FFFFFF"))
-                        }
+                        refreshRegisterButton()
                     }
                     is ApiStatus.Error -> {
-                        nickname = ""
-                        activityRegisterBinding.etNickname.setText(nickname)
                         onDialogBtnClicked("해당 닉네임은\n 이미 사용 중입니다.")
-                        activityRegisterBinding.btnEndRegister1.isEnabled = false
-                        activityRegisterBinding.btnEndRegister1.setBackgroundColor(
-                            Color.parseColor(
-                                "#202425"
-                            )
-                        )
-                        activityRegisterBinding.btnEndRegister1.setTextColor(Color.parseColor("#575757"))
-
+                        refreshRegisterButton()
                     }
                 }
             })
-
-
         }
 
-        activityRegisterBinding.btnEndRegister1.setOnClickListener {
+        binding.btnEndRegister1.setOnClickListener {
 
-            if (nickname != activityRegisterBinding.etNickname.text.toString()) {
+            if (registerViewModel.nickname != binding.etNickname.text.toString()) {
                 onDialogBtnClicked("중복 확인을\n 해주세요!")
             }
-            if (nickname == activityRegisterBinding.etNickname.text.toString()) {
-
+            if (registerViewModel.nickname == binding.etNickname.text.toString()) {
                 val intent = Intent(this, Register2Activity::class.java)
-                intent.putExtra("nickname", nickname)
+                intent.putExtra("registerViewModel.nickname", registerViewModel.nickname)
                 startActivity(intent)
                 finish()
             }
+        }
+
+        binding.etNickname.addTextChangedListener {
+            val nickname = it.toString()
+            if (nickname.length < 2 || nickname.length > 10) {
+                binding.tvNicknameWaring.text = "2자 이상, 10자 이하로 입력해주세요."
+            } else {
+                binding.tvNicknameWaring.text = ""
+            }
+        }
+
+        binding.btnTerms.setOnClickListener {
+            val intent = WebActivity.getStartIntent(
+                this@RegisterActivity,
+                "http://double-slash.shop/service"
+            )
+            startActivity(intent)
+        }
+
+        binding.btnPrivacy.setOnClickListener {
+            val intent = WebActivity.getStartIntent(
+                this@RegisterActivity,
+                "http://double-slash.shop/privacy"
+            )
+            startActivity(intent)
+        }
+
+        binding.btnAge.setOnClickListener {
+            val intent = WebActivity.getStartIntent(
+                this@RegisterActivity,
+                "http://double-slash.shop/adult"
+            )
+            startActivity(intent)
         }
     }
 
 
     private fun checkAll() {
-        if (activityRegisterBinding.cbAdmitAll.isChecked) {
-            activityRegisterBinding.cbEssential1.isChecked = true
-            activityRegisterBinding.cbEssential2.isChecked = true
-            activityRegisterBinding.cbEssential3.isChecked = true
-            activityRegisterBinding.cbChoice1.isChecked = true
-
+        if (binding.cbAll.isChecked) {
+            binding.cbAge.isChecked = true
+            binding.cbTerms.isChecked = true
+            binding.cbPrivacy.isChecked = true
+            binding.cbMarketing.isChecked = false
         } else {
-            activityRegisterBinding.cbEssential1.isChecked = false
-            activityRegisterBinding.cbEssential2.isChecked = false
-            activityRegisterBinding.cbEssential3.isChecked = false
-            activityRegisterBinding.cbChoice1.isChecked = false
+            binding.cbAge.isChecked = false
+            binding.cbTerms.isChecked = false
+            binding.cbPrivacy.isChecked = false
+            binding.cbMarketing.isChecked = false
         }
-
-
     }
 
     private fun isChecked() {
-        if (activityRegisterBinding.cbAdmitAll.isChecked) {
-            activityRegisterBinding.cbAdmitAll.isChecked = false
-        }
-        if (activityRegisterBinding.cbEssential1.isChecked && activityRegisterBinding.cbEssential2.isChecked && activityRegisterBinding.cbEssential3.isChecked && activityRegisterBinding.cbChoice1.isChecked) {
-            activityRegisterBinding.cbAdmitAll.isChecked = true
-        } else if (activityRegisterBinding.cbEssential1.isChecked && activityRegisterBinding.cbEssential2.isChecked && activityRegisterBinding.cbEssential3.isChecked && activityRegisterBinding.cbChoice1.isChecked && nickname != "") {
-            activityRegisterBinding.btnEndRegister1.isEnabled = true
-        }
-        if (activityRegisterBinding.cbEssential1.isChecked && activityRegisterBinding.cbEssential2.isChecked && activityRegisterBinding.cbEssential3.isChecked && nickname != "") {
-            activityRegisterBinding.btnEndRegister1.setBackgroundColor(Color.parseColor("#4638CE"))
-            activityRegisterBinding.btnEndRegister1.setTextColor(Color.parseColor("#FFFFFF"))
-            activityRegisterBinding.btnEndRegister1.isEnabled = true
+        val essentialCheck = isEssentialAllCheck()
 
+        if (binding.cbAll.isChecked) {
+            binding.cbAll.isChecked = false
+        }
 
+//        if (essentialCheck && binding.cbMarketing.isChecked) {
+        if (essentialCheck) {
+            binding.cbAll.isChecked = true
+        } else if (essentialCheck && registerViewModel.nickname != "") {
+            binding.btnEndRegister1.isEnabled = true
+        }
+
+        refreshRegisterButton()
+    }
+
+    private fun refreshRegisterButton() {
+        if (isEssentialAllCheck() && registerViewModel.nickname != null) {
+            binding.btnEndRegister1.setBackgroundDrawable(activeButtonDrawable)
+            binding.btnEndRegister1.setTextColor(Color.parseColor("#FFFFFF"))
+            binding.btnEndRegister1.isEnabled = true
         } else {
-            activityRegisterBinding.btnEndRegister1.setBackgroundColor(Color.parseColor("#202425"))
-            activityRegisterBinding.btnEndRegister1.setTextColor(Color.parseColor("#575757"))
-            activityRegisterBinding.btnEndRegister1.isEnabled = false
+            binding.btnEndRegister1.setBackgroundColor(Color.parseColor("#202425"))
+            binding.btnEndRegister1.setTextColor(Color.parseColor("#575757"))
+            binding.btnEndRegister1.isEnabled = false
         }
+    }
 
+    private fun isEssentialAllCheck(): Boolean {
+        return binding.cbAge.isChecked && binding.cbPrivacy.isChecked && binding.cbTerms.isChecked
     }
 
 
     private fun onDialogBtnClicked(text: String?) {
         customDialog.show()
         customDialog.tv_nicknameCheck?.text = text
-
     }
 
 
@@ -159,10 +172,9 @@ class RegisterActivity : AppCompatActivity(), CustomDialogInterface {
         customDialog.dismiss()
     }
 
-    companion object {
-        var nickname: String = ""
+    override fun onClick(v: View) {
+        isChecked()
     }
-
 
 }
 

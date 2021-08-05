@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
     android:orientation="horizontal"
-    android:padding="20dp">
+    android:paddingTop="15dp"
+    android:paddingBottom="5dp"
+    android:paddingHorizontal="20dp">
 
     <TextView
         android:id="@+id/tv_sort"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/noto_sans_medium"
+        android:includeFontPadding="false"
         android:textColor="@color/white"
         tools:text="인기도순" />
 
