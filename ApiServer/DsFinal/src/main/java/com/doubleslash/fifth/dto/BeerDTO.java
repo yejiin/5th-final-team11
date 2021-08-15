@@ -19,6 +19,8 @@ public class BeerDTO extends AlcoholDTO {
     private String subKind;
     
     private List<String> flavors;
+    
+    private String source;
 
     public BeerDTO(Beer beer, User user) {
         this.aid = beer.getId();
@@ -47,6 +49,8 @@ public class BeerDTO extends AlcoholDTO {
         for (String temp : flavortemp) {
             this.flavors.add(temp);
         }
+        
+        this.source = "와인21";
     }
 
     public BeerDTO(Beer beer) {
@@ -69,5 +73,7 @@ public class BeerDTO extends AlcoholDTO {
         for (String temp : flavortemp) {
             this.flavors.add(temp);
         }
+        
+        this.source = "와인21";
     }
 }

@@ -17,6 +17,8 @@ import static com.doubleslash.fifth.service.AlcoholService.starAvgByReview;
 public class LiquorDTO extends AlcoholDTO {
 	
 	private List<String> flavors;
+	
+	private String source;
     
     public LiquorDTO(Liquor liquor, User user) {
         this.aid = liquor.getId();

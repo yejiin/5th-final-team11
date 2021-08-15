@@ -21,6 +21,8 @@ public class WineDTO extends AlcoholDTO {
     private int flavor;
     
     private int body;
+    
+    private String source;
 
     public WineDTO(Wine wine, User user) {
         this.aid = wine.getId();
@@ -46,6 +48,8 @@ public class WineDTO extends AlcoholDTO {
                 .filter(al -> al.getUser() == user)
                 .findAny()
                 .isPresent();
+        
+        this.source = "와인21";
     }
 
     public WineDTO(Wine wine) {
@@ -65,5 +69,7 @@ public class WineDTO extends AlcoholDTO {
         this.area = wine.getArea();
         this.flavor = wine.getFlavor();
         this.body = wine.getBody();
+        
+        this.source = "와인21";
     }
 }
