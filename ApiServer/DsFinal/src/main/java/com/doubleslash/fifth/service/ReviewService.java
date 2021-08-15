@@ -209,10 +209,10 @@ public class ReviewService {
 	}
 	
 	//내 기록 삭제
-	public void deleteMyReview(List<Long> rid) {
-		for(Long i : rid) {
-			reviewRepository.deleteById(i);
-		}
+	@Transactional
+	public void deleteMyReview(Long rid) {
+		
+			reviewRepository.deleteById(rid);
 	}
 
 	//내 기록 수정

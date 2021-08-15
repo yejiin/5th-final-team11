@@ -43,6 +43,7 @@ public class UserService {
 		user.setNickname(nickname);
 		user.setDrink(drink);
 		user.setHangover(hangover);
+		userRepository.save(user);
     }
 	
 	public Long getId(String uid) {
