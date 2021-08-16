@@ -199,10 +199,13 @@ public class ReviewController {
 		@ApiResponse(code = 200, message = "Success"),
 	})
 	@DeleteMapping(value = "/{rid}")
-	public ResponseEntity<?> DeleteMyReviewList(@PathVariable List<Long> rid, HttpServletRequest request) throws Exception {		
-		reviewService.deleteMyReview(rid);
+	public ResponseEntity<?> DeleteMyReviewList(HttpServletRequest request, @PathVariable("rid") Long ... rid) throws Exception {		
+		for (Long id : rid) {
+			reviewService.deleteMyReview(id);
+	
+		}
 		
-		return ResponseEntity.ok().build();
+		return ResponseEntity.ok("{}");
 	}
 	
 	@ApiOperation(value = "내 기록 수정")

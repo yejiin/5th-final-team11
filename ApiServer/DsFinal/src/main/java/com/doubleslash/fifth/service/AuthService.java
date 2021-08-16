@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -63,12 +65,13 @@ public class AuthService {
 	}
 
 	// Kakao Access Token 검증
-	public String verifyKakaoAccessToken(String accessToken) {
+	public Map<String, String> verifyKakaoAccessToken(String accessToken) {
+
+		Map<String, String> res = new HashMap<>();
 
 		String requestUrl = "https://kapi.kakao.com/v2/user/me";
 		URL url;
-		String email = null;
-		
+
 		try {
 			url = new URL(requestUrl);
 
@@ -88,41 +91,60 @@ public class AuthService {
 
 			JSONObject subObj = (JSONObject) mainObj.get("kakao_account");
 			boolean isNotEmailAgreed = (boolean) subObj.get("email_needs_agreement");
-
+			System.out.println(mainObj.get("id"));
 			if (!isNotEmailAgreed) {
-				email = subObj.get("email").toString();
+				res.put("email", subObj.get("email").toString());
+			} else {
+				res.put("uid", mainObj.get("id").toString());
 			}
-			
+
 		} catch (IOException | ParseException e) {
-			System.out.println(e.getMessage());
+			e.printStackTrace();
 		}
 
-		return email;
+		return res;
 
 	}
 
 	// Firebase Custom Token 발급
-	public CustomTokenDTO getFirebaseCustomToken(String accessToken) {
-		String email = verifyKakaoAccessToken(accessToken);
+	public CustomTokenDTO getFirebaseCustomToken(String accessToken) throws FirebaseAuthException {
+		Map<String, String> val = verifyKakaoAccessToken(accessToken);
+
+		boolean isEmail = val.containsKey("email") ? true : false;
 
 		CreateRequest request = new CreateRequest();
 
-		if (email != null) {
+		String email = null;
+		String kakaoUid = null;
+		String uId = null;
+
+		if (isEmail) {
+			email = val.get("email");
 			request.setEmail(email);
 
 		} else {
-			request.setEmailVerified(false);
+			kakaoUid = val.get("uid");
+			request.setUid(kakaoUid);
+
 		}
 
 		try {
-			String uId = FirebaseAuth.getInstance().createUser(request).getUid();
-			// 커스텀 토큰 생성
-			String customToken = FirebaseAuth.getInstance().createCustomToken(uId);
-			return new CustomTokenDTO(customToken);
+			uId = FirebaseAuth.getInstance().createUser(request).getUid();
 		} catch (FirebaseAuthException e) {
-			System.out.println(e.getMessage());
+			try {
+				if (isEmail) {
+					uId = FirebaseAuth.getInstance().getUserByEmail(email).getUid();
+				} else {
+					uId = FirebaseAuth.getInstance().getUser(kakaoUid).getUid();
+				}
+			} catch (FirebaseAuthException e1) {
+				System.out.println(e.getMessage());
+			}
 		}
+		
+		// 커스텀 토큰 생성
+		String customToken = FirebaseAuth.getInstance().createCustomToken(uId);
+		return new CustomTokenDTO(customToken);
 
-		return null;
 	}
 }
