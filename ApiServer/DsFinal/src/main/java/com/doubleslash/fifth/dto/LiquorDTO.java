@@ -42,9 +42,12 @@ public class LiquorDTO extends AlcoholDTO {
                 .isPresent();
         
         this.flavors = new ArrayList<>();
-        String flavortemp[] = liquor.getFlavor().split("#");
-        for (String temp : flavortemp) {
-            this.flavors.add(temp);
+        flavors.addAll(getFlavors(liquor.getFlavor().split("#")));
+        
+        String subFlavor = liquor.getSubFlavor();
+
+        if (subFlavor != null) {
+        	flavors.addAll(getFlavors(subFlavor.split("#")));
         }
     }
 
@@ -63,11 +66,25 @@ public class LiquorDTO extends AlcoholDTO {
         this.starAvg = starAvgByReview(liquor.getReviews());
         
         this.flavors = new ArrayList<>();
-        String flavortemp[] = liquor.getFlavor().split("#");
-        for (String temp : flavortemp) {
-            this.flavors.add(temp);
-        }
-       
+        
+        flavors.addAll(getFlavors(liquor.getFlavor().split("#")));
+        
+        String subFlavor = liquor.getSubFlavor();
+        if (subFlavor != null) {
+        	flavors.addAll(getFlavors(subFlavor.split("#")));
+        } 
+    }
+    
+    
+    private ArrayList<String> getFlavors(String[] flavors) {
+    	
+    	ArrayList<String> res = new ArrayList<String>();
+    	
+    	for (String flavor : flavors) {
+			res.add(flavor);
+		}
+    	
+    	return res;
     }
 
 }

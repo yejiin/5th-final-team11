@@ -11,4 +11,5 @@ import lombok.Getter;
 public class Liquor extends Alcohol {
 	
 	private String flavor;
+	private String subFlavor;
 }
