@@ -13,7 +13,6 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
 import com.doubleslash.fifth.interceptor.AuthInterceptor;
-import com.google.common.base.Predicates;
 
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
@@ -40,6 +39,7 @@ public class SwaggerConfig extends WebMvcConfigurationSupport{
             "/review",
             "/alcohol/*/love",
             "/alcohol/recommend",
+            "/alcohol/*/rand",
             "/alcohol/rating",
             "/cabinet/**"
     };

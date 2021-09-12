@@ -5,12 +5,14 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.doubleslash.fifth.dto.AlcoholSearchDTO;
 import com.doubleslash.fifth.dto.RecommendDTO;
 import com.doubleslash.fifth.service.AuthService;
 import com.doubleslash.fifth.service.RecommendService;
@@ -22,6 +24,8 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 @Api(value = "Recommend", description = "주류 추천 API")
@@ -92,6 +96,27 @@ public class RecommendController {
 
 		recommendService.createRecommend(requestBody, id);		
 		return "{}";
+	}
+	
+	@ApiOperation(value = "주류 추천 랜덤 데이터")
+	@GetMapping(value = "/recommed/rand")
+	public ResponseEntity<RecommendRandResponse<AlcoholSearchDTO>> getRecommendRand(HttpServletRequest request) {
+	
+		try {
+			String uid = authService.verifyToken(request);
+			Long id = userService.getId(uid);
+			return ResponseEntity.ok(new RecommendRandResponse(recommendService.getRecommendRandom(id)));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return ResponseEntity.badRequest().build();
+	}
+	
+	@Data
+	@AllArgsConstructor
+	static class RecommendRandResponse<T> {
+		private T recommendList;
 	}
 	
 }

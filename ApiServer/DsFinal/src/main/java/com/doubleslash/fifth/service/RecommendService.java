@@ -322,6 +322,10 @@ public class RecommendService {
 		return res;
 	}
 	
+	public List<AlcoholSearchDTO> getRecommendRandom(Long id) {
+		return searchRepository.getRecommendRand(id, PageRequest.of(0, 5));
+	}
+	
 	//정렬 기준을 동적으로 설정
 	private Sort sortOption(Direction direction, String property) {
 		List<Order> orders = new ArrayList<Sort.Order>();

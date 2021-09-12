@@ -1,5 +1,7 @@
 package com.doubleslash.fifth.repository;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -33,5 +35,8 @@ public interface SearchRepository extends JpaRepository<ViewSearch, Long>{
 	
 	@Query(value = "select new com.doubleslash.fifth.dto.AlcoholSearchDTO(v.aid, v.name, v.category, v.thumbnail, v.star, v.reviewCnt) from ViewSearch as v, Recommend as r where v.aid = r.aid and r.id = ?1 and category = ?2 and processed = 'N'")
 	public Page<AlcoholSearchDTO> getRecommendSorting(Long id, String category, Pageable pageable); 
+
+	@Query(value = "select new com.doubleslash.fifth.dto.AlcoholSearchDTO(v.aid, v.name, v.category, v.thumbnail, v.star, v.reviewCnt) from ViewSearch as v, Recommend as r where v.aid = r.aid and r.id = ?1 order by rand()")
+	public List<AlcoholSearchDTO> getRecommendRand(Long id, Pageable pageable);
 	
 }
